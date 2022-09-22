@@ -5,13 +5,11 @@
       <el-dropdown-menu>
         <el-dropdown-item>
           <span class="title">列设置</span>
-          <Draggable class="t_table_column_setting_dropdown" :force-fallback="true" animation="300"
-            v-model="state.columnSet" item-key="prop">
-            <template #item>
-              <el-checkbox v-for="(col, index) in state.columnSet" :key="index" @click.native.stop
-                :checked="!col.hidden" :disabled="col.checkBoxDisabled"
+          <Draggable class="t_table_column_setting_dropdown" v-model="state.columnSet" item-key="prop">
+            <template #item="{element,index}">
+              <el-checkbox :checked="!element.hidden" @click.native.stop :disabled="element.checkBoxDisabled"
                 @change="checked => checkChanged(checked, index)">
-                {{ col.label }}
+                {{element.label}}
               </el-checkbox>
             </template>
           </Draggable>
@@ -27,7 +25,7 @@ export default {
 </script>
 <script setup lang="ts">
 import Draggable from 'vuedraggable'
-import { ref, watch, computed, reactive } from 'vue'
+import { watch, onMounted, reactive } from 'vue'
 const props = defineProps({
   columns: {
     type: Array,
@@ -54,31 +52,31 @@ const initColumnSet = () => {
 }
 // 获取缓存数据
 const getColumnSetCache = () => {
-  const value = localStorage.getItem(`t-ui:TTable.columnSet-${props.name || props.title}`)
+  const value = localStorage.getItem(`t-ui-plus:TTable.columnSet-${props.name || props.title}`)
   return value ? JSON.parse(value) : initColumnSet()
 }
 // 抛出事件
 const emits = defineEmits(['columnSetting'])
-// const columnSet = ref(getColumnSetCache())
-const state = reactive({
-  columnSet: getColumnSetCache()
+const state: any = reactive({
+  columnSet: []
 })
-// let columnSet = computed(() => getColumnSetCache())
-console.log(777, state.columnSet)
-emits('columnSetting', state.columnSet)
+onMounted(() => {
+  state.columnSet = getColumnSetCache()
+  // console.log('onMounted', state.columnSet)
+  emits('columnSetting', state.columnSet)
+})
 watch(
   () => state.columnSet,
   (val) => {
     emits('columnSetting', val)
-    localStorage.setItem(`t-ui:TTable.columnSet-${props.name || props.title}`, JSON.stringify(val))
-  }
-  // { deep: true }
+    // console.log(3333, val)
+    localStorage.setItem(`t-ui-plus:TTable.columnSet-${props.name || props.title}`, JSON.stringify(val))
+  },
+  { deep: true }
 )
+// checkbox改变选中状态
 const checkChanged = (checked, index) => {
-  state.columnSet[index] = {
-    ...state.columnSet[index],
-    hidden: !checked
-  }
+  state.columnSet[index].hidden = !checked
   let obj: any = {}
   state.columnSet.map(val => {
     val.hidden in obj || (obj[val.hidden] = [])
@@ -87,35 +85,32 @@ const checkChanged = (checked, index) => {
   if (obj.false.length < 2) {
     state.columnSet.map((val, key) => {
       if (!val.hidden) {
-        state.columnSet[key] = {
-          ...state.columnSet[key],
-          checkBoxDisabled: true
-        }
+        state.columnSet[key].checkBoxDisabled = true
       }
     })
   } else {
     state.columnSet.map((val, key) => {
       if (!val.hidden) {
-        state.columnSet[key] = {
-          ...state.columnSet[key],
-          checkBoxDisabled: false
-        }
+        state.columnSet[key].checkBoxDisabled = false
       }
     })
   }
 }
+
 </script>
 <style lang="scss">
 .el-dropdown-menu {
-  padding: 15px;
+  padding: 10px;
   font-size: 14px;
 
   .el-dropdown-menu__item {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
 
     .title {
       font-weight: bold;
+      margin-bottom: 5px;
     }
 
     .t_table_column_setting_dropdown {
@@ -125,7 +120,6 @@ const checkChanged = (checked, index) => {
       overflow-y: auto;
 
       .el-checkbox {
-        margin: 5px 0;
 
         .el-checkbox__input.is-checked+.el-checkbox__label {
           color: #262626;

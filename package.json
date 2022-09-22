@@ -1,6 +1,6 @@
 {
   "name": "@wocwin/t-ui-plus",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Vue3 中基于Element-plus二次封装基础组件文档",
   "author": "wocwin",
   "license": "ISC",
@@ -27,6 +27,7 @@
     "vue-clipboard3": "^2.0.0",
     "vue-demi": "^0.13.6",
     "vue-router": "^4.0.0-0",
+    "vuedraggable": "^4.1.0",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
@@ -68,21 +69,20 @@
     "svg-sprite-loader": "5.1.1",
     "typescript": "~4.1.5",
     "typings-for-css-modules-loader": "^1.7.0",
-    "vuedraggable": "^4.1.0",
     "vuepress": "^2.0.0-beta.51",
     "vuepress-plugin-demoblock-plus": "^1.6.0",
     "xlsx": "^0.17.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://gitee.com/wocwin/t-ui.git"
+    "url": "https://github.com/wocwin/t-ui-plus"
   },
-  "homepage": "https://wocwin.github.io/t-ui/",
+  "homepage": "https://wocwin.github.io/t-ui-plus/",
   "keywords": [
     "element-plus",
     "vue3",
     "ts",
-    "webpack",
+    "webpack5",
     "vuepress2",
     "二次封装组件",
     "封装组件",

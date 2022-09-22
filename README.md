@@ -1,6 +1,8 @@
 # T-ui-Plus
 
-## [Vue2 中基于 Element-ui 和 ant-design-vue 二次封装基础组件地址](https://gitee.com/wocwin/t-ui)
+## [Vue2 基础组件传送门](https://gitee.com/wocwin/t-ui)
+
+> 基于 Element-ui 和 ant-design-vue 二次封装基础组件地址
 
 ## 介绍
 
@@ -20,7 +22,7 @@
   </a>
   <a href="https://www.npmjs.com/package/@wocwin/t-ui-plus" target="_blank">
       <img alt="npm" src="https://img.shields.io/npm/v/@wocwin/t-ui-plus.svg" />
-  </a>
+    </a>
 </p>
 
 ## npm 方式安装使用
