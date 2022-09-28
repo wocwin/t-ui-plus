@@ -2,6 +2,30 @@
 
 ---
 
+## 基础用法
+
+:::demo
+
+TQueryCondition/Base
+
+:::
+
+## Tsx 用法
+
+:::demo
+
+TQueryCondition/Tsx
+
+:::
+
+## 输入框插槽使用用法
+
+:::demo
+
+TQueryCondition/SlotName
+
+:::
+
 ## TQueryCondition 参数配置
 
 ### 代码示例
@@ -19,7 +43,7 @@
      loading：查询按钮loading -->
 ```
 
-### 1、配置参数（Attributes）
+### 配置参数（Attributes）
 
 | 参数       | 说明                                      | 类型    | 默认值  |
 | :--------- | :---------------------------------------- | :------ | :------ |
@@ -29,7 +53,7 @@
 | boolEnter  | 是否敲回车查询                            | Boolean | true    |
 | labelWidth | labelWidth 宽度                           | String  | '110px' |
 
-### 2、opts Attributes
+### opts Attributes
 
 | 参数 | 说明 | 类型 | 默认值 |
 | :-- | :-- | :-- | :-- |
@@ -42,7 +66,7 @@
 | span | 控件占用的列宽，默认占用 1 列，最多 4 列 (独占一行) | number | 1 |
 | defaultVal | 默认值 | - | - |
 
-### 3、事件（events）
+### 事件（events）
 
 | 事件名 | 说明 | 返回值 |
 | :-- | :-- | :-- |

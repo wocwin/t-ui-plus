@@ -1,25 +1,53 @@
 <template>
-  <div class="single_edit_cell" :class="{'edit-enabled-cell': canEdit}">
+  <div class="single_edit_cell" :class="{ 'edit-enabled-cell': canEdit }">
     <!-- 编辑组件自定义插槽 -->
     <template v-if="configEdit.editSlotName">
       <slot />
     </template>
-    <component v-if="!configEdit.editSlotName" :is="configEdit.editComponent||'el-input'" v-model="record.row[prop]"
-      :type="configEdit.type" :placeholder="configEdit.placeholder||getPlaceholder(configEdit)" ref="parentCom"
-      @change="handleEvent(configEdit.event, record.row[prop],configEdit.editComponent)"
-      :style="{width: configEdit.width||'100%'}"
-      v-bind="typeof configEdit.bind == 'function' ? configEdit.bind(record) : {clearable:true,filterable:true,...configEdit.bind}">
+    <component
+      v-if="!configEdit.editSlotName"
+      :is="configEdit.editComponent || 'el-input'"
+      v-model="record.row[prop]"
+      :type="configEdit.type"
+      :placeholder="configEdit.placeholder || getPlaceholder(configEdit)"
+      ref="parentCom"
+      @change="
+        handleEvent(
+          configEdit.event,
+          record.row[prop],
+          configEdit.editComponent
+        )
+      "
+      :style="{ width: configEdit.width || '100%' }"
+      v-bind="
+        typeof configEdit.bind == 'function'
+          ? configEdit.bind(record)
+          : { clearable: true, filterable: true, ...configEdit.bind }
+      "
+    >
       <!-- 前置文本 -->
-      <template #prepend v-if="configEdit.prepend">{{ configEdit.prepend }}</template>
+      <template #prepend v-if="configEdit.prepend">{{
+        configEdit.prepend
+      }}</template>
       <!-- 后置文本 -->
-      <template #append v-if="configEdit.append">{{ configEdit.append }}</template>
+      <template #append v-if="configEdit.append">{{
+        configEdit.append
+      }}</template>
       <!-- 子组件自定义插槽 -->
       <!-- <template v-if="configEdit.childSlotName">
         <slot />
       </template>-->
-      <component :is="compChildName(configEdit)" v-for="(value, key, index) in listTypeInfo[configEdit.list]"
-        :key="index" :disabled="value.disabled" :label="compChildLabel(configEdit,value)"
-        :value="compChildValue(configEdit,value,key)">{{compChildShowLabel(configEdit,value)}}</component>
+      <template v-if="!configEdit.editComponent.includes('date')">
+        <component
+          :is="compChildName(configEdit)"
+          v-for="(value, key, index) in listTypeInfo[configEdit.list]"
+          :key="index"
+          :disabled="value.disabled"
+          :label="compChildLabel(configEdit, value)"
+          :value="compChildValue(configEdit, value, key)"
+          >{{ compChildShowLabel(configEdit, value) }}</component
+        >
+      </template>
     </component>
   </div>
 </template>
