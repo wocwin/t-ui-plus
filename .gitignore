@@ -5,7 +5,7 @@ lib
 # 忽略目录
 # examples/
 # packages/
-public/
+# public/
 # vuepress2 .cache .temp dist
 docs/.vuepress/.temp/
 docs/.vuepress/.cache/

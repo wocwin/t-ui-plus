@@ -1,0 +1,8 @@
+:root {
+  --content-width: 980px;
+}
+
+th,
+td {
+  border: none;
+}
