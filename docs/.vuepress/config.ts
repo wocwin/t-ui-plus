@@ -1,7 +1,7 @@
 import { defineUserConfig, defaultTheme } from 'vuepress'
 
-import { path } from '@vuepress/utils'
-import { registerComponentsPlugin } from '@vuepress/plugin-register-components'
+import path from 'path'
+import demoBlock from 'vuepress-plugin-demo-code-block'
 import { viteBundler } from '@vuepress/bundler-vite'
 export default defineUserConfig({
   lang: 'zh-CN',
@@ -16,6 +16,13 @@ export default defineUserConfig({
       {
         rel: 'icon', // 增加一个自定义的 favicon(网页标签的图标)
         href: './favicon.ico'
+      }
+    ],
+    [
+      'link',
+      {
+        rel: 'stylesheet', // 增加一个自定义的 favicon(网页标签的图标)
+        href: '/css/index.css'
       }
     ]
   ],
@@ -32,11 +39,11 @@ export default defineUserConfig({
       },
       {
         text: 'GitHub',
-        link: 'https://github.com/wocwin/t-ui'
+        link: 'https://github.com/wocwin/t-ui-plus'
       },
       {
         text: 'Gitee码云',
-        link: 'https://gitee.com/wocwin/t-ui'
+        link: 'https://gitee.com/wocwin/t-ui-plus'
       },
       {
         text: '博客',
@@ -61,33 +68,19 @@ export default defineUserConfig({
   }),
   plugins: [
     [
-      registerComponentsPlugin({
-        componentsDir: path.resolve(__dirname, './components/docsComponents'),
-        components: {
-          CodeFormat: path.resolve(__dirname, './components/code-format.vue')
-        }
+      demoBlock({
+        componentsDir: path.resolve(__dirname, './../examples'), // 组件目录路径, Component directory path
+        githubEditLinkPath:
+          'https://github.com/wocwin/t-ui-plus/edit/master/docs/examples/' // github编辑地址路径, the path of github edit link
       })
     ]
-    // [
-    //   'vuepress-plugin-demoblock-plus',
-    //   {
-    //     customClass: 'demoblock-custom',
-    //     // theme: 'github-light',
-    //     scriptReplaces: [
-    //       {
-    //         searchValue:
-    //           /const ({ defineComponent as _defineComponent }) = Vue/g,
-    //         replaceValue: 'const { defineComponent: _defineComponent } = Vue'
-    //       }
-    //     ]
-    //   }
-    // ]
   ],
   bundler: viteBundler({
     viteOptions: {
-      ssr: {
-        noExternal: ['element-plus']
-      }
+      configFile: path.resolve(__dirname, './vite.config.ts')
+      // ssr: {
+      //   noExternal: ['element-plus']
+      // }
     },
     vuePluginOptions: {}
   })

@@ -13,11 +13,20 @@
     "allowSyntheticDefaultImports": true,
     "suppressImplicitAnyIndexErrors": true,
     "sourceMap": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
+    "useDefineForClassFields": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "types": [
       "node",
       "webpack-env",
-      "jest"
+      "jest",
+      "vite/client",
+      "element-plus/global",
+      "@vuepress/client/types"
     ],
     "paths": {
       "@/*": [
@@ -37,9 +46,11 @@
     "examples/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx",
-    "examples/ public-path.js"
+    "examples/ public-path.js",
+    "docs/examples/**/*",
+    "docs/.vuepress/vite.config.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
   ]
 }

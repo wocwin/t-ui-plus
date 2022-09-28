@@ -3,7 +3,7 @@ node_modules
 /dist
 lib
 # 忽略目录
-examples/
+# examples/
 # packages/
 public/
 # vuepress2 .cache .temp dist

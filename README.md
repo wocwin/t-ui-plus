@@ -8,19 +8,19 @@
 
 > 基于 vue3+ ts+ Element-plus 二次封装组件
 
-这是我在学习 Vue3 中基于[Element-plus](https://element-plus.org/zh-CN/) 二次封装基础组件文档，希望对你有用。可查看 [详细组件案例文档](https://wocwin.github.io/t-ui/) 预览
+这是我在学习 Vue3 中基于[Element-plus](https://element-plus.org/zh-CN/) 二次封装基础组件文档，希望对你有用。可查看 [详细组件案例文档](https://wocwin.github.io/t-ui-plus/) 预览
 
 <p align="center">
-  <a href="https://github.com/vuejs/vue">
-    <img src="https://img.shields.io/badge/vue-3.2.36-brightgreen.svg" alt="vue">
+  <a href="https://github.com/vuejs/vue" target="_blank">
+    <img src="https://img.shields.io/badge/vue-3.2.36-brightgreen.svg" alt="vue3">
   </a>
-  <a href="https://github.com/element-plus/element-plus">
-    <img src="https://img.shields.io/badge/element--plus-2.2.12-brightgreen.svg" alt="element-plus">
+  <a href="https://gitee.com/wocwin/t-ui-plus/stargazers" target="_blank">
+    <img src="https://gitee.com/wocwin/t-ui-plus/badge/star.svg?theme=dark" alt="t-ui-plus">
   </a>
-  <a href="https://github.com/vuejs/vuex">
-    <img src="https://img.shields.io/badge/vuex-4.0-brightgreen" alt="vuex">
+   <a href="https://github.com/wocwin/t-ui-plus/stargazers" target="_blank">
+    <img src="https://img.shields.io/github/stars/wocwin/t-ui-plus.svg" alt="t-ui-plus">
   </a>
-  <a href="https://www.npmjs.com/package/@wocwin/t-ui-plus" target="_blank">
+   <a href="https://www.npmjs.com/package/@wocwin/t-ui-plus" target="_blank">
       <img alt="npm" src="https://img.shields.io/npm/v/@wocwin/t-ui-plus.svg" />
     </a>
 </p>
