@@ -1,5 +1,10 @@
 :root {
-  --content-width: 980px;
+  --content-width: 1200px;
+}
+
+.page .demo-block .demo-content {
+  padding: 10px !important;
+  overflow-x: auto;
 }
 
 th,

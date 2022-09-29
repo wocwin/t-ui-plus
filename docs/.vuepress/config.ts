@@ -15,14 +15,14 @@ export default defineUserConfig({
       'link',
       {
         rel: 'icon', // 增加一个自定义的 favicon(网页标签的图标)
-        href: './favicon.ico'
+        href: '/favicon.ico'
       }
     ],
     [
       'link',
       {
         rel: 'stylesheet', // 增加一个自定义的 favicon(网页标签的图标)
-        href: '/css/index.css'
+        href: `/t-ui-plus/css/index.css`
       }
     ]
   ],

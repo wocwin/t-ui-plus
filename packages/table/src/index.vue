@@ -347,7 +347,7 @@ watch(
   { deep: true }
 )
 onMounted(() => {
-  console.log('onMounted', props.table.firstColumn)
+  // console.log('onMounted', props.table.firstColumn)
 })
 // 按钮权限
 // const btnPremissions = computed(() => {
