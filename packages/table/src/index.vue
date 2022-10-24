@@ -199,8 +199,8 @@
               @click="
                 item.fun && item.fun(scope.row, scope.$index, state.tableData)
               "
-              :type="item.type"
-              text
+              :type="item.type || 'primary'"
+              link
               :style="item.style"
               :icon="item.icon ? item.icon : ''"
               :disabled="item.disabled"
@@ -232,7 +232,6 @@
       :page-size="table.pageSize"
       layout="total,sizes, prev, pager, next, jumper"
       :total="table.total"
-      :page-count="table.total"
       v-bind="$attrs"
       background
     ></el-pagination>

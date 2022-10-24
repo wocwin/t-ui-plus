@@ -30,7 +30,9 @@
     ],
     "paths": {
       "@/*": [
-        "examples/*"
+        "examples/*",
+        "docs/*",
+        "packages/*",
       ]
     },
     "lib": [
@@ -52,5 +54,6 @@
   ],
   "exclude": [
     "node_modules",
+    "dist"
   ]
 }

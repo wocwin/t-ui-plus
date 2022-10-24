@@ -232,6 +232,7 @@ const getList = () => {
   if (res.success) {
     res.data.map((item: any) => {
       item.isEdit = false
+      item.isDisabled = false
     })
     state.table.data = res.data
   }
