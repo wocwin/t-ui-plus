@@ -1,18 +1,13 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-table
-        title="集成分页器"
-        :table="table"
-        :columns="table.columns"
-        @size-change="handlesSizeChange"
-        @page-change="handlesCurrentChange"
-      />
+      <t-table title="集成分页器" :table="table" :columns="table.columns" />
     </t-layout-page-item>
   </t-layout-page>
 </template>
 
 <script setup lang="ts">
+// import { onMounted } from 'vue'
 const table = {
   total: 20,
   currentPage: 1,
@@ -60,6 +55,9 @@ const table = {
     { prop: 'address', label: '地址', minWidth: '220' }
   ]
 }
+// onMounted(() => {
+//   table.total = 100
+// })
 // 选择当前展示的总页码
 const handlesSizeChange = val => {
   console.log('选择当前展示的总页码', val)

@@ -226,10 +226,10 @@
     <el-pagination
       v-if="state.tableData && state.tableData.length && isShowPagination"
       small
-      :current-page="table.currentPage"
+      v-model:current-page="table.currentPage"
       @current-change="handlesCurrentChange"
       :page-sizes="[10, 20, 50, 100]"
-      :page-size="table.pageSize"
+      v-model:page-size="table.pageSize"
       layout="total,sizes, prev, pager, next, jumper"
       :total="table.total"
       v-bind="$attrs"
