@@ -18,11 +18,12 @@ TForm 表单组件 **代码示例：**
 
 ```html
 <t-form
+  v-model="formOpts.ref"
   :formOpts="formOpts"
   :widthSize="2"
   @handleEvent="handleEvent"
 />
-//注意:ref-obj(form校验规则相当于ref)必须要‘.sync’修饰符
+//注意formOpts.ref(t-form组件实例相当于vue2 ref)需要要v-model接收
 ```
 
 ### 2. events
@@ -31,7 +32,7 @@ TForm 表单组件 **代码示例：**
 | :-- | :-- | :-- |
 | handleEvent | 单个查询条件触发事件 | fieldList 中 type/查询条件输入的值/fieldList 中 event 值 |
 
-### 3. Methods
+### 3. Methods 继承element-plus的methods
 
 | 事件名        | 说明     | 参数 |
 | :------------ | :------- | :--- |
@@ -69,4 +70,4 @@ TForm 表单组件 **代码示例：**
 | ---rules | 规则（可依据 elementUI el-form 配置————对应 formData 的值） | Object/Array | 否 |
 | ---operatorList | 操作按钮 list | Array | 否 |
 
-### 5. 关于 element-ui el-form/el-form-item 提供的一些方法/属性可直接使用，无需其他配置
+### 5. 关于 element-plus el-form/el-form-item 提供的一些方法/属性可直接使用，无需其他配置

@@ -1,6 +1,6 @@
 <template>
   <el-form class="t-form" ref="tform" :class="className" :model="formOpts.formData" :rules="formOpts.rules"
-    :label-width="formOpts.labelWidth||'120px'" :label-position="formOpts.labelPosition||'right'" v-bind="$attrs">
+    :label-width="formOpts.labelWidth||'100px'" :label-position="formOpts.labelPosition||'right'" v-bind="$attrs">
     <el-form-item v-for="(item, index) in formOpts.fieldList" :key="index" :prop="item.value" :label="item.label"
       :class="[item.className, { 'render_label': item.labelRender }, { 'slot_label': item.slotName }, { 'render_laber_position': formOpts.labelPosition }]"
       :rules="item.rules" :style="getChildWidth(item)" v-bind="$attrs">
@@ -157,16 +157,16 @@ const colSize = ref(props.widthSize)
 // 获取ref
 const tform: any = ref<HTMLElement | null>(null)
 // 抛出事件
-const emits = defineEmits(['handleEvent'])
-// watch(
-//   () => props.formOpts.formData,
-//   (val) => {
-//     // state.form = initForm(opts, true)
-//     // 将form实例返回到父级
-//     emits('update:refObj', tform)
-//   },
-//   { deep: true }
-// )
+const emits = defineEmits(['update:modelValue', 'handleEvent'])
+watch(
+  () => props.formOpts.formData,
+  (val) => {
+    // state.form = initForm(opts, true)
+    // 将form实例返回到父级
+    emits('update:modelValue', tform.value)
+  },
+  { deep: true }
+)
 watch(
   () => props.widthSize,
   (val) => {
@@ -180,8 +180,9 @@ watch(
   { deep: true }
 )
 onMounted(() => {
+  // console.log(789, tform.value)
   // 将form实例返回到父级
-  // emits('update:refObj', tform)
+  emits('update:modelValue', tform.value)
 })
 // label与输入框的布局方式
 const getChildWidth = (item) => {
@@ -248,8 +249,7 @@ defineExpose({ resetFields, clearValidate, validate })
   flex-wrap: wrap;
 
   .el-form-item {
-    display: inline-block;
-    width: 50%;
+    align-items: center;
 
     .el-form-item__content {
 
@@ -268,6 +268,13 @@ defineExpose({ resetFields, clearValidate, validate })
     }
   }
 
+  // 左对齐
+  .asterisk-left {
+    .el-form-item__label {
+      margin-left: 5px;
+    }
+  }
+
   .t-margin-top-5 {
     margin-top: calc(5px);
   }
@@ -276,21 +283,6 @@ defineExpose({ resetFields, clearValidate, validate })
     .el-input {
       .el-input__inner {
         text-align: left;
-      }
-    }
-  }
-
-  .t-form-block {
-    display: block;
-    width: 100% !important;
-
-    .el-form-item__content {
-
-      .el-input,
-      .el-select,
-      .el-date-editor,
-      .el-textarea {
-        width: 100%;
       }
     }
   }

@@ -1,7 +1,7 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-form ref="TFormDemo" :formOpts="formOpts" :widthSize="2" @handleEvent="handleEvent">
+      <t-form ref="TFormDemo" v-model="formOpts.ref" :formOpts="formOpts" :widthSize="3" @handleEvent="handleEvent">
         <template #wechat>
           <div style="display:flex;">
             <!-- <label for="wechat">微信</label> -->
@@ -22,13 +22,23 @@
 import { ref, reactive } from 'vue'
 // 获取ref
 const TFormDemo: any = ref<HTMLElement | null>(null)
-// 提交form表单
-const submitForm = async () => {
-  const { valid, formData } = await TFormDemo.value.validate()
-  console.log('formOpts.formData', formData)
-  if (!valid) return
-  console.log('最终数据', formData)
+// 提交formOpts.ref 方式form表单
+const submitForm = () => {
+  formOpts.ref.validate((valid) => {
+    console.log(88, valid)
+    console.log(77, formOpts.formData)
+    if (!valid) return
+    console.log('最终数据', formOpts.formData)
+  })
 }
+// 提交form表单
+// const submitForm = async () => {
+//   const { valid, formData } = await TFormDemo.value.validate()
+//   console.log('formOpts.ref', formOpts.ref)
+//   console.log('formOpts.formData', formData)
+//   if (!valid) return
+//   console.log('最终数据', formData)
+// }
 // 重置form表单
 const resetForm = () => {
   formOpts.formData = {}
@@ -40,7 +50,8 @@ const clearValidate = () => {
   TFormDemo.value.clearValidate()
 }
 const formOpts: any = reactive({
-  labelPosition: 'top',
+  // labelPosition: 'top',
+  ref: null,
   formData: {
     account: null, // *用户账号
     password: null, // *用户密码
@@ -77,7 +88,7 @@ const formOpts: any = reactive({
         )
       },
       placeholder: '请选择element日期范围',
-      rules: { required: true, message: '请选择element日期', trigger: 'change' },
+      // rules: { required: true, message: '请选择element日期', trigger: 'change' },
       value: 'valDate',
       type: 'daterange',
       comp: 'el-date-picker',
@@ -85,9 +96,9 @@ const formOpts: any = reactive({
     },
     { label: '微信', value: 'wechat', slotName: 'wechat' },
     { label: 'QQ', value: 'qq', type: 'input', comp: 'el-input' },
-    { label: '邮箱', value: 'email', type: 'input', comp: 'el-input'},
+    { label: '邮箱', value: 'email', type: 'input', comp: 'el-input' },
     { label: '计数器', value: 'number', type: 'inputNumber', widthSize: 1, bind: { controls: false, min: 2, max: 99 }, comp: 'el-input-number' },
-    { label: '描述', value: 'desc', type: 'textarea', comp: 'el-input', className: 't-form-block', widthSize: 1 }
+    { label: '描述', value: 'desc', type: 'textarea', comp: 'el-input', widthSize: 1 }
   ],
   rules: {
     account: [
