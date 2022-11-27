@@ -1,9 +1,24 @@
 <template>
-  <el-form class="t-form" ref="tform" :class="className" :model="formOpts.formData" :rules="formOpts.rules"
-    :label-width="formOpts.labelWidth||'100px'" :label-position="formOpts.labelPosition||'right'" v-bind="$attrs">
-    <el-form-item v-for="(item, index) in formOpts.fieldList" :key="index" :prop="item.value" :label="item.label"
+  <el-form
+    class="t-form"
+    ref="tform"
+    :class="className"
+    :model="formOpts.formData"
+    :rules="formOpts.rules"
+    :label-width="formOpts.labelWidth||'100px'"
+    :label-position="formOpts.labelPosition||'right'"
+    v-bind="$attrs"
+  >
+    <el-form-item
+      v-for="(item, index) in formOpts.fieldList"
+      :key="index"
+      :prop="item.value"
+      :label="item.label"
       :class="[item.className, { 'render_label': item.labelRender }, { 'slot_label': item.slotName }, { 'render_laber_position': formOpts.labelPosition }]"
-      :rules="item.rules" :style="getChildWidth(item)" v-bind="$attrs">
+      :rules="item.rules"
+      :style="getChildWidth(item)"
+      v-bind="$attrs"
+    >
       <!-- 自定义label -->
       <template #label v-if="item.labelRender">
         <render-comp :render="item.labelRender" :item="item" />
@@ -16,10 +31,16 @@
       <template v-if="item.textShow">
         <span>{{ item.textValue || formOpts.formData[item.value] }}</span>
       </template>
-      <component v-if="!item.slotName && !item.textShow" :is="item.comp" v-model="formOpts.formData[item.value]"
-        :type="item.type" :placeholder="item.placeholder || getPlaceholder(item)"
+      <component
+        v-if="!item.slotName && !item.textShow"
+        :is="item.comp"
+        v-model="formOpts.formData[item.value]"
+        :type="item.type"
+        :placeholder="item.placeholder || getPlaceholder(item)"
         @change="handleEvent(item.event, formOpts.formData[item.value])"
-        v-bind="{ clearable: true, filterable: true, ...item.bind }" :style="{ width: item.width || '100%' }">
+        v-bind="typeof item.bind == 'function'? item.bind(item) :{ clearable: true, filterable: true, ...item.bind }"
+        :style="{ width: item.width || '100%' }"
+      >
         <!-- 前置文本 -->
         <template #prepend v-if="item.prepend">{{ item.prepend }}</template>
         <!-- 后置文本 -->
@@ -29,10 +50,14 @@
           <slot :name="item.childSlotName"></slot>
         </template>
         <template v-if="!item.comp.includes('date') && !item.childSlotName">
-          <component :is="compChildName(item)" v-for="(value, key, index) in selectListType(item)" :key="index"
-            :disabled="value.disabled" :label="compChildLabel(item, value)" :value="compChildValue(item, value, key)">
-            {{ compChildShowLabel(item, value) }}
-          </component>
+          <component
+            :is="compChildName(item)"
+            v-for="(value, key, index) in selectListType(item)"
+            :key="index"
+            :disabled="value.disabled"
+            :label="compChildLabel(item, value)"
+            :value="compChildValue(item, value, key)"
+          >{{ compChildShowLabel(item, value) }}</component>
         </template>
       </component>
     </el-form-item>
@@ -41,11 +66,22 @@
       <template v-if="formOpts.btnSlotName">
         <slot :name="formOpts.btnSlotName"></slot>
       </template>
-      <template v-if="!formOpts.btnSlotName && formOpts.operatorList && formOpts.operatorList.length > 0">
-        <el-button v-for="(val, index) in formOpts.operatorList" :key="index" @click="val.fun(val)"
-          :type="val.type || 'primary'" :icon="val.icon" :size="val.size || 'small'" :disabled="val.disabled">{{
-    val.label
-          }}</el-button>
+      <template
+        v-if="!formOpts.btnSlotName && formOpts.operatorList && formOpts.operatorList.length > 0"
+      >
+        <el-button
+          v-for="(val, index) in formOpts.operatorList"
+          :key="index"
+          @click="val.fun(val)"
+          :type="val.type || 'primary'"
+          :icon="val.icon"
+          :size="val.size || 'small'"
+          :disabled="val.disabled"
+        >
+          {{
+          val.label
+          }}
+        </el-button>
       </template>
     </div>
   </el-form>
@@ -160,7 +196,7 @@ const tform: any = ref<HTMLElement | null>(null)
 const emits = defineEmits(['update:modelValue', 'handleEvent'])
 watch(
   () => props.formOpts.formData,
-  (val) => {
+  val => {
     // state.form = initForm(opts, true)
     // 将form实例返回到父级
     emits('update:modelValue', tform.value)
@@ -169,7 +205,7 @@ watch(
 )
 watch(
   () => props.widthSize,
-  (val) => {
+  val => {
     if (val > 4) {
       ElMessage.warning('widthSize值不能大于4！')
       colSize.value = 4
@@ -185,9 +221,11 @@ onMounted(() => {
   emits('update:modelValue', tform.value)
 })
 // label与输入框的布局方式
-const getChildWidth = (item) => {
+const getChildWidth = item => {
   if (props.formOpts.labelPosition === 'top') {
-    return `flex: 0 1 calc((${100 / (item.widthSize || colSize.value)}% - 10px));margin-right:10px;`
+    return `flex: 0 1 calc((${
+      100 / (item.widthSize || colSize.value)
+    }% - 10px));margin-right:10px;`
   } else {
     return `flex: 0 1 ${100 / (item.widthSize || colSize.value)}%;`
   }
@@ -240,7 +278,6 @@ const clearValidate = () => {
 }
 // 暴露方法出去
 defineExpose({ resetFields, clearValidate, validate })
-
 </script>
 
 <style lang="scss">
@@ -252,7 +289,6 @@ defineExpose({ resetFields, clearValidate, validate })
     align-items: center;
 
     .el-form-item__content {
-
       .el-input,
       .el-select,
       .el-date-editor,
@@ -312,10 +348,8 @@ defineExpose({ resetFields, clearValidate, validate })
   }
 
   .slot_label {
-
     // margin-bottom: 0 !important;
     .el-form-item__content {
-
       // margin-left: 0 !important;
       label {
         min-width: 108px;

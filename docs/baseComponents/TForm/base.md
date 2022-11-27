@@ -32,7 +32,7 @@ TForm 表单组件 **代码示例：**
 | :-- | :-- | :-- |
 | handleEvent | 单个查询条件触发事件 | fieldList 中 type/查询条件输入的值/fieldList 中 event 值 |
 
-### 3. Methods 继承element-plus的methods
+### 3. Methods 继承 element-plus 的 methods
 
 | 事件名        | 说明     | 参数 |
 | :------------ | :------- | :--- |
@@ -52,7 +52,7 @@ TForm 表单组件 **代码示例：**
 | ------slotName | 自定义表单某一项输入框 | slot | 否 |
 | ------childSlotName | 自定义表单某一下拉选择项子组件插槽（el-option） | slot | 否 |
 | ------comp | form 表单每一项组件是输入框还是下拉选择等（可使用第三方 UI 如 el-select/el-input 也可以使用自定义组件） | String | 是 |
-| ------bind | 表单每一项属性（继承第三方 UI 的 Attributes，如 el-input 中的 clearable 清空功能）默认清空及下拉过滤 | Object | 否 |
+| ------bind | 表单每一项属性（继承第三方 UI 的 Attributes，如 el-input 中的 clearable 清空功能）默认清空及下拉过滤 | Object/funnction | 否 |
 | ------type | form 表单每一项类型 | String | 是 |
 | ------widthSize | form 表单某一项所占比例(如果占一整行则设置 1) | Number | 否 |
 | ------width | form 表单某一项所占实际宽度 | String | 否 |
