@@ -26,6 +26,14 @@ TQueryCondition/SlotName
 
 :::
 
+## 结合 TSelect 使用
+
+:::demo
+
+TQueryCondition/TSelectUse
+
+:::
+
 ## TQueryCondition 参数配置
 
 ### 代码示例
