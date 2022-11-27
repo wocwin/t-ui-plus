@@ -3,6 +3,7 @@ import TLayoutPageItem from './layout-page-item'
 import TQueryCondition from './query-condition'
 import TTable from './table'
 import TForm from './form'
+import TSelect from './select'
 
 // 存储组件列表
 const components = [
@@ -10,7 +11,8 @@ const components = [
   TLayoutPageItem,
   TQueryCondition,
   TTable,
-  TForm
+  TForm,
+  TSelect
 ]
 
 // 插件声明：声明所有插件

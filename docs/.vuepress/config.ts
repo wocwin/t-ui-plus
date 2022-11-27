@@ -58,6 +58,7 @@ export default defineUserConfig({
         {
           text: '常用组件',
           children: [
+            '/baseComponents/TSelect/base.md',
             '/baseComponents/TQueryCondition/base.md',
             '/baseComponents/TForm/base.md'
           ]
