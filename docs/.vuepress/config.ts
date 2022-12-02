@@ -58,9 +58,15 @@ export default defineUserConfig({
         {
           text: '常用组件',
           children: [
-            '/baseComponents/TSelect/base.md',
-            '/baseComponents/TQueryCondition/base.md',
-            '/baseComponents/TForm/base.md'
+            '/baseComponents/TSelect/base.md', // 下拉选择组件
+            '/baseComponents/TSelectTable/base.md', // 下拉选择表格组件
+            '/baseComponents/TQueryCondition/base.md' // 条件查询组件
+          ]
+        },
+        {
+          text: '表单组件',
+          children: [
+            '/baseComponents/TForm/base.md' // 表单组件
           ]
         },
         {

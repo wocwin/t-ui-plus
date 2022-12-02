@@ -42,15 +42,17 @@ npm install
 
 ```
 
-## 本地运行 src 中组件示例
+## 本地运行 examples 中组件示例
 
 ```shell
+// examples项目（常规的后台管理系统）基于vue3+webpack项目
 npm run serve
 ```
 
 ## 本地运行 vuepress 中组件文档
 
 ```shell
+// docs项目(文档demo示例)基于vue3+vite项目
 npm run docs:dev
 
 ```

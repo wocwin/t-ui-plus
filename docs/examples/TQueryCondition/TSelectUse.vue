@@ -64,6 +64,7 @@ const opts = computed(() => {
     workshopNum: {
       label: 't-select单选使用',
       comp: 't-select',
+      defaultVal: 'W1',
       bind: {
         optionSource: state.sexList
       }

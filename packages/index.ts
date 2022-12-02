@@ -4,6 +4,7 @@ import TQueryCondition from './query-condition'
 import TTable from './table'
 import TForm from './form'
 import TSelect from './select'
+import TSelectTable from './select-table'
 
 // 存储组件列表
 const components = [
@@ -12,7 +13,8 @@ const components = [
   TQueryCondition,
   TTable,
   TForm,
-  TSelect
+  TSelect,
+  TSelectTable
 ]
 
 // 插件声明：声明所有插件
