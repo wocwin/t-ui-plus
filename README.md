@@ -32,6 +32,7 @@
 npm i @wocwin/t-ui-plus
 // 在main.js中按下引入
 import TuiPlus from '@wocwin/t-ui-plus'
+import '@wocwin/t-ui-plus/lib/t-ui-plus.css'
 Vue.use(TuiPlus)
 ```
 

@@ -1,16 +1,13 @@
 'use strict'
 const path = require('path')
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, dir)
 }
-const packageName = require('./package.json').name
-const name = 'vue3子应用模板' // 标题
+const isProduction = process.env.NODE_ENV === 'production'
+const name = 'Vue3 中基于Element-plus二次封装基础组件文档' // 标题
 
 module.exports = {
-  publicPath: '/webdemo',
-  outputDir: 'dist',
-  assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development' ? 'error' : false, // 生成环境取消 eslint 验证
   transpileDependencies: ['vue-echarts', 'resize-detector'],
   productionSourceMap: false,
@@ -30,8 +27,6 @@ module.exports = {
     },
     proxy: {
       '^/mes': {
-        // target: `http://10.0.10.243:5001/mesv2`, // sit环境
-        // target: `http://172.16.40.223:5504/mesv2`, // prod
         target: `http://10.0.10.243:5000/mesv2`, // 开发环境
         changeOrigin: true,
         pathRewrite: {
@@ -78,92 +73,19 @@ module.exports = {
       filename: 'index.html'
     }
   },
-  configureWebpack: {
-    name,
-    resolve: {
-      alias: {
-        '@': path.resolve(__dirname, './examples'),
-        '~': path.resolve(__dirname, './packages')
-      }
-    },
-    output: {
-      // 把子应用打包成 umd 库格式
-      library: `${packageName}`,
-      libraryTarget: 'umd', // 把微应用打包成 umd 库格式
-      jsonpFunction: `webpackJsonp_${packageName}`,
-      filename: `[name].[hash].js`,
-      chunkFilename: `[name].[hash].js`,
-    },
-    module: {
-      rules: [
-        {
-          test: /\.mjs$/,
-          include: /node_modules/,
-          type: "javascript/auto"
-        },
-      ]
-    }
-  },
-  css: {
-    loaderOptions: {
-      sass: {
-        // additionalData: `@import "@/styles/element-variables.scss";`
+  configureWebpack: config => {
+    config.name = name
+    config.resolve.alias['@'] = resolve('examples')
+    config.resolve.alias['components'] = resolve('examples/components')
+    config.resolve.alias['~'] = resolve('packages')
+    // 生产环境配置
+    if (isProduction) {
+      config.mode = 'production'
+      // 打包文件大小配置
+      config.performance = {
+        maxEntrypointSize: 10000000,
+        maxAssetSize: 30000000
       }
     }
-  },
-  chainWebpack (config) {
-    config.plugins.delete('preload')
-    config.plugins.delete('prefetch')
-    // 全局变量
-    config.plugin('define')
-      .tap(args => {
-        args[0].ISPROD = process.env.NODE_ENV === 'production'
-        return args
-      })
-    // set svg-sprite-loader
-    config.module
-      .rule('svg')
-      .exclude.add(resolve('src/assets/icons'))
-      .end()
-    config.module
-      .rule('icons')
-      .test(/\.svg$/)
-      .include.add(resolve('src/assets/icons'))
-      .end()
-      .use('svg-sprite-loader')
-      .loader('svg-sprite-loader')
-      .options({
-        symbolId: 'icon-[name]'
-      })
-      .end()
-
-    config
-      .when(process.env.NODE_ENV !== 'development',
-        config => {
-          config.optimization.splitChunks({
-            chunks: 'all',
-            cacheGroups: {
-              libs: {
-                name: 'chunk-libs',
-                test: /[\\/]node_modules[\\/]/,
-                priority: 10,
-                chunks: 'initial' // only package third parties that are initially dependent
-              },
-              elementUI: {
-                name: 'chunk-elementUI', // split elementUI into a single package
-                priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
-                test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
-              },
-              commons: {
-                name: 'chunk-commons',
-                test: resolve('src/components'), // can customize your rules
-                minChunks: 3, //  minimum common number
-                priority: 5,
-                reuseExistingChunk: true
-              }
-            }
-          })
-        }
-      )
   }
 }
