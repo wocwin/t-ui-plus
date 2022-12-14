@@ -1,7 +1,7 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-form ref="TFormDemo" v-model="formOpts.ref" :formOpts="formOpts" />
+      <t-form ref="TFormDemo" v-model="formOpts.ref" :formOpts="formOpts" :widthSize="3" @handleEvent="handleEvent" />
     </t-layout-page-item>
   </t-layout-page>
 </template>
@@ -37,7 +37,15 @@ const resetForm = () => {
 const clearValidate = () => {
   TFormDemo.value.clearValidate()
 }
+// 邮箱校验
+const validatorEmail = (rule, value, callback) => {
+  if (value && !/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/.test(value)) {
+    callback(new Error(rule.message))
+  }
+  callback()
+}
 const formOpts: any = reactive({
+  // labelPosition: 'top',
   ref: null,
   formData: {
     account: null, // *用户账号
@@ -46,12 +54,12 @@ const formOpts: any = reactive({
     sex: null, // *性别: 0:男 1:女
     hobby: [], // *爱好: 0:男 1:女
     phone: null, // 手机号码
+    createDate: null, // 创建时间
     valDate: null, // el日期选择范围
     wechat: null, // 微信
     qq: null, // qq
     email: null, // 邮箱
     desc: null, // 描述
-    number: null, // 计算器
     status: null // *状态: 0：停用，1：启用(默认为1)',
   },
   fieldList: [
@@ -76,12 +84,21 @@ const formOpts: any = reactive({
     },
     { label: 'QQ', value: 'qq', type: 'input', comp: 'el-input' },
     { label: '邮箱', value: 'email', type: 'input', comp: 'el-input' },
-    { label: '计数器', value: 'number', type: 'inputNumber', widthSize: 1, bind: { controls: false, min: 2, max: 99 }, comp: 'el-input-number' },
     { label: '描述', value: 'desc', type: 'textarea', comp: 'el-input', widthSize: 1 }
   ],
+  rules: {
+    account: [{ required: true, message: '请输入账号', trigger: 'blur' }],
+    password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+    name: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
+    phone: [{ required: true, message: '请输入手机号码', trigger: 'blur' }],
+    sex: [{ required: true, message: '请选择性别', trigger: 'change' }],
+    hobby: [{ type: 'array', required: true, message: '请至少选择一个爱好', trigger: 'change' }],
+    email: [{ validator: validatorEmail, message: '自定义配置校验规则', trigger: 'blur' }]
+  },
   operatorList: [
     { label: '提交', type: 'danger', fun: submitForm },
     { label: '重置', type: 'primary', fun: resetForm },
+    { label: '清除校验', type: 'danger', fun: clearValidate }
   ],
   // 相关列表
   listTypeInfo: {
@@ -102,5 +119,12 @@ const formOpts: any = reactive({
     ]
   }
 })
-
+// 触发事件
+const handleEvent = (type, val) => {
+  switch (type) {
+    case 'checkbox':
+      console.log('checkbox', val, type)
+      break
+  }
+}
 </script>

@@ -1,13 +1,20 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-form ref="TFormDemo" v-model="formOpts.ref" :formOpts="formOpts" />
+      <el-radio-group v-model="widthSize" size="small" style="margin-bottom:15px;">
+        <el-radio-button :label="1">一行展示</el-radio-button>
+        <el-radio-button :label="2">一行展示2项</el-radio-button>
+        <el-radio-button :label="3">一行展示3项</el-radio-button>
+        <el-radio-button :label="4">一行展示4项</el-radio-button>
+      </el-radio-group>
+      <t-form ref="TFormDemo" v-model="formOpts.ref" :formOpts="formOpts" :widthSize="widthSize" />
     </t-layout-page-item>
   </t-layout-page>
 </template>
 
 <script setup lang="tsx">
 import { ref, reactive } from 'vue'
+const widthSize = ref(1)
 // 获取ref
 const TFormDemo: any = ref<HTMLElement | null>(null)
 // 提交formOpts.ref 方式form表单
@@ -19,14 +26,6 @@ const submitForm = () => {
     console.log('最终数据', formOpts.formData)
   })
 }
-// 提交form表单
-// const submitForm = async () => {
-//   const { valid, formData } = await TFormDemo.value.validate()
-//   console.log('formOpts.ref', formOpts.ref)
-//   console.log('formOpts.formData', formData)
-//   if (!valid) return
-//   console.log('最终数据', formData)
-// }
 // 重置form表单
 const resetForm = () => {
   formOpts.formData = {}
@@ -38,6 +37,7 @@ const clearValidate = () => {
   TFormDemo.value.clearValidate()
 }
 const formOpts: any = reactive({
+  labelPosition: 'right',
   ref: null,
   formData: {
     account: null, // *用户账号
@@ -46,9 +46,11 @@ const formOpts: any = reactive({
     sex: null, // *性别: 0:男 1:女
     hobby: [], // *爱好: 0:男 1:女
     phone: null, // 手机号码
+    createDate: null, // 创建时间
     valDate: null, // el日期选择范围
     wechat: null, // 微信
     qq: null, // qq
+    accountType: null, // *用户类型: 0: 手机注册 1: 论坛注册 2: 管理平台添加
     email: null, // 邮箱
     desc: null, // 描述
     number: null, // 计算器

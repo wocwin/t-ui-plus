@@ -10,6 +10,128 @@ TForm/base
 
 :::
 
+## 对齐方式
+
+::: tip 配置
+
+通过设置 `formOpts.labelPosition` 属性可以改变表单域标签的位置，可选值为 `top`、`left`、`right`，默认`right`
+
+**前提：需设置`formOpts.labelWidth`(默认是：100px——即 `label` 的宽度)**
+
+:::
+
+:::demo
+
+TForm/labelPosition
+
+:::
+
+## 每行展示多少项
+
+::: tip 配置
+
+通过设置 `widthSize` 属性可以改变表单域每行显示项，可选值为 `1`、`2`、`3`、`4`，默认`2`————即每行显示两项
+
+**若某一项需要单独显示一行（通常是备注或者文本域）需要在 fieldList 中设置 `widthSize` 为 1**
+
+:::
+
+:::demo
+
+TForm/widthSize
+
+:::
+
+## 表单校验规则
+
+::: tip 配置
+
+`TForm` 组件提供了表单验证的功能，只需要通过 `rules` 属性传入约定的验证规则，并将 `Form-Item` 的 `prop` 属性设置为需校验的字段名即可。校验规则参见 [async-validator](https://github.com/yiminghe/async-validator);
+
+可以`自定义校验规则`可以参考`email`方式来写
+
+:::
+
+:::demo
+
+TForm/rules
+
+:::
+
+## 自定义 label jsx 渲染
+
+::: tip 配置
+
+`TForm`组件提供了自定义 `label`的功能，使用`jsx`方式—————配置`labelRender`
+
+**当`labelRender`与`label`同时存在时：优先渲染`labelRender`**
+
+:::
+
+:::demo
+
+TForm/labelRender
+
+:::
+
+## 输入框插槽使用
+
+::: tip 配置
+
+`TForm`组件提供了自定义 `输入框插槽`或下拉选择的`option插槽`的功能
+
+输入框插槽：配置`slotName`
+
+option 插槽：配置`childSlotName`
+
+:::
+
+:::demo
+
+TForm/slotName
+
+:::
+
+## 文本展示
+
+::: tip 配置
+
+`TForm`组件提供了`文本展示`的功能
+
+设置 `textShow: true`; `textValue`——显示的文本
+
+:::
+
+:::demo
+
+TForm/textShow
+
+:::
+
+## 结合自己封装组件使用
+
+:::demo
+
+TForm/comUse
+
+:::
+
+## 赋值回显数据
+
+:::demo
+
+TForm/assignment
+
+:::
+
+## 新开页面或弹窗获取表单数据
+
+:::demo
+
+TForm/submit
+
+:::
+
 ## TForm 参数配置
 
 ### 1. 简介：基于 Element-plus Form 表单组件的二次封装，着重于数据层面，HTML 一行代码

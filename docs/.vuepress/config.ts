@@ -64,14 +64,11 @@ export default defineUserConfig({
           ]
         },
         {
-          text: '表单组件',
+          text: '复杂组件',
           children: [
-            '/baseComponents/TForm/base.md' // 表单组件
+            '/baseComponents/TForm/base.md', // 表单组件
+            '/baseComponents/TTable/base.md' // table组件
           ]
-        },
-        {
-          text: 'TTable组件',
-          children: ['/baseComponents/TTable/base.md']
         }
       ]
     }
