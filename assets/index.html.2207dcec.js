@@ -1,0 +1,1 @@
+const e={key:"v-29d3602f",path:"/baseComponents/",title:"\u5B89\u88C5",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[{level:2,title:"Install",slug:"install",children:[]},{level:2,title:"Usage",slug:"usage",children:[]}],git:{updatedTime:1670993334e3,contributors:[{name:"wocwin",email:"wocwin@163.com",commits:2}]},filePathRelative:"baseComponents/README.md"};export{e as data};

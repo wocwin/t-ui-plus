@@ -1,0 +1,13 @@
+:root {
+  --content-width: 1200px;
+}
+
+.page .demo-block .demo-content {
+  padding: 10px !important;
+  overflow-x: auto;
+}
+
+th,
+td {
+  border: none;
+}
