@@ -54,7 +54,7 @@ const props = defineProps({
   },
   // 下拉框组件数据源
   optionSource: {
-    type: Array<any>,
+    type: Array as unknown as any[],
     default: () => []
   }
 })
