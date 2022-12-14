@@ -31,7 +31,7 @@ npm install @wocwin/t-ui-plus -S
 ```js
 // main.ts
 import TuiPlus from '@wocwin/t-ui-plus'
-
+import '@wocwin/t-ui-plus/lib/t-ui-plus.css'
 const app = createApp(App)
 app.use(TuiPlus)
 app.mount('#app')
