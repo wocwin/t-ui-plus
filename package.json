@@ -1,6 +1,6 @@
 {
   "name": "@wocwin/t-ui-plus",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Vue3 中基于Element-plus二次封装基础组件文档",
   "author": "wocwin",
   "license": "ISC",
