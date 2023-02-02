@@ -1,52 +1,91 @@
 <template>
-  <el-form class="t-form" ref="tform" :class="className" :model="formOpts.formData" :rules="formOpts.rules"
-    :label-width="formOpts.labelWidth||'100px'" :label-position="formOpts.labelPosition||'right'" v-bind="$attrs">
-    <el-form-item v-for="(item, index) in formOpts.fieldList" :key="index" :prop="item.value" :label="item.label"
-      :class="[item.className, { 'render_label': item.labelRender }, { 'slot_label': item.slotName }, { 'render_laber_position_left': formOpts.labelPosition === 'left' }]"
-      :rules="item.rules" :style="getChildWidth(item)" v-bind="$attrs">
-      <!-- 自定义label -->
-      <template #label v-if="item.labelRender">
-        <render-comp :render="item.labelRender" :item="item" />
-      </template>
-      <!-- 自定义输入框插槽 -->
-      <template v-if="item.slotName">
-        <slot :name="item.slotName"></slot>
-      </template>
-      <!-- 文本展示值 -->
-      <template v-if="item.textShow">
-        <span>{{ item.textValue || formOpts.formData[item.value] }}</span>
-      </template>
-      <component v-if="!item.slotName && !item.textShow" :is="item.comp" v-model="formOpts.formData[item.value]"
-        :type="item.type" :placeholder="item.placeholder || getPlaceholder(item)"
-        @change="handleEvent(item.event, formOpts.formData[item.value])"
-        v-bind="typeof item.bind == 'function' ? item.bind(item) : { clearable: true, filterable: true, ...item.bind }"
-        :style="{ width: item.width || '100%' }">
-        <!-- 前置文本 -->
-        <template #prepend v-if="item.prepend">{{ item.prepend }}</template>
-        <!-- 后置文本 -->
-        <template #append v-if="item.append">{{ item.append }}</template>
-        <!-- 子组件自定义插槽 -->
-        <template v-if="item.childSlotName">
-          <slot :name="item.childSlotName"></slot>
+  <el-form
+    class="t-form"
+    ref="tform"
+    :class="className"
+    :model="formOpts.formData"
+    :rules="formOpts.rules"
+    :label-width="formOpts.labelWidth||'100px'"
+    :label-position="formOpts.labelPosition||'right'"
+    v-bind="$attrs"
+  >
+    <template v-for="(item, index) in formOpts.fieldList">
+      <el-form-item
+        v-if="!item.isHideItem"
+        :key="index"
+        :prop="item.value"
+        :label="item.label"
+        :class="[item.className, { 'render_label': item.labelRender }, { 'slot_label': item.slotName }, { 'render_laber_position_left': formOpts.labelPosition === 'left' }]"
+        :rules="item.rules"
+        :style="getChildWidth(item)"
+        v-bind="$attrs"
+      >
+        <!-- 自定义label -->
+        <template #label v-if="item.labelRender">
+          <render-comp :render="item.labelRender" :item="item" />
         </template>
-        <template v-if="!item.comp.includes('date') && !item.childSlotName">
-          <component :is="compChildName(item)" v-for="(value, key, index) in selectListType(item)" :key="index"
-            :disabled="value.disabled" :label="compChildLabel(item, value)" :value="compChildValue(item, value, key)">{{
-                compChildShowLabel(item, value)
-            }}</component>
+        <!-- 自定义输入框插槽 -->
+        <template v-if="item.slotName">
+          <slot :name="item.slotName"></slot>
         </template>
-      </component>
-    </el-form-item>
+        <!-- 文本展示值 -->
+        <template v-if="item.textShow">
+          <span>{{ item.textValue || formOpts.formData[item.value] }}</span>
+        </template>
+        <component
+          v-if="!item.slotName && !item.textShow"
+          :is="item.comp"
+          v-model="formOpts.formData[item.value]"
+          :type="item.type"
+          :placeholder="item.placeholder || getPlaceholder(item)"
+          @change="handleEvent(item.event, formOpts.formData[item.value])"
+          v-bind="typeof item.bind == 'function' ? item.bind(item) : { clearable: true, filterable: true, ...item.bind }"
+          :style="{ width: item.width || '100%' }"
+        >
+          <!-- 前置文本 -->
+          <template #prepend v-if="item.prepend">{{ item.prepend }}</template>
+          <!-- 后置文本 -->
+          <template #append v-if="item.append">{{ item.append }}</template>
+          <!-- 子组件自定义插槽 -->
+          <template v-if="item.childSlotName">
+            <slot :name="item.childSlotName"></slot>
+          </template>
+          <template v-if="!item.comp.includes('date') && !item.childSlotName">
+            <component
+              :is="compChildName(item)"
+              v-for="(value, key, index) in selectListType(item)"
+              :key="index"
+              :disabled="value.disabled"
+              :label="compChildLabel(item, value)"
+              :value="compChildValue(item, value, key)"
+            >
+              {{
+              compChildShowLabel(item, value)
+              }}
+            </component>
+          </template>
+        </component>
+      </el-form-item>
+    </template>
     <!-- 按钮 -->
     <div class="footer_btn flex-box flex-ver t-margin-top-5">
       <template v-if="formOpts.btnSlotName">
         <slot :name="formOpts.btnSlotName"></slot>
       </template>
-      <template v-if="!formOpts.btnSlotName && formOpts.operatorList && formOpts.operatorList.length > 0">
-        <el-button v-for="(val, index) in formOpts.operatorList" :key="index" @click="val.fun(val)"
-          :type="val.type || 'primary'" :icon="val.icon" :size="val.size || 'small'" :disabled="val.disabled">
+      <template
+        v-if="!formOpts.btnSlotName && formOpts.operatorList && formOpts.operatorList.length > 0"
+      >
+        <el-button
+          v-for="(val, index) in formOpts.operatorList"
+          :key="index"
+          @click="val.fun(val)"
+          :type="val.type || 'primary'"
+          :icon="val.icon"
+          :size="val.size || 'small'"
+          :disabled="val.disabled"
+        >
           {{
-    val.label
+          val.label
           }}
         </el-button>
       </template>
@@ -190,8 +229,9 @@ onMounted(() => {
 // label与输入框的布局方式
 const getChildWidth = item => {
   if (props.formOpts.labelPosition === 'top') {
-    return `flex: 0 1 calc((${100 / (item.widthSize || colSize.value)
-      }% - 10px));margin-right:10px;`
+    return `flex: 0 1 calc((${
+      100 / (item.widthSize || colSize.value)
+    }% - 10px));margin-right:10px;`
   } else {
     return `flex: 0 1 ${100 / (item.widthSize || colSize.value)}%;`
   }
@@ -255,7 +295,6 @@ defineExpose({ resetFields, clearValidate, validate })
     align-items: center;
 
     .el-form-item__content {
-
       .el-input,
       .el-select,
       .el-date-editor,
@@ -325,10 +364,8 @@ defineExpose({ resetFields, clearValidate, validate })
   }
 
   .slot_label {
-
     // margin-bottom: 0 !important;
     .el-form-item__content {
-
       // margin-left: 0 !important;
       label {
         min-width: 108px;

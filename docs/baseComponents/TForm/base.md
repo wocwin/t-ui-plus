@@ -171,6 +171,7 @@ TForm 表单组件 **代码示例：**
 | formOpts | 表单配置项 | Object | 否 |
 | ---listTypeInfo | 下拉选择数据源（type:'select'有效） | Object | 否 |
 | ---fieldList | form 表单每项 list | Array | 是 |
+| ------isHideItem | 某一项不显示 | Boolean | false |
 | ------slotName | 自定义表单某一项输入框 | slot | 否 |
 | ------childSlotName | 自定义表单某一下拉选择项子组件插槽（el-option） | slot | 否 |
 | ------comp | form 表单每一项组件是输入框还是下拉选择等（可使用第三方 UI 如 el-select/el-input 也可以使用自定义组件） | String | 是 |
