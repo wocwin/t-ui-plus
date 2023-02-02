@@ -1,10 +1,23 @@
 <template>
-  <el-form id="t_query_condition" v-bind="$attrs" :label-width="labelWidth" :form="state.form" size="default"
+  <el-form
+    id="t_query_condition"
+    v-bind="$attrs"
+    :label-width="labelWidth"
+    :form="state.form"
+    size="default"
     class="t-query-condition"
     :style="{'grid-template-areas': gridAreas, 'grid-template-columns': `repeat(${colLength}, minmax(220px, ${100 / colLength}%))`}"
-    @submit.prevent>
-    <el-form-item v-for="(opt, i) in cOpts" :key="i" :label="opt.label" :label-width="opt.labelWidth" v-bind="$attrs"
-      :style="{gridArea: i}" :class="[opt.className,{'render_label':opt.labelRender}]">
+    @submit.prevent
+  >
+    <el-form-item
+      v-for="(opt, i) in cOpts"
+      :key="i"
+      :label="opt.label"
+      :label-width="opt.labelWidth"
+      v-bind="$attrs"
+      :style="{gridArea: i}"
+      :class="[opt.className,{'render_label':opt.labelRender}]"
+    >
       <!-- 自定义label -->
       <template #label v-if="opt.labelRender">
         <render-comp :form="state.form" :render="opt.labelRender" />
@@ -13,23 +26,50 @@
       <template v-if="opt.slotName">
         <slot :name="opt.slotName" :param="state.form"></slot>
       </template>
-      <component v-if="!opt.slotName" :is="opt.comp"
+      <component
+        v-if="!opt.slotName"
+        :is="opt.comp"
         v-bind="typeof opt.bind == 'function' ? opt.bind(state.form) : {clearable:true,filterable:true,...$attrs,...opt.bind}"
-        :placeholder="opt.placeholder||getPlaceholder(opt)" @change="handleEvent(opt.event, state.form[opt.dataIndex])"
-        v-model="state.form[opt.dataIndex]">
+        :placeholder="opt.placeholder||getPlaceholder(opt)"
+        @change="handleEvent(opt.event, state.form[opt.dataIndex])"
+        v-model="state.form[opt.dataIndex]"
+      >
         <template v-if="!opt.comp.includes('date')">
-          <component :is="compChildName(opt)" v-for="(value, key, index) in selectListType(opt)" :key="index"
-            :disabled="value.disabled" :label="compChildLabel(opt,value)" :value="compChildValue(opt,value,key)">
-            {{compChildShowLabel(opt,value)}}
-          </component>
+          <component
+            :is="compChildName(opt)"
+            v-for="(value, key, index) in selectListType(opt)"
+            :key="index"
+            :disabled="value.disabled"
+            :label="compChildLabel(opt,value)"
+            :value="compChildValue(opt,value,key)"
+          >{{compChildShowLabel(opt,value)}}</component>
         </template>
       </component>
     </el-form-item>
-    <el-form-item v-if="Object.keys(cOpts).length > 0" label-width="0" style="grid-area: submit_btn"
-      :class="{'flex_end': cellLength % colLength === 0}">
-      <el-button type="primary" size="default" class="btn_check" @click="checkHandle" :loading="loading">查询</el-button>
+    <el-form-item
+      v-if="Object.keys(cOpts).length > 0"
+      label-width="0"
+      style="grid-area: submit_btn"
+      :class="['btn',{'flex_end': cellLength % colLength === 0}]"
+    >
+      <el-button
+        type="primary"
+        size="default"
+        class="btn_check"
+        @click="checkHandle"
+        :loading="loading"
+      >查询</el-button>
       <el-button v-if="reset" class="btn_reset" size="default" @click="resetHandle">重置</el-button>
       <slot name="querybar"></slot>
+      <el-button v-if="originCellLength > colLength&&isShowOpen" @click="open = !open" link>
+        {{ open ? '收起' : '展开'}}
+        <el-icon v-if="open">
+          <ArrowUp />
+        </el-icon>
+        <el-icon v-else>
+          <ArrowDown />
+        </el-icon>
+      </el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -62,6 +102,11 @@ const props = defineProps({
   boolEnter: {
     type: Boolean,
     default: true
+  },
+  // 是否显示收起和展开
+  isShowOpen: {
+    type: Boolean,
+    default: true
   }
 })
 // 初始化表单数据
@@ -72,10 +117,29 @@ let state = reactive({
   }, {})
 })
 let colLength = ref(0)
+let open = ref(false)
+
+const originCellLength = computed(() => {
+  let length = 0
+  Object.keys(props.opts).forEach(key => {
+    let span = props.opts[key].span || 1
+    if ((length % colLength.value) + span > colLength.value) {
+      length += colLength.value - (length % colLength.value)
+    }
+    length += span
+  })
+  return length
+})
 const cOpts = computed(() => {
+  let renderSpan = 0
   return Object.keys(props.opts).reduce((acc: any, field: any) => {
     let opt = {
       ...props.opts[field]
+    }
+    // 收起、展开操作
+    if (props.isShowOpen) {
+      renderSpan += opt.span ?? 1
+      if (!open.value && renderSpan - 1 >= colLength.value) return acc
     }
     opt.dataIndex = field
     acc[field] = opt
@@ -93,57 +157,37 @@ const cellLength: any = computed(() => {
 })
 const gridAreas = computed(() => {
   // grid布局按钮位置
-  let template = "'. . . .'"
-  switch (colLength.value) {
-    case 3:
-      template = "'. . .'"
-      break
-    case 2:
-      template = "'. .'"
-      break
+  const fields = Object.keys(cOpts.value)
+  let rowIndex = 0
+  let rowSpan = 0
+  const areas = [[]]
+  for (let fieldIndex = 0; fieldIndex < fields.length; fieldIndex++) {
+    const field = fields[fieldIndex]
+    const opt = cOpts.value[field]
+    const span = Math.min(opt.span ?? 1, 4) // 最大4
+    if (rowSpan + span > colLength.value) {
+      if (rowSpan < colLength.value) {
+        areas[rowIndex].push('.')
+      }
+      rowSpan = 0
+      areas[++rowIndex] = []
+    }
+    rowSpan += span
+    for (let index = 0; index < span; index++) {
+      areas[rowIndex].push(field)
+    }
   }
-  let areas = [template]
-  Object.keys(props.opts).forEach(key => {
-    // 根据控件描述注定占用多少列及顺序
-    let span = 1
-    if (props.opts[key].span > 1 || props.opts[key].span <= 2) {
-      // 最多占用2列
-      span = props.opts[key].span
-    }
-    // 计算剩余多少未占用的位置
-    let count = 0
-    let scrstr = areas[areas.length - 1]
-    while (scrstr.indexOf('.') !== -1) {
-      scrstr = scrstr.replace(/\./, '')
-      count++
-    }
-    // 若剩余位置不足以放下下一个控件
-    if (count < span) {
-      areas.push(template)
-    }
-    let i = 0
-    while (i < span) {
-      areas[areas.length - 1] = areas[areas.length - 1].replace(/\./, key)
-      i++
-    }
-  })
-  // 若控件正好占满一行时，补充多一列放置btn
-  if (areas[areas.length - 1].indexOf('.') === -1) {
-    areas.push(template)
-  }
-  if (cellLength.value % colLength.value === 0) {
-    // 正好占满一行
-    areas[areas.length - 1] = areas[areas.length - 1].replace(
-      /\.'$/,
-      "submit_btn'"
-    )
+  if (areas[rowIndex].length === colLength.value) {
+    areas.push(['submit_btn', 'submit_btn', 'submit_btn', 'submit_btn'])
   } else {
-    areas[areas.length - 1] = areas[areas.length - 1].replace(
-      /\./,
-      'submit_btn'
-    )
+    while (areas[rowIndex].length < colLength.value) {
+      areas[rowIndex].push('submit_btn')
+    }
   }
-  return (areas + '').replace(/,/g, '')
+  return areas.reduce((acc, cur) => {
+    acc += `'${cur.join(' ')}'\n`
+    return acc
+  }, '')
 })
 // 初始化表单数据
 const initForm = (opts: any, keepVal = false) => {
@@ -302,7 +346,6 @@ watch(
     state.form = initForm(opts, true)
   }
 )
-
 </script>
 
 <style lang="scss">
@@ -322,7 +365,6 @@ watch(
   .flex_end {
     grid-area: submit_btn;
     margin-top: 2px;
-
     .el-form-item__content {
       display: flex;
       justify-content: flex-end;
@@ -330,7 +372,13 @@ watch(
       overflow: visible !important;
     }
   }
-
+  .btn {
+    text-align: end;
+    .el-form-item__content {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
   .el-form-item {
     display: flex;
     margin-bottom: 6px;
