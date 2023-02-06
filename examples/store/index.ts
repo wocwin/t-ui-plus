@@ -1,29 +1,9 @@
-import { createStore, createLogger } from 'vuex'
-import { app } from './modules/app/index'
-import { user } from './modules/user/index'
-import { permission } from './modules/permission/index'
-import { settings } from './modules/settings/index'
-import { tagViews } from './modules/tagViews/index'
-import getters from './getters'
-// Plug in logger when in development environment
-const debug = process.env.NODE_ENV !== 'production'
-const plugins = debug ? [createLogger({})] : []
-// Plug in session storage based persistence
-// plugins.push(createPersistedState({ storage: window.sessionStorage }))
+// 因为用了“unplugin-auto-import”插件 可以不需要再import Pinia的API
+// import { createPinia } from 'pinia'
+// 持久化处理
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+// 创建pinia状态管理对象
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
 
-const store = createStore({
-  plugins,
-  modules: {
-    app,
-    settings,
-    permission,
-    user,
-    tagViews
-  },
-  getters
-})
-
-// export function useStore(): Store {
-//   return store as Store
-// }
-export default store
+export default pinia

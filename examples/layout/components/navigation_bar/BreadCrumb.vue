@@ -13,8 +13,8 @@
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, ref, watch } from 'vue'
-import { compile } from 'path-to-regexp'
 import { RouteLocationMatched, useRoute, useRouter } from 'vue-router'
+// import { qiankunWindow } from 'vite-plugin-qiankun/dist/helper'
 
 export default defineComponent({
   setup() {
@@ -33,27 +33,14 @@ export default defineComponent({
       )
     }
 
-    const pathCompile = (path: string) => {
-      const { params } = route
-      const toPath = compile(path)
-      return toPath(params)
-    }
-
     const handleLink = (item: any) => {
       const { redirect, path } = item
       if (redirect) {
         router.push(redirect)
         return
       }
-      // router.push(pathCompile(path))
-      // if (!window.__POWERED_BY_QIANKUN__) {
-      //   console.log(1111, path)
-      //   router.push({ path })
-      // } else {
-      //   console.log(222)
-      //   window.location.href = '/'
-      // }
-      window.location.href = window.__POWERED_BY_QIANKUN__ ? '/' : '/webdemo'
+      // window.location.href = qiankunWindow.__POWERED_BY_QIANKUN__ ? '/' : '/vitedemo'
+      window.location.href = '/'
     }
     // 在挂载阶段执行获取面包屑数组
     onMounted(() => {

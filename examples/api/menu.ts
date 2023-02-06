@@ -6,7 +6,7 @@ export const getRouters = () => {
     url: '/portal-user/getRouters',
     method: 'get',
     params: {
-      menuId: 643
+      menuId: 901
     }
   })
 }
@@ -16,7 +16,7 @@ export const getRouterPrefix = () => {
     url: '/portal-user/system/menu/router-prefix',
     method: 'get',
     params: {
-      menuId: 643
+      menuId: 901
     }
   })
 }

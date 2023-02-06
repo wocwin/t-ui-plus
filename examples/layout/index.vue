@@ -1,105 +1,70 @@
 <template>
-  <div :class="classObj" class="app-wrapper">
-    <div v-if="classObj.mobile && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
-    <sidebar class="sidebar-container" />
-    <div :class="{hasTagsView: showTagsView}" class="main-container">
+  <div :class="classObj"  class="app-wrapper" :style="{ '--current-color': theme }">
+    <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
+    <Sidebar v-if="!sidebar.hide" class="sidebar-container" />
+    <div :class="{hasTagsView: needTagsView, sidebarHide: sidebar.hide }" class="main-container">
       <div :class="{'fixed-header': fixedHeader}">
-        <navbar  />
-        <tags-view v-if="showTagsView" />
+        <navbar />
+        <tags-view v-if="needTagsView" />
       </div>
       <app-main />
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { DeviceType } from '@/store/modules/app/types'
-import {
-  computed,
-  defineComponent,
-  onBeforeMount,
-  onBeforeUnmount,
-  onMounted,
-  reactive,
-  toRefs
-} from 'vue'
-import store from '@/store'
+<script setup lang="ts">
+import { useWindowSize } from '@vueuse/core'
 import { Navbar, TagsView, Sidebar, AppMain } from './components'
-import resize from './resize'
-export default defineComponent({
-  name: 'Layout',
-  components: {
-    Navbar,
-    Sidebar,
-    AppMain,
-    TagsView
-  },
-  setup() {
-    const {
-      sidebar,
-      device,
-      addEventListenerOnResize,
-      resizeMounted,
-      removeEventListenerResize,
-      watchRouter
-    } = resize()
-    const state = reactive({
-      handleClickOutside: () => {
-        store.dispatch('closeSideBar', false)
-      }
-    })
+import useAppStore from '@/store/modules/app'
+import useSettingsStore from '@/store/modules/settings'
+const settingsStore = useSettingsStore()
+const theme = computed(() => settingsStore.theme)
+const sidebar = computed(() => useAppStore().sidebar)
+const device = computed(() => useAppStore().device)
+const needTagsView = computed(() => settingsStore.showTagsView)
+const fixedHeader = computed(() => settingsStore.fixedHeader)
 
-    const classObj = computed(() => {
-      return {
-        hideSidebar: !sidebar.value.opened,
-        openSidebar: sidebar.value.opened,
-        withoutAnimation: sidebar.value.withoutAnimation,
-        mobile: device.value === DeviceType.Mobile
-      }
-    })
+const classObj = computed(() => ({
+  hideSidebar: !sidebar.value.opened,
+  openSidebar: sidebar.value.opened,
+  withoutAnimation: sidebar.value.withoutAnimation,
+  mobile: device.value === 'mobile'
+}))
+const { width, height } = useWindowSize()
 
-    const showSettings = computed(() => {
-      // console.log(123456, store.state)
-      return store.state.settings.showSettings
-    })
-    const showTagsView = computed(() => {
-      return store.state.settings.showTagsView
-    })
-    const fixedHeader = computed(() => {
-      return store.state.settings.fixedHeader
-    })
-
-    watchRouter()
-    onBeforeMount(() => {
-      addEventListenerOnResize()
-    })
-
-    onMounted(() => {
-      resizeMounted()
-    })
-
-    onBeforeUnmount(() => {
-      removeEventListenerResize()
-    })
-    return {
-      classObj,
-      sidebar,
-      showSettings,
-      showTagsView,
-      fixedHeader,
-      ...toRefs(state)
-    }
+const WIDTH = 992 // refer to Bootstrap's responsive design
+watchEffect(() => {
+  if (device.value === 'mobile' && sidebar.value.opened) {
+    useAppStore().closeSideBar({ withoutAnimation: false })
+  }
+  if (width.value - 1 < WIDTH) {
+    useAppStore().toggleDevice('mobile')
+    useAppStore().closeSideBar({ withoutAnimation: true })
+  } else {
+    useAppStore().toggleDevice('desktop')
   }
 })
+
+function handleClickOutside() {
+  useAppStore().closeSideBar({ withoutAnimation: false })
+}
+
 </script>
 
 <style lang="scss" scoped>
-@import '~@/styles/_variables.scss';
+@import "@/assets/styles/mixin.scss";
+@import "@/assets/styles/variables.scss";
 .app-wrapper {
-  // @include clearfix;
+  @include clearfix;
   position: relative;
   height: 100%;
   width: 100%;
+  overflow-y: auto;
+
+  &.mobile.openSidebar {
+    position: fixed;
+    top: 0;
+  }
 }
 
 .drawer-bg {
@@ -109,27 +74,7 @@ export default defineComponent({
   top: 0;
   height: 100%;
   position: absolute;
-  z-index: 999;
-}
-
-.main-container {
-  min-height: 100%;
-  transition: margin-left 0.28s;
-  margin-left: $sideBarWidth;
-  position: relative;
-}
-
-.sidebar-container {
-  transition: width 0.28s;
-  width: $sideBarWidth !important;
-  height: 100%;
-  position: fixed;
-  font-size: 0px;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1001;
-  overflow: hidden;
+  z-index: 9;
 }
 
 .fixed-header {
@@ -141,53 +86,15 @@ export default defineComponent({
   transition: width 0.28s;
 }
 
-.hideSidebar {
-  .main-container {
-    margin-left: 54px;
-  }
-
-  .sidebar-container {
-    width: 54px !important;
-  }
-
-  .fixed-header {
-    width: calc(100% - 54px);
-  }
+.hideSidebar .fixed-header {
+  width: calc(100% - 54px);
 }
 
-/* for mobile response 适配移动端 */
-.mobile {
-  .main-container {
-    margin-left: 0px;
-  }
-
-  .sidebar-container {
-    transition: transform 0.28s;
-    width: $sideBarWidth !important;
-  }
-
-  &.openSidebar {
-    position: fixed;
-    top: 0;
-  }
-
-  &.hideSidebar {
-    .sidebar-container {
-      pointer-events: none;
-      transition-duration: 0.3s;
-      transform: translate3d(-$sideBarWidth, 0, 0);
-    }
-  }
-
-  .fixed-header {
-    width: 100%;
-  }
+.sidebarHide .fixed-header {
+  width: 100%;
 }
 
-.withoutAnimation {
-  .main-container,
-  .sidebar-container {
-    transition: none;
-  }
+.mobile .fixed-header {
+  width: 100%;
 }
 </style>

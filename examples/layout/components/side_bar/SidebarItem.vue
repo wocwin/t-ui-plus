@@ -8,9 +8,9 @@
         :route="onlyOneChild.path"
         :class="{ 'submenu-title-noDropdown': !isNested }"
       >
-        <svg-icon :icon-class="onlyOneChild.meta.icon" />
+        <svg-icon :icon-class="onlyOneChild.meta && onlyOneChild.meta.icon" />
         <template #title>
-          <span class="menu-title">{{ onlyOneChild.meta.title }}</span>
+          <span class="menu-title">{{ onlyOneChild.meta && onlyOneChild.meta.title }}</span>
         </template>
       </el-menu-item>
     </template>
@@ -31,7 +31,7 @@
   </div>
 </template>
 <script lang="ts">
-import path from 'path'
+import path from 'path-browserify'
 import { defineComponent, ref, toRef } from 'vue'
 import SidebarItemLink from './SidebarItemLink.vue'
 import { isExternal } from '@/utils/validate'

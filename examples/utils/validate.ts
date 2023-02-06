@@ -4,7 +4,7 @@ export const isValidUsername = (str: string) => ['admin', 'editor'].indexOf(str.
  * @param {string} path
  * @returns {Boolean}
  */
- export function isExternal(path: string) {
+export function isExternal(path: string) {
   return /^(https?:|mailto:|tel:)/.test(path)
 }
 

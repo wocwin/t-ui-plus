@@ -1,34 +1,18 @@
 <template>
   <section class="app-main">
-    <router-view :key="key" v-slot="{ Component }">
+    <router-view v-slot="{ Component, route }">
       <transition name="fade-transform" mode="out-in">
-        <keep-alive :include="cachedViews">
-          <component :is="Component" />
+        <keep-alive :include="tagsViewStore.cachedViews">
+          <component v-if="!route.meta.link" :is="Component" :key="route.path" />
         </keep-alive>
       </transition>
     </router-view>
   </section>
 </template>
 
-<script lang="ts">
-import store from '@/store'
-import { defineComponent, computed } from 'vue'
-import { useRoute } from 'vue-router'
-export default defineComponent({
-  setup() {
-    const route = useRoute()
-    const cachedViews = computed(() => {
-      return store.state.tagViews.cachedViews
-    })
-    const key = () => {
-      return route.path
-    }
-    return {
-      cachedViews,
-      key
-    }
-  }
-})
+<script setup lang="ts">
+import useTagsViewStore from '@/store/modules/tagViews'
+const tagsViewStore = useTagsViewStore()
 </script>
 
 <style lang="scss" scoped>
@@ -54,6 +38,14 @@ export default defineComponent({
 
   .fixed-header + .app-main {
     padding-top: 84px;
+  }
+}
+</style>
+<style lang="scss">
+// fix css style bug in open el-dialog
+.el-popup-parent--hidden {
+  .fixed-header {
+    padding-right: 17px;
   }
 }
 </style>

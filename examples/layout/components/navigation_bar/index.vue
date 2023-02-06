@@ -1,32 +1,30 @@
 <template>
   <div class="navbar">
-    <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container"
+    <hamburger id="hamburger-container" :is-active="appStore.sidebar.opened" class="hamburger-container"
       @toggle-click="toggleSideBar" />
-    <breadCrumb id="breadcrumb-container" class="breadcrumb-container" />
+    <BreadCrumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
       <template v-if="device !== 'mobile'">
         <el-tooltip content="全屏预览" effect="dark" placement="left">
-          <screenfull class="right-menu-item hover-effect" />
+          <screenfull class="full_screen right-menu-item hover-effect" />
         </el-tooltip>
       </template>
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="hover">
         <div class="avatar-wrapper">
-          <div>{{nickName||'wocwin'}}</div>
+          <div>{{nickName}}
+            <el-icon>
+              <ArrowDown />
+            </el-icon>
+          </div>
         </div>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item @click="goTo('gitHub')">
-              <span style="display:block;">gitHub地址</span>
-            </el-dropdown-item>
-            <el-dropdown-item divided @click="goTo('gitee')">
-              <span style="display:block;">gitee地址</span>
-            </el-dropdown-item>
-            <el-dropdown-item divided @click="setting=true">
+            <el-dropdown-item @click="setting=true">
               <span style="display:block;">布局设置</span>
             </el-dropdown-item>
-            <!-- <el-dropdown-item divided @click="logout">
+            <el-dropdown-item divided @click="logout">
               <span style="display:block;">退出登录</span>
-            </el-dropdown-item> -->
+            </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -35,87 +33,53 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import BreadCrumb from './BreadCrumb.vue'
 import Hamburger from './Hamburger.vue'
 import Screenfull from './Screenfull.vue'
 import Settings from '../settings/index.vue'
-import { computed, reactive, toRefs, defineEmits } from 'vue'
-import store from '@/store'
+// import { qiankunWindow } from 'vite-plugin-qiankun/dist/helper'
+import useAppStore from '@/store/modules/app'
+import useUserStore from '@/store/modules/user'
+import useSettingsStore from '@/store/modules/settings'
+import useTagViewsStore from '@/store/modules/tagViews'
 import { ElMessageBox } from 'element-plus'
-export default {
-  components: {
-    BreadCrumb,
-    Hamburger,
-    Screenfull,
-    Settings
+
+const appStore = useAppStore()
+const userStore = useUserStore()
+const device = computed(() => {
+  return appStore.device.toString()
+})
+const nickName = computed(() => {
+  return userStore.nickName
+})
+const setting = computed({
+  get() {
+    return useSettingsStore().showSettings
   },
-  setup() {
-    const sidebar = computed(() => {
-      return store.state.app.sidebar
+  set(val) {
+    useSettingsStore().getChangeSetting({
+      key: 'showSettings',
+      value: val
     })
-    const device = computed(() => {
-      return store.state.app.device.toString()
-    })
-    const avatar = computed(() => {
-      return store.state.user.avatar
-    })
-    const nickName = computed(() => {
-      return store.state.user.nickName
-    })
-    const setting = computed({
-      get() {
-        return store.state.settings.showSettings
-      },
-      set(val) {
-        store.dispatch('settings/getChangeSetting', {
-          key: 'showSettings',
-          value: val
-        })
-      }
-    })
-    // const emits = defineEmits<{ (e: 'setLayout'): void }>()
-    // const setLayout = () => {
-    //   emits('setLayout')
-    // }
-    const goTo = (type) => {
-      switch (type) {
-        case 'gitHub':
-          window.open('https://github.com/wocwin/vue3-ts-admin-template.git', '_blank')
-          break
-        case 'gitee':
-          window.open('https://gitee.com/wocwin/vue3.2-ts-webpack-element-puls-template.git', '_blank')
-          break
-      }
-    }
-    const state = reactive({
-      toggleSideBar: () => {
-        store.dispatch('toggleSideBar', false)
-      },
-      logout: () => {
-        ElMessageBox.confirm('确定注销并退出系统吗？', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          store.dispatch('LogOut').then(() => {
-            window.location.href = window.__POWERED_BY_QIANKUN__
-              ? '/'
-              : '/webdemo'
-          })
-        })
-      }
-    })
-    return {
-      goTo,
-      setting,
-      sidebar,
-      device,
-      avatar,
-      nickName,
-      ...toRefs(state)
-    }
   }
+})
+
+function toggleSideBar() {
+  appStore.toggleSideBar(false)
+}
+function logout() {
+  ElMessageBox.confirm('确定注销并退出系统吗？', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(() => {
+    userStore.FedLogOut()
+    // window.location.href = qiankunWindow.__POWERED_BY_QIANKUN__
+    //   ? '/'
+    //   : '/vitedemo/'
+    window.location.href = '/'
+  })
 }
 </script>
 
@@ -154,6 +118,7 @@ export default {
     float: right;
     height: 100%;
     line-height: 50px;
+    display: flex;
 
     &:focus {
       outline: none;
@@ -175,6 +140,11 @@ export default {
           background: rgba(0, 0, 0, 0.025);
         }
       }
+    }
+
+    .full_screen {
+      display: flex;
+      align-items: center;
     }
 
     .avatar-container {

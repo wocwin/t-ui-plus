@@ -11,8 +11,8 @@ arr.forEach((type: any) => {
         message: options
       }
     }
-    options.type = type;
-    return DoneMessage(options);
+    options.type = type
+    return DoneMessage(options)
   }
 })
 

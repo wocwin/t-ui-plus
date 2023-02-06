@@ -2,19 +2,19 @@ import axios from 'axios'
 import Message from '@/utils/message'
 import { ElMessageBox } from 'element-plus'
 import { getToken } from '@/utils/cookies'
-import store from '@/store'
+import useUserStore from '@/store/modules/user'
 export default (config: any) => {
   // 创建axios实例
   const service: any = axios.create({
-    baseURL: process.env.VUE_APP_API_URL as string,
+    baseURL: (import.meta.env.VITE_APP_BASE_API as string) + (config.url.includes('portal-sso') || config.url.includes('portal-user') ? '' : '/mes'),
     // 超时
     timeout: 50000
   })
-
   // 请求拦截器
   service.interceptors.request.use(
     (config: any) => {
-      config.headers['Authorization'] = getToken() || store.getters.token || ''
+      config.headers['Authorization'] = getToken() || ''
+      // config.headers['Authorization'] = 'PC:90_d6164543c758402d815604f5f698098d'
       config.headers['Content-Type'] =
         config.headers['Content-Type'] || 'application/json'
       // 8080
@@ -32,7 +32,6 @@ export default (config: any) => {
       return Promise.reject(error)
     }
   )
-
   // 响应拦截器
   service.interceptors.response.use(
     (response: any) => {
@@ -47,10 +46,12 @@ export default (config: any) => {
             type: 'warning'
           }
         ).then(() => {
-          store.dispatch('FedLogOut')
-          window.location.href = window.__POWERED_BY_QIANKUN__
-            ? '/'
-            : '/webdemo'
+          // 调用退出登录接口
+          useUserStore().FedLogOut()
+          window.location.href ='/'
+          // window.location.href = qiankunWindow.__POWERED_BY_QIANKUN__
+          //   ? '/'
+          //   : '/vitedemo/'
         })
       } else if (code !== 200) {
         Message({

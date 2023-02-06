@@ -7,7 +7,7 @@
       </div>
       <div v-else key="expand" class="sidebar-logo-link" @click="goIndex">
         <img v-if="logo" :src="logo" class="sidebar-logo" />
-        <h1 class="sidebar-title">{{ title }}</h1>
+        <h1 class="sidebar-title">Vue3二次封装基础组件</h1>
       </div>
     </transition>
   </div>
@@ -15,8 +15,12 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue'
-const title = require('../../../../package.json').description
-const logo = require('@/assets/logo/logo.png')
+// const title = require('../../../../package.json').description
+import titleDescription from '../../../../package.json'
+const title =titleDescription.description
+// const logo = require('@/assets/logo/logo.png')
+const logo = new URL('../../../assets/logo/logo.png', import.meta.url).href
+// import { qiankunWindow } from 'vite-plugin-qiankun/dist/helper'
 export default defineComponent({
   props: {
     collapse: {
@@ -28,7 +32,8 @@ export default defineComponent({
     // const title = settings.title
     const state = reactive({
       goIndex: () => {
-        window.location.href = window.__POWERED_BY_QIANKUN__ ? '/' : '/webdemo'
+        // window.location.href = qiankunWindow.__POWERED_BY_QIANKUN__ ? '/' : '/vitedemo/'
+        window.location.href = '/'
       }
     })
     return {
@@ -41,7 +46,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '~@/styles/_variables.scss';
+@import "@/assets/styles/variables.scss";
 .sidebarLogoFade-enter-active {
   transition: opacity 1.5s;
 }
@@ -63,6 +68,9 @@ export default defineComponent({
   & .sidebar-logo-link {
     height: 100%;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     & .sidebar-logo {
       width: 32px;

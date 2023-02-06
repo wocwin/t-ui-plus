@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 // 登录方法
-export function login(data) {
+export function login(data: any) {
   sessionStorage.removeItem('systemName')
   return request({
     url: '/portal-sso/web/login',
@@ -17,16 +17,6 @@ export function login(data) {
 export const getPermBtm = () => {
   return request({
     url: '/portal-user/system/user/menuList'
-  })
-}
-
-
-//sso登录退出
-export function ssoLogout() {
-  sessionStorage.removeItem('systemName')
-  return request({
-    url: '/portal-sso/web/logout',
-    method: 'post',
   })
 }
 

@@ -1,9 +1,9 @@
 import Cookies from 'js-cookie'
 class Keys {
-  static sidebarStatusKey = 'vue3-ts-sidebarStatusKey'
-  static sizeKey = 'vue3-ts-sizeKey'
+  static sidebarStatusKey = 'vue3-vite-sidebarStatusKey'
+  static sizeKey = 'vue3-vite-sizeKey'
   static tokenKey = 'authorization'
-  static aseKey = 'vue3-ts-key'
+  static aseKey = 'vue3-vite-key'
 }
 export const getSidebarStatus = () => Cookies.get(Keys.sidebarStatusKey)
 export const setSidebarStatus = (sidebarStatus: string) => Cookies.set(Keys.sidebarStatusKey, sidebarStatus)

@@ -21,7 +21,7 @@ tests/
 node_modules/
 /node_modules
 # 忽略指定文件
-vue.config.js
+vite.config.ts
 babel.config.js
 .browserslistrc
 .editorconfig
@@ -29,6 +29,7 @@ babel.config.js
 .prettierignore
 .prettierrc.js
 .eslintignore
+tsconfig.node.json
 tsconfig.json
 yarn.lock
 deploy.sh

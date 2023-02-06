@@ -1,6 +1,6 @@
 # T-ui-Plus
 
-## [Vue2 基础组件传送门](https://gitee.com/wocwin/t-ui)
+## [Vue2 基础组件传送门](https://github.com/wocwin/t-ui)
 
 > 基于 Element-ui 和 ant-design-vue 二次封装基础组件地址
 
@@ -32,7 +32,7 @@
 npm i @wocwin/t-ui-plus
 // 在main.js中按下引入
 import TuiPlus from '@wocwin/t-ui-plus'
-import '@wocwin/t-ui-plus/lib/t-ui-plus.css'
+import '@wocwin/t-ui-plus/lib/style.css'
 Vue.use(TuiPlus)
 ```
 
@@ -46,7 +46,7 @@ npm install
 ## 本地运行 examples 中组件示例
 
 ```shell
-// examples项目（常规的后台管理系统）基于vue3+webpack项目
+// examples项目（常规的后台管理系统）基于vue3+ts+vite项目
 npm run serve
 ```
 

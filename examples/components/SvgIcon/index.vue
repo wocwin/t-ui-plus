@@ -6,14 +6,12 @@
 </template>
 
 <script lang='ts'>
-import { isExternal } from '@/utils/validate'
 import { computed, defineComponent } from 'vue'
 export default defineComponent({
   props: {
     iconClass: {
       type: String,
-      required: true,
-      default: ''
+      required: true
     },
     className: {
       type: String,
@@ -23,7 +21,9 @@ export default defineComponent({
   setup(props) {
     const iconClass = props.iconClass
     const className = props.className
-
+    const isExternal = (path: string)=> {
+      return /^(https?:|mailto:|tel:)/.test(path)
+    }
     const isExt = computed(() => isExternal(iconClass))
     const iconName = computed(() => `#icon-${iconClass}`)
     const svgClass = computed(() => {

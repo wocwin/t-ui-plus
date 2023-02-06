@@ -17,7 +17,6 @@ export default defineComponent({
     // methods
     const linkProps = (url: string) => {
       if (isExternal(url)) {
-        console.log(3999833)
         return {
           is: 'a',
           href: url,

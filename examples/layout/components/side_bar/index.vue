@@ -23,39 +23,31 @@
   </div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, toRaw } from 'vue'
+<script setup lang="ts">
 import SidebarItem from './SidebarItem.vue'
 import SidebarLogo from './SidebarLogo.vue'
-import variables from '@/styles/_variables.scss'
-import store from '@/store'
-import { useRoute } from 'vue-router'
-import { constantRoutes } from '@/router'
-export default defineComponent({
-  components: {
-    SidebarItem,
-    SidebarLogo
-  },
-  setup() {
-    const route = useRoute()
-    const sidebar = computed(() => {
-      return store.state.app.sidebar
-    })
-    const routes = computed(() => {
-      // return store.state.permission.routes
-      return constantRoutes
-    })
-    // console.log(666, toRaw(store.getters.permission_routes))
-    const showLogo = computed(() => {
-      return store.state.settings.showSidebarLogo
-    })
-    const menuActiveTextColor = computed(() => {
-      console.log(store.state.settings.sidebarTextTheme)
-      if (store.state.settings.sidebarTextTheme) {
-        return store.state.settings.theme
+import variables from '@/assets/styles/variables.scss'
+import useAppStore from '@/store/modules/app'
+import useSettingsStore from '@/store/modules/settings'
+import usePermissionStore from '@/store/modules/permission'
+
+const route = useRoute()
+const appStore = useAppStore()
+const settingsStore = useSettingsStore()
+const permissionStore = usePermissionStore()
+
+const routes = computed(() => permissionStore.routes)
+const showLogo = computed(() => settingsStore.showSidebarLogo)
+const menuActiveTextColor = computed(() => {
+      // console.log(settingsStore.sidebarTextTheme)
+      if (settingsStore.sidebarTextTheme) {
+        return settingsStore.theme
       } else {
         return variables.menuActiveText
       }
+    })
+    const isCollapse = computed(() => {
+      return appStore.sidebar.opened
     })
     const activeMenu = computed(() => {
       const { meta, path } = route
@@ -66,20 +58,6 @@ export default defineComponent({
       }
       return path
     })
-    const isCollapse = computed(() => {
-      return sidebar.value.opened
-    })
-    return {
-      sidebar,
-      routes,
-      showLogo,
-      menuActiveTextColor,
-      variables,
-      activeMenu,
-      isCollapse
-    }
-  }
-})
 </script>
 
 <style lang="scss">

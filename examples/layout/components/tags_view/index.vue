@@ -1,24 +1,11 @@
 <template>
   <div id="tags-view-container" class="tags-view-container">
     <scroll-pane ref="scrollPaneRef" class="tags-view-wrapper" @scroll="handleScroll">
-      <router-link
-        v-for="tag in visitedViews"
-        ref="tag"
-        :key="tag.path"
-        :class="isActive(tag) ? 'active' : ''"
-        :data-path="tag.path"
-        :to="{path: tag.path, query: tag.query, fullPath: tag.fullPath}"
-        tag="span"
-        class="tags-view-item"
-        @click.middle="!isAffix(tag)?closeSelectedTag(tag):''"
-        @contextmenu.prevent="openMenu(tag, $event)"
-      >
+      <router-link v-for="tag in visitedViews" ref="tag" :key="tag.path" :class="isActive(tag) ? 'active' : ''"
+        :data-path="tag.path" :to="{path: tag.path, query: tag.query}" tag="span" class="tags-view-item"
+        @click.middle="!isAffix(tag)?closeSelectedTag(tag):''" @contextmenu.prevent="openMenu(tag, $event)">
         {{ tag.meta.title }}
-        <span
-          class
-          v-if="lastTagShow&&!isAffix(tag)"
-          @click.prevent.stop="closeSelectedTag(tag)"
-        >
+        <span class v-if="lastTagShow&&!isAffix(tag)" @click.prevent.stop="closeSelectedTag(tag)">
           <close class="el-icon-close" style="width: 1em; height: 1em;vertical-align: middle;" />
         </span>
       </router-link>
@@ -33,9 +20,9 @@
 </template>
 
 <script lang="ts">
-import path from 'path'
-import store from '@/store'
-import { TagView } from '@/store/modules/tagViews/types'
+import path from 'path-browserify'
+import useTagViewsStore from '@/store/modules/tagViews'
+import usePermissionStore from '@/store/modules/permission'
 import {
   computed,
   defineComponent,
@@ -49,6 +36,7 @@ import {
   inject
 } from 'vue'
 import { RouteRecordRaw, useRoute, useRouter } from 'vue-router'
+// import { qiankunWindow } from 'vite-plugin-qiankun/dist/helper'
 import ScrollPane from './ScrollPane.vue'
 export default defineComponent({
   components: {
@@ -60,8 +48,8 @@ export default defineComponent({
     const currentRoute = useRoute()
     const scrollPaneRef = ref(null)
     const { ctx } = instance as any
-    const reload = inject('reload')
-    const toLastView = (visitedViews: TagView[], view: TagView) => {
+    const reload: any = inject('reload')
+    const toLastView = (visitedViews: any, view: any) => {
       const latestView = visitedViews.slice(-1)[0]
       if (latestView !== undefined && latestView.fullPath !== undefined) {
         router.push(latestView.fullPath).catch(err => {
@@ -75,46 +63,47 @@ export default defineComponent({
         //     console.warn(err)
         //   })
         // } else {
-        window.location.href = window.__POWERED_BY_QIANKUN__ ? '/' : '/webdemo'
+        // window.location.href = qiankunWindow.__POWERED_BY_QIANKUN__ ? '/' : '/vitedemo/'
+        window.location.href = '/'
         // }
       }
     }
     const visitedViews = computed(() => {
-      return store.state.tagViews.visitedViews.filter(v => {
+      return useTagViewsStore().visitedViews.filter(v => {
         return v?.title !== '首页'
       })
     })
-    const routes = computed(() => store.state.permission.routes)
+    const routes = computed(() => usePermissionStore().routes)
     const state = reactive({
       visible: false,
       lastTagShow: true, // 是否 是最后一个tag
       top: 0,
       left: 0,
-      selectedTag: {} as TagView,
-      affixTags: [] as TagView[],
-      isActive: (route: TagView) => {
+      selectedTag: {} as any,
+      affixTags: [] as any[],
+      isActive: (route: any) => {
         state.lastTagShow = !(visitedViews.value.length === 1)
         return route.path === currentRoute.path
       },
-      isAffix: (tag: TagView) => {
+      isAffix: (tag: any) => {
         return tag.meta && tag.meta.affix
       },
-      refreshSelectedTag: (view: TagView) => {
-        store.dispatch('tagViews/delCachedView', view).then(() => {
+      refreshSelectedTag: (view: any) => {
+        useTagViewsStore().delCachedView(view).then(() => {
           // const { fullPath } = view
           // nextTick(() => {
           //   router.replace({ path: '/redirect' + fullPath }).catch(err => {
           //     console.warn(err)
           //   })
           // })
-          reload
+          reload()
           state.closeMenu()
         })
       },
-      closeSelectedTag: (view: TagView) => {
-        store.dispatch('tagViews/delView', view)
+      closeSelectedTag: (view: any) => {
+        useTagViewsStore().delView(view)
         if (state.isActive(view)) {
-          toLastView(store.state.tagViews.visitedViews, view)
+          toLastView(useTagViewsStore().visitedViews, view)
           state.closeMenu()
         }
       },
@@ -127,12 +116,12 @@ export default defineComponent({
             console.log(err)
           })
         }
-        store.dispatch('tagViews/delOthersViews', state.selectedTag as TagView)
+        useTagViewsStore().delOthersViews(state.selectedTag as any)
         state.closeMenu()
       },
       // 关闭所有标签
-      closeAllTags: (view: TagView) => {
-        store.dispatch('tagViews/delAllViews').then(({ visitedViews }) => {
+      closeAllTags: (view: any) => {
+        useTagViewsStore().delAllViews(view).then(({ visitedViews }: any) => {
           if (state.affixTags.some(tag => tag.path === view.path)) {
             return
           }
@@ -140,7 +129,7 @@ export default defineComponent({
           state.closeMenu()
         })
       },
-      openMenu: (tag: TagView, e: MouseEvent) => {
+      openMenu: (tag: any, e: MouseEvent) => {
         const menuMinWidth = 105
         const offsetLeft = ctx.$el.getBoundingClientRect().left // container margin left
         const offsetWidth = ctx.$el.offsetWidth // container width
@@ -164,7 +153,7 @@ export default defineComponent({
     })
 
     const filterAffixTags = (routes: RouteRecordRaw[], basePath = '/') => {
-      let tags: TagView[] = []
+      let tags: any[] = []
       routes.forEach(route => {
         if (route.meta && route.meta.affix) {
           const tagPath = path.resolve(basePath, route.path)
@@ -191,7 +180,7 @@ export default defineComponent({
       for (const tag of state.affixTags) {
         // Must have tag name
         if (tag.name) {
-          store.dispatch('tagViews/addVisitedView', tag as TagView)
+          useTagViewsStore().addVisitedView(tag as any)
         }
       }
     }
@@ -199,7 +188,7 @@ export default defineComponent({
     const addTags = () => {
       if (currentRoute.name) {
         state.lastTagShow = true
-        store.dispatch('tagViews/addView', currentRoute)
+        useTagViewsStore().addView(currentRoute)
       }
       return false
     }
@@ -209,10 +198,10 @@ export default defineComponent({
         for (const r of visitedViews.value) {
           if (r.path === currentRoute.path) {
             // scrollPaneRef.value.moveToTarget(r)
-            ;(scrollPaneRef.value as any).moveToTarget(r)
+            ; (scrollPaneRef.value as any).moveToTarget(r)
             // when query is different then update
             if (r.fullPath !== currentRoute.fullPath) {
-              store.dispatch('tagViews/updateVisitedView', currentRoute)
+              useTagViewsStore().updateVisitedView(currentRoute)
             }
           }
         }
@@ -236,7 +225,6 @@ export default defineComponent({
       routes,
       reload,
       scrollPaneRef,
-      // t,
       ...toRefs(state)
     }
   }
@@ -255,11 +243,13 @@ export default defineComponent({
       text-align: center;
       transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
       transform-origin: 100% 50%;
+
       &:before {
         transform: scale(0.6);
         display: inline-block;
         vertical-align: -3px;
       }
+
       &:hover {
         background-color: #b4bccc;
         color: #fff;

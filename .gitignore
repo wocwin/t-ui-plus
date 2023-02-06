@@ -2,14 +2,15 @@
 node_modules
 /dist
 lib
+umd
 # 忽略目录
 # examples/
 # packages/
 # public/
-# vuepress2 .cache .temp dist
-docs/.vuepress/.temp/
-docs/.vuepress/.cache/
-docs/.vuepress/dist/
+# vitepress .cache .temp dist
+docs/.vitepress/.temp/
+docs/.vitepress/.cache/
+docs/.vitepress/dist/
 
 # local env files
 .env.local

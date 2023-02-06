@@ -34,74 +34,58 @@
   </el-drawer>
 </template>
 
-<script lang="ts">
-import store from '@/store'
-import { defineComponent, reactive, toRefs, watch, ref } from 'vue'
-export default defineComponent({
-  components: {},
-  setup() {
-    // const showSettings = ref(false)
-    const state = reactive({
-      showSettings: store.state.settings.showSettings,
-      fixedHeader: store.state.settings.fixedHeader,
-      showTagsView: store.state.settings.showTagsView,
-      showSidebarLogo: store.state.settings.showSidebarLogo,
-      sidebarTextTheme: store.state.settings.sidebarTextTheme
-    })
-    // const openSetting = () => {
-    //   showSettings.value = true
-    // }
-    const close = () => {
-      store.dispatch('settings/getChangeSetting', {
+<script setup lang="ts">
+import useSettingsStore from '@/store/modules/settings'
+const settingsStore = useSettingsStore()
+const storeSettings = computed(() => settingsStore)
+// const state = reactive({
+//       showSettings: settingsStore.showSettings,
+//       fixedHeader: settingsStore.fixedHeader,
+//       showTagsView: settingsStore.showTagsView,
+//       showSidebarLogo: settingsStore.showSidebarLogo,
+//       sidebarTextTheme: settingsStore.sidebarTextTheme
+//     })
+const showSettings = computed({
+  get: () => storeSettings.value.showSettings,
+  set: (val) => {
+    settingsStore.getChangeSetting({ key: 'showSettings', value: val })
+  }
+})
+    /** 是否需要tagview */
+const showTagsView = computed({
+  get: () => storeSettings.value.showTagsView,
+  set: (val) => {
+    settingsStore.getChangeSetting({ key: 'showTagsView', value: val })
+  }
+})
+/**是否需要固定头部 */
+const fixedHeader = computed({
+  get: () => storeSettings.value.fixedHeader,
+  set: (val) => {
+    settingsStore.getChangeSetting({ key: 'fixedHeader', value: val })
+  }
+})
+/**是否需要侧边栏的logo */
+const showSidebarLogo = computed({
+  get: () => storeSettings.value.showSidebarLogo,
+  set: (val) => {
+    settingsStore.getChangeSetting({ key: 'showSidebarLogo', value: val })
+  }
+})
+const sidebarTextTheme = computed({
+  get: () => storeSettings.value.sidebarTextTheme,
+  set: (val) => {
+    settingsStore.getChangeSetting({ key: 'sidebarTextTheme', value: val })
+  }
+})
+const close = () => {
+      settingsStore.getChangeSetting({
         key: 'showSettings',
         value: false
       })
     }
-    watch(
-      () => state.fixedHeader,
-      value => {
-        store.dispatch('settings/getChangeSetting', {
-          key: 'fixedHeader',
-          value
-        })
-      }
-    )
-    watch(
-      () => state.showTagsView,
-      value => {
-        store.dispatch('settings/getChangeSetting', {
-          key: 'showTagsView',
-          value
-        })
-      }
-    )
-    watch(
-      () => state.showSidebarLogo,
-      value => {
-        console.log(value)
 
-        store.dispatch('settings/getChangeSetting', {
-          key: 'showSidebarLogo',
-          value
-        })
-      }
-    )
-    watch(
-      () => state.sidebarTextTheme,
-      value => {
-        store.dispatch('settings/getChangeSetting', {
-          key: 'sidebarTextTheme',
-          value
-        })
-      }
-    )
-    return {
-      // openSetting,
-      close,
-      ...toRefs(state)
-    }
-  }
-})
+
 </script>
 
 <style lang="scss" scoped>
