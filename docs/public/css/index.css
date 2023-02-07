@@ -1,13 +1,4 @@
-:root {
-  --content-width: 1200px;
-}
-
-.page .demo-block .demo-content {
-  padding: 10px !important;
-  overflow-x: auto;
-}
-
-th,
-td {
-  border: none;
+html{
+  overflow-y: auto;
+  overflow-x: hidden;
 }

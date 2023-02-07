@@ -7,7 +7,7 @@ import locale from 'element-plus/lib/locale/lang/zh-cn'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 // 基于element-plus二次封装基础组件
 import TuiPlus from '../../../packages'
-// import TuiPlus from '@wocwin/t-ui-plus'
+import '../../public/css/index.css'
 
 export default {
   ...DefaultTheme,
