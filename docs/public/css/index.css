@@ -2,3 +2,6 @@ html{
   overflow-y: auto;
   overflow-x: hidden;
 }
+#VPContent{
+  background: #fff;
+}
