@@ -1,14 +1,83 @@
 # TSelect 下拉选择组件
----
+
 ### 基础用法
 
-<demo src="../../demos/TSelect/base.vue"></demo>
+:::demo
 
+```vue
+<template>
+  <t-layout-page>
+    <t-select
+      placeholder="请选择工序"
+      v-model="selectVlaue"
+      :optionSource="stepList"
+      valueKey="label"
+      @change="selectChange"
+      width="200px"
+    />
+  </t-layout-page>
+</template>
+<script setup lang="ts">
+import { ref } from 'vue'
+const selectVlaue = ref<any>()
+const stepList=  [
+    { label: '开始' },
+    { label: 'POSUI' },
+    { label: '11' },
+    { label: 'GX123' },
+    { label: '烘干破碎' },
+    { label: '车间仓库' },
+    { label: 'ui3333' },
+    { label: 'hhh333' }
+  ]
+const selectChange = (val:any) => {
+  console.log('selectChange', val, selectVlaue.value)
+}
+</script>
+
+```
+
+:::
 ### 多选
 
-<demo src="../../demos/TSelect/multiple.vue"></demo>
+:::demo
 
-### TSelect参数配置
+```vue
+<template>
+  <t-layout-page>
+    <t-select
+      placeholder="请选择工序"
+      v-model="selectVlaue"
+      :optionSource="stepList"
+      valueKey="label"
+      @change="selectChange"
+      multiple
+    />
+  </t-layout-page>
+</template>
+<script setup lang="ts">
+import { ref, reactive } from 'vue'
+const selectVlaue = ref<any>()
+const stepList=  [
+    { label: '开始' },
+    { label: 'POSUI' },
+    { label: '11' },
+    { label: 'GX123' },
+    { label: '烘干破碎' },
+    { label: '车间仓库' },
+    { label: 'ui3333' },
+    { label: 'hhh333' }
+  ]
+const selectChange = (val:any) => {
+  console.log('selectChange', val, selectVlaue.value)
+}
+</script>
+
+```
+
+:::
+
+### TSelect Attributes
 
 *****
 #### 1、代码示例

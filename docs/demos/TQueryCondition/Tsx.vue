@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="tsx">
-import { ref, computed, reactive } from 'vue'
+import {  computed, reactive } from 'vue'
 let state = reactive({
   queryData: {
     userName: null, // 登录名

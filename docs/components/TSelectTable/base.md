@@ -4,55 +4,171 @@
 
 ### 基础用法
 
-::: tip 在组件中需配置：
+::: demo 在组件中需配置：<br/>`table` 数据源及表头信息<br/>`keywords` 选项中的 value（选项的值）,label(选项的标签)<br/>`@radioChange` 选中事件，传出当前选中对象
 
-`table` 数据源及表头信息
+```vue
+<template>
+  <t-select-table :table="table" :columns="table.columns" :max-height="400" :keywords="{ label: 'name', value: 'id' }"
+    @radioChange="radioChange"></t-select-table>
+</template>
+<script setup lang="ts">
+const table = {
+  data: [
+    { id: 1, code: 1, name: '物料名称1', spec: '物料规格1', unitName: '吨' },
+    { id: 2, code: 2, name: '物料名称2', spec: '物料规格2', unitName: '吨' },
+    { id: 3, code: 3, name: '物料名称3', spec: '物料规格3', unitName: '吨' },
+    { id: 4, code: 4, name: '物料名称4', spec: '物料规格4', unitName: '吨' },
+    { id: 5, code: 5, name: '物料名称5', spec: '物料规格5', unitName: '吨' },
+    { id: 6, code: 6, name: '物料名称6', spec: '物料规格6', unitName: '吨' },
+    { id: 7, code: 7, name: '物料名称7', spec: '物料规格7', unitName: '吨' },
+    { id: 8, code: 8, name: '物料名称8', spec: '物料规格8', unitName: '吨' },
+    { id: 9, code: 9, name: '物料名称9', spec: '物料规格9', unitName: '吨' },
+    { id: 10, code: 10, name: '物料名称10', spec: '物料规格10', unitName: '吨' },
+    { id: 11, code: 11, name: '物料名称11', spec: '物料规格11', unitName: '吨' },
+    { id: 12, code: 12, name: '物料名称12', spec: '物料规格12', unitName: '吨' },
+    { id: 13, code: 13, name: '物料名称13', spec: '物料规格13', unitName: '吨' },
+  ],
+  columns: [
+    { label: '物料编号', width: '100px', prop: 'code' },
+    { label: '物料名称', width: '149px', prop: 'name' },
+    { label: '规格', width: '149px', prop: 'spec' },
+    { label: '单位', width: '110px', prop: 'unitName' },
+    { label: '物料编号1', width: '149px', prop: 'code' },
+    { label: '物料名称1', width: '149px', prop: 'name' },
+    { label: '规格1', width: '149px', prop: 'spec' },
+    { label: '单位1', width: '110px', prop: 'unitName' },
+    { label: '物料编号11', width: '149px', prop: 'code' },
+    { label: '物料名称11', width: '149px', prop: 'name' },
+    { label: '规格11', width: '149px', prop: 'spec' },
+    { label: '单位11', width: '110px', prop: 'unitName' },
+    { label: '物料编号111', width: '149px', prop: 'code' },
+    { label: '物料名称111', width: '149px', prop: 'name' },
+    { label: '规格111', width: '149px', prop: 'spec' },
+    { label: '单位111', width: '110px', prop: 'unitName' },
+  ],
+}
+const radioChange = (row) => {
+  console.log('单选--传给后台的值', row)
+}
+</script>
 
-`keywords` 选项中的 value（选项的值）,label(选项的标签)
-
-`@radioChange` 选中事件，传出当前选中对象
-
+```
 :::
 
-<demo src="../../demos/TSelectTable/radio.vue"></demo>
 
 ### 多选
 
-::: tip 在组件中需配置：
+:::demo 在组件中需配置：<br/>`multiple` 开启多选<br/>`table` 数据源及表头信息<br/>`keywords` 选项中的 value（选项的值）,label(选项的标签)<br/>`@selectionChange` 多选事件，传出当前选中项，及选中项的 keywords.value 集合
 
-`multiple` 开启多选
+```vue
+<template>
+  <t-layout-page>
+    <t-select
+      placeholder="请选择工序"
+      v-model="selectVlaue"
+      :optionSource="stepList"
+      valueKey="label"
+      @change="selectChange"
+      multiple
+    />
+  </t-layout-page>
+</template>
+<script setup lang="ts">
+import { ref } from 'vue'
+const selectVlaue = ref()
+const stepList =  [
+    { label: '开始' },
+    { label: 'POSUI' },
+    { label: '11' },
+    { label: 'GX123' },
+    { label: '烘干破碎' },
+    { label: '车间仓库' },
+    { label: 'ui3333' },
+    { label: 'hhh333' }
+  ]
+const selectChange = val => {
+  console.log('selectChange', val, selectVlaue.value)
+}
+</script>
 
-`table` 数据源及表头信息
-
-`keywords` 选项中的 value（选项的值）,label(选项的标签)
-
-`@selectionChange` 多选事件，传出当前选中项，及选中项的 keywords.value 集合
+```
 
 :::
-
-<demo src="../../demos/TSelectTable/multiple.vue"></demo>
 
 
 ### 开启分页功能
 
-::: tip 在组件中需配置：
+:::demo 在组件中需配置：<br/>`isShowPagination` 开启分页功能<br/>`@page-change`页码改变事件;传出当前选中的页码<br/>`table` 数据源及表头信息<br/>`keywords` 选项中的 value（选项的值）,label(选项的标签)<br/>
 
-`isShowPagination` 开启分页功能
-
-`@page-change`页码改变事件;传出当前选中的页码
-
-`table` 数据源及表头信息
-
-`keywords` 选项中的 value（选项的值）,label(选项的标签)
+```vue
+<template>
+  <t-select-table
+    :table="table"
+    :columns="table.columns"
+    :max-height="400"
+    :keywords="{ label: 'name', value: 'id' }"
+    multiple
+    @selectionChange="selectionChange"
+    isShowPagination x
+    @current-change="pageChange" />
+</template>
+<script setup lang="ts">
+let table = {
+  total: 100,
+  data: [
+    { id: 1, code: 1, name: '物料名称1', spec: '物料规格1', unitName: '吨' },
+    { id: 2, code: 2, name: '物料名称2', spec: '物料规格2', unitName: '吨' },
+    { id: 3, code: 3, name: '物料名称3', spec: '物料规格3', unitName: '吨' },
+    { id: 4, code: 4, name: '物料名称4', spec: '物料规格4', unitName: '吨' },
+    { id: 5, code: 5, name: '物料名称5', spec: '物料规格5', unitName: '吨' },
+    { id: 6, code: 6, name: '物料名称6', spec: '物料规格6', unitName: '吨' },
+    { id: 7, code: 7, name: '物料名称7', spec: '物料规格7', unitName: '吨' },
+    { id: 8, code: 8, name: '物料名称8', spec: '物料规格8', unitName: '吨' },
+    { id: 9, code: 9, name: '物料名称9', spec: '物料规格9', unitName: '吨' },
+    { id: 10, code: 10, name: '物料名称10', spec: '物料规格10', unitName: '吨' },
+    { id: 11, code: 11, name: '物料名称11', spec: '物料规格11', unitName: '吨' },
+    { id: 12, code: 12, name: '物料名称12', spec: '物料规格12', unitName: '吨' },
+    { id: 13, code: 13, name: '物料名称13', spec: '物料规格13', unitName: '吨' },
+  ],
+  columns: [
+    { label: '物料编号', width: '100px', prop: 'code', fixed: true },
+    { label: '物料名称', width: '149px', prop: 'name' },
+    { label: '规格', width: '149px', prop: 'spec' },
+    { label: '单位', width: '110px', prop: 'unitName' },
+    { label: '物料编号1', width: '149px', prop: 'code' },
+    { label: '物料名称1', width: '149px', prop: 'name' },
+    { label: '规格1', width: '149px', prop: 'spec' },
+    { label: '单位1', width: '110px', prop: 'unitName' },
+    { label: '物料编号11', width: '149px', prop: 'code' },
+    { label: '物料名称11', width: '149px', prop: 'name' },
+    { label: '规格11', width: '149px', prop: 'spec' },
+    { label: '单位11', width: '110px', prop: 'unitName' },
+    { label: '物料编号111', width: '149px', prop: 'code' },
+    { label: '物料名称111', width: '149px', prop: 'name' },
+    { label: '规格111', width: '149px', prop: 'spec' },
+    { label: '单位111', width: '110px', prop: 'unitName' },
+  ],
+}
+const selectionChange = (val, ids) => {
+  console.log('复选框', val)
+  console.log('复选框--id', ids)
+}
+// 获取当前的页码
+const pageChange = (val) => {
+  console.log('获取当前的页码', val)
+  table.currentPage = val
+}
+</script>
+```
 
 :::
 
-<demo src="../../demos/TSelectTable/showPagination.vue"></demo>
 
 
 ### TSelectTable 参数配置
 
-#### 代码示例
+*****
+#### 1、代码示例
 
 ```html
 <t-select-table
@@ -64,7 +180,7 @@
 ></t-select-table>
 ```
 
-#### 1. 配置参数（Attributes）继承 el-table 及 el-select 属性
+#### 2、配置参数（Attributes）继承 el-table 及 el-select 属性
 
 | 参数 | 说明 | 类型 | 默认值 |
 | :-- | :-- | :-- | :-- |
@@ -90,7 +206,7 @@
 | isShowPagination | 开启分页 | Boolean | false |
 | tableWidth | table 宽度 | Number | 550 |
 
-#### 2. 事件（events）继承 el-table 及 el-select 属性
+#### 3、事件（events）继承 el-table 及 el-select 属性
 
 | 事件名 | 说明 | 回调参数 |
 | :-- | :-- | :-- |
@@ -98,7 +214,7 @@
 | selectionChange | 多选事件 | 返回选中的项数据及选中项的 keywords.value 集合 |
 | radioChange | 单选 | 返回当前项所有数据 |
 
-#### 3.方法（Methods）继承 el-table 及 el-select 属性
+#### 4、方法（Methods）继承 el-table 及 el-select 属性
 
 | 方法名 | 说明                            | 回调参数 |
 | :----- | :------------------------------ | :------- |

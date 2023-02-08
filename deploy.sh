@@ -14,8 +14,4 @@ git commit -m 'deploy'
 # 如果发布到 https://<USERNAME>.github.io/<REPO>
 git push -f https://github.com/wocwin/t-ui-plus.git master:gh-pages
 
-# git remote add origin https://github.com/wocwin/myVuePress.git
-# git push origin --delete gh-pages
-# git push origin master:gh-pages
-
 cd -

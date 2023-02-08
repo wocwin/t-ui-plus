@@ -12,6 +12,7 @@ node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
 # # 忽略目录
 examples/
 docs/
@@ -21,6 +22,7 @@ tests/
 node_modules/
 /node_modules
 # 忽略指定文件
+auto-imports.d.ts
 vite.config.ts
 babel.config.js
 .browserslistrc

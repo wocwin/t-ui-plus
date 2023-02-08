@@ -1,5 +1,8 @@
 import DefaultTheme from 'vitepress/theme'
-import demo from 'vitepress-demoblock/demo.vue'
+// 演示组件
+import 'vitepress-theme-demoblock/dist/theme/styles/index.css'
+import { useComponents } from './useComponents'
+
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import locale from 'element-plus/lib/locale/lang/zh-cn'
@@ -11,17 +14,20 @@ import '../../public/css/index.css'
 
 export default {
   ...DefaultTheme,
-  enhanceApp({app}) {
+  enhanceApp(ctx) {
+    DefaultTheme.enhanceApp(ctx)
     // 注册ElementPlus
-  app.use(ElementPlus, {
-    locale // 语言设置
-  })
-  // 注册所有图标
-  for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-    app.component(key, component)
-  }
-   // 全局注册基础组件
-   app.use(TuiPlus)
-   app.component('demo', demo)
-  }
+    ctx.app.use(ElementPlus, {
+      locale, // 语言设置
+    })
+    // 注册所有图标
+    for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+      ctx.app.component(key, component)
+    }
+    // 全局注册基础组件
+    ctx.app.use(TuiPlus)
+    useComponents(ctx.app)
+    // app.component('Demo', Demo)
+    // app.component('DemoBlock', DemoBlock)
+  },
 }

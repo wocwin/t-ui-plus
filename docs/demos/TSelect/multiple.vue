@@ -11,10 +11,9 @@
   </t-layout-page>
 </template>
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 const selectVlaue = ref()
-const state = reactive({
-  stepList: [
+const stepList =  [
     { label: '开始' },
     { label: 'POSUI' },
     { label: '11' },
@@ -24,7 +23,6 @@ const state = reactive({
     { label: 'ui3333' },
     { label: 'hhh333' }
   ]
-})
 const selectChange = val => {
   console.log('selectChange', val, selectVlaue.value)
 }

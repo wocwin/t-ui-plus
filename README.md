@@ -25,6 +25,10 @@
     </a>
 </p>
 
+## 动态效果图
+
+<img src="./public/TuiPlus__demo.gif">
+
 ## npm 方式安装使用
 
 ```js
@@ -36,10 +40,10 @@ import '@wocwin/t-ui-plus/lib/style.css'
 Vue.use(TuiPlus)
 ```
 
-## 安装依赖 **如果总报错就用 cnpm install**
+## 安装依赖
 
 ```shell
-npm install
+pnpm install
 
 ```
 
@@ -54,7 +58,7 @@ npm run serve
 
 ```shell
 // docs项目(文档demo示例)基于vue3+vite项目
-npm run docs:dev
+pnpm docs:dev
 
 ```
 ## 微信交流群

@@ -1,6 +1,5 @@
-import { DefaultTheme,defineConfig } from 'vitepress'
-import demoblock from 'vitepress-demoblock'
-
+import { defineConfig } from 'vitepress'
+import { demoBlockPlugin } from 'vitepress-theme-demoblock'
 export default defineConfig({
   title: 'TuiPlus基础组件文档',
   description: '基于Element-plus基础组件封装使用',
@@ -57,8 +56,15 @@ export default defineConfig({
     }
   },
   markdown: {
+    headers: {
+      level: [0, 0]
+    },
+    // light: #f9fafb, dark: --vp-code-block-bg
+    theme: { light: 'github-light', dark: 'github-dark' },
     config(md) {
-      md.use(demoblock)
+      md.use(demoBlockPlugin, {
+        customClass: 'demoblock-custom'
+      })
     }
   }
 })
