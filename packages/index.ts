@@ -5,6 +5,7 @@ import TTable from './table'
 import TForm from './form'
 import TSelect from './select'
 import TSelectTable from './select-table'
+import TDetail from './detail'
 
 // 存储组件列表
 const components = [
@@ -14,7 +15,8 @@ const components = [
   TTable,
   TForm,
   TSelect,
-  TSelectTable
+  TSelectTable,
+  TDetail
 ]
 
 // 插件声明：声明所有插件

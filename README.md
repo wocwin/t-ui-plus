@@ -40,10 +40,10 @@ import '@wocwin/t-ui-plus/lib/style.css'
 Vue.use(TuiPlus)
 ```
 
-## 安装依赖
+## 安装依赖 **如果总报错就用 cnpm install**
 
 ```shell
-pnpm install
+npm install
 
 ```
 
@@ -58,7 +58,7 @@ npm run serve
 
 ```shell
 // docs项目(文档demo示例)基于vue3+vite项目
-pnpm docs:dev
+npm run docs:dev
 
 ```
 ## 微信交流群
