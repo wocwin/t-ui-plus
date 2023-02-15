@@ -1,23 +1,10 @@
 <template>
-  <el-form
-    id="t_query_condition"
-    v-bind="$attrs"
-    :label-width="labelWidth"
-    :form="state.form"
-    size="default"
+  <el-form id="t_query_condition" v-bind="$attrs" :label-width="labelWidth" :form="state.form" size="default"
     class="t-query-condition"
-    :style="{'grid-template-areas': gridAreas, 'grid-template-columns': `repeat(${colLength}, minmax(220px, ${100 / colLength}%))`}"
-    @submit.prevent
-  >
-    <el-form-item
-      v-for="(opt, i) in cOpts"
-      :key="i"
-      :label="opt.label"
-      :label-width="opt.labelWidth"
-      v-bind="$attrs"
-      :style="{gridArea: i}"
-      :class="[opt.className,{'render_label':opt.labelRender}]"
-    >
+    :style="{ 'grid-template-areas': gridAreas, 'grid-template-columns': `repeat(${colLength}, minmax(220px, ${100 / colLength}%))` }"
+    @submit.prevent>
+    <el-form-item v-for="(opt, i) in cOpts" :key="i" :label="opt.label" :label-width="opt.labelWidth" v-bind="$attrs"
+      :style="{ gridArea: i }" :class="[opt.className, { 'render_label': opt.labelRender }]">
       <!-- 自定义label -->
       <template #label v-if="opt.labelRender">
         <render-comp :form="state.form" :render="opt.labelRender" />
@@ -26,43 +13,24 @@
       <template v-if="opt.slotName">
         <slot :name="opt.slotName" :param="state.form"></slot>
       </template>
-      <component
-        v-if="!opt.slotName"
-        :is="opt.comp"
-        v-bind="typeof opt.bind == 'function' ? opt.bind(state.form) : {clearable:true,filterable:true,...$attrs,...opt.bind}"
-        :placeholder="opt.placeholder||getPlaceholder(opt)"
-        @change="handleEvent(opt.event, state.form[opt.dataIndex])"
-        v-model="state.form[opt.dataIndex]"
-      >
+      <component v-if="!opt.slotName" :is="opt.comp"
+        v-bind="typeof opt.bind == 'function' ? opt.bind(state.form) : { clearable: true, filterable: true, ...$attrs, ...opt.bind }"
+        :placeholder="opt.placeholder || getPlaceholder(opt)"
+        @change="handleEvent(opt.event, state.form[opt.dataIndex])" v-model="state.form[opt.dataIndex]">
         <template v-if="!opt.comp.includes('date')">
-          <component
-            :is="compChildName(opt)"
-            v-for="(value, key, index) in selectListType(opt)"
-            :key="index"
-            :disabled="value.disabled"
-            :label="compChildLabel(opt,value)"
-            :value="compChildValue(opt,value,key)"
-          >{{compChildShowLabel(opt,value)}}</component>
+          <component :is="compChildName(opt)" v-for="(value, key, index) in selectListType(opt)" :key="index"
+            :disabled="value.disabled" :label="compChildLabel(opt, value)" :value="compChildValue(opt, value, key)">
+            {{ compChildShowLabel(opt, value) }}</component>
         </template>
       </component>
     </el-form-item>
-    <el-form-item
-      v-if="Object.keys(cOpts).length > 0"
-      label-width="0"
-      style="grid-area: submit_btn"
-      :class="['btn',{'flex_end': cellLength % colLength === 0}]"
-    >
-      <el-button
-        type="primary"
-        size="default"
-        class="btn_check"
-        @click="checkHandle"
-        :loading="loading"
-      >查询</el-button>
+    <el-form-item v-if="Object.keys(cOpts).length > 0" label-width="0" style="grid-area: submit_btn"
+      :class="['btn', { 'flex_end': cellLength % colLength === 0 }]">
+      <el-button type="primary" size="default" class="btn_check" @click="checkHandle" :loading="loading">查询</el-button>
       <el-button v-if="reset" class="btn_reset" size="default" @click="resetHandle">重置</el-button>
       <slot name="querybar"></slot>
-      <el-button v-if="originCellLength > colLength&&isShowOpen" @click="open = !open" link>
-        {{ open ? '收起' : '展开'}}
+      <el-button v-if="originCellLength > colLength && isShowOpen" @click="open = !open" link>
+        {{ open? '收起': '展开' }}
         <el-icon v-if="open">
           <ArrowUp />
         </el-icon>
@@ -107,6 +75,11 @@ const props = defineProps({
   isShowOpen: {
     type: Boolean,
     default: true
+  },
+  // 是否默认展开
+  isExpansion: {
+    type: Boolean,
+    default: false
   }
 })
 // 初始化表单数据
@@ -118,6 +91,12 @@ let state = reactive({
 })
 let colLength = ref(0)
 let open = ref(false)
+// 默认展开
+if (props.isExpansion) {
+  open.value = true
+} else {
+  open.value = false
+}
 
 const originCellLength = computed(() => {
   let length = 0
@@ -365,6 +344,7 @@ watch(
   .flex_end {
     grid-area: submit_btn;
     margin-top: 2px;
+
     .el-form-item__content {
       display: flex;
       justify-content: flex-end;
@@ -372,13 +352,16 @@ watch(
       overflow: visible !important;
     }
   }
+
   .btn {
     text-align: end;
+
     .el-form-item__content {
       display: flex;
       justify-content: flex-end;
     }
   }
+
   .el-form-item {
     display: flex;
     margin-bottom: 6px;
