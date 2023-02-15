@@ -14,8 +14,8 @@ export default defineConfig({
     vueJsx(),
     vueSetupExtend(),
     AutoImport({
-      imports: ['vue', 'vue-router','pinia'], // 自动导入vue、vue-router、pinia相关API
-      dts: 'examples/auto-import.d.ts' // 生成 `auto-import.d.ts` 全局声明
+      imports: ['vue', 'vue-router', 'pinia'], // 自动导入vue、vue-router、pinia相关API
+      dts: 'examples/auto-import.d.ts', // 生成 `auto-import.d.ts` 全局声明
     }),
     viteCompression({
       verbose: true,
@@ -23,7 +23,7 @@ export default defineConfig({
       deleteOriginFile: false, // 压缩后是否删除原文件
       threshold: 10240, // 压缩前最小文件大小
       algorithm: 'gzip', // 压缩算法
-      ext: '.gz' // 文件类型
+      ext: '.gz', // 文件类型
     }),
     // visualizer({
     //   open:true,  //注意这里要设置为true，否则无效
@@ -40,28 +40,28 @@ export default defineConfig({
       '^/mes': {
         target: `http://10.0.10.243:5000/mesv2/`,
         changeOrigin: true,
-        rewrite: (p) => p.replace(/^\/mes/, '')
+        rewrite: (p) => p.replace(/^\/mes/, ''),
       },
       '^/portal-user': {
         target: `http://10.0.10.240:8172`,
         changeOrigin: true,
-        rewrite: (p) => p.replace(/^\/portal-user/, '/portal-user')
+        rewrite: (p) => p.replace(/^\/portal-user/, '/portal-user'),
       },
       '^/portal-sso': {
         target: `http://10.0.10.240:8171`,
         changeOrigin: true,
-        rewrite: (p) => p.replace(/^\/portal-sso/, '/portal-sso')
-      }
-    }
+        rewrite: (p) => p.replace(/^\/portal-sso/, '/portal-sso'),
+      },
+    },
   },
   resolve: {
     // 配置别名
     alias: {
       '@': resolve(__dirname, 'examples'),
-      components: resolve(__dirname, 'examples/components')
+      components: resolve(__dirname, 'examples/components'),
     },
     // 类型： string[] 导入时想要省略的扩展名列表。
-    extensions: ['.js', '.ts', '.jsx', '.tsx', '.json', '.vue', '.mjs']
+    extensions: ['.js', '.ts', '.jsx', '.tsx', '.json', '.vue', '.mjs'],
   },
   build: {
     outDir: 'lib',
@@ -78,6 +78,7 @@ export default defineConfig({
     lib: {
       entry: './packages/index.ts',
       name: 't-ui-plus',
-    }
+      fileName: 't-ui-plus',
+    },
   },
 })

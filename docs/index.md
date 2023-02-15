@@ -30,6 +30,7 @@ features:
     title: Vue驱动。
     details: 享受 Vue3 + vite3 的开发体验，在 Markdown 中使用 Vue 组件，同时可以使用 Vue 来开发自定义主题。
 ---
+
 <p style="display: flex;
     justify-content: center;
     align-items: center;
@@ -40,7 +41,7 @@ features:
   <a href="https://gitee.com/wocwin/t-ui-plus/stargazers" target="_blank">
     <img src="https://gitee.com/wocwin/t-ui-plus/badge/star.svg?theme=dark" alt="t-ui-plus">
   </a>
-   <a href="https://github.com/wocwin/t-ui-plus/stargazers" target="_blank">
+  <a href="https://github.com/wocwin/t-ui-plus/stargazers" target="_blank">
     <img src="https://img.shields.io/github/stars/wocwin/t-ui-plus.svg" alt="t-ui-plus">
   </a>
    <a href="https://www.npmjs.com/package/@wocwin/t-ui-plus" target="_blank">
