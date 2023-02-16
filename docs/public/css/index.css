@@ -25,23 +25,22 @@ html.dark {
   --vp-code-block-bg: var(--vp-c-bg-alt);
 }
 
-.vp-doc th,
-.vp-doc td {
+.source th,
+.source td {
   border: none;
   background-color: #fff;
 }
-.vp-doc table {
+.source table {
   border-collapse: separate;
   text-indent: initial;
   border-spacing: 2px;
-  /* display: contents; */
   margin: 0;
   overflow-x: inherit;
 }
-.vp-doc tr:nth-child(2n) {
+.source tr:nth-child(2n) {
   background-color: #fff;
 }
 
-.vp-doc tr {
+.source tr {
   border-top: none;
 }

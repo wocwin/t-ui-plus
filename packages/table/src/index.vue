@@ -9,15 +9,12 @@
         <!-- 表格外操作 -->
         <slot name="toolbar"></slot>
         <!--列设置按钮-->
-        <div
-          class="header_right_wrap"
-          :style="{ marginLeft: isShow('toolbar') ? '12px' : 0 }"
-        >
+        <div class="header_right_wrap" :style="{ marginLeft: isShow('toolbar') ? '12px' : 0 }">
           <slot name="btn" />
           <column-set
             v-if="columnSetting"
             v-bind="$attrs"
-            :columns="columns"
+            :columns="renderColumns"
             @columnSetting="v => (state.columnSet = v)"
           />
         </div>
@@ -82,9 +79,9 @@
           <template #default="scope">
             <span>
               {{
-                isShowPagination
-                  ? (table.currentPage - 1) * table.pageSize + scope.$index + 1
-                  : scope.$index + 1
+              isShowPagination
+              ? (table.currentPage - 1) * table.pageSize + scope.$index + 1
+              : scope.$index + 1
               }}
             </span>
           </template>
@@ -148,12 +145,12 @@
               <!-- 字典过滤 -->
               <template v-if="item.filters && item.filters.list">
                 {{
-                  constantEscape(
-                    scope.row[item.prop],
-                    table.listTypeInfo[item.filters.list],
-                    item.filters.key || 'value',
-                    item.filters.label || 'label'
-                  )
+                constantEscape(
+                scope.row[item.prop],
+                table.listTypeInfo[item.filters.list],
+                item.filters.key || 'value',
+                item.filters.label || 'label'
+                )
                 }}
               </template>
               <div
@@ -189,10 +186,7 @@
         class-name="operator"
       >
         <template #default="scope">
-          <div
-            class="operator_btn"
-            :style="table.operatorConfig && table.operatorConfig.style"
-          >
+          <div class="operator_btn" :style="table.operatorConfig && table.operatorConfig.style">
             <el-button
               v-for="(item, index) in table.operator"
               :key="index"
@@ -249,7 +243,7 @@
 </template>
 <script lang="ts">
 export default {
-  name: 'TTable'
+  name: 'TTable',
 }
 </script>
 <script setup lang="ts">
@@ -268,64 +262,64 @@ const props = defineProps({
     default: () => {
       return {}
     },
-    required: true
+    required: true,
   },
   // 表头数据
   columns: {
     type: Array,
     default: () => {
       return []
-    }
+    },
     // required: true
   },
   // 表格标题
   title: {
-    type: String
+    type: String,
   },
   // 是否复制单元格
   isCopy: {
     type: Boolean,
-    default: true
+    default: true,
   },
   // 是否开启点击整行选中单选框
   rowClickRadio: {
     type: Boolean,
-    default: true
+    default: true,
   },
   // 是否显示分页
   isShowPagination: {
     type: Boolean,
-    default: true
+    default: true,
   },
   // 是否开启编辑保存按钮
   isShowFooterBtn: {
     type: Boolean,
-    default: false
+    default: false,
   },
   // 是否显示设置（隐藏/显示列）
   columnSetting: {
     type: Boolean,
-    default: false
+    default: false,
   },
   // 是否高亮选中行
   highlightCurrentRow: {
     type: Boolean,
-    default: false
+    default: false,
   },
   // 是否开启合计行隐藏复选框/单选框/序列
   isTableColumnHidden: {
     type: Boolean,
-    default: false
+    default: false,
   },
   // 如果设置为 'custom'，则代表用户希望远程排序，需要监听 Table 的 sort-change 事件
   sortable: {
-    type: [Boolean, String]
-  }
+    type: [Boolean, String],
+  },
 })
 // 初始化数据
 let state = reactive({
   tableData: props.table.data,
-  columnSet: []
+  columnSet: [],
 })
 // 单选框
 const radioVal = ref(null)
@@ -339,7 +333,7 @@ const emits = defineEmits(['save', 'page-change', 'handleEvent', 'radioChange'])
 const slots = useSlots()
 watch(
   () => props.table.data,
-  val => {
+  (val) => {
     // console.log(111, val)
     state.tableData = val
   },
@@ -362,7 +356,7 @@ onMounted(() => {
  * @param {String} label  数据源的label字段（默认：label）
  */
 const constantEscape = (value, list, key, label) => {
-  const res = list.find(item => {
+  const res = list.find((item) => {
     return item[key] === value
   })
   return res && res[label]
@@ -435,13 +429,13 @@ const radioChange = (e, row, index) => {
   radioClick(row, index)
 }
 // 点击某行事件
-const rowClick = row => {
+const rowClick = (row) => {
   if (props.rowClickRadio) {
     radioClick(row, state.tableData.indexOf(row) + 1)
   }
 }
 // 复制内容
-const copyDomText = val => {
+const copyDomText = (val) => {
   // 获取需要复制的元素以及元素内的文本内容
   const text = val
   // 添加一个input元素放置需要的文本内容
@@ -467,7 +461,7 @@ const cellDblclick = (row, column) => {
   }
 }
 // 判断是否使用漏了某个插槽
-const isShow = name => {
+const isShow = (name) => {
   return Object.keys(slots).includes(name)
 }
 // 整行编辑返回数据
@@ -480,7 +474,7 @@ const checkIsShow = (scope, item) => {
   let isNoshow = false
   if (item.noshow) {
     // 双重判断
-    item.noshow.map(rs => {
+    item.noshow.map((rs) => {
       rs.isShow =
         typeof rs.val === 'string'
           ? rs.val === 'isHasVal'
@@ -492,7 +486,7 @@ const checkIsShow = (scope, item) => {
           ? 'false'
           : 'true'
     })
-    isNoshow = item.noshow.every(key => {
+    isNoshow = item.noshow.every((key) => {
       return key.isShow === 'true'
     })
   } else {
@@ -503,11 +497,11 @@ const checkIsShow = (scope, item) => {
   // 按钮权限
   // let isPermission = item.hasPermi ? btnPremissions.value.includes(item.hasPermi) : true
   // table页面合计
-  let totalTxt = Object.values(scope.row).every(key => {
+  let totalTxt = Object.values(scope.row).every((key) => {
     return key !== '当页合计'
   })
   // table页面合计
-  let totalTxt1 = Object.values(scope.row).every(key => {
+  let totalTxt1 = Object.values(scope.row).every((key) => {
     return key !== '全部合计'
   })
   return (
@@ -524,7 +518,7 @@ const handleEvent = (type, val) => {
   emits('handleEvent', type, val)
 }
 // 当前页码
-const handlesCurrentChange = val => {
+const handlesCurrentChange = (val) => {
   emits('page-change', val)
 }
 /**

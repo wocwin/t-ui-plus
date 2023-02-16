@@ -40,10 +40,10 @@ import '@wocwin/t-ui-plus/lib/style.css'
 Vue.use(TuiPlus)
 ```
 
-## 安装依赖
+## 安装依赖 **如果总报错就用 cnpm install**
 
 ```shell
-pnpm install
+npm install
 
 ```
 

@@ -6,17 +6,17 @@
         <el-dropdown-item>
           <span class="title">列设置</span>
           <Draggable class="t_table_column_setting_dropdown" v-model="state.columnSet" item-key="prop">
-            <template #item="{element,index}">
+            <template #item="{ element, index }">
               <el-checkbox :checked="!element.hidden" @click.native.stop :disabled="element.checkBoxDisabled"
                 @change="checked => checkChanged(checked, index)">
-                {{element.label}}
+                {{ element.label }}
               </el-checkbox>
             </template>
           </Draggable>
         </el-dropdown-item>
       </el-dropdown-menu>
     </template>
-  </el-dropdown>
+</el-dropdown>
 </template>
 <script lang="ts">
 export default {
@@ -40,6 +40,19 @@ const props = defineProps({
     default: ''
   }
 })
+
+// 获取缓存数据
+const getColumnSetCache = () => {
+  let value: any = localStorage.getItem(`t-ui-plus:TTable.columnSet-${props.name || props.title}`)
+  // let columnOption = initColumnSet()
+  // let valueArr = JSON.parse(value) || []
+  // columnOption.map(item => {
+  //   let findEle = valueArr.find(ele => ele.label === item.label && ele.prop === item.prop)
+  //   item.hidden = findEle ? findEle.hidden : false
+  // })
+  // value = JSON.stringify(columnOption)
+  return value ? JSON.parse(value) : initColumnSet()
+}
 // 初始化
 const initColumnSet = () => {
   const columnSet = props.columns.map((col: any, index) => ({
@@ -49,11 +62,6 @@ const initColumnSet = () => {
     checkBoxDisabled: false
   }))
   return columnSet
-}
-// 获取缓存数据
-const getColumnSetCache = () => {
-  const value = localStorage.getItem(`t-ui-plus:TTable.columnSet-${props.name || props.title}`)
-  return value ? JSON.parse(value) : initColumnSet()
 }
 // 抛出事件
 const emits = defineEmits(['columnSetting'])

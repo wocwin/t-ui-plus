@@ -1,10 +1,23 @@
 <template>
-  <el-form id="t_query_condition" v-bind="$attrs" :label-width="labelWidth" :form="state.form" size="default"
+  <el-form
+    id="t_query_condition"
+    v-bind="$attrs"
+    :label-width="labelWidth"
+    :form="state.form"
+    size="default"
     class="t-query-condition"
     :style="{ 'grid-template-areas': gridAreas, 'grid-template-columns': `repeat(${colLength}, minmax(220px, ${100 / colLength}%))` }"
-    @submit.prevent>
-    <el-form-item v-for="(opt, i) in cOpts" :key="i" :label="opt.label" :label-width="opt.labelWidth" v-bind="$attrs"
-      :style="{ gridArea: i }" :class="[opt.className, { 'render_label': opt.labelRender }]">
+    @submit.prevent
+  >
+    <el-form-item
+      v-for="(opt, i) in cOpts"
+      :key="i"
+      :label="opt.label"
+      :label-width="opt.labelWidth"
+      v-bind="$attrs"
+      :style="{ gridArea: i }"
+      :class="[opt.className, { 'render_label': opt.labelRender }]"
+    >
       <!-- 自定义label -->
       <template #label v-if="opt.labelRender">
         <render-comp :form="state.form" :render="opt.labelRender" />
@@ -13,20 +26,39 @@
       <template v-if="opt.slotName">
         <slot :name="opt.slotName" :param="state.form"></slot>
       </template>
-      <component v-if="!opt.slotName" :is="opt.comp"
+      <component
+        v-if="!opt.slotName"
+        :is="opt.comp"
         v-bind="typeof opt.bind == 'function' ? opt.bind(state.form) : { clearable: true, filterable: true, ...$attrs, ...opt.bind }"
         :placeholder="opt.placeholder || getPlaceholder(opt)"
-        @change="handleEvent(opt.event, state.form[opt.dataIndex])" v-model="state.form[opt.dataIndex]">
+        @change="handleEvent(opt.event, state.form[opt.dataIndex])"
+        v-model="state.form[opt.dataIndex]"
+      >
         <template v-if="!opt.comp.includes('date')">
-          <component :is="compChildName(opt)" v-for="(value, key, index) in selectListType(opt)" :key="index"
-            :disabled="value.disabled" :label="compChildLabel(opt, value)" :value="compChildValue(opt, value, key)">
-            {{ compChildShowLabel(opt, value) }}</component>
+          <component
+            :is="compChildName(opt)"
+            v-for="(value, key, index) in selectListType(opt)"
+            :key="index"
+            :disabled="value.disabled"
+            :label="compChildLabel(opt, value)"
+            :value="compChildValue(opt, value, key)"
+          >{{ compChildShowLabel(opt, value) }}</component>
         </template>
       </component>
     </el-form-item>
-    <el-form-item v-if="Object.keys(cOpts).length > 0" label-width="0" style="grid-area: submit_btn"
-      :class="['btn', { 'flex_end': cellLength % colLength === 0 }]">
-      <el-button type="primary" size="default" class="btn_check" @click="checkHandle" :loading="loading">查询</el-button>
+    <el-form-item
+      v-if="Object.keys(cOpts).length > 0"
+      label-width="0"
+      style="grid-area: submit_btn"
+      :class="['btn', { 'flex_end': cellLength % colLength === 0 }]"
+    >
+      <el-button
+        type="primary"
+        size="default"
+        class="btn_check"
+        @click="checkHandle"
+        :loading="loading"
+      >查询</el-button>
       <el-button v-if="reset" class="btn_reset" size="default" @click="resetHandle">重置</el-button>
       <slot name="querybar"></slot>
       <el-button v-if="originCellLength > colLength && isShowOpen" @click="open = !open" link>
@@ -43,7 +75,7 @@
 </template>
 <script lang="ts">
 export default {
-  name: 'TQueryCondition'
+  name: 'TQueryCondition',
 }
 </script>
 <script setup lang="ts">
@@ -53,43 +85,43 @@ const props = defineProps({
   opts: {
     type: Object,
     required: true,
-    default: () => ({})
+    default: () => ({}),
   },
   labelWidth: {
     type: String,
-    default: '110px'
+    default: '110px',
   },
   loading: {
     type: Boolean,
-    default: false
+    default: false,
   },
   reset: {
     type: Boolean,
-    default: true
+    default: true,
   },
   boolEnter: {
     type: Boolean,
-    default: true
+    default: true,
   },
   // 是否显示收起和展开
   isShowOpen: {
     type: Boolean,
-    default: true
+    default: true,
   },
   // 是否默认展开
   isExpansion: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 })
 // 初始化表单数据
 let state = reactive({
   form: Object.keys(props.opts).reduce((acc: any, field: any) => {
     acc[field] = props.opts[field].defaultVal || null
     return acc
-  }, {})
+  }, {}),
 })
-let colLength = ref(0)
+let colLength = ref(4)
 let open = ref(false)
 // 默认展开
 if (props.isExpansion) {
@@ -100,7 +132,7 @@ if (props.isExpansion) {
 
 const originCellLength = computed(() => {
   let length = 0
-  Object.keys(props.opts).forEach(key => {
+  Object.keys(props.opts).forEach((key) => {
     let span = props.opts[key].span || 1
     if ((length % colLength.value) + span > colLength.value) {
       length += colLength.value - (length % colLength.value)
@@ -113,7 +145,7 @@ const cOpts = computed(() => {
   let renderSpan = 0
   return Object.keys(props.opts).reduce((acc: any, field: any) => {
     let opt = {
-      ...props.opts[field]
+      ...props.opts[field],
     }
     // 收起、展开操作
     if (props.isShowOpen) {
@@ -128,7 +160,7 @@ const cOpts = computed(() => {
 const cellLength: any = computed(() => {
   // 占用单元格长度
   let length = 0
-  Object.keys(props.opts).forEach(key => {
+  Object.keys(props.opts).forEach((key) => {
     let span = props.opts[key].span > 4 ? 4 : props.opts[key].span || 1
     length += span
   })
@@ -294,13 +326,13 @@ const getPlaceholder = (row: any) => {
 onMounted(() => {
   colLength.value = getColLength()
   if (props.boolEnter) {
-    document.onkeyup = e => {
+    document.onkeyup = (e) => {
       // console.log(7777, e)
       let key = e.keyCode
       let pagination = document.querySelectorAll('.el-pagination')
       let isPaginationInputFocus = false
       if (pagination) {
-        pagination.forEach(ele => {
+        pagination.forEach((ele) => {
           let paginationInputList = ele.getElementsByTagName('input')
           let paginationInput =
             paginationInputList[paginationInputList.length - 1]
