@@ -52,14 +52,8 @@
       style="grid-area: submit_btn"
       :class="['btn', { 'flex_end': cellLength % colLength === 0 }]"
     >
-      <el-button
-        type="primary"
-        size="default"
-        class="btn_check"
-        @click="checkHandle"
-        :loading="loading"
-      >查询</el-button>
-      <el-button v-if="reset" class="btn_reset" size="default" @click="resetHandle">重置</el-button>
+      <el-button class="btn_check" @click="checkHandle" v-bind="queryAttrs" :loading="loading">查询</el-button>
+      <el-button v-if="reset" class="btn_reset" v-bind="resetAttrs" @click="resetHandle">重置</el-button>
       <slot name="querybar"></slot>
       <el-button v-if="originCellLength > colLength && isShowOpen" @click="open = !open" link>
         {{ open? '收起': '展开' }}
@@ -90,6 +84,14 @@ const props = defineProps({
   labelWidth: {
     type: String,
     default: '110px',
+  },
+  // 查询按钮配置
+  btnCheckBind: {
+    type: [Object],
+  },
+  // 重置按钮配置
+  btnResetBind: {
+    type: [Object],
   },
   loading: {
     type: Boolean,
@@ -129,7 +131,14 @@ if (props.isExpansion) {
 } else {
   open.value = false
 }
-
+// 查询按钮配置
+const queryAttrs = computed(() => {
+  return { type: 'primary', size: 'default', ...props.btnCheckBind }
+})
+// 重置按钮配置
+const resetAttrs = computed(() => {
+  return { size: 'default', ...props.btnResetBind }
+})
 const originCellLength = computed(() => {
   let length = 0
   Object.keys(props.opts).forEach((key) => {

@@ -14,6 +14,7 @@
         :opts="opts"
         @submit="conditionEnter"
         @handleEvent="handleEvent"
+        :btnResetBind="{ size: 'small' }"
       />
     </t-layout-page-item>
   </t-layout-page>
