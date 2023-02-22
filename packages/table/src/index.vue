@@ -101,9 +101,7 @@
             :sortable="item.sort || sortable"
             :align="item.align || 'center'"
             :fixed="item.fixed"
-            :show-overflow-tooltip="
-              item.noShowTip === false ? item.noShowTip : true
-            "
+            :show-overflow-tooltip="item.noShowTip === false ? item.noShowTip : true"
             v-bind="{ ...item.bind, ...$attrs }"
           >
             <template #header v-if="item.renderHeader">
@@ -130,8 +128,8 @@
                   :configEdit="item.configEdit"
                   v-model="scope.row[scope.column.property]"
                   :prop="item.prop"
-                  :record="scope"
-                  @handleEvent="handleEvent"
+                  :scope="scope"
+                  @handleEvent="handleEvent($event,scope.$index)"
                   v-bind="$attrs"
                   ref="editCell"
                 >
@@ -187,31 +185,29 @@
       >
         <template #default="scope">
           <div class="operator_btn" :style="table.operatorConfig && table.operatorConfig.style">
-            <el-button
-              v-for="(item, index) in table.operator"
-              :key="index"
-              @click="
-                item.fun && item.fun(scope.row, scope.$index, state.tableData)
-              "
-              :type="item.type || 'primary'"
-              link
-              :style="item.style"
-              :icon="item.icon ? item.icon : ''"
-              :disabled="item.disabled"
-              size="small"
-              v-show="checkIsShow(scope, item)"
-            >
-              <!-- render渲染 -->
-              <template v-if="item.render">
-                <render-col
-                  :column="item"
-                  :row="scope.row"
-                  :render="item.render"
-                  :index="scope.$index"
-                />
-              </template>
-              <span v-if="!item.render">{{ item.text }}</span>
-            </el-button>
+            <template v-for="(item, index) in table.operator" :key="index">
+              <el-button
+                @click="item.fun && item.fun(scope.row, scope.$index, state.tableData)"
+                :type="item.type ? item.type : 'primary'"
+                link
+                :style="item.style ? item.style : ''"
+                :icon="item.icon ? item.icon : ''"
+                :disabled="item.disabled"
+                :size="item.size ? item.size : 'small'"
+                v-if="('disabled' in item)&&checkIsShow(scope, item)"
+              >
+                <!-- render渲染 -->
+                <template v-if="item.render">
+                  <render-col
+                    :column="item"
+                    :row="scope.row"
+                    :render="item.render"
+                    :index="scope.$index"
+                  />
+                </template>
+                <span v-if="!item.render">{{ item.text }}</span>
+              </el-button>
+            </template>
           </div>
         </template>
       </el-table-column>
@@ -379,7 +375,7 @@ const renderColumns = computed(() => {
 })
 // 判断如果有表头合并就自动开启单元格缩放
 const isTableBorder = computed(() => {
-  return renderColumns.value.some((item: any) => item.children)
+  return props.columns.some((item: any) => item.children)
 })
 // 合并行隐藏复选框/单选框
 const cellClassNameFuc = ({ row }) => {
@@ -514,8 +510,8 @@ const checkIsShow = (scope, item) => {
   )
 }
 // 单个编辑事件
-const handleEvent = (type, val) => {
-  emits('handleEvent', type, val)
+const handleEvent = ({ type, val }, index) => {
+  emits('handleEvent', type, val, index)
 }
 // 当前页码
 const handlesCurrentChange = (val) => {

@@ -1,5 +1,5 @@
 <template>
-  <div class="single_edit_cell" :class="{ 'edit-enabled-cell': canEdit }">
+  <div class="single_edit_cell">
     <!-- 编辑组件自定义插槽 -->
     <template v-if="configEdit.editSlotName">
       <slot />
@@ -7,32 +7,22 @@
     <component
       v-if="!configEdit.editSlotName"
       :is="configEdit.editComponent || 'el-input'"
-      v-model="record.row[prop]"
+      v-model="scope.row[prop]"
       :type="configEdit.type"
       :placeholder="configEdit.placeholder || getPlaceholder(configEdit)"
       ref="parentCom"
-      @change="
-        handleEvent(
-          configEdit.event,
-          record.row[prop],
-          configEdit.editComponent
-        )
-      "
+      @change="handleEvent(configEdit.event,scope.row[prop],configEdit.editComponent)"
       :style="{ width: configEdit.width || '100%' }"
       v-bind="
         typeof configEdit.bind == 'function'
-          ? configEdit.bind(record)
+          ? configEdit.bind(scope)
           : { clearable: true, filterable: true, ...configEdit.bind }
       "
     >
       <!-- 前置文本 -->
-      <template #prepend v-if="configEdit.prepend">{{
-        configEdit.prepend
-      }}</template>
+      <template #prepend v-if="configEdit.prepend">{{configEdit.prepend}}</template>
       <!-- 后置文本 -->
-      <template #append v-if="configEdit.append">{{
-        configEdit.append
-      }}</template>
+      <template #append v-if="configEdit.append">{{configEdit.append}}</template>
       <!-- 子组件自定义插槽 -->
       <!-- <template v-if="configEdit.childSlotName">
         <slot />
@@ -45,20 +35,19 @@
           :disabled="value.disabled"
           :label="compChildLabel(configEdit, value)"
           :value="compChildValue(configEdit, value, key)"
-          >{{ compChildShowLabel(configEdit, value) }}</component
-        >
+        >{{ compChildShowLabel(configEdit, value) }}</component>
       </template>
     </component>
   </div>
 </template>
 <script lang="ts">
 export default {
-  name: 'SingleEditCell'
+  name: 'SingleEditCell',
 }
 </script>
 <script setup lang="ts">
-import { computed } from 'vue'
-defineProps({
+import { computed, ref, watch } from 'vue'
+const props = defineProps({
   /** 编辑配置项说明
    * label: '爱好', // placeholder显示
    * editComponent: 'el-select', // 组件
@@ -70,37 +59,43 @@ defineProps({
    */
   configEdit: {
     type: Object,
-    default: () => ({})
+    default: () => ({}),
   },
   // 下拉选择数据源
   listTypeInfo: {
     type: Object,
-    default: () => ({})
+    default: () => ({}),
   },
-  // 是否显示tip
-  isShowTips: {
-    type: Boolean,
-    default: true
-  },
-  // 是否开启编辑
-  canEdit: {
-    type: Boolean,
-    default: false
-  },
-  value: {
-    type: [String, Number, Object, Array, Date, Boolean]
-  },
-  record: {
+  scope: {
     type: Object,
-    default: {}
+    default: {},
   },
   prop: {
     type: String,
-    default: ''
-  }
+    default: '',
+  },
+  // modelValue: {
+  //   type: [String, Number, Array, Boolean],
+  // },
 })
 // 抛出事件
-const emits = defineEmits(['handleEvent'])
+const emits = defineEmits(['handleEvent', 'update:modelValue'])
+// const childValue = ref(props.scope?.row[props?.prop])
+// vue3 v-model简写
+// let childValue: any = computed({
+//   get() {
+//     return props.scope?.row[props.scope?.column?.property]
+//     // return props.scope?.row[props?.prop]
+//   },
+//   set(val) {
+//     console.log('update:modelValue', val)
+//     emits('update:modelValue', val)
+//   },
+// })
+// watch(
+//   () => childValue.value,
+//   (data) => emits('update:modelValue', data)
+// )
 // 子组件名称
 const compChildName = computed(() => {
   return (configEdit: any) => {
@@ -177,11 +172,11 @@ const getPlaceholder = (row: any) => {
 // 绑定的相关事件
 const handleEvent = (type, val, editCom) => {
   // console.log('组件', type, val, editCom)
-  emits('handleEvent', type, val)
+  emits('handleEvent', { type, val })
 }
 </script>
 <style lang="scss">
-.edit-enabled-cell {
+.single_edit_cell {
   cursor: pointer;
 }
 </style>
