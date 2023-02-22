@@ -6,6 +6,9 @@ import TForm from './form'
 import TSelect from './select'
 import TSelectTable from './select-table'
 import TDetail from './detail'
+import TButton from './button'
+import TStepWizard from './step-wizard'
+import TTimerBtn from './timer-btn'
 
 // 存储组件列表
 const components = [
@@ -16,7 +19,10 @@ const components = [
   TForm,
   TSelect,
   TSelectTable,
-  TDetail
+  TDetail,
+  TButton,
+  TStepWizard,
+  TTimerBtn,
 ]
 
 // 插件声明：声明所有插件
@@ -37,5 +43,5 @@ const install = (app: any, router?: any) => {
 export default {
   ...components, // 按需引入
   // 导出的对象必须具有 install，才能被 Vue.use() 方法安装
-  install
+  install,
 }

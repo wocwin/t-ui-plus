@@ -49,6 +49,12 @@ export default defineConfig({
               link: '/components/TSelectTable/base.md',
             },
             { text: '详情组件', link: '/components/TDetail/base.md' },
+            { text: 'Button组件', link: '/components/TButton/base.md' },
+            {
+              text: '获取验证码倒计时组件',
+              link: '/components/TTimerBtn/base.md',
+            },
+            { text: '步骤组件', link: '/components/TStepWizard/base.md' },
           ],
         },
         {
