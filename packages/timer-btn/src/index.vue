@@ -36,6 +36,10 @@ const run = () => {
   emits('click')
   start()
 }
+// 重置倒计时0
+const reset = () => {
+  time.value = 0
+}
 const start = () => {
   time.value = props.second
   disabled.value = true
@@ -49,6 +53,8 @@ const timer = () => {
     disabled.value = false
   }
 }
+// 暴露方法出去
+defineExpose({ reset })
 </script>
 <style lang="scss" scoped>
 .timer-btn {
