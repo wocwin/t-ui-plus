@@ -94,7 +94,7 @@
 </template>
 <script lang="ts">
 export default {
-  name: 'TForm'
+  name: 'TForm',
 }
 </script>
 <script setup lang="ts">
@@ -104,7 +104,7 @@ import { computed, ref, watch, onMounted } from 'vue'
 const props = defineProps({
   // 自定义类名
   className: {
-    type: String
+    type: String,
   },
   /** 表单配置项说明
    * formData object 表单提交数据
@@ -116,7 +116,7 @@ const props = defineProps({
    */
   formOpts: {
     type: Object,
-    default: () => ({})
+    default: () => ({}),
   },
   // 一行显示几个输入项;最大值4
   widthSize: {
@@ -124,8 +124,8 @@ const props = defineProps({
     default: 2,
     validator: (value: any) => {
       return value <= 4
-    }
-  }
+    },
+  },
 })
 const selectListType = computed(() => {
   return ({ list }) => {
@@ -159,7 +159,7 @@ const compChildLabel = computed(() => {
         return value.value
       case 'el-select-multiple':
       case 'select-arr':
-        return value[opt.arrLabel || 'dictLabel']
+        return value[opt.arrLabel || 'label']
       case 'select-obj':
         return value
     }
@@ -174,7 +174,7 @@ const compChildValue = computed(() => {
         return value.value
       case 'el-select-multiple':
       case 'select-arr':
-        return value[opt.arrKey || 'dictValue']
+        return value[opt.arrKey || 'key']
       case 'select-obj':
         return key
     }
@@ -189,7 +189,7 @@ const compChildShowLabel = computed(() => {
         return value.label
       case 'el-select-multiple':
       case 'select-arr':
-        return value[opt.arrLabel || 'dictLabel']
+        return value[opt.arrLabel || 'label']
       case 'select-obj':
         return value
     }
@@ -202,7 +202,7 @@ const tform: any = ref<HTMLElement | null>(null)
 const emits = defineEmits(['update:modelValue', 'handleEvent'])
 watch(
   () => props.formOpts.formData,
-  val => {
+  (val) => {
     // state.form = initForm(opts, true)
     // 将form实例返回到父级
     emits('update:modelValue', tform.value)
@@ -211,7 +211,7 @@ watch(
 )
 watch(
   () => props.widthSize,
-  val => {
+  (val) => {
     if (val > 4) {
       ElMessage.warning('widthSize值不能大于4！')
       colSize.value = 4
@@ -227,7 +227,7 @@ onMounted(() => {
   emits('update:modelValue', tform.value)
 })
 // label与输入框的布局方式
-const getChildWidth = item => {
+const getChildWidth = (item) => {
   if (props.formOpts.labelPosition === 'top') {
     return `flex: 0 1 calc((${
       100 / (item.widthSize || colSize.value)
@@ -262,13 +262,13 @@ const validate = () => {
       if (valid) {
         resolve({
           valid,
-          formData: props.formOpts.formData
+          formData: props.formOpts.formData,
         })
       } else {
         // eslint-disable-next-line prefer-promise-reject-errors
         reject({
           valid,
-          formData: null
+          formData: null,
         })
       }
     })

@@ -44,3 +44,12 @@ html.dark {
 .source tr {
   border-top: none;
 }
+.VPContent .VPDoc .container .content {
+  padding: 0;
+}
+.VPSidebar {
+  z-index: 9 !important;
+}
+.VPContent .VPDoc.has-aside .content-container {
+  max-width: 1200px;
+}

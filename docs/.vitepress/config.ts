@@ -65,6 +65,7 @@ export default defineConfig({
               link: '/components/TQueryCondition/base.md',
             },
             { text: '表单组件', link: '/components/TForm/base.md' },
+            { text: '模块表单组件', link: '/components/TModuleForm/base.md' },
             { text: 'table组件', link: '/components/TTable/base.md' },
           ],
         },

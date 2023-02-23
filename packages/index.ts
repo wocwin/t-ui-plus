@@ -9,6 +9,7 @@ import TDetail from './detail'
 import TButton from './button'
 import TStepWizard from './step-wizard'
 import TTimerBtn from './timer-btn'
+import TModuleForm from './module-form'
 
 // 存储组件列表
 const components = [
@@ -23,6 +24,7 @@ const components = [
   TButton,
   TStepWizard,
   TTimerBtn,
+  TModuleForm,
 ]
 
 // 插件声明：声明所有插件
