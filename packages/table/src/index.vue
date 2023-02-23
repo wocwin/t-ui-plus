@@ -194,7 +194,7 @@
                 :icon="item.icon ? item.icon : ''"
                 :disabled="item.disabled"
                 :size="item.size ? item.size : 'small'"
-                v-if="('disabled' in item)&&checkIsShow(scope, item)"
+                v-if="checkIsShow(scope, item)"
               >
                 <!-- render渲染 -->
                 <template v-if="item.render">
