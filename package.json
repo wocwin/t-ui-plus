@@ -1,6 +1,6 @@
 {
   "name": "@wocwin/t-ui-plus",
-  "version": "1.0.5",
+  "version": "1.0.10",
   "description": "Vue3 中基于Element-plus二次封装基础组件文档",
   "author": "wocwin",
   "license": "ISC",
@@ -17,7 +17,8 @@
     "docs:build": "pnpm run register:components && vitepress build docs",
     "register:components": "vitepress-rc"
   },
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "@element-plus/icons-vue": "^2.0.10",
     "axios": "^1.1.2",
     "element-plus": "^2.2.18",
@@ -26,9 +27,7 @@
     "pinia-plugin-persistedstate": "^2.3.0",
     "vue": "3.2.44",
     "vue-router": "^4.1.5",
-    "vuedraggable": "^4.1.0"
-  },
-  "devDependencies": {
+    "vuedraggable": "^4.1.0",
     "@types/js-cookie": "^3.0.2",
     "@types/node": "18.7.18",
     "@types/nprogress": "^0.2.0",
@@ -37,6 +36,7 @@
     "@typescript-eslint/parser": "^5.40.0",
     "@vitejs/plugin-vue": "^3.1.0",
     "@vitejs/plugin-vue-jsx": "^2.0.1",
+    "@vueuse/core": "^9.13.0",
     "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",

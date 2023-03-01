@@ -47,12 +47,7 @@ pnpm install
 
 ```
 
-## 本地运行 examples 中组件示例
-
-```shell
-// examples项目（常规的后台管理系统）基于vue3+ts+vite项目
-npm run serve
-```
+## 使用[t-ui-plus组件的后台管理系统地址](https://github.com/wocwin/wocwin-admin)
 
 ## 本地运行 vuepress 中组件文档
 
