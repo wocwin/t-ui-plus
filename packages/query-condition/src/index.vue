@@ -27,23 +27,37 @@
         <slot :name="opt.slotName" :param="state.form"></slot>
       </template>
       <component
-        v-if="!opt.slotName"
+        v-if="!opt.slotName&&opt.comp.includes('date')"
+        :is="opt.comp"
+        v-bind="typeof opt.bind == 'function' ? opt.bind(state.form) : { clearable: true, filterable: true, ...$attrs, ...opt.bind }"
+        :placeholder="opt.placeholder || getPlaceholder(opt)"
+        @change="handleEvent(opt.event, state.form[opt.dataIndex])"
+        v-model="state.form[opt.dataIndex]"
+      />
+      <component
+        v-if="!opt.slotName&&opt.comp.includes('tree-select')"
+        :is="opt.comp"
+        v-bind="typeof opt.bind == 'function' ? opt.bind(state.form) : { clearable: true, filterable: true, ...$attrs, ...opt.bind }"
+        :placeholder="opt.placeholder || getPlaceholder(opt)"
+        @change="handleEvent(opt.event, state.form[opt.dataIndex])"
+        v-model="state.form[opt.dataIndex]"
+      />
+      <component
+        v-if="!opt.slotName&&!opt.comp.includes('date')&&!opt.comp.includes('tree-select')"
         :is="opt.comp"
         v-bind="typeof opt.bind == 'function' ? opt.bind(state.form) : { clearable: true, filterable: true, ...$attrs, ...opt.bind }"
         :placeholder="opt.placeholder || getPlaceholder(opt)"
         @change="handleEvent(opt.event, state.form[opt.dataIndex])"
         v-model="state.form[opt.dataIndex]"
       >
-        <template v-if="!opt.comp.includes('date')">
-          <component
-            :is="compChildName(opt)"
-            v-for="(value, key, index) in selectListType(opt)"
-            :key="index"
-            :disabled="value.disabled"
-            :label="compChildLabel(opt, value)"
-            :value="compChildValue(opt, value, key)"
-          >{{ compChildShowLabel(opt, value) }}</component>
-        </template>
+        <component
+          :is="compChildName(opt)"
+          v-for="(value, key, index) in selectListType(opt)"
+          :key="index"
+          :disabled="value.disabled"
+          :label="compChildLabel(opt, value)"
+          :value="compChildValue(opt, value, key)"
+        >{{ compChildShowLabel(opt, value) }}</component>
       </component>
     </el-form-item>
     <el-form-item

@@ -33,7 +33,27 @@
           <span>{{ item.textValue || formOpts.formData[item.value] }}</span>
         </template>
         <component
-          v-if="!item.slotName && !item.textShow"
+          v-if="!item.slotName && !item.textShow&&item.comp.includes('date')"
+          :is="item.comp"
+          v-model="formOpts.formData[item.value]"
+          :type="item.type"
+          :placeholder="item.placeholder || getPlaceholder(item)"
+          @change="handleEvent(item.event, formOpts.formData[item.value])"
+          v-bind="typeof item.bind == 'function' ? item.bind(item) : { clearable: true, filterable: true, ...item.bind }"
+          :style="{ width: item.width || '100%' }"
+        />
+        <component
+          v-if="!item.slotName && !item.textShow&&item.comp.includes('tree-select')"
+          :is="item.comp"
+          v-model="formOpts.formData[item.value]"
+          :type="item.type"
+          :placeholder="item.placeholder || getPlaceholder(item)"
+          @change="handleEvent(item.event, formOpts.formData[item.value])"
+          v-bind="typeof item.bind == 'function' ? item.bind(item) : { clearable: true, filterable: true, ...item.bind }"
+          :style="{ width: item.width || '100%' }"
+        />
+        <component
+          v-if="!item.slotName && !item.textShow&&!item.comp.includes('date')&&!item.comp.includes('tree-select')"
           :is="item.comp"
           v-model="formOpts.formData[item.value]"
           :type="item.type"
@@ -50,20 +70,20 @@
           <template v-if="item.childSlotName">
             <slot :name="item.childSlotName"></slot>
           </template>
-          <template v-if="!item.comp.includes('date') && !item.childSlotName">
-            <component
-              :is="compChildName(item)"
-              v-for="(value, key, index) in selectListType(item)"
-              :key="index"
-              :disabled="value.disabled"
-              :label="compChildLabel(item, value)"
-              :value="compChildValue(item, value, key)"
-            >
-              {{
-              compChildShowLabel(item, value)
-              }}
-            </component>
-          </template>
+          <!-- <template v-if="!item.comp.includes('date') && !item.childSlotName"> -->
+          <component
+            :is="compChildName(item)"
+            v-for="(value, key, index) in selectListType(item)"
+            :key="index"
+            :disabled="value.disabled"
+            :label="compChildLabel(item, value)"
+            :value="compChildValue(item, value, key)"
+          >
+            {{
+            compChildShowLabel(item, value)
+            }}
+          </component>
+          <!-- </template> -->
         </component>
       </el-form-item>
     </template>
