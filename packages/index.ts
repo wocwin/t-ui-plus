@@ -41,9 +41,22 @@ const install = (app: any, router?: any) => {
   // !router && installRouter(app);
   installComponents(app)
 }
-
+// 按需引入
+export {
+  TLayoutPage,
+  TLayoutPageItem,
+  TQueryCondition,
+  TTable,
+  TForm,
+  TSelect,
+  TSelectTable,
+  TDetail,
+  TButton,
+  TStepWizard,
+  TTimerBtn,
+  TModuleForm,
+}
 export default {
-  ...components, // 按需引入
   // 导出的对象必须具有 install，才能被 Vue.use() 方法安装
   install,
 }
