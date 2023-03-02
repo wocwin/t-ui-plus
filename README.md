@@ -31,13 +31,28 @@
 
 ## npm 方式安装使用
 
-```js
-// 先安装
+```shell
 npm i @wocwin/t-ui-plus
+```
+
+### 全局注册使用
+
+```js
 // 在main.js中按下引入
 import TuiPlus from '@wocwin/t-ui-plus'
 import '@wocwin/t-ui-plus/lib/style.css'
 Vue.use(TuiPlus)
+```
+
+### 按需引入
+
+```js
+// 在main.js中按下引入
+import '@wocwin/t-ui-plus/lib/style.css'
+// 单个.vue文件引入
+<script setup lang="ts">
+  import {TDetail, TForm} from "@wocwin/t-ui-plus"
+</script>
 ```
 
 ## 安装依赖
