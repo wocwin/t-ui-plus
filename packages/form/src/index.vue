@@ -38,9 +38,10 @@
           v-model="formOpts.formData[item.value]"
           :type="item.type"
           :placeholder="item.placeholder || getPlaceholder(item)"
-          @change="handleEvent(item.event, formOpts.formData[item.value])"
+          @change="handleEvent(item.event, formOpts.formData[item.value],item)"
           v-bind="typeof item.bind == 'function' ? item.bind(item) : { clearable: true, filterable: true, ...item.bind }"
           :style="{ width: item.width || '100%' }"
+          v-on="cEvent(item)"
         />
         <component
           v-if="!item.slotName && !item.textShow&&item.comp.includes('tree-select')"
@@ -48,9 +49,10 @@
           v-model="formOpts.formData[item.value]"
           :type="item.type"
           :placeholder="item.placeholder || getPlaceholder(item)"
-          @change="handleEvent(item.event, formOpts.formData[item.value])"
+          @change="handleEvent(item.event, formOpts.formData[item.value],item)"
           v-bind="typeof item.bind == 'function' ? item.bind(item) : { clearable: true, filterable: true, ...item.bind }"
           :style="{ width: item.width || '100%' }"
+          v-on="cEvent(item)"
         />
         <component
           v-if="!item.slotName && !item.textShow&&!item.comp.includes('date')&&!item.comp.includes('tree-select')"
@@ -58,9 +60,10 @@
           v-model="formOpts.formData[item.value]"
           :type="item.type"
           :placeholder="item.placeholder || getPlaceholder(item)"
-          @change="handleEvent(item.event, formOpts.formData[item.value])"
+          @change="handleEvent(item.event, formOpts.formData[item.value],item)"
           v-bind="typeof item.bind == 'function' ? item.bind(item) : { clearable: true, filterable: true, ...item.bind }"
           :style="{ width: item.width || '100%' }"
+          v-on="cEvent(item)"
         >
           <!-- 前置文本 -->
           <template #prepend v-if="item.prepend">{{ item.prepend }}</template>
@@ -146,6 +149,16 @@ const props = defineProps({
       return value <= 4
     },
   },
+  // 全局是否开启清除前后空格
+  isTrim: {
+    type: Boolean,
+    default: true,
+  },
+})
+const cEvent = computed(() => {
+  return ({ eventHandle }) => {
+    return { ...eventHandle }
+  }
 })
 const selectListType = computed(() => {
   return ({ list }) => {
@@ -272,7 +285,17 @@ const getPlaceholder = (row: any) => {
   return placeholder
 }
 // 查询条件change事件
-const handleEvent = (type, val) => {
+const handleEvent = (type, val, item) => {
+  // 去除前后空格
+  if (
+    props.isTrim &&
+    !item.isTrim &&
+    item.comp.includes('el-input') &&
+    item.type !== 'password'
+  ) {
+    props.formOpts.formData[item.value] =
+      props.formOpts.formData[item.value].trim()
+  }
   emits('handleEvent', type, val)
 }
 // 校验

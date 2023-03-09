@@ -46,6 +46,15 @@ const resetForm = () => {
 const clearValidate = () => {
   TFormDemo.value.clearValidate()
 }
+const accountFocus = ({ type }) => {
+  console.log('账号聚焦事件', type)
+}
+const accountClear = () => {
+  console.log('账号清空事件')
+}
+const accountBlur = ({ type }) => {
+  console.log('账号失焦事件', type)
+}
 const formOpts: any = reactive({
   ref: null,
   formData: {
@@ -70,6 +79,11 @@ const formOpts: any = reactive({
       type: 'input',
       comp: 'el-input',
       event: 'account',
+      eventHandle: {
+        focus: (val) => accountFocus(val),
+        clear: () => accountClear(),
+        blur: (val) => accountBlur(val),
+      },
     },
     { label: '密码', value: 'password', type: 'password', comp: 'el-input' },
     { label: '昵称', value: 'name', type: 'input', comp: 'el-input' },
@@ -158,6 +172,201 @@ const formOpts: any = reactive({
       { key: '停用', value: 0 },
     ],
   },
+})
+</script>
+```
+
+:::
+
+### 继承 Element-plus 组件的事件使用
+
+::: demo
+
+```vue
+<template>
+  <t-layout-page>
+    <t-layout-page-item>
+      <t-form ref="TFormDemo" v-model="formOpts.ref" :formOpts="formOpts" />
+    </t-layout-page-item>
+  </t-layout-page>
+</template>
+
+<script setup lang="tsx">
+import { ref, reactive } from 'vue'
+// 获取ref
+const TFormDemo: any = ref<HTMLElement | null>(null)
+// 提交formOpts.ref 方式form表单
+const submitForm = () => {
+  formOpts.ref.validate((valid) => {
+    console.log(88, valid)
+    console.log(77, formOpts.formData)
+    if (!valid) return
+    console.log('最终数据', formOpts.formData)
+  })
+}
+// 提交form表单
+// const submitForm = async () => {
+//   const { valid, formData } = await TFormDemo.value.validate()
+//   console.log('formOpts.ref', formOpts.ref)
+//   console.log('formOpts.formData', formData)
+//   if (!valid) return
+//   console.log('最终数据', formData)
+// }
+// 重置form表单
+const resetForm = () => {
+  formOpts.formData = {}
+  // 清空校验
+  TFormDemo.value.clearValidate()
+}
+// 清除校验
+const clearValidate = () => {
+  TFormDemo.value.clearValidate()
+}
+const accountFocus = ({ type }) => {
+  console.log('账号聚焦事件', type)
+}
+const accountClear = () => {
+  console.log('账号清空事件')
+}
+const accountBlur = ({ type }) => {
+  console.log('账号失焦事件', type)
+}
+const nameBlur = ({ type }) => {
+  console.log('昵称失焦事件', type)
+}
+const formOpts: any = reactive({
+  ref: null,
+  formData: {
+    account: null, // *用户账号
+    password: null, // *用户密码
+    name: null, // *用户昵称
+    qq: null, // qq
+    email: null, // 邮箱
+    desc: null, // 描述
+  },
+  fieldList: [
+    {
+      label: '账号',
+      value: 'account',
+      type: 'input',
+      comp: 'el-input',
+      eventHandle: {
+        focus: (val) => accountFocus(val),
+        clear: () => accountClear(),
+        blur: (val) => accountBlur(val),
+      },
+    },
+    { label: '密码', value: 'password', type: 'password', comp: 'el-input' },
+    {
+      label: '昵称',
+      value: 'name',
+      type: 'input',
+      comp: 'el-input',
+      eventHandle: {
+        blur: (val) => nameBlur(val),
+      },
+    },
+
+    { label: 'QQ', value: 'qq', type: 'input', comp: 'el-input' },
+    { label: '邮箱', value: 'email', type: 'input', comp: 'el-input' },
+    {
+      label: '描述',
+      value: 'desc',
+      type: 'textarea',
+      comp: 'el-input',
+      widthSize: 1,
+    },
+  ],
+  operatorList: [
+    { label: '提交', type: 'danger', fun: submitForm },
+    { label: '重置', type: 'primary', fun: resetForm },
+  ],
+})
+</script>
+```
+
+:::
+
+### el-input 去除前后空格（type=password 除外）
+
+::: demo
+
+```vue
+<template>
+  <t-layout-page>
+    <t-layout-page-item>
+      <t-form ref="TFormDemo" v-model="formOpts.ref" :formOpts="formOpts" />
+    </t-layout-page-item>
+  </t-layout-page>
+</template>
+
+<script setup lang="tsx">
+import { ref, reactive } from 'vue'
+// 获取ref
+const TFormDemo: any = ref<HTMLElement | null>(null)
+// 提交formOpts.ref 方式form表单
+const submitForm = () => {
+  formOpts.ref.validate((valid) => {
+    console.log(88, valid)
+    console.log(77, formOpts.formData)
+    if (!valid) return
+    console.log('最终数据', formOpts.formData)
+  })
+}
+// 提交form表单
+// const submitForm = async () => {
+//   const { valid, formData } = await TFormDemo.value.validate()
+//   console.log('formOpts.ref', formOpts.ref)
+//   console.log('formOpts.formData', formData)
+//   if (!valid) return
+//   console.log('最终数据', formData)
+// }
+// 重置form表单
+const resetForm = () => {
+  formOpts.formData = {}
+  // 清空校验
+  TFormDemo.value.clearValidate()
+}
+// 清除校验
+const clearValidate = () => {
+  TFormDemo.value.clearValidate()
+}
+const formOpts: any = reactive({
+  ref: null,
+  formData: {
+    account: null, // *用户账号
+    password: null, // *用户密码
+    name: null, // *用户昵称
+  },
+  fieldList: [
+    {
+      label: '账号',
+      value: 'account',
+      placeholder: '账号设置isTrim，不去除前后空格',
+      type: 'input',
+      comp: 'el-input',
+      isTrim: true,
+    },
+    {
+      label: '密码',
+      placeholder: 'type为password，不去除前后空格',
+      value: 'password',
+      type: 'password',
+      comp: 'el-input',
+      bind: { 'show-password': true },
+    },
+    {
+      label: '昵称',
+      value: 'name',
+      placeholder: '默认el-input去除前后空格',
+      type: 'input',
+      comp: 'el-input',
+    },
+  ],
+  operatorList: [
+    { label: '提交', type: 'danger', fun: submitForm },
+    { label: '重置', type: 'primary', fun: resetForm },
+  ],
 })
 </script>
 ```
@@ -1244,7 +1453,7 @@ const getData = () => {
 
 :::
 
-### 新开页面或弹窗获取表单数据
+### 密码在新增显示，编辑不显示
 
 :::demo
 
@@ -1430,6 +1639,7 @@ const formOpts: any = reactive({
 | className           | 自定义类名                                                                                              | String           | -        |
 | labelPosition       | 改变表单项 label 与输入框的布局方式(默认：right) /top                                                   | String           | right    |
 | widthSize           | 每行显示几个输入项（默认两项） 最大值 4                                                                 | Number           | 2        |
+| isTrim              | 全局是否开启清除前后空格(comp 为 el-input 且 type 不等于'password')                                     | Boolean          | true     |
 | formOpts            | 表单配置项                                                                                              | Object           | -        |
 | ---listTypeInfo     | 下拉选择数据源（type:'select'有效）                                                                     | Object           | -        |
 | ---fieldList        | form 表单每项 list                                                                                      | Array            | 是-      |
@@ -1438,6 +1648,7 @@ const formOpts: any = reactive({
 | ------childSlotName | 自定义表单某一下拉选择项子组件插槽（el-option）                                                         | slot             | -        |
 | ------comp          | form 表单每一项组件是输入框还是下拉选择等（可使用第三方 UI 如 el-select/el-input 也可以使用自定义组件） | String           | -        |
 | ------bind          | 表单每一项属性（继承第三方 UI 的 Attributes，如 el-input 中的 clearable 清空功能）默认清空及下拉过滤    | Object/funnction | -        |
+| ------isTrim        | 是否不清除前后空格(comp 为 el-input 且 type 不等于'password')                                           | Boolean          | false    |
 | ------type          | form 表单每一项类型                                                                                     | String           | -        |
 | ------widthSize     | form 表单某一项所占比例(如果占一整行则设置 1)                                                           | Number           | -        |
 | ------width         | form 表单某一项所占实际宽度                                                                             | String           | -        |
@@ -1448,7 +1659,8 @@ const formOpts: any = reactive({
 | ------value         | form 表单每一项传给后台的参数                                                                           | String           | -        |
 | ------rules         | 每一项输入框的表单校验规则                                                                              | Object/Array     | -        |
 | ------list          | 下拉选择数据源（仅仅对 type:'select'有效）                                                              | String           | -        |
-| ------event         | 表单每一项事件标志（handleEvent 事件）                                                                  | Array            | -        |
+| ------event         | 表单每一项事件标志（即是：handleEvent 事件第一个参数值）                                                | String           | -        |
+| ------eventHandle   | 继承 comp 组件的事件                                                                                    | Object           | -        |
 | ---formData         | 表单提交数据(对应 fieldList 每一项的 value 值)                                                          | Object           | -        |
 | ---labelWidth       | label 宽度                                                                                              | String           | -        |
 | ---rules            | 规则（可依据 elementUI el-form 配置————对应 formData 的值）                                             | Object/Array     | -        |
