@@ -1,26 +1,74 @@
 <template>
-  <el-select ref="selectRef" v-model="state.defaultValue" popper-class="t-select-table" :multiple="multiple"
-    v-bind="selectAttr" :value-key="keywords.value" @visible-change="visibleChange" @remove-tag="removeTag"
-    @clear="clear">
+  <el-select
+    ref="selectRef"
+    v-model="state.defaultValue"
+    popper-class="t-select-table"
+    :multiple="multiple"
+    v-bind="selectAttr"
+    :value-key="keywords.value"
+    :filterable="filterable"
+    :filter-method="filterMethod"
+    @visible-change="visibleChange"
+    @remove-tag="removeTag"
+    @clear="clear"
+  >
     <template #empty>
       <div class="t-table-select__table" :style="{ width: `${tableWidth}px` }">
-        <el-table ref="selectTable" :data="state.tableData" class="radioStyle" border @row-click="rowClick"
-          @cell-dblclick="cellDblclick" @selection-change="selectionChange" v-bind="$attrs">
-          <el-table-column v-if="multiple" type="selection" width="55" fixed></el-table-column>
-          <el-table-column type="radio" width="55" :label="radioTxt" fixed v-else>
+        <el-table
+          ref="selectTable"
+          :data="state.tableData"
+          :class="{'radioStyle':!multiple,'highlightCurrentRow':isRadio}"
+          :highlight-current-row="isRadio"
+          border
+          :row-key="getRowKey"
+          @row-click="rowClick"
+          @cell-dblclick="cellDblclick"
+          @selection-change="handlesSelectionChange"
+          v-bind="$attrs"
+        >
+          <el-table-column
+            v-if="multiple"
+            type="selection"
+            width="55"
+            :reserve-selection="reserveSelection"
+            fixed
+          ></el-table-column>
+          <el-table-column
+            type="radio"
+            width="55"
+            :label="radioTxt"
+            fixed
+            v-if="!multiple&&isShowFirstColumn"
+          >
             <template #default="scope">
-              <el-radio v-model="state.radioVal" :label="scope.$index + 1"
-                @click.native.prevent="radioChange(scope.row, scope.$index + 1)"></el-radio>
+              <el-radio
+                v-model="state.radioVal"
+                :label="scope.$index + 1"
+                @click.native.prevent="radioChange(scope.row, scope.$index + 1)"
+              ></el-radio>
             </template>
           </el-table-column>
-          <el-table-column v-for="(item, index) in columns" :key="index + 'i'" :type="item.type" :label="item.label"
-            :prop="item.prop" :min-width="item['min-width'] || item.minWidth || item.width"
-            :align="item.align || 'center'" :fixed="item.fixed" :show-overflow-tooltip="item.noShowTip"
-            v-bind="{ ...item.bind, ...$attrs }">
+          <el-table-column
+            v-for="(item, index) in columns"
+            :key="index + 'i'"
+            :type="item.type"
+            :label="item.label"
+            :prop="item.prop"
+            :min-width="item['min-width'] || item.minWidth || item.width"
+            :align="item.align || 'center'"
+            :fixed="item.fixed"
+            :show-overflow-tooltip="item.noShowTip"
+            v-bind="{ ...item.bind, ...$attrs }"
+          >
             <template #default="scope">
               <!-- render方式 -->
               <template v-if="item.render">
-                <render-col :column="item" :row="scope.row" :render="item.render" :index="scope.$index" />
+                <render-col
+                  :column="item"
+                  :row="scope.row"
+                  :render="item.render"
+                  :index="scope.$index"
+                />
               </template>
               <!-- 作用域插槽 -->
               <template v-if="item.slotName">
@@ -34,8 +82,16 @@
           <slot></slot>
         </el-table>
         <div class="t-table-select__page" v-if="isShowPagination">
-          <el-pagination v-model:current-page="table.currentPage" v-model:page-size="table.pageSize" small background
-            layout="total, prev, pager, next, jumper" :pager-count="5" :total="table.total" v-bind="$attrs" />
+          <el-pagination
+            v-model:current-page="table.currentPage"
+            v-model:page-size="table.pageSize"
+            small
+            background
+            layout="total, prev, pager, next, jumper"
+            :pager-count="5"
+            :total="table.total"
+            v-bind="$attrs"
+          />
         </div>
       </div>
     </template>
@@ -43,7 +99,7 @@
 </template>
 <script lang="ts">
 export default {
-  name: 'TSelectTable'
+  name: 'TSelectTable',
 }
 </script>
 <script setup lang="ts">
@@ -53,29 +109,44 @@ import { ElMessage } from 'element-plus'
 const props = defineProps({
   // 选择值
   value: {
-    type: [String, Number, Array]
+    type: [String, Number, Array],
   },
   // table所需数据
   table: {
     type: Object,
     default: () => {
       return {}
-    }
+    },
   },
   // 表头数据
   columns: {
     type: Array as unknown as any[],
-    default: () => []
+    default: () => [],
   },
   // 单选文案
   radioTxt: {
     type: String,
-    default: '单选'
+    default: '单选',
+  },
+  // 是否显示首列
+  isShowFirstColumn: {
+    type: Boolean,
+    default: true,
+  },
+  // 是否过滤
+  filterable: {
+    type: Boolean,
+    default: true,
+  },
+  // 是否支持翻页选中
+  reserveSelection: {
+    type: Boolean,
+    default: true,
   },
   // 是否显示分页
   isShowPagination: {
     type: Boolean,
-    default: false
+    default: false,
   },
   // 下拉数据指向的label/value
   keywords: {
@@ -83,49 +154,52 @@ const props = defineProps({
     default: () => {
       return {
         label: 'label',
-        value: 'value'
+        value: 'value',
       }
-    }
+    },
   },
   // 多选
   multiple: {
     type: Boolean,
-    default: false
+    default: false,
   },
   // table宽度
   tableWidth: {
     type: Number,
-    default: 550
-  }
+    default: 550,
+  },
 })
 const selectAttr = computed(() => {
   return {
     clearable: true,
-    filterable: true,
-    ...useAttrs()
+    ...useAttrs(),
   }
 })
+const isRadio = ref(false)
 const state: any = reactive({
   radioVal: '',
   forbidden: true, // 判断单选选中及取消选中
   tableData: props.table.data, // table数据
   defaultValue: props.value,
   ids: [], // 多选id集合
-  tabularMap: {} // 存储下拉tale的所有name
+  tabularMap: {}, // 存储下拉tale的所有name
 })
 // 获取ref
 const selectRef: any = ref<HTMLElement | null>(null)
 const selectTable: any = ref<HTMLElement | null>(null)
 watch(
   () => props.table.data,
-  val => {
+  (val) => {
     // console.log(111, val)
     state.tableData = val
     state.tableData = val
     nextTick(() => {
-      state.tableData && state.tableData.length > 0 && state.tableData.forEach(item => {
-        state.tabularMap[item[props.keywords.value]] = item[props.keywords.label]
-      })
+      state.tableData &&
+        state.tableData.length > 0 &&
+        state.tableData.forEach((item) => {
+          state.tabularMap[item[props.keywords.value]] =
+            item[props.keywords.label]
+        })
       findLabel()
     })
   },
@@ -133,19 +207,25 @@ watch(
 )
 watch(
   () => props.value,
-  val => {
+  (val) => {
     // console.log(111, val)
     state.tableData = val
     state.tableData = val
     nextTick(() => {
       // 多选
       if (props.multiple) {
-        state.defaultValue = Array.isArray(props.value) ? props.value : typeof props.value === 'string' ? props.value.split(',') : []
-        state.defaultValue = (state.defaultValue || []).map(item => {
+        state.defaultValue = Array.isArray(props.value)
+          ? props.value
+          : typeof props.value === 'string'
+          ? props.value.split(',')
+          : []
+        state.defaultValue = (state.defaultValue || []).map((item) => {
           return item
         })
       } else {
-        state.defaultValue = props.value ? { [props.keywords.value]: props.value } : ''
+        state.defaultValue = props.value
+          ? { [props.keywords.value]: props.value }
+          : ''
       }
       findLabel()
     })
@@ -168,7 +248,8 @@ const findLabel = () => {
       // }
     } else {
       // if (selectRef.value) {
-      selectRef.value.selectedLabel = state.defaultValue[props.keywords.label] || ''
+      selectRef.value.selectedLabel =
+        state.defaultValue[props.keywords.label] || ''
       // }
     }
   })
@@ -177,14 +258,37 @@ const findLabel = () => {
 const emits = defineEmits(['page-change', 'selectionChange', 'radioChange'])
 // 当前页码
 const handlesCurrentChange = (val) => {
+  if (props.multiple) {
+    if (!props.reserveSelection) {
+      clear()
+    }
+  } else {
+    clear()
+  }
   emits('page-change', val)
 }
 // 复选框(多选)
-const selectionChange = (val) => {
+const handlesSelectionChange = (val) => {
   // console.log('复选框', val)
-  state.defaultValue = val.map(item => item[props.keywords.label])
-  state.ids = val.map(item => item[props.keywords.value])
+  state.defaultValue = val.map((item) => item[props.keywords.label])
+  state.ids = val.map((item) => item[props.keywords.value])
   emits('selectionChange', val, state.ids)
+}
+// 搜索后表格勾选不取消
+const getRowKey = (row) => {
+  return row[props.keywords.value]
+}
+// 搜索过滤
+const filterMethod = (val) => {
+  if (!props.filterable) return
+  const tableData = JSON.parse(JSON.stringify(props.table?.data))
+  if (tableData && tableData.length > 0) {
+    state.tableData = tableData.filter((item) => {
+      if (item[props.keywords.label].includes(val)) {
+        return item
+      }
+    })
+  }
 }
 // 表格显示隐藏回调
 const visibleChange = (visible) => {
@@ -193,6 +297,7 @@ const visibleChange = (visible) => {
     initTableData()
   } else {
     findLabel()
+    filterMethod('')
   }
 }
 // 获取表格数据
@@ -200,20 +305,26 @@ const initTableData = () => {
   // 表格默认赋值
   nextTick(() => {
     if (props.multiple) {
-      state.defaultValue.forEach(row => {
-        const arr = state.tableData.filter(item => item[props.keywords.value] === row[props.keywords.value])
+      state.defaultValue.forEach((row) => {
+        const arr = state.tableData.filter(
+          (item) => item[props.keywords.value] === row[props.keywords.value]
+        )
         if (arr.length > 0) {
           selectTable.value.toggleRowSelection(arr[0], true)
         }
       })
     } else {
-      const arr = state.tableData.filter(item => item[props.keywords.value] === state.defaultValue && state.defaultValue[props.keywords.value])
+      const arr = state.tableData.filter(
+        (item) =>
+          item[props.keywords.value] === state.defaultValue &&
+          state.defaultValue[props.keywords.value]
+      )
       selectTable.value.setCurrentRow(arr[0])
     }
   })
 }
 // 复制内容
-const copyDomText = val => {
+const copyDomText = (val) => {
   // 获取需要复制的元素以及元素内的文本内容
   const text = val
   // 添加一个input元素放置需要的文本内容
@@ -272,16 +383,31 @@ const radioClick = (row, index) => {
   }
 }
 // 单击行
-const rowClick = (row) => {
-  if (props.multiple) {
-
-  } else {
-    radioClick(row, state.tableData.indexOf(row) + 1)
+const rowClick = async (row) => {
+  if (!props.multiple) {
+    let rowIndex
+    // eslint-disable-next-line no-unused-expressions
+    props.table?.data.forEach((item, index) => {
+      if (item[props.keywords.value] === row[props.keywords.value]) {
+        // console.log('index', index)
+        rowIndex = index
+      }
+    })
+    // await this.radioClick(row, rowIndex + 1)
+    await radioClick(row, rowIndex + 1)
+    console.log('1111')
+    if (state.radioVal) {
+      console.log('2222')
+      isRadio.value = true
+    } else {
+      isRadio.value = false
+    }
+    console.log('333', isRadio.value)
   }
 }
 // tags删除后回调
 const removeTag = (tag) => {
-  const row = state.tableData.find(item => item[props.keywords.label] === tag)
+  const row = state.tableData.find((item) => item[props.keywords.label] === tag)
   selectTable.value.toggleRowSelection(row, false)
 }
 // 清空后的回调
@@ -326,14 +452,21 @@ defineExpose({ focus, blur })
         box-shadow: none;
       }
     }
-
-    :deep(tbody) {
-      .el-table__row {
-        cursor: pointer;
-      }
+    .el-table__row {
+      cursor: pointer;
     }
   }
+  // 选中行样式
+  .highlightCurrentRow {
+    .el-table__row {
+      cursor: pointer;
+    }
 
+    .current-row td {
+      cursor: pointer;
+      color: #409eff;
+    }
+  }
   .t-table-select__table {
     padding: 10px;
 
