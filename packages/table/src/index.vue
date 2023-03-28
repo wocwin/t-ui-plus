@@ -533,7 +533,7 @@ const clearSelection = () => {
   return TTable.value.clearSelection()
 }
 // 暴露方法出去
-defineExpose({ clearSelection, toggleRowSelection, clearSort })
+defineExpose({ clearSelection, toggleRowSelection, clearSort, state, radioVal })
 </script>
 <style lang="scss" scoped>
 .t-table {

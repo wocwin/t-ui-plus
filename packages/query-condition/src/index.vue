@@ -380,6 +380,9 @@ watch(
     state.form = initForm(opts, true)
   }
 )
+
+// 暴露方法出去
+defineExpose({ state })
 </script>
 
 <style lang="scss">
