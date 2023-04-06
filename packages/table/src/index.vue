@@ -275,7 +275,7 @@ const props = defineProps({
   // 是否复制单元格
   isCopy: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   // 是否开启点击整行选中单选框
   rowClickRadio: {

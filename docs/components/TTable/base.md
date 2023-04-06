@@ -387,9 +387,9 @@ let table = {
 
 :::
 
-### 双击单元格复制(默认开启)
+### 双击单元格复制(默认不开启)
 
-:::demo 若需要关闭（在 TTable 标签中设置属性：`isCopy:false`）
+:::demo 若需要关闭（在 TTable 标签中设置属性：`isCopy:true`）
 
 ```vue
 <template>
@@ -398,6 +398,7 @@ let table = {
       <t-table
         title="双击单元格复制"
         :table="table"
+        isCopy
         :columns="table.columns"
         :isShowPagination="false"
       />
@@ -1594,7 +1595,7 @@ state.table.data = resData
 | title                   | 表格左上标题                                                                   | String /slot | -       |
 | isShowPagination        | 是否显示分页(默认显示分页)                                                     | Boolean      | true    |
 | isTableColumnHidden     | 是否开启合计行隐藏复选框/单选框                                                | Boolean      | false   |
-| isCopy                  | 是否允许双击单元格复制                                                         | Boolean      | true    |
+| isCopy                  | 是否允许双击单元格复制                                                         | Boolean      | false   |
 | rowClickRadio           | 是否开启点击整行选中单选框                                                     | Boolean      | true    |
 | columnSetting           | 是否显示设置（隐藏/显示列）                                                    | Boolean      | false   |
 | name                    | 与 columnSetting 配合使用标记隐藏/显示列唯一性                                 | String       | title   |
