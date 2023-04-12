@@ -812,7 +812,8 @@ let state = reactive({
       {
         text: '查看',
         fun: viewDetail,
-        show: { key: 'status', val: ['1'] },
+        // show: { key: 'status', val: ['1'] },
+        noshow: [{ key: 'status', val: ['1'] }],
       },
       {
         text: '编辑',

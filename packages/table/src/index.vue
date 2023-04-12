@@ -469,8 +469,10 @@ const save = () => {
 const checkIsShow = (scope, item) => {
   let isNoshow = false
   if (item.noshow) {
+    // 解决双重判断循环递归
+    let nushowFun = JSON.parse(JSON.stringify(item.noshow))
     // 双重判断
-    item.noshow.map((rs) => {
+    nushowFun.map((rs) => {
       rs.isShow =
         typeof rs.val === 'string'
           ? rs.val === 'isHasVal'
@@ -482,7 +484,7 @@ const checkIsShow = (scope, item) => {
           ? 'false'
           : 'true'
     })
-    isNoshow = item.noshow.every((key) => {
+    isNoshow = nushowFun.every((key) => {
       return key.isShow === 'true'
     })
   } else {
