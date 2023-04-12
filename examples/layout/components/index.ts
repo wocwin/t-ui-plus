@@ -1,5 +1,0 @@
-export { default as AppMain } from './AppMain.vue'
-export { default as Navbar } from './navigation_bar/index.vue'
-export { default as Settings } from './settings/index.vue'
-export { default as Sidebar } from './side_bar/index.vue'
-export { default as TagsView } from './tags_view/index.vue'
