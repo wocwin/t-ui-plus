@@ -107,7 +107,7 @@ const props: any = defineProps({
   footer: Object,
   title: String,
   subTitle: String,
-  tabs: Array,
+  tabs: Array as unknown as any[],
   submit: Function,
 })
 const attrs: any = useAttrs()

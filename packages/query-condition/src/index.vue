@@ -194,7 +194,7 @@ const gridAreas = computed(() => {
   const fields = Object.keys(cOpts.value)
   let rowIndex = 0
   let rowSpan = 0
-  const areas = [[]]
+  const areas:any = [[]]
   for (let fieldIndex = 0; fieldIndex < fields.length; fieldIndex++) {
     const field = fields[fieldIndex]
     const opt = cOpts.value[field]

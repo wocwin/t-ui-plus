@@ -69,7 +69,7 @@ import FixBtn from './fixBtn.vue'
 const props = defineProps({
   // 步骤数据
   stepData: {
-    type: Array,
+    type: Array as unknown as any[],
     default: () => {
       return []
     },

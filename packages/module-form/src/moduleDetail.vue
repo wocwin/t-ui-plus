@@ -28,7 +28,6 @@ export default {
 </script>
 <script setup lang="ts">
 import { computed, ref, useAttrs, useSlots } from 'vue'
-import RenderTooltip from './renderTooltip.vue'
 const props: any = defineProps({
   descData: {
     type: Object,
