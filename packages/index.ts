@@ -1,18 +1,21 @@
-import { TLayoutPage } from './layout-page'
-import { TLayoutPageItem } from './layout-page-item'
-import { TQueryCondition } from './query-condition'
-import { TTable } from './table'
-import { TForm } from './form'
-import { TSelect } from './select'
-import { TSelectTable } from './select-table'
-import { TDetail } from './detail'
-import { TButton } from './button'
-import { TStepWizard } from './step-wizard'
-import { TTimerBtn } from './timer-btn'
-import { TModuleForm } from './module-form'
+import type { Component, App } from 'vue'
+import TLayoutPage from './layout-page'
+import TLayoutPageItem from './layout-page-item'
+import TQueryCondition from './query-condition'
+import TTable from './table'
+import TForm from './form'
+import TSelect from './select'
+import TSelectTable from './select-table'
+import TDetail from './detail'
+import TButton from './button'
+import TStepWizard from './step-wizard'
+import TTimerBtn from './timer-btn'
+import TModuleForm from './module-form'
 
 // 存储组件列表
-const components = [
+const components: {
+  [propName: string]: Component
+} = {
   TLayoutPage,
   TLayoutPageItem,
   TQueryCondition,
@@ -25,14 +28,16 @@ const components = [
   TStepWizard,
   TTimerBtn,
   TModuleForm,
-]
-
+}
 // 插件声明：声明所有插件
 // 插件注册：在 Vue 项目的入口文件中，通过 ( app.use(插件) ) 进行注册
-const installComponents: any = (app: any) => {
-  components.forEach((comp: any) => {
-    app.component(comp.name as string, comp)
-  })
+const installComponents: any = (app: App) => {
+  // components.forEach((comp: any) => {
+  //   app.component(comp.name as string, comp)
+  // })
+  for (const key in components) {
+    app.component(key, components[key])
+  }
 }
 // vue插件
 // - install：每个插件都有一个 install 方法
@@ -41,19 +46,6 @@ const install: any = (app: any, router?: any) => {
   // !router && installRouter(app);
   installComponents(app)
 }
-
-export * from './layout-page'
-export * from './layout-page-item'
-export * from './query-condition'
-export * from './table'
-export * from './form'
-export * from './select'
-export * from './select-table'
-export * from './detail'
-export * from './button'
-export * from './step-wizard'
-export * from './timer-btn'
-export * from './module-form'
 
 // 按需引入
 export {
