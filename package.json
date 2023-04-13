@@ -1,6 +1,6 @@
 {
   "name": "@wocwin/t-ui-plus",
-  "version": "1.0.16",
+  "version": "1.0.18",
   "description": "Vue3 中基于Element-plus二次封装基础组件文档",
   "author": "wocwin",
   "license": "ISC",
@@ -8,7 +8,12 @@
   "main": "lib/t-ui-plus.umd.cjs",
   "module": "lib/t-ui-plus.umd.cjs",
   "type": "module",
-  "typings": "lib/index.d.ts",
+  "types": "./lib/packages/index.d.ts",
+  "files": [
+    "lib/*",
+    "global.d.ts",
+    "README.md"
+  ],
   "scripts": {
     "serve": "vite --mode dev",
     "build:dev": "vue-tsc --noEmit && vite build --mode dev",
