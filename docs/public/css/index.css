@@ -47,8 +47,14 @@ html.dark {
 .VPContent .VPDoc .container .content {
   padding: 0;
 }
+.VPNav {
+  z-index: 41 !important;
+}
 .VPSidebar {
   z-index: 40 !important;
+}
+.VPSidebar.open {
+  z-index: 42 !important;
 }
 .VPContent .VPDoc.has-aside .content-container {
   max-width: 1200px;
