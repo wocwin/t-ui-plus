@@ -10,6 +10,7 @@ import TButton from './packages/button'
 import TStepWizard from './packages/step-wizard'
 import TTimerBtn from './packages/timer-btn'
 import TModuleForm from './packages/module-form'
+import TAdaptivePage from './packages/adaptive-page'
 declare module '@avue/runtime-core' {
   export interface GlobalComponents {
     TLayoutPage: typeof TLayoutPage
@@ -24,5 +25,6 @@ declare module '@avue/runtime-core' {
     TStepWizard: typeof TStepWizard
     TTimerBtn: typeof TTimerBtn
     TModuleForm: typeof TModuleForm
+    TAdaptivePage: typeof TAdaptivePage
   }
 }
