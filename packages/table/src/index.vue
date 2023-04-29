@@ -540,7 +540,7 @@ defineExpose({ clearSelection, toggleRowSelection, clearSort, state, radioVal })
 <style lang="scss" scoped>
 .t-table {
   z-index: 0;
-  background-color: #fff;
+  background-color: var(--el-bg-color);
   :deep(.el-table__header-wrapper) {
     .el-table__header {
       margin: 0;
@@ -557,7 +557,7 @@ defineExpose({ clearSelection, toggleRowSelection, clearSort, state, radioVal })
     margin-top: 20px;
     // margin-right: 60px;
     margin-right: calc(2% - 20px);
-    background-color: #fff;
+    background-color: var(--el-bg-color);
   }
 
   // 某行隐藏复选框/单选框
@@ -624,6 +624,7 @@ defineExpose({ clearSelection, toggleRowSelection, clearSort, state, radioVal })
     }
 
     .header_title {
+      color: var(--el-text-color-primary);
       display: flex;
       align-items: center;
       flex: 0 30%;
@@ -727,7 +728,7 @@ defineExpose({ clearSelection, toggleRowSelection, clearSort, state, radioVal })
     bottom: -8px;
     margin: 0 -8px -8px;
     padding: 12px 16px;
-    background-color: #fff;
+    background-color: var(--el-bg-color);
     border-top: 1px solid #ebeef5;
     text-align: right;
 

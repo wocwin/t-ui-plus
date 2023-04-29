@@ -28,7 +28,7 @@ export default {
   height: 60px;
   text-align: center;
   margin: 10px 0;
-  background: #fff;
+  background: var(--el-bg-color);
 }
 .bar-fixed-bottom {
   position: absolute;

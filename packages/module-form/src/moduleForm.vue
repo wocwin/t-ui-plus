@@ -75,13 +75,13 @@ const handleEvent = (val, type) => {
 .t_form {
   .el-collapse {
     border: none;
-    background-color: #f0f2f5;
+    // background-color: #f0f2f5;
     .el-collapse-item {
-      background-color: #fff;
+      background-color: var(--el-bg-color);
       margin-top: 10px;
       border: none;
       .el-collapse-item__header {
-        border-bottom: 1px solid #ebeef5;
+        border-bottom: 1px solid var(--el-border-color);
         position: relative;
         padding-left: 15px;
         .el-collapse-item__arrow {

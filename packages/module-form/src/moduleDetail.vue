@@ -50,13 +50,13 @@ const defaultActiveKey = computed({
 .t_detail {
   .el-collapse {
     border: none;
-    background-color: #f6f6f6;
+    // background-color: #f6f6f6;
     .el-collapse-item {
-      background-color: #fff;
+      background-color: var(--el-bg-color);
       margin-top: 10px;
       border: none;
       .el-collapse-item__header {
-        border-bottom: 1px solid #ebeef5;
+        border-bottom: 1px solid var(--el-border-color);
         position: relative;
         padding-left: 15px;
         .el-collapse-item__arrow {

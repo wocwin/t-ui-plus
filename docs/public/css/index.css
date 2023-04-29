@@ -22,13 +22,17 @@
 }
 
 html.dark {
-  --vp-code-block-bg: var(--vp-c-bg-alt);
+  --vp-code-block-bg: var(--vp-code-block-bg);
+}
+
+.source {
+  background-color: var(--el-bg-color);
 }
 
 .source th,
 .source td {
   border: none;
-  background-color: #fff;
+  background-color: var(--el-bg-color);
 }
 .source table {
   border-collapse: separate;
@@ -38,7 +42,7 @@ html.dark {
   overflow-x: inherit;
 }
 .source tr:nth-child(2n) {
-  background-color: #fff;
+  background-color: var(--el-bg-color);
 }
 
 .source tr {

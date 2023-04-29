@@ -484,7 +484,7 @@ defineExpose({ focus, blur })
       justify-content: flex-end;
       align-items: center;
       margin-right: calc(2% - 20px);
-      background-color: #fff;
+      background-color: var(--el-table-tr-bg-color);
     }
   }
 }

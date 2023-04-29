@@ -255,7 +255,7 @@ defineExpose({
   flex-direction: column;
   height: 100%;
   text-align: left;
-  background-color: #f0f2f5;
+  background-color: var(--el-bg-color);
   overflow: auto;
   .scroll_wrap {
     display: flex;
@@ -267,7 +267,8 @@ defineExpose({
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      color: rgba(0, 0, 0, 0.65);
+      // color: rgba(0, 0, 0, 0.65);
+      color: var(--el-text-color-primary);
       font-size: 14px;
       font-variant: tabular-nums;
       line-height: 1.5;
@@ -276,9 +277,9 @@ defineExpose({
       font-feature-settings: 'tnum';
       position: relative;
       padding: 16px 24px;
-      background-color: #fff;
+      background-color: var(--el-bg-color);
       .el-page-header__left {
-        color: #303133;
+        color: var(--el-text-color-primary);
         align-items: center;
         margin: 0;
         width: 100%;
@@ -322,21 +323,21 @@ defineExpose({
     }
     .t_form {
       .el-collapse-borderless {
-        background-color: #f0f2f5;
+        background-color: var(--el-bg-color);
         .noTitle {
           .el-collapse-header {
             display: none;
           }
         }
         .el-collapse-item {
-          background-color: #fff;
+          background-color: var(--el-bg-color);
           margin-top: 10px;
           border: none;
           &:first-child {
             margin-top: 0;
           }
           .el-collapse-header {
-            border-bottom: 1px solid #d9d9d9;
+            border-bottom: 1px solid var(--el-border-color);
           }
           .el-collapse-content-box {
             padding: 16px;
@@ -351,7 +352,7 @@ defineExpose({
         .el-tabs__header {
           margin: 0;
           padding: 0 10px;
-          background-color: #fff;
+          background-color: var(--el-bg-color);
         }
         .el-tabs__nav-wrap {
           &::after {
@@ -362,15 +363,6 @@ defineExpose({
     }
   }
   .handle_wrap {
-    // position: sticky;
-    // z-index: 10;
-    // right: 0;
-    // bottom: -8px;
-    // // margin: 0 -8px -8px;
-    // padding: 12px 16px;
-    // background-color: #fff;
-    // border-top: 1px solid #ebeef5;
-    // text-align: right;
     position: fixed;
     z-index: 4;
     right: 0;
@@ -379,8 +371,8 @@ defineExpose({
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    background-color: #fff;
-    border-top: 1px solid #ebeef5;
+    background-color: var(--el-bg-color);
+    border-top: 1px solid var(--el-border-color);
     text-align: right;
     width: 100%;
     .el-button:last-child {
