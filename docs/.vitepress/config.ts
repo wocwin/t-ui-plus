@@ -50,6 +50,7 @@ export default defineConfig({
             },
             { text: '详情组件', link: '/components/TDetail/base.md' },
             { text: 'Button组件', link: '/components/TButton/base.md' },
+            { text: '日期组件', link: '/components/TDatePicker/base.md' },
             {
               text: '获取验证码倒计时组件',
               link: '/components/TTimerBtn/base.md',

@@ -624,7 +624,6 @@ defineExpose({ clearSelection, toggleRowSelection, clearSort, state, radioVal })
     }
 
     .header_title {
-      color: var(--el-text-color-primary);
       display: flex;
       align-items: center;
       flex: 0 30%;

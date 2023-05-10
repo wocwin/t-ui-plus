@@ -12,6 +12,7 @@ import TStepWizard from './step-wizard'
 import TTimerBtn from './timer-btn'
 import TModuleForm from './module-form'
 import TAdaptivePage from './adaptive-page'
+import TDatePicker from './date-picker'
 
 // 存储组件列表
 const components: {
@@ -30,6 +31,7 @@ const components: {
   TTimerBtn,
   TModuleForm,
   TAdaptivePage,
+  TDatePicker,
 }
 // 插件声明：声明所有插件
 // 插件注册：在 Vue 项目的入口文件中，通过 ( app.use(插件) ) 进行注册
@@ -64,6 +66,7 @@ export {
   TTimerBtn,
   TModuleForm,
   TAdaptivePage,
+  TDatePicker,
 }
 export default {
   ...components,
