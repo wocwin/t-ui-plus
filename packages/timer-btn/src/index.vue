@@ -2,11 +2,13 @@
   <div class="timer-btn">
     <button
       class="sendSmsBtn"
-      :class="{dissendSmsBtn:disabled,className}"
+      :class="{ dissendSmsBtn: disabled, className }"
       type="button"
       @click="run"
       :disabled="disabled || time > 0"
-    >{{ text }}</button>
+    >
+      {{ text }}
+    </button>
   </div>
 </template>
 

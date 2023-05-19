@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-import { demoBlockPlugin } from 'vitepress-theme-demoblock'
+import { mdPlugin } from './config/plugins'
 export default defineConfig({
   title: 'TuiPlus基础组件文档',
   description: '基于Element-plus基础组件封装使用',
@@ -51,10 +51,6 @@ export default defineConfig({
             { text: '详情组件', link: '/components/TDetail/base.md' },
             { text: 'Button组件', link: '/components/TButton/base.md' },
             { text: '日期组件', link: '/components/TDatePicker/base.md' },
-            {
-              text: '获取验证码倒计时组件',
-              link: '/components/TTimerBtn/base.md',
-            },
             { text: '步骤组件', link: '/components/TStepWizard/base.md' },
           ],
         },
@@ -79,10 +75,6 @@ export default defineConfig({
     },
     // light: #f9fafb, dark: --vp-code-block-bg
     theme: { light: 'github-light', dark: 'github-dark' },
-    config(md) {
-      md.use(demoBlockPlugin, {
-        customClass: 'demoblock-custom',
-      })
-    },
+    config: (md) => mdPlugin(md),
   },
 })
