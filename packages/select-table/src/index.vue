@@ -17,8 +17,8 @@
         <el-table
           ref="selectTable"
           :data="state.tableData"
-          :class="{'radioStyle':!multiple,'highlightCurrentRow':isRadio}"
-          :highlight-current-row="isRadio"
+          :class="{ radioStyle: !multiple, highlightCurrentRow: isRadio }"
+          highlight-current-row
           border
           :row-key="getRowKey"
           @row-click="rowClick"
@@ -38,7 +38,7 @@
             width="55"
             :label="radioTxt"
             fixed
-            v-if="!multiple&&isShowFirstColumn"
+            v-if="!multiple && isShowFirstColumn"
           >
             <template #default="scope">
               <el-radio
@@ -104,7 +104,15 @@ export default {
 </script>
 <script setup lang="ts">
 import RenderCol from './renderCol.vue'
-import { computed, useAttrs, ref, watch, nextTick, reactive } from 'vue'
+import {
+  computed,
+  useAttrs,
+  ref,
+  watch,
+  nextTick,
+  reactive,
+  onMounted,
+} from 'vue'
 import { ElMessage } from 'element-plus'
 const props = defineProps({
   // 选择值
@@ -168,6 +176,10 @@ const props = defineProps({
     type: Number,
     default: 550,
   },
+  // 设置默认选中项--keywords.value值（单选是String, Number类型；多选时是数组）
+  defaultSelectVal: {
+    type: [String, Number, Array],
+  },
 })
 const selectAttr = computed(() => {
   return {
@@ -175,6 +187,7 @@ const selectAttr = computed(() => {
     ...useAttrs(),
   }
 })
+const isDefaultSelectVal = ref(true) // 是否已经重新选择了
 const isRadio = ref(false)
 const state: any = reactive({
   radioVal: '',
@@ -210,7 +223,6 @@ watch(
   (val) => {
     // console.log(111, val)
     state.tableData = val
-    state.tableData = val
     nextTick(() => {
       // 多选
       if (props.multiple) {
@@ -232,6 +244,12 @@ watch(
   },
   { deep: true }
 )
+onMounted(() => {
+  // 设置默认选中项（单选）
+  if (props.defaultSelectVal && isDefaultSelectVal.value) {
+    defaultSelect(props.defaultSelectVal)
+  }
+})
 // 赋值
 const findLabel = () => {
   nextTick(() => {
@@ -267,9 +285,52 @@ const handlesCurrentChange = (val) => {
   }
   emits('page-change', val)
 }
+// 默认选中（且只能默认选中第一页的数据）
+const defaultSelect = (defaultSelectVal) => {
+  if (typeof defaultSelectVal === 'object' && props.multiple) {
+    let multipleList: any = []
+    defaultSelectVal.map((val) => {
+      state.tableData.forEach((row: any) => {
+        if (val === row[props.keywords.value]) {
+          multipleList.push(row)
+        }
+      })
+    })
+    setTimeout(() => {
+      state.defaultValue = multipleList.map(
+        (item) => item[props.keywords.label]
+      )
+      multipleList.forEach((row) => {
+        const arr = state.tableData.filter(
+          (item) => item[props.keywords.value] === row[props.keywords.value]
+        )
+        if (arr.length > 0) {
+          selectTable.value.toggleRowSelection(arr[0], true)
+        }
+      })
+      selectRef.value.selected.forEach((item) => {
+        item.currentLabel = item.value
+      })
+    }, 0)
+  } else {
+    let row, index
+    state.tableData.map((val, i) => {
+      if (val[props.keywords.value] === defaultSelectVal) {
+        row = val
+        index = i
+      }
+    })
+    state.radioVal = index + 1
+    state.defaultValue = row
+    setTimeout(() => {
+      selectRef.value.selectedLabel = row[props.keywords.label]
+    }, 0)
+  }
+}
 // 复选框(多选)
 const handlesSelectionChange = (val) => {
   // console.log('复选框', val)
+  isDefaultSelectVal.value = false
   state.defaultValue = val.map((item) => item[props.keywords.label])
   state.ids = val.map((item) => item[props.keywords.value])
   emits('selectionChange', val, state.ids)
@@ -294,6 +355,9 @@ const filterMethod = (val) => {
 const visibleChange = (visible) => {
   // console.log('表格显示隐藏回调', visible)
   if (visible) {
+    if (props.defaultSelectVal && isDefaultSelectVal.value) {
+      defaultSelect(props.defaultSelectVal)
+    }
     initTableData()
   } else {
     findLabel()
@@ -348,6 +412,7 @@ const cellDblclick = (row, column) => {
 }
 // 点击单选框单元格触发事件
 const radioChange = (row, index) => {
+  isDefaultSelectVal.value = false
   radioClick(row, index)
 }
 // forbidden取值
@@ -394,15 +459,13 @@ const rowClick = async (row) => {
       }
     })
     // await this.radioClick(row, rowIndex + 1)
+    isDefaultSelectVal.value = false
     await radioClick(row, rowIndex + 1)
-    console.log('1111')
     if (state.radioVal) {
-      console.log('2222')
       isRadio.value = true
     } else {
       isRadio.value = false
     }
-    console.log('333', isRadio.value)
   }
 }
 // tags删除后回调
@@ -458,13 +521,9 @@ defineExpose({ focus, blur })
   }
   // 选中行样式
   .highlightCurrentRow {
-    .el-table__row {
+    :deep(.current-row) {
+      color: var(--el-color-primary);
       cursor: pointer;
-    }
-
-    .current-row td {
-      cursor: pointer;
-      color: #409eff;
     }
   }
   .t-table-select__table {
