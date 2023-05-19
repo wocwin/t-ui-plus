@@ -9,13 +9,16 @@
         <!-- 表格外操作 -->
         <slot name="toolbar"></slot>
         <!--列设置按钮-->
-        <div class="header_right_wrap" :style="{ marginLeft: isShow('toolbar') ? '12px' : 0 }">
+        <div
+          class="header_right_wrap"
+          :style="{ marginLeft: isShow('toolbar') ? '12px' : 0 }"
+        >
           <slot name="btn" />
           <column-set
             v-if="columnSetting"
             v-bind="$attrs"
             :columns="renderColumns"
-            @columnSetting="v => (state.columnSet = v)"
+            @columnSetting="(v) => (state.columnSet = v)"
           />
         </div>
       </div>
@@ -26,7 +29,7 @@
       :class="{
         cursor: isCopy,
         highlightCurrentRow: highlightCurrentRow,
-        radioStyle: table.firstColumn && table.firstColumn.type === 'radio'
+        radioStyle: table.firstColumn && table.firstColumn.type === 'radio',
       }"
       v-bind="$attrs"
       size="default"
@@ -79,9 +82,9 @@
           <template #default="scope">
             <span>
               {{
-              isShowPagination
-              ? (table.currentPage - 1) * table.pageSize + scope.$index + 1
-              : scope.$index + 1
+                isShowPagination
+                  ? (table.currentPage - 1) * table.pageSize + scope.$index + 1
+                  : scope.$index + 1
               }}
             </span>
           </template>
@@ -101,7 +104,9 @@
             :sortable="item.sort || sortable"
             :align="item.align || 'center'"
             :fixed="item.fixed"
-            :show-overflow-tooltip="item.noShowTip === false ? item.noShowTip : true"
+            :show-overflow-tooltip="
+              item.noShowTip === false ? item.noShowTip : true
+            "
             v-bind="{ ...item.bind, ...$attrs }"
           >
             <template #header v-if="item.renderHeader">
@@ -129,7 +134,8 @@
                   v-model="scope.row[scope.column.property]"
                   :prop="item.prop"
                   :scope="scope"
-                  @handleEvent="handleEvent($event,scope.$index)"
+                  @handleEvent="handleEvent($event, scope.$index)"
+                  @keyup-handle="handleKeyup"
                   v-bind="$attrs"
                   ref="editCell"
                 >
@@ -143,12 +149,12 @@
               <!-- 字典过滤 -->
               <template v-if="item.filters && item.filters.list">
                 {{
-                constantEscape(
-                scope.row[item.prop],
-                table.listTypeInfo[item.filters.list],
-                item.filters.key || 'value',
-                item.filters.label || 'label'
-                )
+                  constantEscape(
+                    scope.row[item.prop],
+                    table.listTypeInfo[item.filters.list],
+                    item.filters.key || 'value',
+                    item.filters.label || 'label'
+                  )
                 }}
               </template>
               <div
@@ -184,10 +190,15 @@
         class-name="operator"
       >
         <template #default="scope">
-          <div class="operator_btn" :style="table.operatorConfig && table.operatorConfig.style">
+          <div
+            class="operator_btn"
+            :style="table.operatorConfig && table.operatorConfig.style"
+          >
             <template v-for="(item, index) in table.operator" :key="index">
               <el-button
-                @click="item.fun && item.fun(scope.row, scope.$index, state.tableData)"
+                @click="
+                  item.fun && item.fun(scope.row, scope.$index, state.tableData)
+                "
                 :type="item.type ? item.type : 'primary'"
                 link
                 :style="item.style ? item.style : ''"
@@ -221,7 +232,7 @@
       :page-sizes="[10, 20, 50, 100]"
       v-model:page-size="table.pageSize"
       layout="total,sizes, prev, pager, next, jumper"
-      :total="table.total"
+      :total="table.total || 0"
       v-bind="$attrs"
       background
     ></el-pagination>
@@ -311,11 +322,17 @@ const props = defineProps({
   sortable: {
     type: [Boolean, String],
   },
+  // 单元格编辑是否开启键盘事件
+  isKeyup: {
+    type: Boolean,
+    default: false,
+  },
 })
 // 初始化数据
 let state = reactive({
   tableData: props.table.data,
   columnSet: [],
+  copyTableData: [], // 键盘事件
 })
 // 单选框
 const radioVal = ref(null)
@@ -377,6 +394,74 @@ const renderColumns = computed(() => {
 const isTableBorder = computed(() => {
   return props.columns.some((item: any) => item.children)
 })
+// 单元格编辑键盘事件
+const handleKeyup = (event, index, key) => {
+  if (!props.isKeyup) return
+  state.copyTableData = JSON.parse(JSON.stringify(state.tableData))
+  // 向上键
+  if (event.keyCode === 38) {
+    let doms = document.getElementsByClassName(key)
+    if (!index) {
+      index = state.copyTableData.length
+    }
+    if (doms.length) {
+      let dom
+      if (doms[index - 1].getElementsByTagName('input')[0]) {
+        dom = doms[index - 1].getElementsByTagName('input')[0]
+      } else {
+        dom = doms[index - 1].getElementsByTagName('textarea')[0]
+      }
+      dom.focus()
+      // dom.select()
+    }
+  }
+  // 向下键
+  if (event.keyCode === 40) {
+    let doms = document.getElementsByClassName(key)
+    if (+index === state.copyTableData.length - 1) {
+      index = -1
+    }
+    if (doms.length) {
+      let dom
+      if (doms[index + 1].getElementsByTagName('input')[0]) {
+        dom = doms[index + 1].getElementsByTagName('input')[0]
+      } else {
+        dom = doms[index + 1].getElementsByTagName('textarea')[0]
+      }
+      dom.focus()
+      // dom.select()
+    }
+  }
+  // 回车横向 向右移动
+  if (event.keyCode === 13) {
+    let keyName = props.columns.map((val: any) => val.prop)
+    let num = 0
+    if (key === keyName[keyName.length - 1]) {
+      if (index === state.copyTableData.length - 1) {
+        index = 0
+      } else {
+        ++index
+      }
+    } else {
+      keyName.map((v, i) => {
+        if (v === key) {
+          num = i + 1
+        }
+      })
+    }
+    let doms = document.getElementsByClassName(keyName[num])
+    if (doms.length) {
+      let dom
+      if (doms[index].getElementsByTagName('input')[0]) {
+        dom = doms[index].getElementsByTagName('input')[0]
+      } else {
+        dom = doms[index].getElementsByTagName('textarea')[0]
+      }
+      dom.focus()
+      // dom.select()
+    }
+  }
+}
 // 合并行隐藏复选框/单选框
 const cellClassNameFuc = ({ row }) => {
   if (!props.isTableColumnHidden) {
@@ -530,12 +615,23 @@ const clearSort = () => {
 const toggleRowSelection = (row, selected = false) => {
   return TTable.value.toggleRowSelection(row, selected)
 }
+// 全部选中
+const toggleAllSelection = () => {
+  return TTable.value.toggleAllSelection()
+}
 // 清空复选框
 const clearSelection = () => {
   return TTable.value.clearSelection()
 }
 // 暴露方法出去
-defineExpose({ clearSelection, toggleRowSelection, clearSort, state, radioVal })
+defineExpose({
+  clearSelection,
+  toggleRowSelection,
+  toggleAllSelection,
+  clearSort,
+  state,
+  radioVal,
+})
 </script>
 <style lang="scss" scoped>
 .t-table {
@@ -632,6 +728,7 @@ defineExpose({ clearSelection, toggleRowSelection, clearSort, state, radioVal })
       font-weight: bold;
       line-height: 35px;
       margin-left: 10px;
+      color: var(--el-text-color-primary);
     }
   }
 
@@ -703,16 +800,10 @@ defineExpose({ clearSelection, toggleRowSelection, clearSort, state, radioVal })
 
   // 选中行样式
   .highlightCurrentRow {
-    tbody {
-      :deep(.el-table__row) {
-        cursor: pointer;
-      }
-
-      .current-row td {
-        cursor: pointer;
-        color: #fff;
-        background-color: #355db4 !important;
-      }
+    :deep(.current-row) {
+      color: var(--el-color-primary);
+      cursor: pointer;
+      background-color: #355db4 !important;
     }
   }
 

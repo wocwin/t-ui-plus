@@ -11,8 +11,13 @@
       :type="configEdit.type"
       :placeholder="configEdit.placeholder || getPlaceholder(configEdit)"
       ref="parentCom"
-      @change="handleEvent(configEdit.event,scope.row[prop],configEdit.editComponent)"
+      :class="prop"
+      @change="
+        handleEvent(configEdit.event, scope.row[prop], configEdit.editComponent)
+      "
+      @keyup="keyUpHandle"
       :style="{ width: configEdit.width || '100%' }"
+      v-on="cEvent(configEdit)"
       v-bind="
         typeof configEdit.bind == 'function'
           ? configEdit.bind(scope)
@@ -20,9 +25,13 @@
       "
     >
       <!-- 前置文本 -->
-      <template #prepend v-if="configEdit.prepend">{{configEdit.prepend}}</template>
+      <template #prepend v-if="configEdit.prepend">{{
+        configEdit.prepend
+      }}</template>
       <!-- 后置文本 -->
-      <template #append v-if="configEdit.append">{{configEdit.append}}</template>
+      <template #append v-if="configEdit.append">{{
+        configEdit.append
+      }}</template>
       <!-- 子组件自定义插槽 -->
       <!-- <template v-if="configEdit.childSlotName">
         <slot />
@@ -35,7 +44,8 @@
           :disabled="value.disabled"
           :label="compChildLabel(configEdit, value)"
           :value="compChildValue(configEdit, value, key)"
-        >{{ compChildShowLabel(configEdit, value) }}</component>
+          >{{ compChildShowLabel(configEdit, value) }}</component
+        >
       </template>
     </component>
   </div>
@@ -79,7 +89,7 @@ const props = defineProps({
   // },
 })
 // 抛出事件
-const emits = defineEmits(['handleEvent', 'update:modelValue'])
+const emits = defineEmits(['handleEvent', 'update:modelValue', 'keyupHandle'])
 // const childValue = ref(props.scope?.row[props?.prop])
 // vue3 v-model简写
 // let childValue: any = computed({
@@ -96,6 +106,27 @@ const emits = defineEmits(['handleEvent', 'update:modelValue'])
 //   () => childValue.value,
 //   (data) => emits('update:modelValue', data)
 // )
+// 键盘事件
+const keyUpHandle = ($event) => {
+  emits('keyupHandle', $event, props.scope.$index, props.prop)
+}
+// 引用第三方事件
+const cEvent = computed(() => {
+  return (configEdit: any) => {
+    let event = { ...configEdit.eventHandle }
+    let changeEvent = {}
+    Object.keys(event).forEach((v) => {
+      changeEvent[v] = (e) => {
+        if (e) {
+          event[v] && event[v](e, props.prop)
+        } else {
+          event[v] && event[v](props.prop)
+        }
+      }
+    })
+    return { ...changeEvent }
+  }
+})
 // 子组件名称
 const compChildName = computed(() => {
   return (configEdit: any) => {
