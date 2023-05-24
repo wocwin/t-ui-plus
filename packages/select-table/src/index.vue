@@ -267,7 +267,7 @@ const findLabel = () => {
     } else {
       // if (selectRef.value) {
       selectRef.value.selectedLabel =
-        state.defaultValue[props.keywords.label] || ''
+        (state.defaultValue && state.defaultValue[props.keywords.label]) || ''
       // }
     }
   })

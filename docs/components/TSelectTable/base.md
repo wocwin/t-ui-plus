@@ -6,6 +6,18 @@
 TSelectTable/radio
 :::
 
+### 单选--动态获取下拉数据源
+
+::: demo `table` 数据源及表头信息;`keywords` 选项中的 value（选项的值）,label(选项的标签);`@radioChange` 选中事件，传出当前选中对象
+TSelectTable/dynamic
+:::
+
+### 多选--动态获取下拉数据源
+
+:::demo `multiple` 开启多选；`table` 数据源及表头信息；`keywords` 选项中的 value（选项的值）,label(选项的标签)；`@selectionChange` 多选事件，传出当前选中项，及选中项的 keywords.value 集合
+TSelectTable/dynamicMultiple
+:::
+
 ### 不显示首列单选
 
 ::: demo `table` 数据源及表头信息;`keywords` 选项中的 value（选项的值）,label(选项的标签);`@radioChange` 选中事件，传出当前选中对象
