@@ -87,6 +87,7 @@ TSelectTable/isShowPagination
 | ------value       | 选项的值                                                                            | String                    | ‘value’    |
 | radioTxt          | 单选文案                                                                            | String                    | 单选       |
 | multiple          | 是否开启多选                                                                        | Boolean                   | false      |
+| rowClickRadio     | 是否开启整行选中(单选)                                                              | boolean                   | true       |
 | isShowFirstColumn | 是否显示首列(单选)                                                                  | boolean                   | true       |
 | defaultSelectVal  | 设置第一页默认选中项--keywords.value 值（单选是 String, Number 类型；多选时是数组） | Number / string / Array   | -          |
 | filterable        | 是否开启过滤(根据 keywords 的 label 值进行过滤)                                     | Boolean                   | true       |

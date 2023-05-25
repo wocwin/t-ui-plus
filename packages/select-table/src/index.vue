@@ -44,7 +44,7 @@
               <el-radio
                 v-model="state.radioVal"
                 :label="scope.$index + 1"
-                @click.native.prevent="radioChange(scope.row, scope.$index + 1)"
+                @click.stop="radioChangeHandle($event,scope.row, scope.$index + 1)"
               ></el-radio>
             </template>
           </el-table-column>
@@ -135,6 +135,11 @@ const props = defineProps({
   radioTxt: {
     type: String,
     default: '单选',
+  },
+  // 单选框--是否开启点击整行选中
+  rowClickRadio: {
+    type: Boolean,
+    default: true,
   },
   // 是否显示首列
   isShowFirstColumn: {
@@ -411,7 +416,8 @@ const cellDblclick = (row, column) => {
   }
 }
 // 点击单选框单元格触发事件
-const radioChange = (row, index) => {
+const radioChangeHandle = (event, row, index) => {
+  event.preventDefault()
   isDefaultSelectVal.value = false
   radioClick(row, index)
 }
@@ -449,6 +455,7 @@ const radioClick = (row, index) => {
 }
 // 单击行
 const rowClick = async (row) => {
+  if (!props.rowClickRadio) return
   if (!props.multiple) {
     let rowIndex
     // eslint-disable-next-line no-unused-expressions
