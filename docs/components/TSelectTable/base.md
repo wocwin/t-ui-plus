@@ -6,6 +6,12 @@
 TSelectTable/radio
 :::
 
+### 单选 -- 开启键盘事件（上下选择高亮，回车选中）
+
+::: demo `table` 数据源及表头信息;`keywords` 选项中的 value（选项的值）,label(选项的标签);`@radioChange` 选中事件，传出当前选中对象；`isKeyup` 是否开启键盘事件（默认不开启）上下选择高亮，回车选中
+TSelectTable/radioKeyup
+:::
+
 ### 单选--动态获取下拉数据源
 
 ::: demo `table` 数据源及表头信息;`keywords` 选项中的 value（选项的值）,label(选项的标签);`@radioChange` 选中事件，传出当前选中对象
@@ -94,6 +100,7 @@ TSelectTable/isShowPagination
 | reserveSelection  | 是否支持翻页选中                                                                    | Boolean                   | true       |
 | isShowPagination  | 开启分页                                                                            | Boolean                   | false      |
 | tableWidth        | table 宽度                                                                          | Number                    | 550        |
+| isKeyup           | 单选是否开启键盘事件                                                                | Boolean                   | false      |
 
 #### 3、事件（events）继承 el-table 及 el-select 属性
 

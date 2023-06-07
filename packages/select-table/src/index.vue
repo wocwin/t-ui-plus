@@ -7,17 +7,18 @@
     v-bind="selectAttr"
     :value-key="keywords.value"
     :filterable="filterable"
-    :filter-method="filterMethod"
+    :filter-method="filterMethod||filterMethodHandle"
     @visible-change="visibleChange"
     @remove-tag="removeTag"
     @clear="clear"
+    @keyup="selectKeyup"
   >
     <template #empty>
       <div class="t-table-select__table" :style="{ width: `${tableWidth}px` }">
         <el-table
           ref="selectTable"
           :data="state.tableData"
-          :class="{ radioStyle: !multiple, highlightCurrentRow: isRadio }"
+          :class="{ radioStyle: !multiple, highlightCurrentRow: isRadio,keyUpStyle:isKeyup }"
           highlight-current-row
           border
           :row-key="getRowKey"
@@ -161,6 +162,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  // 是否自定义过滤
+  filterMethod: {
+    type: Function,
+  },
   // 下拉数据指向的label/value
   keywords: {
     type: Object,
@@ -170,6 +175,11 @@ const props = defineProps({
         value: 'value',
       }
     },
+  },
+  // 单选是否开启键盘事件
+  isKeyup: {
+    type: Boolean,
+    default: false,
   },
   // 多选
   multiple: {
@@ -205,6 +215,7 @@ const state: any = reactive({
 // 获取ref
 const selectRef: any = ref<HTMLElement | null>(null)
 const selectTable: any = ref<HTMLElement | null>(null)
+const nowIndex = ref(-1)
 watch(
   () => props.table.data,
   (val) => {
@@ -255,6 +266,43 @@ onMounted(() => {
     defaultSelect(props.defaultSelectVal)
   }
 })
+// 单选键盘事件
+const selectKeyup = (e) => {
+  if (!props.multiple) {
+    if (!props.isKeyup) return
+    if (state.tableData.length === 0) return
+    switch (e.keyCode) {
+      case 40: // 下键
+        if (state.tableData[nowIndex.value * 1 + 1] !== undefined) {
+          selectTable.value.setCurrentRow(
+            state.tableData[nowIndex.value * 1 + 1]
+          )
+          nowIndex.value = nowIndex.value * 1 + 1
+        } else {
+          nowIndex.value = 0
+          selectTable.value.setCurrentRow(state.tableData[0])
+        }
+        break
+      case 38: // 上键
+        if (
+          state.tableData[nowIndex.value * 1 - 1] !== undefined &&
+          nowIndex.value > 0
+        ) {
+          selectTable.value.setCurrentRow(
+            state.tableData[nowIndex.value * 1 - 1]
+          )
+          nowIndex.value = nowIndex.value * 1 - 1
+        } else {
+          nowIndex.value = 0
+          selectTable.value.setCurrentRow(state.tableData[0])
+        }
+        break
+      case 13: // 回车
+        rowClick(state.tableData[nowIndex.value])
+        break
+    }
+  }
+}
 // 赋值
 const findLabel = () => {
   nextTick(() => {
@@ -345,7 +393,7 @@ const getRowKey = (row) => {
   return row[props.keywords.value]
 }
 // 搜索过滤
-const filterMethod = (val) => {
+const filterMethodHandle = (val) => {
   if (!props.filterable) return
   const tableData = JSON.parse(JSON.stringify(props.table?.data))
   if (tableData && tableData.length > 0) {
@@ -366,7 +414,7 @@ const visibleChange = (visible) => {
     initTableData()
   } else {
     findLabel()
-    filterMethod('')
+    filterMethodHandle('')
   }
 }
 // 获取表格数据
@@ -485,6 +533,9 @@ const clear = () => {
   if (props.multiple) {
     selectTable.value.clearSelection()
   } else {
+    // 取消高亮
+    selectTable.value.setCurrentRow(-1)
+    nowIndex.value = -1
     state.radioVal = ''
     state.forbidden = false
   }
@@ -524,6 +575,17 @@ defineExpose({ focus, blur })
     }
     .el-table__row {
       cursor: pointer;
+    }
+  }
+  // 键盘事件开启选择高亮
+  .keyUpStyle {
+    .el-table__body {
+      tbody {
+        .current-row {
+          color: var(--el-color-primary) !important;
+          cursor: pointer;
+        }
+      }
     }
   }
   // 选中行样式

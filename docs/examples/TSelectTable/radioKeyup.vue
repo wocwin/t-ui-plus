@@ -7,7 +7,7 @@
         :max-height="400"
         :keywords="{ label: 'name', value: 'id' }"
         @radioChange="radioChange"
-        :filterMethod="filterMethod"
+        isKeyup
       ></t-select-table>
     </t-layout-page-item>
   </t-layout-page>
@@ -71,9 +71,6 @@ const table = {
     { label: '规格111', width: '149px', prop: 'spec' },
     { label: '单位111', width: '110px', prop: 'unitName' },
   ],
-}
-const filterMethod = (val) => {
-  console.log('自定义过滤', val)
 }
 const radioChange = (row) => {
   console.log('单选--传给后台的值', row)
