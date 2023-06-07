@@ -27,7 +27,7 @@
 
 ## 动态效果图
 
-<img src="./public/TuiPlus__demo.gif">
+<img src="./README_GIF/TuiPlus__demo.gif">
 
 ## npm 方式安装使用
 
