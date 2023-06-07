@@ -7,7 +7,7 @@
           <t-date-picker
             v-model="date"
             type="datetimerange"
-            @change="change($event, 'datetimerange', 'date')"
+            @change="change($event, 'datetimerange', date)"
           />
         </div>
         <div class="box_flex">
@@ -16,7 +16,7 @@
             v-model="date1"
             type="datetimerange"
             isPickerOptions
-            @change="change($event, 'datetimerange', 'date1')"
+            @change="change($event, 'datetimerange', date1)"
           />
         </div>
         <div class="box_flex">
@@ -29,7 +29,7 @@
               new Date(2000, 1, 1, 12, 0, 0),
               new Date(2000, 2, 1, 23, 59, 59),
             ]"
-            @change="change($event, 'datetimerange', 'date2')"
+            @change="change($event, 'datetimerange', date2)"
           />
         </div>
       </div>
@@ -56,7 +56,7 @@ const typeTxt = {
 
 const change = (event, type, value) => {
   console.log(`change选择${typeTxt[type]}返回值是：`, event)
-  console.log(`v-model绑定的值是：`, eval(value).value)
+  console.log(`v-model绑定的值是：`, value)
 }
 </script>
 <style lang="scss" scoped>

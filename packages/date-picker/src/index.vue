@@ -1,5 +1,5 @@
 <template>
-  <div class="t-date-picker">
+  <div class="t-date-picker" ref="DatePicker">
     <el-date-picker
       :type="type"
       v-model="time"
@@ -19,7 +19,7 @@ export default {
 }
 </script>
 <script setup lang="ts">
-import { computed, useAttrs, useSlots, watch, reactive } from 'vue'
+import { computed, useAttrs, useSlots, watch, reactive, ref } from 'vue'
 const props = defineProps({
   value: {
     type: [String, Date, Array],
@@ -63,11 +63,10 @@ let time: any = computed({
     emits('update:modelValue', val)
   },
 })
-
+const DatePicker = ref()
 const attrsBind = computed(() => {
-  const { type } = props
   let attrs = {}
-  switch (type) {
+  switch (props.type) {
     case 'date':
     case 'dates':
       attrs['value-format'] = 'YYYY-MM-DD'
@@ -272,8 +271,7 @@ const getShortcuts = (type: any) => {
   return shortcuts
 }
 const dateChange = (val: any[]) => {
-  const { type } = props
-  if (type === 'daterange' && val) {
+  if (props.type === 'daterange' && val) {
     let startTime = val[0]
     let endTime = val[1]
     if (props.plusTime) {
@@ -282,8 +280,16 @@ const dateChange = (val: any[]) => {
     }
     time.value = [startTime, endTime]
     emits('change', [startTime, endTime])
+    DatePicker.value.getElementsByClassName('el-range-input')[0].blur()
+    DatePicker.value.getElementsByClassName('el-range-input')[1].blur()
   } else {
     emits('change', val)
+    if (props.type.includes('range')) {
+      DatePicker.value.getElementsByClassName('el-range-input')[0].blur()
+      DatePicker.value.getElementsByClassName('el-range-input')[1].blur()
+    } else {
+      DatePicker.value.getElementsByClassName('el-input__inner')[0].blur()
+    }
   }
 }
 if (props.isPickerOptions) {

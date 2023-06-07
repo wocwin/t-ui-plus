@@ -9,11 +9,7 @@
       <div class="box_content">
         <div class="box_flex">
           <div>选择日期</div>
-          <t-date-picker
-            v-model="date"
-            :size="size"
-            @change="change($event, 'date', 'date')"
-          />
+          <t-date-picker v-model="date" :size="size" @change="change($event, 'date', date)" />
         </div>
         <div class="box_flex">
           <div>选择周</div>
@@ -21,7 +17,7 @@
             v-model="date1"
             :size="size"
             type="week"
-            @change="change($event, 'week', 'date1')"
+            @change="change($event, 'week', date1)"
           />
         </div>
         <div class="box_flex">
@@ -30,7 +26,7 @@
             v-model="date2"
             :size="size"
             type="month"
-            @change="change($event, 'month', 'date2')"
+            @change="change($event, 'month', date2)"
           />
         </div>
         <div class="box_flex">
@@ -39,7 +35,7 @@
             v-model="date3"
             :size="size"
             type="year"
-            @change="change($event, 'year', 'date3')"
+            @change="change($event, 'year', date3)"
           />
         </div>
         <div class="box_flex">
@@ -48,7 +44,7 @@
             v-model="date4"
             :size="size"
             isPickerOptions
-            @change="change($event, 'date', 'date4')"
+            @change="change($event, 'date', date4)"
           />
         </div>
         <div class="box_flex">
@@ -56,7 +52,7 @@
           <t-date-picker
             v-model="date5"
             type="datetime"
-            @change="change($event, 'datetime', 'date5')"
+            @change="change($event, 'datetime', date5)"
           />
         </div>
         <div class="box_flex">
@@ -65,7 +61,7 @@
             v-model="date6"
             type="datetime"
             isPickerOptions
-            @change="change($event, 'datetime', 'date6')"
+            @change="change($event, 'datetime', date6)"
           />
         </div>
       </div>
@@ -97,7 +93,7 @@ const typeTxt = {
 
 const change = (event, type, value) => {
   console.log(`change选择${typeTxt[type]}返回值是：`, event)
-  console.log(`v-model绑定的值是：`, eval(value).value)
+  console.log(`v-model绑定的值是：`, value)
 }
 </script>
 <style lang="scss" scoped>
