@@ -50,6 +50,12 @@ TTable/filters
 TTable/multileHead
 :::
 
+### 表头合并（多级表头）-插槽使用
+
+:::demo 只需要配置`columns`中某项新增`children：Array[]`属性;表头合并自动加边框
+TTable/slotNameMerge
+:::
+
 ### 表格操作按钮
 
 :::demo `operator数组`：`operator 数组`是显示按钮数且点击后将当前行数据传出；`operatorConfig` 对象是操作列样式（可以设置宽度/列标题及是否固定在最左/右侧）；按钮的颜色是以 `ElementUI` 内置 `button` 的 `type` 为准；隐藏按钮——`noshow`:多种状态控制按钮的显示与隐藏；例如：`noshow:[{key:'fields',val:'isHasVal'},{key:'status',val:[0,1,99]},{key:'channelCode',val:['bank']}]`；注释： `noshow` 中的 `key` 值(fields/status/channelCode)是表格后台返回的字段； 当 `val` 等于字符串'isHasVal'时,字段'fields'返回为空时，此行操作按钮隐藏； `以上综合：`当'status'为 0/1/99 并且'channelCode'为'bank'及'fields'为空时；`show: { key: 'status', val: [3,4] }`表 status 值为 3 或者 4 时，显示此操作健 根据后台字段返回是数字还是字符串来显示
@@ -80,10 +86,16 @@ TTable/slotName
 TTable/renderHeader
 :::
 
-### 动态显示隐藏列且可以拖动排序
+### 列--动态显示隐藏且拖动排序
 
 :::demo
 TTable/columnSetting
+:::
+
+### 行--拖拽排序
+
+:::demo 属性`isRowSort`是否开启行拖拽排序;事件`@rowSort`，返回最终排序的table数据;`注意`: `row-key` 需要设置，否则拖动排序可能显示不正常
+TTable/rowSort
 :::
 
 ### 单元格编辑功能
@@ -146,7 +158,8 @@ TTable/eventHandle
 | ----bind                | el-table-column Attributes                                                     | Object       | -       |
 | ----noShowTip           | 是否换行 （设置：noShowTip:true）                                              | Boolean      | false   |
 | ----slotName            | 插槽显示此列数据（其值是具名作用域插槽                                         | String       | -       |
-| ----------param         | 具名插槽获取此行数据必须用解构接收{scope}.row 是当前行数据 }                   | Object       | -       |
+| ----slotNameMerge       | 合并表头插槽显示此列数据（其值是具名作用域插槽）                               | String       | -       |
+| ----------scope         | 具名插槽获取此行数据必须用解构接收{scope}.row 是当前行数据 }                   | Object       | -       |
 | ----canEdit             | 是否开启单元格编辑功能                                                         | Boolean      | false   |
 | ----configEdit          | 表格编辑配置（开启编辑功能有效）                                               | Object       | -       |
 | ----------label         | placeholder 显示                                                               | String       | -       |
@@ -173,15 +186,18 @@ TTable/eventHandle
 | rowClickRadio           | 是否开启点击整行选中单选框                                                     | Boolean      | true    |
 | columnSetting           | 是否显示设置（隐藏/显示列）                                                    | Boolean      | false   |
 | name                    | 与 columnSetting 配合使用标记隐藏/显示列唯一性                                 | String       | title   |
+| isRowSort               | 是否开启行拖拽(`row-key` 需要设置)                                             | Boolean      | false   |
+
 
 #### 3、events 其他事件按照 el-table 直接使用（如 sort-change 排序事件）
 
-| 事件名      | 说明             | 返回值                                        |
-| :---------- | :--------------- | :-------------------------------------------- |
-| page-change | 当前页码         | 当前选中的页码                                |
-| save        | 保存按钮         | 编辑后的所有数据                              |
-| handleEvent | 单个输入触发事件 | configEdit 中的 event 值和对应输入的 value 值 |
-| radioChange | 单选选中事件     | 返回当前选中的整行数据                        |
+| 事件名      | 说明                 | 返回值                                        |
+| :---------- | :------------------- | :-------------------------------------------- |
+| page-change | 当前页码             | 当前选中的页码                                |
+| save        | 保存按钮             | 编辑后的所有数据                              |
+| handleEvent | 单个输入触发事件     | configEdit 中的 event 值和对应输入的 value 值 |
+| radioChange | 单选选中事件         | 返回当前选中的整行数据                        |
+| rowSort     | 行拖拽排序后触发事件 | 返回排序后的table数据                         |
 
 #### 4、Methods 方法
 
