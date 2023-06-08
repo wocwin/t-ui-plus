@@ -1,5 +1,5 @@
 <template>
-  <div class="t-table">
+  <div class="t-table" ref="TTableBox">
     <div class="header_wrap">
       <div class="header_title">
         {{ title }}
@@ -28,6 +28,7 @@
       :data="state.tableData"
       :class="{
         cursor: isCopy,
+        row_sort: isRowSort,
         highlightCurrentRow: highlightCurrentRow,
         radioStyle: table.firstColumn && table.firstColumn.type === 'radio',
       }"
@@ -171,7 +172,11 @@
           </el-table-column>
         </template>
         <!-- 表头合并单元格 -->
-        <t-table-column v-else :key="index + 'm'" :item="item" />
+        <t-table-column v-else :key="index + 'm'" :item="item">
+          <template v-for="(index, name) in slots" v-slot:[name]="data">
+            <slot :name="name" v-bind="data"></slot>
+          </template>
+        </t-table-column>
       </template>
       <slot></slot>
       <!-- 操作按钮 -->
@@ -242,7 +247,7 @@
       v-if="isShowFooterBtn && state.tableData && state.tableData.length > 0"
     >
       <slot name="footer" />
-      <div v-if="!$slots.footer">
+      <div v-if="!slots.footer">
         <el-button type="primary" @click="save">保存</el-button>
       </div>
     </footer>
@@ -256,6 +261,7 @@ export default {
 <script setup lang="ts">
 import { computed, ref, watch, useSlots, reactive, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
+import Sortable from 'sortablejs'
 // import store from '@/store'
 import SingleEditCell from './singleEditCell.vue'
 import ColumnSet from './ColumnSet.vue'
@@ -282,6 +288,11 @@ const props = defineProps({
   // 表格标题
   title: {
     type: String,
+  },
+  // 是否开启行拖拽
+  isRowSort: {
+    type: Boolean,
+    default: false,
   },
   // 是否复制单元格
   isCopy: {
@@ -338,10 +349,18 @@ let state = reactive({
 const radioVal = ref(null)
 // 判断单选选中及取消选中
 const forbidden = ref(true)
-// 获取ref
+// 获取el-table ref
 const TTable: any = ref<HTMLElement | null>(null)
+// 获取t-table ref
+const TTableBox: any = ref<HTMLElement | null>(null)
 // 抛出事件
-const emits = defineEmits(['save', 'page-change', 'handleEvent', 'radioChange'])
+const emits = defineEmits([
+  'save',
+  'page-change',
+  'handleEvent',
+  'radioChange',
+  'rowSort',
+])
 // 获取所有插槽
 const slots = useSlots()
 watch(
@@ -354,12 +373,32 @@ watch(
 )
 onMounted(() => {
   // console.log('onMounted', props.table.firstColumn)
+  initSort()
 })
 // 按钮权限
 // const btnPremissions = computed(() => {
 //   // return store.getters.permissions
 //   // return store.getters.permissions
 // })
+// 行拖拽
+const initSort = () => {
+  if (!props.isRowSort) return
+  const el = TTableBox.value.querySelector('.el-table__body-wrapper tbody')
+  // console.log('3333', el)
+  Sortable.create(el, {
+    animation: 150, // 动画
+    // handle: '.move', // 指定拖拽目标，点击此目标才可拖拽元素(此例中设置操作按钮拖拽)
+    // filter: '.disabled', // 指定不可拖动的类名（el-table中可通过row-class-name设置行的class）
+    // dragClass: 'dragClass', // 设置拖拽样式类名
+    // ghostClass: 'ghostClass', // 设置拖拽停靠样式类名
+    // chosenClass: 'chosenClass', // 设置选中样式类名
+    onEnd: (evt) => {
+      const curRow = state.tableData.splice(evt.oldIndex, 1)[0]
+      state.tableData.splice(evt.newIndex, 0, curRow)
+      emits('rowSort', state.tableData)
+    },
+  })
+}
 // 过滤字典
 /**
  * 下拉数据回显中文过滤器
@@ -760,6 +799,14 @@ defineExpose({
     :deep(tbody) {
       .el-table__row {
         cursor: pointer;
+      }
+    }
+  }
+  // 行拖动
+  .row_sort {
+    :deep(tbody) {
+      .el-table__row {
+        cursor: move;
       }
     }
   }
