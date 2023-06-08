@@ -7,7 +7,7 @@
     v-bind="selectAttr"
     :value-key="keywords.value"
     :filterable="filterable"
-    :filter-method="filterMethod||filterMethodHandle"
+    :filter-method="filterMethod || filterMethodHandle"
     @visible-change="visibleChange"
     @remove-tag="removeTag"
     @clear="clear"
@@ -18,7 +18,11 @@
         <el-table
           ref="selectTable"
           :data="state.tableData"
-          :class="{ radioStyle: !multiple, highlightCurrentRow: isRadio,keyUpStyle:isKeyup }"
+          :class="{
+            radioStyle: !multiple,
+            highlightCurrentRow: isRadio,
+            keyUpStyle: isKeyup,
+          }"
           highlight-current-row
           border
           :row-key="getRowKey"
@@ -43,9 +47,11 @@
           >
             <template #default="scope">
               <el-radio
-                v-model="state.radioVal"
+                v-model="radioVal"
                 :label="scope.$index + 1"
-                @click.stop="radioChangeHandle($event,scope.row, scope.$index + 1)"
+                @click.stop="
+                  radioChangeHandle($event, scope.row, scope.$index + 1)
+                "
               ></el-radio>
             </template>
           </el-table-column>
@@ -203,10 +209,10 @@ const selectAttr = computed(() => {
   }
 })
 const isDefaultSelectVal = ref(true) // 是否已经重新选择了
+const forbidden = ref(true) // 判断单选选中及取消选中
 const isRadio = ref(false)
+const radioVal = ref('')
 const state: any = reactive({
-  radioVal: '',
-  forbidden: true, // 判断单选选中及取消选中
   tableData: props.table.data, // table数据
   defaultValue: props.value,
   ids: [], // 多选id集合
@@ -322,6 +328,7 @@ const findLabel = () => {
       selectRef.value.selectedLabel =
         (state.defaultValue && state.defaultValue[props.keywords.label]) || ''
       // }
+      blur()
     }
   })
 }
@@ -373,7 +380,7 @@ const defaultSelect = (defaultSelectVal) => {
         index = i
       }
     })
-    state.radioVal = index + 1
+    radioVal.value = index + 1
     state.defaultValue = row
     setTimeout(() => {
       selectRef.value.selectedLabel = row[props.keywords.label]
@@ -471,31 +478,31 @@ const radioChangeHandle = (event, row, index) => {
 }
 // forbidden取值
 const isForbidden = () => {
-  state.forbidden = false
+  forbidden.value = false
   setTimeout(() => {
-    state.forbidden = true
+    forbidden.value = true
   }, 0)
 }
 // 单选抛出事件radioChange
 const radioClick = (row, index) => {
-  state.forbidden = !!state.forbidden
-  if (state.radioVal) {
-    if (state.radioVal === index) {
-      state.radioVal = ''
+  forbidden.value = !!forbidden.value
+  if (radioVal.value) {
+    if (radioVal.value === index) {
+      radioVal.value = ''
       isForbidden()
       state.defaultValue = {}
       emits('radioChange', {}, null) // 取消勾选就把回传数据清除
       blur()
     } else {
       isForbidden()
-      state.radioVal = index
+      radioVal.value = index
       state.defaultValue = row
       emits('radioChange', row, row[props.keywords.value])
       blur()
     }
   } else {
     isForbidden()
-    state.radioVal = index
+    radioVal.value = index
     state.defaultValue = row
     emits('radioChange', row, row[props.keywords.value])
     blur()
@@ -516,7 +523,7 @@ const rowClick = async (row) => {
     // await this.radioClick(row, rowIndex + 1)
     isDefaultSelectVal.value = false
     await radioClick(row, rowIndex + 1)
-    if (state.radioVal) {
+    if (radioVal.value) {
       isRadio.value = true
     } else {
       isRadio.value = false
@@ -536,8 +543,8 @@ const clear = () => {
     // 取消高亮
     selectTable.value.setCurrentRow(-1)
     nowIndex.value = -1
-    state.radioVal = ''
-    state.forbidden = false
+    radioVal.value = ''
+    forbidden.value = false
   }
 }
 // 触发select隐藏
