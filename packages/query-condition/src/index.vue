@@ -6,7 +6,12 @@
     :form="state.form"
     size="default"
     class="t-query-condition"
-    :style="{ 'grid-template-areas': gridAreas, 'grid-template-columns': `repeat(${colLength}, minmax(220px, ${100 / colLength}%))` }"
+    :style="{
+      'grid-template-areas': gridAreas,
+      'grid-template-columns': `repeat(${colLength}, minmax(220px, ${
+        100 / colLength
+      }%))`,
+    }"
     @submit.prevent
   >
     <el-form-item
@@ -16,7 +21,7 @@
       :label-width="opt.labelWidth"
       v-bind="$attrs"
       :style="{ gridArea: i }"
-      :class="[opt.className, { 'render_label': opt.labelRender }]"
+      :class="[opt.className, { render_label: opt.labelRender }]"
     >
       <!-- 自定义label -->
       <template #label v-if="opt.labelRender">
@@ -27,27 +32,44 @@
         <slot :name="opt.slotName" :param="state.form"></slot>
       </template>
       <component
-        v-if="!opt.slotName&&opt.comp.includes('date')"
+        v-if="!opt.slotName && opt.comp.includes('date')"
         :is="opt.comp"
-        v-bind="typeof opt.bind == 'function' ? opt.bind(state.form) : { clearable: true, filterable: true, ...$attrs, ...opt.bind }"
+        v-bind="
+          typeof opt.bind == 'function'
+            ? opt.bind(state.form)
+            : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
+        "
         :placeholder="opt.placeholder || getPlaceholder(opt)"
         @change="handleEvent(opt.event, state.form[opt.dataIndex])"
         v-model="state.form[opt.dataIndex]"
       />
       <component
-        v-if="!opt.slotName&&opt.comp.includes('tree-select')"
+        v-if="!opt.slotName && opt.comp.includes('tree-select')"
         :is="opt.comp"
-        v-bind="typeof opt.bind == 'function' ? opt.bind(state.form) : { clearable: true, filterable: true, ...$attrs, ...opt.bind }"
+        v-bind="
+          typeof opt.bind == 'function'
+            ? opt.bind(state.form)
+            : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
+        "
         :placeholder="opt.placeholder || getPlaceholder(opt)"
         @change="handleEvent(opt.event, state.form[opt.dataIndex])"
         v-model="state.form[opt.dataIndex]"
       />
       <component
-        v-if="!opt.slotName&&!opt.comp.includes('date')&&!opt.comp.includes('tree-select')"
+        v-if="
+          !opt.slotName &&
+          !opt.comp.includes('date') &&
+          !opt.comp.includes('tree-select')
+        "
         :is="opt.comp"
-        v-bind="typeof opt.bind == 'function' ? opt.bind(state.form) : { clearable: true, filterable: true, ...$attrs, ...opt.bind }"
+        v-bind="
+          typeof opt.bind == 'function'
+            ? opt.bind(state.form)
+            : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
+        "
         :placeholder="opt.placeholder || getPlaceholder(opt)"
         @change="handleEvent(opt.event, state.form[opt.dataIndex])"
+        v-on="cEvent(opt)"
         v-model="state.form[opt.dataIndex]"
       >
         <component
@@ -57,20 +79,37 @@
           :disabled="value.disabled"
           :label="compChildLabel(opt, value)"
           :value="compChildValue(opt, value, key)"
-        >{{ compChildShowLabel(opt, value) }}</component>
+          >{{ compChildShowLabel(opt, value) }}</component
+        >
       </component>
     </el-form-item>
     <el-form-item
       v-if="Object.keys(cOpts).length > 0"
       label-width="0"
       style="grid-area: submit_btn"
-      :class="['btn', { 'flex_end': cellLength % colLength === 0 }]"
+      :class="['btn', { flex_end: cellLength % colLength === 0 }]"
     >
-      <el-button class="btn_check" @click="checkHandle" v-bind="queryAttrs" :loading="loading">查询</el-button>
-      <el-button v-if="reset" class="btn_reset" v-bind="resetAttrs" @click="resetHandle">重置</el-button>
+      <el-button
+        class="btn_check"
+        @click="checkHandle"
+        v-bind="queryAttrs"
+        :loading="loading"
+        >查询</el-button
+      >
+      <el-button
+        v-if="reset"
+        class="btn_reset"
+        v-bind="resetAttrs"
+        @click="resetHandle"
+        >重置</el-button
+      >
       <slot name="querybar"></slot>
-      <el-button v-if="originCellLength > colLength && isShowOpen" @click="open = !open" link>
-        {{ open? '收起': '展开' }}
+      <el-button
+        v-if="originCellLength > colLength && isShowOpen"
+        @click="open = !open"
+        link
+      >
+        {{ open ? '收起' : '展开' }}
         <el-icon v-if="open">
           <ArrowUp />
         </el-icon>
@@ -194,7 +233,7 @@ const gridAreas = computed(() => {
   const fields = Object.keys(cOpts.value)
   let rowIndex = 0
   let rowSpan = 0
-  const areas:any = [[]]
+  const areas: any = [[]]
   for (let fieldIndex = 0; fieldIndex < fields.length; fieldIndex++) {
     const field = fields[fieldIndex]
     const opt = cOpts.value[field]
@@ -222,6 +261,23 @@ const gridAreas = computed(() => {
     acc += `'${cur.join(' ')}'\n`
     return acc
   }, '')
+})
+// 引用第三方事件
+const cEvent = computed(() => {
+  return (opt: any) => {
+    let event = { ...opt.eventHandle }
+    let changeEvent = {}
+    Object.keys(event).forEach((v) => {
+      changeEvent[v] = (e) => {
+        if (e) {
+          event[v] && event[v](e, state.form)
+        } else {
+          event[v] && event[v](state.form)
+        }
+      }
+    })
+    return { ...changeEvent }
+  }
 })
 // 初始化表单数据
 const initForm = (opts: any, keepVal = false) => {

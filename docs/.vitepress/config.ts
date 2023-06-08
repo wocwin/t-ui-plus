@@ -44,10 +44,6 @@ export default defineConfig({
           text: '常用组件',
           items: [
             { text: '下拉选择组件', link: '/components/TSelect/base.md' },
-            {
-              text: '下拉选择表格组件',
-              link: '/components/TSelectTable/base.md',
-            },
             { text: '详情组件', link: '/components/TDetail/base.md' },
             { text: 'Button组件', link: '/components/TButton/base.md' },
             { text: '日期组件', link: '/components/TDatePicker/base.md' },
@@ -57,6 +53,10 @@ export default defineConfig({
         {
           text: '复杂组件',
           items: [
+            {
+              text: '下拉选择表格组件',
+              link: '/components/TSelectTable/base.md',
+            },
             {
               text: '条件查询组件',
               link: '/components/TQueryCondition/base.md',

@@ -241,6 +241,7 @@ span[class~='language-css']:before {
   --prism-marker-opacity: 0.6;
   --prism-marker-color: var(--code-text-color);
   --prism-line-height: var(--code-line-height);
+  --vp-layout-max-width: 1640px;
 }
 
 html:not(.dark) {
