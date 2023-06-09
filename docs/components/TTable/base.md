@@ -74,6 +74,12 @@ TTable/isShowPagination
 TTable/render
 :::
 
+### Tree-Table
+
+:::demo 按照`el-table`方式配置；新增`isTree`属性——其作用是布局TTable-Tree样式
+TTable/treeTable
+:::
+
 ### 某列 作用域插槽渲染
 
 :::demo
@@ -187,6 +193,7 @@ TTable/eventHandle
 | columnSetting           | 是否显示设置（隐藏/显示列）                                                    | Boolean      | false   |
 | name                    | 与 columnSetting 配合使用标记隐藏/显示列唯一性                                 | String       | title   |
 | isRowSort               | 是否开启行拖拽(`row-key` 需要设置)                                             | Boolean      | false   |
+| isTree                  | 是否开启Tree-table样式                                                         | Boolean      | false   |
 
 
 #### 3、events 其他事件按照 el-table 直接使用（如 sort-change 排序事件）

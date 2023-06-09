@@ -29,6 +29,7 @@
       :class="{
         cursor: isCopy,
         row_sort: isRowSort,
+        tree_style: isTree,
         highlightCurrentRow: highlightCurrentRow,
         radioStyle: table.firstColumn && table.firstColumn.type === 'radio',
       }"
@@ -288,6 +289,11 @@ const props = defineProps({
   // 表格标题
   title: {
     type: String,
+  },
+  // 是否开启Tree-table
+  isTree: {
+    type: Boolean,
+    default: false,
   },
   // 是否开启行拖拽
   isRowSort: {
@@ -694,7 +700,20 @@ defineExpose({
     margin-right: calc(2% - 20px);
     background-color: var(--el-bg-color);
   }
-
+  // ttable过长省略号
+  .el-table {
+    .el-tooltip {
+      div {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-all;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+    }
+  }
   // 某行隐藏复选框/单选框
   .el-table {
     .el-table__row {
@@ -829,7 +848,22 @@ defineExpose({
       }
     }
   }
-
+  // treeTable样式
+  .tree_style {
+    :deep(.el-table__body-wrapper) {
+      .el-table__body {
+        .cell {
+          display: flex;
+          align-items: center;
+          .el-table__expand-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
   .operator {
     // 操作样式
     .operator_btn {
