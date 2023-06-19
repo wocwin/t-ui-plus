@@ -55,6 +55,18 @@ import '@wocwin/t-ui-plus/lib/style.css'
 </script>
 ```
 
+### Volar 组件类型提示
+
+```json
+// 需要在使用的项目的tsconfig.json文件中添加以下
+compilerOptions：{
+  "types": [
+      "@wocwin/t-ui-plus/lib/components.d.ts"
+    ],
+}
+
+```
+
 ## 安装依赖
 
 ```shell

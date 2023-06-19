@@ -25,6 +25,17 @@ const app = createApp(App)
 app.use(TuiPlus)
 app.mount('#app')
 ```
+### Volar 组件类型提示
+
+```json
+// 需要在使用的项目的tsconfig.json文件中添加以下
+compilerOptions：{
+  "types": [
+      "@wocwin/t-ui-plus/lib/components.d.ts"
+    ],
+}
+
+```
 ### docs文档结构目录
 ```
 ├─ examples               # VPDemo组件自动解析此文件夹下的所有.vue文件
