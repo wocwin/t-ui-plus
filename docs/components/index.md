@@ -25,7 +25,7 @@ const app = createApp(App)
 app.use(TuiPlus)
 app.mount('#app')
 ```
-### Volar 组件类型提示
+### Volar 组件类型提示(1.1.8版本支持)
 
 ```json
 // 需要在使用的项目的tsconfig.json文件中添加以下
