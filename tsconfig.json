@@ -36,7 +36,6 @@
     "skipLibCheck": true
   },
   "include": [
-    // "src/**/*.d.ts"
     "packages/**/*.ts",
     "packages/**/*.d.ts",
     "packages/**/*.tsx",

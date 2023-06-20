@@ -12,7 +12,7 @@ import dts from 'vite-plugin-dts'
 export default defineConfig({
   plugins: [
     vue(),
-    dts({outputDir: './lib',entryRoot: './packages'}),
+    dts(),
     vueJsx(),
     vueSetupExtend(),
     viteCompression({
