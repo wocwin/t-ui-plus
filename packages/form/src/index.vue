@@ -1,30 +1,13 @@
 <template>
-  <el-form
-    class="t-form"
-    ref="tform"
-    :class="className"
-    :model="formOpts.formData"
-    :rules="formOpts.rules"
-    :label-width="formOpts.labelWidth || '100px'"
-    :label-position="formOpts.labelPosition || 'right'"
-    v-bind="$attrs"
-  >
+  <el-form class="t-form" ref="tform" :class="className" :model="formOpts.formData" :rules="formOpts.rules"
+    :label-width="formOpts.labelWidth || '100px'" :label-position="formOpts.labelPosition || 'right'" v-bind="$attrs">
     <template v-for="(item, index) in formOpts.fieldList">
-      <el-form-item
-        v-if="!item.isHideItem"
-        :key="index"
-        :prop="item.value"
-        :label="item.label"
-        :class="[
-          item.className,
-          { render_label: item.labelRender },
-          { slot_label: item.slotName },
-          { render_laber_position_left: formOpts.labelPosition === 'left' },
-        ]"
-        :rules="item.rules"
-        :style="getChildWidth(item)"
-        v-bind="$attrs"
-      >
+      <el-form-item v-if="!item.isHideItem" :key="index" :prop="item.value" :label="item.label" :class="[
+        item.className,
+        { render_label: item.labelRender },
+        { slot_label: item.slotName },
+        { render_laber_position_left: formOpts.labelPosition === 'left' },
+      ]" :rules="item.rules" :style="getChildWidth(item)" v-bind="$attrs">
         <!-- 自定义label -->
         <template #label v-if="item.labelRender">
           <render-comp :render="item.labelRender" :item="item" />
@@ -39,60 +22,32 @@
             item.textValue || formOpts.formData[item.value]
           }}</span>
         </template>
-        <component
-          v-if="!item.slotName && !item.textShow && item.comp.includes('date')"
-          :is="item.comp"
-          v-model="formOpts.formData[item.value]"
-          :type="item.type"
+        <component v-if="!item.slotName && !item.textShow && item.comp.includes('date')" :is="item.comp"
+          v-model="formOpts.formData[item.value]" :type="item.type"
           :placeholder="item.placeholder || getPlaceholder(item)"
-          @change="handleEvent(item.event, formOpts.formData[item.value], item)"
-          v-bind="
-            typeof item.bind == 'function'
-              ? item.bind(item)
-              : { clearable: true, filterable: true, ...item.bind }
-          "
-          :style="{ width: item.width || '100%' }"
-          v-on="cEvent(item)"
-        />
-        <component
-          v-if="
-            !item.slotName &&
-            !item.textShow &&
-            item.comp.includes('tree-select')
-          "
-          :is="item.comp"
-          v-model="formOpts.formData[item.value]"
-          :type="item.type"
+          @change="handleEvent(item.event, formOpts.formData[item.value], item)" v-bind="typeof item.bind == 'function'
+            ? item.bind(item)
+            : { clearable: true, filterable: true, ...item.bind }
+            " :style="{ width: item.width || '100%' }" v-on="cEvent(item)" />
+        <component v-if="!item.slotName &&
+          !item.textShow &&
+          item.comp.includes('tree-select')
+          " :is="item.comp" v-model="formOpts.formData[item.value]" :type="item.type"
           :placeholder="item.placeholder || getPlaceholder(item)"
-          @change="handleEvent(item.event, formOpts.formData[item.value], item)"
-          v-bind="
-            typeof item.bind == 'function'
-              ? item.bind(item)
-              : { clearable: true, filterable: true, ...item.bind }
-          "
-          :style="{ width: item.width || '100%' }"
-          v-on="cEvent(item)"
-        />
-        <component
-          v-if="
-            !item.slotName &&
-            !item.textShow &&
-            !item.comp.includes('date') &&
-            !item.comp.includes('tree-select')
-          "
-          :is="item.comp"
-          v-model="formOpts.formData[item.value]"
-          :type="item.type"
+          @change="handleEvent(item.event, formOpts.formData[item.value], item)" v-bind="typeof item.bind == 'function'
+            ? item.bind(item)
+            : { clearable: true, filterable: true, ...item.bind }
+            " :style="{ width: item.width || '100%' }" v-on="cEvent(item)" />
+        <component v-if="!item.slotName &&
+          !item.textShow &&
+          !item.comp.includes('date') &&
+          !item.comp.includes('tree-select')
+          " :is="item.comp" v-model="formOpts.formData[item.value]" :type="item.type"
           :placeholder="item.placeholder || getPlaceholder(item)"
-          @change="handleEvent(item.event, formOpts.formData[item.value], item)"
-          v-bind="
-            typeof item.bind == 'function'
-              ? item.bind(item)
-              : { clearable: true, filterable: true, ...item.bind }
-          "
-          :style="{ width: item.width || '100%' }"
-          v-on="cEvent(item)"
-        >
+          @change="handleEvent(item.event, formOpts.formData[item.value], item)" v-bind="typeof item.bind == 'function'
+            ? item.bind(item)
+            : { clearable: true, filterable: true, ...item.bind }
+            " :style="{ width: item.width || '100%' }" v-on="cEvent(item)">
           <!-- 前置文本 -->
           <template #prepend v-if="item.prepend">{{ item.prepend }}</template>
           <!-- 后置文本 -->
@@ -102,14 +57,8 @@
             <slot :name="item.childSlotName"></slot>
           </template>
           <!-- <template v-if="!item.comp.includes('date') && !item.childSlotName"> -->
-          <component
-            :is="compChildName(item)"
-            v-for="(value, key, index) in selectListType(item)"
-            :key="index"
-            :disabled="value.disabled"
-            :label="compChildLabel(item, value)"
-            :value="compChildValue(item, value, key)"
-          >
+          <component :is="compChildName(item)" v-for="(value, key, index) in selectListType(item)" :key="index"
+            :disabled="value.disabled" :label="compChildLabel(item, value)" :value="compChildValue(item, value, key)">
             {{ compChildShowLabel(item, value) }}
           </component>
           <!-- </template> -->
@@ -121,22 +70,12 @@
       <template v-if="formOpts.btnSlotName">
         <slot :name="formOpts.btnSlotName"></slot>
       </template>
-      <template
-        v-if="
-          !formOpts.btnSlotName &&
-          formOpts.operatorList &&
-          formOpts.operatorList.length > 0
-        "
-      >
-        <el-button
-          v-for="(val, index) in formOpts.operatorList"
-          :key="index"
-          @click="val.fun(val)"
-          :type="val.type || 'primary'"
-          :icon="val.icon"
-          :size="val.size || 'small'"
-          :disabled="val.disabled"
-        >
+      <template v-if="!formOpts.btnSlotName &&
+        formOpts.operatorList &&
+        formOpts.operatorList.length > 0
+        ">
+        <el-button v-for="(val, index) in formOpts.operatorList" :key="index" @click="val.fun(val)"
+          :type="val.type || 'primary'" :icon="val.icon" :size="val.size || 'small'" :disabled="val.disabled">
           {{ val.label }}
         </el-button>
       </template>
@@ -151,7 +90,7 @@ export default {
 <script setup lang="ts">
 import RenderComp from './renderComp.vue'
 import { ElMessage } from 'element-plus'
-import { computed, ref, watch, onMounted } from 'vue'
+import { computed, ref, watch, onMounted, getCurrentInstance } from 'vue'
 const props = defineProps({
   // 自定义类名
   className: {
@@ -259,6 +198,8 @@ const compChildShowLabel = computed(() => {
 const colSize = ref(props.widthSize)
 // 获取ref
 const tform: any = ref<HTMLElement | null>(null)
+// 获取实例方法
+const instance: any = getCurrentInstance()
 // 抛出事件
 const emits = defineEmits(['update:modelValue', 'handleEvent'])
 watch(
@@ -283,16 +224,20 @@ watch(
   { deep: true }
 )
 onMounted(() => {
-  // console.log(789, tform.value)
+  const entries = Object.entries(tform.value.$.exposed)
+  // console.log('111', entries)
+  for (const [key, value] of entries) {
+    instance.exposed[key] = value
+  }
+  // console.log(789, instance)
   // 将form实例返回到父级
   emits('update:modelValue', tform.value)
 })
 // label与输入框的布局方式
 const getChildWidth = (item) => {
   if (props.formOpts.labelPosition === 'top') {
-    return `flex: 0 1 calc((${
-      100 / (item.widthSize || colSize.value)
-    }% - 10px));margin-right:10px;`
+    return `flex: 0 1 calc((${100 / (item.widthSize || colSize.value)
+      }% - 10px));margin-right:10px;`
   } else {
     return `flex: 0 1 ${100 / (item.widthSize || colSize.value)}%;`
   }
@@ -319,15 +264,16 @@ const handleEvent = (type, val, item) => {
     props.isTrim &&
     !item.isTrim &&
     item.comp.includes('el-input') &&
-    item.type !== 'password'
+    item.type !== 'password' &&
+    item.type !== 'inputNumber'
   ) {
     props.formOpts.formData[item.value] =
       props.formOpts.formData[item.value].trim()
   }
   emits('handleEvent', type, val)
 }
-// 校验
-const validate = () => {
+// 自定义校验
+const selfValidate = () => {
   return new Promise((resolve: any, reject: any) => {
     tform.value.validate((valid: boolean) => {
       if (valid) {
@@ -345,16 +291,8 @@ const validate = () => {
     })
   })
 }
-// 重置表单
-const resetFields = () => {
-  return tform.value.resetFields()
-}
-// 清空校验
-const clearValidate = () => {
-  return tform.value.clearValidate()
-}
 // 暴露方法出去
-defineExpose({ resetFields, clearValidate, validate })
+defineExpose({ ...instance.exposed, selfValidate })
 </script>
 
 <style lang="scss">
@@ -366,6 +304,7 @@ defineExpose({ resetFields, clearValidate, validate })
     align-items: center;
 
     .el-form-item__content {
+
       .el-input,
       .el-select,
       .el-date-editor,
@@ -433,12 +372,16 @@ defineExpose({ resetFields, clearValidate, validate })
     align-items: center;
     justify-content: flex-end;
   }
+
   .text_show {
     color: var(--el-text-color-primary);
   }
+
   .slot_label {
+
     // margin-bottom: 0 !important;
     .el-form-item__content {
+
       // margin-left: 0 !important;
       label {
         min-width: 108px;

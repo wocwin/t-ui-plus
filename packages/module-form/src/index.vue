@@ -141,7 +141,7 @@ const saveHandle = async () => {
   Object.keys(formOpts).forEach(async (formIndex) => {
     const { valid, formData } = await tForm.value
       .getChildRef(formIndex)
-      .validate()
+      .selfValidate()
     // const { valid, formData } = await attrs.formOpts[formIndex].ref.validate()
     // console.log('11111', valid)
     if (valid) {
