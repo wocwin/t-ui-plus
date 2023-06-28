@@ -15,6 +15,13 @@
   >
     <template #empty>
       <div class="t-table-select__table" :style="{ width: `${tableWidth}px` }">
+        <div class="table_query_condition" v-if="isShowQuery">
+          <t-query-condition ref="tQueryConditionRef" v-bind="$attrs">
+            <template v-for="(index, name) in slots" v-slot:[name]="data">
+              <slot :name="name" v-bind="data"></slot>
+            </template>
+          </t-query-condition>
+        </div>
         <el-table
           ref="selectTable"
           :data="state.tableData"
@@ -110,10 +117,12 @@ export default {
 }
 </script>
 <script setup lang="ts">
+import TQueryCondition from '../../query-condition/src/index.vue'
 import RenderCol from './renderCol.vue'
 import {
   computed,
   useAttrs,
+  useSlots,
   ref,
   watch,
   nextTick,
@@ -142,6 +151,11 @@ const props = defineProps({
   radioTxt: {
     type: String,
     default: '单选',
+  },
+  // 是否显示搜索条件
+  isShowQuery: {
+    type: Boolean,
+    default: false,
   },
   // 单选框--是否开启点击整行选中
   rowClickRadio: {
@@ -208,6 +222,7 @@ const selectAttr = computed(() => {
     ...useAttrs(),
   }
 })
+const slots = useSlots()
 const isDefaultSelectVal = ref(true) // 是否已经重新选择了
 const forbidden = ref(true) // 判断单选选中及取消选中
 const isRadio = ref(false)
@@ -272,6 +287,7 @@ onMounted(() => {
     defaultSelect(props.defaultSelectVal)
   }
 })
+
 // 单选键盘事件
 const selectKeyup = (e) => {
   if (!props.multiple) {
@@ -608,6 +624,13 @@ defineExpose({ focus, blur })
     .el-table__body,
     .el-table__header {
       margin: 0;
+    }
+    // 条件查询组件样式
+    .table_query_condition {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 10px;
     }
   }
 
