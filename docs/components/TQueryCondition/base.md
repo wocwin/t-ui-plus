@@ -47,7 +47,7 @@ TQueryCondition/querybar
 
 ---
 
-#### 1、代码示例
+### 1、代码示例
 
 ```html
 <t-query-condition
@@ -62,7 +62,7 @@ TQueryCondition/querybar
      loading：查询按钮loading -->
 ```
 
-#### 2、配置参数（Attributes）
+### 2、配置参数（Attributes）
 
 | 参数        | 说明                                      | 类型    | 默认值  |
 | :---------- | :---------------------------------------- | :------ | :------ |
@@ -74,7 +74,7 @@ TQueryCondition/querybar
 | isExpansion | 是否默认展开                              | Boolean | false   |
 | labelWidth  | labelWidth 宽度                           | String  | '110px' |
 
-#### 3、opts Attributes
+### 3、opts Attributes
 
 | 参数        | 说明                                                                             | 类型             | 默认值                   |
 | :---------- | :------------------------------------------------------------------------------- | :--------------- | :----------------------- |

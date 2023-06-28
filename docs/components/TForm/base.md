@@ -78,7 +78,7 @@ TForm/isHideItem
 
 ---
 
-#### 1. 简介：基于 Element-plus Form 表单组件的二次封装，着重于数据层面，HTML 一行代码
+### 1. 简介：基于 Element-plus Form 表单组件的二次封装，着重于数据层面，HTML 一行代码
 
 > TForm 表单组件 **代码示例：**
 
@@ -92,7 +92,7 @@ TForm/isHideItem
 //注意formOpts.ref(t-form组件实例相当于vue2 ref)需要要v-model接收
 ```
 
-#### 2. 配置参数
+### 2. 配置参数
 
 | 参数                | 说明                                                                                                    | 类型             | 是否必须 |
 | :------------------ | :------------------------------------------------------------------------------------------------------ | :--------------- | :------- |
@@ -126,16 +126,16 @@ TForm/isHideItem
 | ---rules            | 规则（可依据 elementUI el-form 配置————对应 formData 的值）                                             | Object/Array     | -        |
 | ---operatorList     | 操作按钮 list                                                                                           | Array            | -        |
 
-#### 3. events
+### 3. events
 
 | 事件名      | 说明                 | 返回值                                                   |
 | :---------- | :------------------- | :------------------------------------------------------- |
 | handleEvent | 单个查询条件触发事件 | fieldList 中 type/查询条件输入的值/fieldList 中 event 值 |
 
-#### 4. Methods 继承 element-plus 的 methods
+### 4. Methods 继承 element-plus 的 methods
 
 | 事件名       | 说明       | 返回值                        |
 | :----------- | :--------- | :---------------------------- |
 | selfValidate | 自定义校验 | valid:Boolean;formData:object |
 
-#### 5. 关于 element-plus el-form/el-form-item 提供的一些方法/属性可直接使用，无需其他配置
+### 5. 关于 element-plus el-form/el-form-item 提供的一些方法/属性可直接使用，无需其他配置

@@ -54,11 +54,17 @@ TSelectTable/multiple
 TSelectTable/isShowPagination
 :::
 
+### 显示查询条件
+
+:::demo `isShowQuery` 是否开启查询条件配置，其配置继承查询条件组件（TQueryCondition组件）的所有属性及事件；`table` 数据源及表头信息；`keywords` 选项中的 value（选项的值）,label(选项的标签)
+TSelectTable/isShowQuery
+:::
+
 ### TSelectTable 参数配置
 
 ---
 
-#### 1、代码示例
+### 1、代码示例
 
 ```html
 <t-select-table
@@ -70,7 +76,7 @@ TSelectTable/isShowPagination
 ></t-select-table>
 ```
 
-#### 2、配置参数（Attributes）继承 el-table 及 el-select 属性
+### 2、配置参数（Attributes）继承 el-table 及 el-select 属性
 
 | 参数              | 说明                                                                                | 类型                      | 默认值     |
 | :---------------- | :---------------------------------------------------------------------------------- | :------------------------ | :--------- |
@@ -101,8 +107,9 @@ TSelectTable/isShowPagination
 | isShowPagination  | 开启分页                                                                            | Boolean                   | false      |
 | tableWidth        | table 宽度                                                                          | Number                    | 550        |
 | isKeyup           | 单选是否开启键盘事件                                                                | Boolean                   | false      |
+| isShowQuery       | 是否允许配置查询条件(继承TQueryCondition的所有属性、事件、插槽)                     | Boolean                   | false      |
 
-#### 3、事件（events）继承 el-table 及 el-select 属性
+### 3、事件（events）继承 el-table 及 el-select 属性
 
 | 事件名          | 说明         | 回调参数                                       |
 | :-------------- | :----------- | :--------------------------------------------- |
@@ -110,7 +117,7 @@ TSelectTable/isShowPagination
 | selectionChange | 多选事件     | 返回选中的项数据及选中项的 keywords.value 集合 |
 | radioChange     | 单选         | 返回当前项所有数据                             |
 
-#### 4、方法（Methods）继承 el-table 及 el-select 属性
+### 4、方法（Methods）继承 el-table 及 el-select 属性
 
 | 方法名 | 说明                            | 回调参数 |
 | :----- | :------------------------------ | :------- |

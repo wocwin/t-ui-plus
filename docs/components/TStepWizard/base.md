@@ -8,7 +8,7 @@ TStepWizard/base
 
 ### TStepWizard 参数配置
 
-#### 1. 简介：基于 Element-plus el-steps el-step 步骤条组件的二次封装，着重于数据层面，HTML 一行代码
+### 1. 简介：基于 Element-plus el-steps el-step 步骤条组件的二次封装，着重于数据层面，HTML 一行代码
 
 > TStepWizard 步骤组件 **代码示例：**
 
@@ -24,7 +24,7 @@ TStepWizard/base
 </t-step-wizard>
 ```
 
-#### 2. 配置参数 继承 element-plus el-steps/el-step 提供的属性
+### 2. 配置参数 继承 element-plus el-steps/el-step 提供的属性
 
 | 参数              | 说明                                  | 类型          | 默认值 |
 | :---------------- | :------------------------------------ | :------------ | :----- |
@@ -47,7 +47,7 @@ TStepWizard/base
 | lastBtnTitle      | 最后一步骤成功按钮文字                | String        | 完成   |
 | successTitle      | 最后一步骤成功提示语                  | String        | -      |
 
-#### 3. events
+### 3. events
 
 | 事件名   | 说明                 | 返回值     |
 | :------- | :------------------- | :--------- |

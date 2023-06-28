@@ -34,7 +34,7 @@ TDatePicker/slotCustomize
 
 ### TDatePicker 参数配置
 
-#### 简介：基于 Element-plus DatePicker DateTimePicker 组件的二次封装，取决于 type 值
+### 简介：基于 Element-plus DatePicker DateTimePicker 组件的二次封装，取决于 type 值
 
 > TDatePicker 日期组件 **代码示例：**
 

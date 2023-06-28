@@ -46,7 +46,7 @@ TDetail/tooltip
 
 ---
 
-#### 1、代码示例
+### 1、代码示例
 
 > `详情组件————可实现表单回显`
 
@@ -58,7 +58,7 @@ TDetail/tooltip
 :listTypeInfo=="listTypeInfo" />
 ```
 
-#### 2、配置参数（Attributes）继承 el-descriptions Attributes
+### 2、配置参数（Attributes）继承 el-descriptions Attributes
 
 | 参数          | 说明                                               | 类型            | 默认值       |
 | :------------ | :------------------------------------------------- | :-------------- | :----------- |
@@ -79,4 +79,4 @@ TDetail/tooltip
 | dataList      | 开启 filters 时详情接口返回的数据                  | Object          | {}           |
 | listTypeInfo  | 开启 filters 时下拉数据源                          | Object          | {}           |
 
-#### 3、继承 el-descriptions events
+### 3、继承 el-descriptions events
