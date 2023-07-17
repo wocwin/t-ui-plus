@@ -1,8 +1,16 @@
 <template>
   <t-layout-page class="dept_mange">
     <t-layout-page-item>
-      <t-table title="部门管理列表" isCopy isTree :table="state.table" :columns="state.table.columns" row-key="deptId"
-        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" :isShowPagination="false">
+      <t-table
+        title="部门管理列表"
+        isCopy
+        isTree
+        :table="state.table"
+        :columns="state.table.columns"
+        row-key="deptId"
+        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+        :isShowPagination="false"
+      >
         <template #toolbar>
           <el-button type="primary">新增</el-button>
         </template>

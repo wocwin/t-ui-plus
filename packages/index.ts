@@ -1,4 +1,7 @@
 import type { Component, App } from 'vue'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+import locale from 'element-plus/lib/locale/lang/zh-cn' // 因element-plus默认是英文，我们指定一下默认中文
 import TLayoutPage from './layout-page'
 import TLayoutPageItem from './layout-page-item'
 import TQueryCondition from './query-condition'
@@ -39,6 +42,10 @@ const installComponents: any = (app: App) => {
   // components.forEach((comp: any) => {
   //   app.component(comp.name as string, comp)
   // })
+  app.use(ElementPlus, {
+    locale // 语言设置
+  // size: Cookies.get('size') || 'medium' // 设置默认尺寸
+})
   for (const key in components) {
     app.component(key, components[key])
   }
