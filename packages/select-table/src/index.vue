@@ -242,7 +242,6 @@ watch(
   (val) => {
     // console.log(111, val)
     state.tableData = val
-    state.tableData = val
     nextTick(() => {
       state.tableData &&
         state.tableData.length > 0 &&
