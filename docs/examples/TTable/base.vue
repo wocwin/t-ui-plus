@@ -6,6 +6,7 @@
         :table="table"
         :columns="table.columns"
         :isShowPagination="false"
+        size="small"
       />
     </t-layout-page-item>
   </t-layout-page>

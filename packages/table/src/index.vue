@@ -34,7 +34,6 @@
         radioStyle: table.firstColumn && table.firstColumn.type === 'radio',
       }"
       v-bind="$attrs"
-      size="default"
       :highlight-current-row="highlightCurrentRow"
       :border="table.border || isTableBorder"
       @cell-dblclick="cellDblclick"

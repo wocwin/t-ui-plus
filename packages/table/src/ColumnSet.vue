@@ -1,10 +1,10 @@
 <template>
   <el-dropdown trigger="click">
-    <el-button icon="Setting" size="default">列设置</el-button>
+    <el-button v-bind="columnBind">{{columnBind.btnTxt||'列设置'}}</el-button>
     <template #dropdown>
       <el-dropdown-menu>
         <el-dropdown-item>
-          <span class="title">列设置</span>
+          <span class="title">{{columnBind.title||'列设置'}}</span>
           <Draggable
             class="t_table_column_setting_dropdown"
             v-model="state.columnSet"
@@ -16,9 +16,7 @@
                 @click.native.stop
                 :disabled="element.checkBoxDisabled"
                 @change="(checked) => checkChanged(checked, index)"
-              >
-                {{ element.label }}
-              </el-checkbox>
+              >{{ element.label }}</el-checkbox>
             </template>
           </Draggable>
         </el-dropdown-item>
@@ -33,7 +31,7 @@ export default {
 </script>
 <script setup lang="ts">
 import Draggable from 'vuedraggable'
-import { watch, onMounted, reactive } from 'vue'
+import { watch, onMounted, reactive, computed,useAttrs } from 'vue'
 const props = defineProps({
   columns: {
     type: Array,
@@ -47,8 +45,16 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  columnSetBind: {
+    type: Object,
+    default: () => {},
+  },
 })
-
+const $attrs: any = useAttrs()
+ const columnBind = computed(()=>{
+      const columnSetBind = { btnTxt: '列设置', title: '列设置', ...props.columnSetBind }
+      return { size: 'default', icon: 'Setting', ...$attrs, ...columnSetBind }
+ })
 // 获取缓存数据
 const getColumnSetCache = () => {
   let value: any = localStorage.getItem(

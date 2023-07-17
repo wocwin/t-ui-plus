@@ -8,6 +8,7 @@
         columnSetting
         :columns="table.columns"
         :isShowPagination="false"
+        :columnSetBind="{btnTxt:'列设置22',title:'随便取一个title',type:'primary',icon:'Edit'}"
       />
     </t-layout-page-item>
   </t-layout-page>
