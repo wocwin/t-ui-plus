@@ -419,6 +419,17 @@ const filterMethodHandle = (val) => {
   if (!props.filterable) return
   const tableData = JSON.parse(JSON.stringify(props.table?.data))
   if (tableData && tableData.length > 0) {
+    if (!props.multiple) {
+      if (val) {
+        radioVal.value = ''
+      } else {
+        tableData.map((item, index) => {
+          if (item.id === state.defaultValue?.id) {
+            radioVal.value = index + 1
+          }
+        })
+      }
+    }
     state.tableData = tableData.filter((item) => {
       if (item[props.keywords.label].includes(val)) {
         return item
