@@ -55,23 +55,15 @@ import '@wocwin/t-ui-plus/lib/style.css'
 </script>
 ```
 
-### t-ui-plus Volar 组件类型提示(1.1.12版本支持)
+### t-ui-plus Volar 组件类型提示
 
 ```js
 // 需要在使用的项目的tsconfig.json文件中添加以下
 compilerOptions：{
   "types": [
-      "@wocwin/t-ui-plus/global.d.ts",
+      "@wocwin/t-ui-plus/components.d.ts",
     ],
 }
-
-```
-### 若需要t-ui-plus集成的Element-plus支持 Volar 类型提示(1.1.12版本支持)
->#### 注意：不安装及注册`element-plus`直接使用那么当前的`element-plus`版本是`@2.2.18`
-
-```js
-// 需要在使用的项目中安装element-plus(不需要注册，也能在项目中全局使用)
-npm install element-plus
 
 ```
 ## 安装依赖
