@@ -71,7 +71,10 @@ let childSelectedValue: any = computed({
   }
 })
 // 设置全选
-const selectChecked: any = ref(false)
+const selectChecked = computed(() => {
+  const _deval: any = props.modelValue
+  return _deval?.length === props.optionSource.length
+})
 // 点击全选
 const selectAll = (val: any) => {
   const options = JSON.parse(JSON.stringify(props.optionSource))
@@ -87,13 +90,13 @@ const selectAll = (val: any) => {
 // 多选时，判断全选框是否选中
 const selectChange = (val: any) => {
   // console.log('selectChange', val)
-  if (props.multiple) {
-    if (val.length === props.optionSource.length) {
-      selectChecked.value = true
-    } else {
-      selectChecked.value = false
-    }
-  }
+  // if (props.multiple) {
+  //   if (val.length === props.optionSource.length) {
+  //     selectChecked.value = true
+  //   } else {
+  //     selectChecked.value = false
+  //   }
+  // }
 }
 </script>
 <style lang="scss" scoped>
