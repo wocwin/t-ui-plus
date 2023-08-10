@@ -82,6 +82,13 @@ pnpm install
 npm run docs:dev
 
 ```
+
+## Thanks to all the contributors
+
+<a href="https://github.com/wocwin/t-ui-plus/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=wocwin/t-ui-plus" alt="contributors" />
+</a>
+
 ## 微信交流群
 
 |                微信二维码                 |
