@@ -71,9 +71,14 @@ let childSelectedValue: any = computed({
   }
 })
 // 设置全选
-const selectChecked = computed(() => {
-  const _deval: any = props.modelValue
-  return _deval?.length === props.optionSource.length
+const selectChecked = computed({
+  get() {
+    const _deval: any = props.modelValue
+    return _deval?.length === props.optionSource?.length
+  },
+  set(val: any) {
+    return val?.length === props.optionSource?.length
+  },
 })
 // 点击全选
 const selectAll = (val: any) => {
