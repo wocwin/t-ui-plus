@@ -5,15 +5,8 @@
     :style="{ width: width || '100%' }"
     v-bind="{ clearable: true, filterable: true, ...$attrs }"
     :multiple="multiple"
-    @change="selectChange"
   >
-    <el-checkbox
-      v-if="multiple"
-      v-model="selectChecked"
-      @change="selectAll"
-      class="all_checkbox"
-      >全选</el-checkbox
-    >
+    <el-checkbox v-if="multiple" v-model="selectChecked" @change="selectAll" class="all_checkbox">全选</el-checkbox>
     <el-option
       v-for="(item, index) in optionSource"
       :key="index + 'i'"
@@ -24,39 +17,39 @@
 </template>
 <script lang="ts">
 export default {
-  name: 'TSelect'
+  name: 'TSelect',
 }
 </script>
 <script setup lang="ts">
 import { computed, watch, ref } from 'vue'
 const props = defineProps({
   modelValue: {
-    type: [String, Number, Array]
+    type: [String, Number, Array],
   },
   // 是否多选
   multiple: {
     type: Boolean,
-    default: false
+    default: false,
   },
   // 选择框宽度
   width: {
-    type: String
+    type: String,
   },
   // 传入的option数组中，要作为最终选择项的键值key
   valueKey: {
     type: String,
-    default: 'key'
+    default: 'key',
   },
   // 传入的option数组中，要作为显示项的键值名称
   labelKey: {
     type: String,
-    default: 'label'
+    default: 'label',
   },
   // 下拉框组件数据源
   optionSource: {
     type: Array as unknown as any[],
-    default: () => []
-  }
+    default: () => [],
+  },
 })
 // 抛出事件
 const emits = defineEmits(['update:modelValue'])
@@ -91,17 +84,6 @@ const selectAll = (val: any) => {
   } else {
     emits('update:modelValue', null)
   }
-}
-// 多选时，判断全选框是否选中
-const selectChange = (val: any) => {
-  // console.log('selectChange', val)
-  // if (props.multiple) {
-  //   if (val.length === props.optionSource.length) {
-  //     selectChecked.value = true
-  //   } else {
-  //     selectChecked.value = false
-  //   }
-  // }
 }
 </script>
 <style lang="scss" scoped>
