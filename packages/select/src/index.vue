@@ -61,23 +61,23 @@ let childSelectedValue: any = computed({
   set(val) {
     // console.log(777, val)
     emits('update:modelValue', val)
-  }
+  },
 })
 // 设置全选
 const selectChecked = computed({
   get() {
     const _deval: any = props.modelValue
-    return _deval?.length === props.optionSource?.length
+    return _deval?.length === props.optionSource.length
   },
   set(val: any) {
-    return val?.length === props.optionSource?.length
+    return val?.length === props.optionSource.length
   },
 })
 // 点击全选
 const selectAll = (val: any) => {
   const options = JSON.parse(JSON.stringify(props.optionSource))
   if (val) {
-    const selectedAllValue = options.map(item => {
+    const selectedAllValue = options.map((item) => {
       return item[props.valueKey]
     })
     emits('update:modelValue', selectedAllValue)

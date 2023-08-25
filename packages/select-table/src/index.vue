@@ -42,6 +42,7 @@
             v-if="multiple"
             type="selection"
             width="55"
+            align="center"
             :reserve-selection="reserveSelection"
             fixed
           ></el-table-column>
@@ -50,6 +51,7 @@
             width="55"
             :label="radioTxt"
             fixed
+            align="center"
             v-if="!multiple && isShowFirstColumn"
           >
             <template #default="scope">
@@ -228,6 +230,7 @@ const forbidden = ref(true) // 判断单选选中及取消选中
 const isRadio = ref(false)
 const radioVal = ref('')
 const state: any = reactive({
+  defaultSelectValue: props.defaultSelectVal, // 默认选中
   tableData: props.table.data, // table数据
   defaultValue: props.value,
   ids: [], // 多选id集合
@@ -280,10 +283,21 @@ watch(
   },
   { deep: true }
 )
+watch(
+  () => props.defaultSelectVal,
+  (val) => {
+    // console.log('props.defaultSelectVal---watch', val)
+    state.defaultSelectValue = val
+    if (val && isDefaultSelectVal.value) {
+      defaultSelect(val)
+    }
+  },
+  { deep: true }
+)
 onMounted(() => {
   // 设置默认选中项（单选）
-  if (props.defaultSelectVal && isDefaultSelectVal.value) {
-    defaultSelect(props.defaultSelectVal)
+  if (state.defaultSelectValue && isDefaultSelectVal.value) {
+    defaultSelect(state.defaultSelectValue)
   }
 })
 
@@ -588,13 +602,13 @@ defineExpose({ focus, blur })
 <style lang="scss">
 .t-select-table {
   .el-table__cell {
-    text-align: center;
+    // text-align: center;
   }
 
   // 单选样式
   .radioStyle {
     .el-table__cell {
-      text-align: center;
+      // text-align: center;
     }
 
     .el-radio {
