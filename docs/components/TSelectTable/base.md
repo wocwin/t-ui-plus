@@ -111,11 +111,11 @@ TSelectTable/isShowQuery
 
 ### 3、事件（events）继承 el-table 及 el-select 属性
 
-| 事件名          | 说明         | 回调参数                                       |
-| :-------------- | :----------- | :--------------------------------------------- |
-| page-change     | 页码改变事件 | 返回选中的页码                                 |
-| selectionChange | 多选事件     | 返回选中的项数据及选中项的 keywords.value 集合 |
-| radioChange     | 单选         | 返回当前项所有数据                             |
+| 事件名          | 说明                                                 | 回调参数                                       |
+| :-------------- | :--------------------------------------------------- | :--------------------------------------------- |
+| page-change     | 页码改变事件(避免与el-table的current-change事件冲突) | 返回选中的页码                                 |
+| selectionChange | 多选事件                                             | 返回选中的项数据及选中项的 keywords.value 集合 |
+| radioChange     | 单选                                                 | 返回当前项所有数据                             |
 
 ### 4、方法（Methods）继承 el-table 及 el-select 属性
 

@@ -1,88 +1,102 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-    <t-select-table
-      :table="table"
-      :columns="table.columns"
-      :max-height="400"
-      :keywords="{ label: 'name', value: 'id' }"
-      multiple
-      @selectionChange="selectionChange"
-      isShowPagination
-      @current-change="pageChange"
-    />
-  </t-layout-page-item>
+      <t-select-table
+        :table="state.table"
+        :columns="state.table.columns"
+        :max-height="400"
+        :keywords="{ label: 'materialName', value: 'materialCode' }"
+        multiple
+        @selectionChange="selectionChange"
+        isShowPagination
+        @page-change="pageChange"
+      ></t-select-table>
+    </t-layout-page-item>
   </t-layout-page>
 </template>
-<script setup lang="ts">
-let table = {
-  total: 100,
-  currentPage: 1,
-  data: [
-    { id: 1, code: 1, name: '物料名称1', spec: '物料规格1', unitName: '吨' },
-    { id: 2, code: 2, name: '物料名称2', spec: '物料规格2', unitName: '吨' },
-    { id: 3, code: 3, name: '物料名称3', spec: '物料规格3', unitName: '吨' },
-    { id: 4, code: 4, name: '物料名称4', spec: '物料规格4', unitName: '吨' },
-    { id: 5, code: 5, name: '物料名称5', spec: '物料规格5', unitName: '吨' },
-    { id: 6, code: 6, name: '物料名称6', spec: '物料规格6', unitName: '吨' },
-    { id: 7, code: 7, name: '物料名称7', spec: '物料规格7', unitName: '吨' },
-    { id: 8, code: 8, name: '物料名称8', spec: '物料规格8', unitName: '吨' },
-    { id: 9, code: 9, name: '物料名称9', spec: '物料规格9', unitName: '吨' },
-    {
-      id: 10,
-      code: 10,
-      name: '物料名称10',
-      spec: '物料规格10',
-      unitName: '吨',
-    },
-    {
-      id: 11,
-      code: 11,
-      name: '物料名称11',
-      spec: '物料规格11',
-      unitName: '吨',
-    },
-    {
-      id: 12,
-      code: 12,
-      name: '物料名称12',
-      spec: '物料规格12',
-      unitName: '吨',
-    },
-    {
-      id: 13,
-      code: 13,
-      name: '物料名称13',
-      spec: '物料规格13',
-      unitName: '吨',
-    },
-  ],
-  columns: [
-    { label: '物料编号', width: '100px', prop: 'code', fixed: true },
-    { label: '物料名称', width: '149px', prop: 'name' },
-    { label: '规格', width: '149px', prop: 'spec' },
-    { label: '单位', width: '110px', prop: 'unitName' },
-    { label: '物料编号1', width: '149px', prop: 'code' },
-    { label: '物料名称1', width: '149px', prop: 'name' },
-    { label: '规格1', width: '149px', prop: 'spec' },
-    { label: '单位1', width: '110px', prop: 'unitName' },
-    { label: '物料编号11', width: '149px', prop: 'code' },
-    { label: '物料名称11', width: '149px', prop: 'name' },
-    { label: '规格11', width: '149px', prop: 'spec' },
-    { label: '单位11', width: '110px', prop: 'unitName' },
-    { label: '物料编号111', width: '149px', prop: 'code' },
-    { label: '物料名称111', width: '149px', prop: 'name' },
-    { label: '规格111', width: '149px', prop: 'spec' },
-    { label: '单位111', width: '110px', prop: 'unitName' },
-  ],
-}
-const selectionChange = (val, ids) => {
-  console.log('复选框', val)
-  console.log('复选框--id', ids)
+<script setup lang="tsx">
+import { reactive, onMounted } from 'vue'
+import { ElMessageBox } from 'element-plus'
+import data from './data.json'
+import data1 from './data2.json'
+const state: any = reactive({
+  table: {
+    total: 0,
+    currentPage: 1,
+    data: [],
+    columns: [
+      { prop: 'factoryModelIdLabel', label: '工厂', minWidth: '100' },
+      { prop: 'materialTypeLabel', label: '物料分类', minWidth: '80' },
+      { prop: 'materialCode', label: '物料编码', minWidth: '100' },
+      { prop: 'materialName', label: '物料名称', minWidth: '160' },
+      { prop: 'materialSpecs', label: '规格', minWidth: '80' },
+      { prop: 'power', label: '功率', minWidth: '80' },
+      {
+        prop: 'enableStatusLabel',
+        label: '状态',
+        minWidth: '80',
+        render: (text, record) => {
+          return (
+            <el-switch
+              active-value={1}
+              inactive-value={2}
+              v-model={record.enableStatus}
+              onChange={() => handleStatusChange(record)}
+            >
+              {text}
+            </el-switch>
+          )
+        },
+      },
+      { prop: 'materialPropertyLabel', label: '物料属性', minWidth: '80' },
+      { prop: 'baseUnit', label: '基本单位', minWidth: '80' },
+      { prop: 'singleWeight', label: '单重', minWidth: '80' },
+      { prop: 'shortRuleMore', label: '改余', minWidth: '80' },
+      { prop: 'shortRuleLess', label: '改损', minWidth: '80' },
+      { prop: 'materialSourceLabel', label: '数据来源', minWidth: '100' },
+      { prop: 'updateTime', label: '最后更新日期', minWidth: '100' },
+      { prop: 'updateBy', label: '最后更新人', minWidth: '100' },
+    ],
+  },
+})
+onMounted(() => {
+  getData(1)
+})
+const getData = async (pageNum) => {
+  let res
+  if (pageNum === 1) {
+    res = await data
+  } else {
+    res = await data1
+  }
+  // console.log('获取列表数据', res)
+  if (res.success) {
+    state.table.data = res.data.records
+    state.table.total = res.data.total
+  }
 }
 // 获取当前的页码
 const pageChange = (val) => {
   console.log('获取当前的页码', val)
-  table.currentPage = val
+  state.table.currentPage = val
+  getData(val)
+}
+const handleStatusChange = (row) => {
+  let text = row.enableStatus === 1 ? '启用' : '废止'
+  ElMessageBox.confirm(`确认要${text}这条数据吗？`, '警告', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning',
+  })
+    .then(() => {
+      console.log('点击确定')
+    })
+    .catch(() => {
+      console.log('点击取消')
+    })
+}
+const selectionChange = (val, ids) => {
+  console.log('复选框', val)
+  console.log('复选框--id', ids)
 }
 </script>

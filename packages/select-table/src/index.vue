@@ -103,6 +103,7 @@
             v-model:page-size="table.pageSize"
             small
             background
+            @current-change="handlesCurrentChange"
             layout="total, prev, pager, next, jumper"
             :pager-count="5"
             :total="table.total"
@@ -228,6 +229,7 @@ const slots = useSlots()
 const isDefaultSelectVal = ref(true) // 是否已经重新选择了
 const forbidden = ref(true) // 判断单选选中及取消选中
 const isRadio = ref(false)
+const isPagination = ref(false) // 分页点击不隐藏下拉框
 const radioVal = ref('')
 const state: any = reactive({
   defaultSelectValue: props.defaultSelectVal, // 默认选中
@@ -357,7 +359,9 @@ const findLabel = () => {
       selectRef.value.selectedLabel =
         (state.defaultValue && state.defaultValue[props.keywords.label]) || ''
       // }
-      blur()
+      if (!isPagination.value) {
+        blur()
+      }
     }
   })
 }
@@ -372,6 +376,7 @@ const handlesCurrentChange = (val) => {
   } else {
     clear()
   }
+  isPagination.value = true
   emits('page-change', val)
 }
 // 默认选中（且只能默认选中第一页的数据）

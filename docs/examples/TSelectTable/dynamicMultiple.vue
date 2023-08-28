@@ -8,6 +8,8 @@
         :keywords="{ label: 'materialName', value: 'materialCode' }"
         multiple
         @selectionChange="selectionChange"
+        isShowPagination
+        @page-change="pageChange"
       ></t-select-table>
     </t-layout-page-item>
   </t-layout-page>
@@ -15,9 +17,12 @@
 <script setup lang="tsx">
 import { reactive, onMounted } from 'vue'
 import { ElMessageBox } from 'element-plus'
-import dataList from './data.json'
+import data from './data.json'
+import data1 from './data2.json'
 const state: any = reactive({
   table: {
+    total: 0,
+    currentPage: 1,
     data: [],
     columns: [
       { prop: 'factoryModelIdLabel', label: '工厂', minWidth: '100' },
@@ -55,13 +60,26 @@ const state: any = reactive({
   },
 })
 onMounted(() => {
-  getData()
+  getData(1)
 })
-const getData = () => {
-  const res = dataList
+const getData = async (pageNum) => {
+  let res
+  if (pageNum === 1) {
+    res = await data
+  } else {
+    res = await data1
+  }
+  // console.log('获取列表数据', res)
   if (res.success) {
     state.table.data = res.data.records
+    state.table.total = res.data.total
   }
+}
+// 获取当前的页码
+const pageChange = (val) => {
+  console.log('获取当前的页码', val)
+  state.table.currentPage = val
+  getData(val)
 }
 const handleStatusChange = (row) => {
   let text = row.enableStatus === 1 ? '启用' : '废止'

@@ -4,8 +4,8 @@
   "msg": "成功",
   "data": {
     "pageSize": 10,
-    "pages": 11,
-    "total": 110,
+    "pages": 2,
+    "total": 20,
     "pageNum": 1,
     "sortNum": null,
     "records": [
