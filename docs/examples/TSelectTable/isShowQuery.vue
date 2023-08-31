@@ -57,6 +57,7 @@ let state = reactive({
     userName: null, // 登录名
     phonenumber: null, // 手机号码
     workshopNum: null,
+    date: null,
   },
   listTypeInfo: {
     sexList: [
@@ -70,26 +71,103 @@ let state = reactive({
       },
     ],
   },
+  list: [
+    {
+      value: '1',
+      label: 'Level one 1',
+      children: [
+        {
+          value: '1-1',
+          label: 'Level two 1-1',
+          children: [
+            {
+              value: '1-1-1',
+              label: 'Level three 1-1-1',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      value: '2',
+      label: 'Level one 2',
+      children: [
+        {
+          value: '2-1',
+          label: 'Level two 2-1',
+          children: [
+            {
+              value: '2-1-1',
+              label: 'Level three 2-1-1',
+            },
+          ],
+        },
+        {
+          value: '2-2',
+          label: 'Level two 2-2',
+          children: [
+            {
+              value: '2-2-1',
+              label: 'Level three 2-2-1',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      value: '3',
+      label: 'Level one 3',
+      children: [
+        {
+          value: '3-1',
+          label: 'Level two 3-1',
+          children: [
+            {
+              value: '3-1-1',
+              label: 'Level three 3-1-1',
+            },
+          ],
+        },
+        {
+          value: '3-2',
+          label: 'Level two 3-2',
+          children: [
+            {
+              value: '3-2-1',
+              label: 'Level three 3-2-1',
+            },
+          ],
+        },
+      ],
+    },
+  ],
 })
 const opts = computed(() => {
   return {
     workshopNum: {
       label: '车间',
       comp: 'el-select',
-      changeEvent: 'change',
       type: 'select-arr',
       list: 'sexList',
       listTypeInfo: state.listTypeInfo,
       span: 2,
+    },
+    date: {
+      label: '日期',
+      comp: 'el-date-picker',
+      span: 2,
       bind: {
-        teleported: false,
-        placement: 'right',
+        valueFormat: 'YYYY-MM-DD',
       },
     },
     userName: {
-      label: '登录名称',
-      comp: 'el-input',
+      label: '树形下拉',
+      comp: 'el-tree-select',
       span: 2,
+      bind: {
+        'check-strictly': true,
+        data: state.list,
+      },
     },
     phonenumber: {
       label: '手机号码',

@@ -2,8 +2,9 @@
   <t-layout-page>
     <t-layout-page-item>
       <t-query-condition
-        labelWidth="130px"
+        labelWidth="140px"
         :opts="opts"
+        isExpansion
         @submit="conditionEnter"
         @handleEvent="handleEvent"
       />
@@ -16,11 +17,28 @@ import { computed, reactive } from 'vue'
 let state = reactive({
   queryData: {
     userName: null, // 登录名
-    phonenumber: null, // 手机号码
     workshopNum: null,
     workshopNum2: null,
     date: null,
-    date1: null,
+  },
+  table: {
+    data: [
+      { id: 1, code: 1, name: '物料名称1', spec: '物料规格1', unitName: '吨' },
+      { id: 2, code: 2, name: '物料名称2', spec: '物料规格2', unitName: '吨' },
+      { id: 3, code: 3, name: '物料名称3', spec: '物料规格3', unitName: '吨' },
+      { id: 4, code: 4, name: '物料名称4', spec: '物料规格4', unitName: '吨' },
+      { id: 5, code: 5, name: '物料名称5', spec: '物料规格5', unitName: '吨' },
+      { id: 6, code: 6, name: '物料名称6', spec: '物料规格6', unitName: '吨' },
+      { id: 7, code: 7, name: '物料名称7', spec: '物料规格7', unitName: '吨' },
+      { id: 8, code: 8, name: '物料名称8', spec: '物料规格8', unitName: '吨' },
+      { id: 9, code: 9, name: '物料名称9', spec: '物料规格9', unitName: '吨' },
+    ],
+    columns: [
+      { label: '物料编号', width: '100px', prop: 'code' },
+      { label: '物料名称', width: '149px', prop: 'name' },
+      { label: '规格', width: '149px', prop: 'spec' },
+      { label: '单位', width: '110px', prop: 'unitName' },
+    ],
   },
   sexList: [
     {
@@ -54,26 +72,27 @@ let state = reactive({
 const opts = computed(() => {
   return {
     userName: {
-      label: '登录名称',
-      comp: 'el-input',
-    },
-    phonenumber: {
-      label: '手机号码',
-      comp: 'el-input',
+      label: '下拉选择表格组件',
+      comp: 't-select-table',
+      span: 2,
+      bind: {
+        maxHeight: 400,
+        isKeyup: true,
+        keywords: { label: 'name', value: 'id' },
+        table: state.table,
+        columns: state.table.columns,
+      },
+      eventHandle: {
+        radioChange: (val) => radioChange(val),
+      },
     },
     workshopNum: {
       label: 't-select单选使用',
       comp: 't-select',
+      span: 2,
       defaultVal: 'W1',
       bind: {
         optionSource: state.sexList,
-      },
-    },
-    date1: {
-      label: '日期',
-      comp: 'el-date-picker',
-      bind: {
-        valueFormat: 'YYYY-MM-DD',
       },
     },
     workshopNum2: {
@@ -88,7 +107,6 @@ const opts = computed(() => {
         optionSource: state.multipleList,
       },
     },
-
     date: {
       label: '装炉时间',
       comp: 'el-date-picker',
@@ -104,17 +122,17 @@ const opts = computed(() => {
     },
   }
 })
+const radioChange = (val) => {
+  console.log('下拉选择表格组件--单选', val)
+  state.queryData.userName = val.id
+}
 // 最终参数获取
 const getQueryData = computed(() => {
-  const { userName, phonenumber, workshopNum, date, date1, workshopNum2 } =
-    state.queryData
-  console.log(444, userName, phonenumber, date1)
+  const { userName, workshopNum, date, workshopNum2 } = state.queryData
   return {
     userName,
     workshopNum,
-    phonenumber,
     workshopNum2,
-    date1,
     beginDate: date && date[0] ? date[0] : null,
     endDate: date && date[1] ? date[1] : null,
   }

@@ -8,6 +8,7 @@
     :value-key="keywords.value"
     :filterable="filterable"
     :filter-method="filterMethod || filterMethodHandle"
+    v-click-outside="closeBox"
     @visible-change="visibleChange"
     @remove-tag="removeTag"
     @clear="clear"
@@ -16,7 +17,7 @@
     <template #empty>
       <div class="t-table-select__table" :style="{ width: `${tableWidth}px` }">
         <div class="table_query_condition" v-if="isShowQuery">
-          <t-query-condition ref="tQueryConditionRef" v-bind="$attrs">
+          <t-query-condition ref="tQueryConditionRef" :boolEnter="false" v-bind="$attrs">
             <template v-for="(index, name) in slots" v-slot:[name]="data">
               <slot :name="name" v-bind="data"></slot>
             </template>
@@ -132,7 +133,7 @@ import {
   reactive,
   onMounted,
 } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ClickOutside as vClickOutside, ElMessage } from 'element-plus'
 const props = defineProps({
   // 选择值
   value: {
@@ -241,6 +242,7 @@ const state: any = reactive({
 // 获取ref
 const selectRef: any = ref<HTMLElement | null>(null)
 const selectTable: any = ref<HTMLElement | null>(null)
+const tQueryConditionRef: any = ref<HTMLElement | null>(null)
 const nowIndex = ref(-1)
 watch(
   () => props.table.data,
@@ -254,7 +256,7 @@ watch(
           state.tabularMap[item[props.keywords.value]] =
             item[props.keywords.label]
         })
-      findLabel()
+      // findLabel()
     })
   },
   { deep: true }
@@ -302,7 +304,17 @@ onMounted(() => {
     defaultSelect(state.defaultSelectValue)
   }
 })
-
+// el-select点击了空白区域
+const closeBox = () => {
+  // 获取查询条件组件的项
+  if (tQueryConditionRef.value) {
+    Object.values(tQueryConditionRef.value?.props?.opts).map((val: any) => {
+      if (val.comp.includes('select') || val.comp.includes('date')) {
+        isPagination.value = true
+      }
+    })
+  }
+}
 // 单选键盘事件
 const selectKeyup = (e) => {
   if (!props.multiple) {
