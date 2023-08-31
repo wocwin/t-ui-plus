@@ -31,7 +31,7 @@ TQueryCondition/slotName
 ::: demo
 TQueryCondition/eventHandle
 :::
-### 结合 TSelect 使用
+### 结合自己封装组件使用
 
 ::: demo
 TQueryCondition/TSelectUse

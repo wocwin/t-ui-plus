@@ -122,7 +122,7 @@ TForm/isHideItem
 | ------event         | 表单每一项事件标志（即是：handleEvent 事件第一个参数值）                                                | String           | -        |
 | ------eventHandle   | 继承 comp 组件的事件                                                                                    | Object           | -        |
 | ---formData         | 表单提交数据(对应 fieldList 每一项的 value 值)                                                          | Object           | -        |
-| ---labelWidth       | label 宽度                                                                                              | String           | -        |
+| ---labelWidth       | label 宽度                                                                                              | String           | 120px    |
 | ---rules            | 规则（可依据 elementUI el-form 配置————对应 formData 的值）                                             | Object/Array     | -        |
 | ---operatorList     | 操作按钮 list                                                                                           | Array            | -        |
 

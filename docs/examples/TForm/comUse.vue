@@ -1,83 +1,13 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-form ref="TFormDemo" v-model="formOpts.ref" :formOpts="formOpts" :widthSize="1">
-        <template #wechat>
-          <t-select-table
-            :table="table"
-            :columns="table.columns"
-            :max-height="400"
-            placeholder="使用下拉选择表格组件"
-            :keywords="{ label: 'name', value: 'id' }"
-            @radioChange="radioChange"
-          ></t-select-table>
-        </template>
-      </t-form>
+      <t-form ref="TFormDemo" v-model="formOpts.ref" :formOpts="formOpts" :widthSize="1" />
     </t-layout-page-item>
   </t-layout-page>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-const table = {
-  data: [
-    { id: 1, code: 1, name: '物料名称1', spec: '物料规格1', unitName: '吨' },
-    { id: 2, code: 2, name: '物料名称2', spec: '物料规格2', unitName: '吨' },
-    { id: 3, code: 3, name: '物料名称3', spec: '物料规格3', unitName: '吨' },
-    { id: 4, code: 4, name: '物料名称4', spec: '物料规格4', unitName: '吨' },
-    { id: 5, code: 5, name: '物料名称5', spec: '物料规格5', unitName: '吨' },
-    { id: 6, code: 6, name: '物料名称6', spec: '物料规格6', unitName: '吨' },
-    { id: 7, code: 7, name: '物料名称7', spec: '物料规格7', unitName: '吨' },
-    { id: 8, code: 8, name: '物料名称8', spec: '物料规格8', unitName: '吨' },
-    { id: 9, code: 9, name: '物料名称9', spec: '物料规格9', unitName: '吨' },
-    {
-      id: 10,
-      code: 10,
-      name: '物料名称10',
-      spec: '物料规格10',
-      unitName: '吨',
-    },
-    {
-      id: 11,
-      code: 11,
-      name: '物料名称11',
-      spec: '物料规格11',
-      unitName: '吨',
-    },
-    {
-      id: 12,
-      code: 12,
-      name: '物料名称12',
-      spec: '物料规格12',
-      unitName: '吨',
-    },
-    {
-      id: 13,
-      code: 13,
-      name: '物料名称13',
-      spec: '物料规格13',
-      unitName: '吨',
-    },
-  ],
-  columns: [
-    { label: '物料编号', width: '100px', prop: 'code' },
-    { label: '物料名称', width: '149px', prop: 'name' },
-    { label: '规格', width: '149px', prop: 'spec' },
-    { label: '单位', width: '110px', prop: 'unitName' },
-    { label: '物料编号1', width: '149px', prop: 'code' },
-    { label: '物料名称1', width: '149px', prop: 'name' },
-    { label: '规格1', width: '149px', prop: 'spec' },
-    { label: '单位1', width: '110px', prop: 'unitName' },
-    { label: '物料编号11', width: '149px', prop: 'code' },
-    { label: '物料名称11', width: '149px', prop: 'name' },
-    { label: '规格11', width: '149px', prop: 'spec' },
-    { label: '单位11', width: '110px', prop: 'unitName' },
-    { label: '物料编号111', width: '149px', prop: 'code' },
-    { label: '物料名称111', width: '149px', prop: 'name' },
-    { label: '规格111', width: '149px', prop: 'spec' },
-    { label: '单位111', width: '110px', prop: 'unitName' },
-  ],
-}
 const hobbyList = ref([
   { label: '吉他', value: '0' },
   { label: '看书', value: '1' },
@@ -92,6 +22,17 @@ const sexList = ref([
 const statusList = ref([
   { label: '启用', value: 1 },
   { label: '停用', value: 0 },
+])
+const tableData = ref([
+  { id: 1, code: 1, name: '物料名称1', spec: '物料规格1', unitName: '吨' },
+  { id: 2, code: 2, name: '物料名称2', spec: '物料规格2', unitName: '吨' },
+  { id: 3, code: 3, name: '物料名称3', spec: '物料规格3', unitName: '吨' },
+  { id: 4, code: 4, name: '物料名称4', spec: '物料规格4', unitName: '吨' },
+  { id: 5, code: 5, name: '物料名称5', spec: '物料规格5', unitName: '吨' },
+  { id: 6, code: 6, name: '物料名称6', spec: '物料规格6', unitName: '吨' },
+  { id: 7, code: 7, name: '物料名称7', spec: '物料规格7', unitName: '吨' },
+  { id: 8, code: 8, name: '物料名称8', spec: '物料规格8', unitName: '吨' },
+  { id: 9, code: 9, name: '物料名称9', spec: '物料规格9', unitName: '吨' },
 ])
 // 获取ref
 const TFormDemo: any = ref<HTMLElement | null>(null)
@@ -119,16 +60,24 @@ const resetForm = () => {
   TFormDemo.value.clearValidate()
 }
 const radioChange = (row) => {
-  console.log('单选--传给后台的值', row)
-  formOpts.formData.wechat = row.id
+  console.log('下拉选择表格-单选', row)
+  formOpts.formData.deptCode = row.id
+}
+const selectionChangeHandler = (row, ids) => {
+  console.log('下拉选择表格--复选框', row, ids)
+  formOpts.formData.createDeptCode = ids
 }
 const formOpts: any = reactive({
   ref: null,
+  labelWidth: '140px',
   formData: {
-    sex: null, // *性别: 0:男 1:女
-    hobby: null, // *爱好: 0:男 1:女
-    status: null, // *状态: 0：停用，1：启用(默认为1)',
+    sex: null,
+    hobby: null,
+    hobby1: null,
+    status: null,
     wechat: null,
+    deptCode: null,
+    createDeptCode: null,
   },
   fieldList: [
     {
@@ -151,15 +100,64 @@ const formOpts: any = reactive({
       label: '爱好',
       value: 'hobby',
       placeholder: 'TSelect多选',
-      type: 'select-arr',
       comp: 't-select',
-      list: 'hobbyList',
       bind: { multiple: true, optionSource: hobbyList, valueKey: 'value' },
     },
     {
-      label: '下拉选择表格',
-      value: 'wechat',
-      slotName: 'wechat',
+      label: '爱好1',
+      value: 'hobby1',
+      placeholder: 'TSelect多选',
+      comp: 't-select',
+      isSelfCom: true,
+      bind: { multiple: true, optionSource: hobbyList, valueKey: 'value' },
+    },
+    {
+      label: '下拉选择表格-单选',
+      value: 'deptCode',
+      placeholder: 't-select-table单选使用',
+      comp: 't-select-table',
+      isSelfCom: true,
+      bind: {
+        isKeyup: true,
+        maxHeight: 400,
+        keywords: { label: 'name', value: 'id' },
+        table: { data: tableData },
+        columns: [
+          { label: '物料编号', width: '100px', prop: 'code', align: 'left' },
+          { label: '物料名称', width: '149px', prop: 'name' },
+          { label: '规格', width: '149px', prop: 'spec' },
+          { label: '单位', width: '110px', prop: 'unitName' },
+          { label: '物料编号1', width: '149px', prop: 'code' },
+          { label: '物料名称1', width: '149px', prop: 'name' },
+        ],
+      },
+      eventHandle: {
+        radioChange: (val) => radioChange(val),
+      },
+    },
+    {
+      label: '下拉选择表格-多选',
+      value: 'createDeptCode',
+      placeholder: 't-select-table多选使用',
+      comp: 't-select-table',
+      isSelfCom: true,
+      bind: {
+        multiple: true,
+        maxHeight: 400,
+        keywords: { label: 'name', value: 'id' },
+        table: { data: tableData },
+        columns: [
+          { label: '物料编号', width: '100px', prop: 'code', align: 'left' },
+          { label: '物料名称', width: '149px', prop: 'name' },
+          { label: '规格', width: '149px', prop: 'spec' },
+          { label: '单位', width: '110px', prop: 'unitName' },
+          { label: '物料编号1', width: '149px', prop: 'code' },
+          { label: '物料名称1', width: '149px', prop: 'name' },
+        ],
+      },
+      eventHandle: {
+        selectionChange: (val, ids) => selectionChangeHandler(val, ids),
+      },
     },
   ],
   operatorList: [

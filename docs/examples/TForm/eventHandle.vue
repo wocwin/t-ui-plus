@@ -37,8 +37,8 @@ const resetForm = () => {
 const clearValidate = () => {
   TFormDemo.value.clearValidate()
 }
-const accountFocus = ({ type }) => {
-  console.log('账号聚焦事件', type)
+const accountFocus = ({ type }, row) => {
+  console.log('账号聚焦事件', type, row)
 }
 const accountClear = () => {
   console.log('账号清空事件')
@@ -66,7 +66,7 @@ const formOpts: any = reactive({
       type: 'input',
       comp: 'el-input',
       eventHandle: {
-        focus: (val) => accountFocus(val),
+        focus: (val, row) => accountFocus(val, row),
         clear: () => accountClear(),
         blur: (val) => accountBlur(val),
       },
