@@ -17,7 +17,11 @@
     <template #empty>
       <div class="t-table-select__table" :style="{ width: `${tableWidth}px` }">
         <div class="table_query_condition" v-if="isShowQuery">
-          <t-query-condition ref="tQueryConditionRef" :boolEnter="false" v-bind="$attrs">
+          <t-query-condition
+            ref="tQueryConditionRef"
+            :boolEnter="false"
+            v-bind="$attrs"
+          >
             <template v-for="(index, name) in slots" v-slot:[name]="data">
               <slot :name="name" v-bind="data"></slot>
             </template>
@@ -115,12 +119,8 @@
     </template>
   </el-select>
 </template>
-<script lang="ts">
-export default {
-  name: 'TSelectTable',
-}
-</script>
-<script setup lang="ts">
+
+<script setup lang="ts" name="TSelectTable">
 import TQueryCondition from '../../query-condition/src/index.vue'
 import RenderCol from './renderCol.vue'
 import {
@@ -602,6 +602,7 @@ const clear = () => {
     nowIndex.value = -1
     radioVal.value = ''
     forbidden.value = false
+    emits('radioChange', {}, null)
   }
 }
 // 触发select隐藏
