@@ -13,12 +13,7 @@
     </el-date-picker>
   </div>
 </template>
-<script lang="ts">
-export default {
-  name: 'TDatePicker',
-}
-</script>
-<script setup lang="ts">
+<script setup lang="ts" name="TDatePicker">
 import { computed, useAttrs, useSlots, watch, reactive, ref } from 'vue'
 const props = defineProps({
   value: {

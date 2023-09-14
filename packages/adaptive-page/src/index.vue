@@ -16,12 +16,8 @@
     </t-layout-page-item>
   </t-layout-page>
 </template>
-<script lang="ts">
-export default {
-  name: 'TAdaptivePage',
-}
-</script>
-<script setup lang="ts">
+
+<script setup lang="ts" name="TAdaptivePage">
 import TLayoutPage from '../../layout-page/src/index.vue'
 import TLayoutPageItem from '../../layout-page-item/src/index.vue'
 import TTable from '../../table/src/index.vue'

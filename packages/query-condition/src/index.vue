@@ -105,12 +105,8 @@
     </el-form-item>
   </el-form>
 </template>
-<script lang="ts">
-export default {
-  name: 'TQueryCondition',
-}
-</script>
-<script setup lang="ts">
+
+<script setup lang="ts" name="TQueryCondition">
 import RenderComp from './renderComp.vue'
 import { computed, ref, watch, onMounted, reactive } from 'vue'
 const props = defineProps({
@@ -304,7 +300,7 @@ const checkHandle = (flagText: any = false) => {
   emits('submit', state.form, flagText)
 }
 // 子组件名称
-const compChildName = computed(() => {
+const compChildName:any = computed(() => {
   return (opt: any) => {
     switch (opt.type) {
       case 'checkbox':

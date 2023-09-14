@@ -16,11 +16,11 @@
         :prop="item.value"
         :label="item.label"
         :class="[
-        item.className,
-        { render_label: item.labelRender },
-        { slot_label: item.slotName },
-        { render_laber_position_left: formOpts.labelPosition === 'left' },
-      ]"
+          item.className,
+          { render_label: item.labelRender },
+          { slot_label: item.slotName },
+          { render_laber_position_left: formOpts.labelPosition === 'left' },
+        ]"
         :rules="item.rules"
         :style="getChildWidth(item)"
         v-bind="$attrs"
@@ -36,74 +36,86 @@
         <!-- 文本展示值 -->
         <template v-if="item.textShow">
           <span class="text_show">
-            {{
-            item.textValue || formOpts.formData[item.value]
-            }}
+            {{ item.textValue || formOpts.formData[item.value] }}
           </span>
         </template>
         <template v-if="item.isSelfCom">
           <component
-            v-if="item.comp==='t-select-table'"
+            v-if="item.comp === 't-select-table'"
             :is="item.comp"
-            :placeholder="item.placeholder||getPlaceholder(item)"
-            v-bind="{clearable:true,filterable:true,...item.bind}"
-            :style="{width: item.width||'100%'}"
-            v-on="cEvent(item,'t-select-table')"
+            :placeholder="item.placeholder || getPlaceholder(item)"
+            v-bind="{ clearable: true, filterable: true, ...item.bind }"
+            :style="{ width: item.width || '100%' }"
+            v-on="cEvent(item, 't-select-table')"
           />
           <component
             v-else
             :is="item.comp"
             v-model="formOpts.formData[item.value]"
-            :placeholder="item.placeholder||getPlaceholder(item)"
-            v-bind="{clearable:true,filterable:true,...item.bind}"
-            :style="{width: item.width||'100%'}"
+            :placeholder="item.placeholder || getPlaceholder(item)"
+            v-bind="{ clearable: true, filterable: true, ...item.bind }"
+            :style="{ width: item.width || '100%' }"
             v-on="cEvent(item)"
           />
         </template>
         <component
-          v-if="!item.slotName && !item.textShow && !item.isSelfCom && item.comp.includes('date')"
-          :is="item.comp"
-          v-model="formOpts.formData[item.value]"
-          :type="item.type"
-          :placeholder="item.placeholder || getPlaceholder(item)"
-          @change="handleEvent(item.event, formOpts.formData[item.value], item)"
-          v-bind="typeof item.bind == 'function'
-            ? item.bind(item)
-            : { clearable: true, filterable: true, ...item.bind }
-            "
-          :style="{ width: item.width || '100%' }"
-          v-on="cEvent(item)"
-        />
-        <component
-          v-if="!item.slotName && !item.textShow && !item.isSelfCom && item.comp.includes('tree-select')"
-          :is="item.comp"
-          v-model="formOpts.formData[item.value]"
-          :type="item.type"
-          :placeholder="item.placeholder || getPlaceholder(item)"
-          @change="handleEvent(item.event, formOpts.formData[item.value], item)"
-          v-bind="typeof item.bind == 'function'
-            ? item.bind(item)
-            : { clearable: true, filterable: true, ...item.bind }
-            "
-          :style="{ width: item.width || '100%' }"
-          v-on="cEvent(item)"
-        />
-        <component
-          v-if="!item.slotName &&
-          !item.textShow &&
-          !item.isSelfCom &&
-          !item.comp.includes('date') &&
-          !item.comp.includes('tree-select')
+          v-if="
+            !item.slotName &&
+            !item.textShow &&
+            !item.isSelfCom &&
+            item.comp.includes('date')
           "
           :is="item.comp"
           v-model="formOpts.formData[item.value]"
           :type="item.type"
           :placeholder="item.placeholder || getPlaceholder(item)"
           @change="handleEvent(item.event, formOpts.formData[item.value], item)"
-          v-bind="typeof item.bind == 'function'
-            ? item.bind(item)
-            : { clearable: true, filterable: true, ...item.bind }
-            "
+          v-bind="
+            typeof item.bind == 'function'
+              ? item.bind(item)
+              : { clearable: true, filterable: true, ...item.bind }
+          "
+          :style="{ width: item.width || '100%' }"
+          v-on="cEvent(item)"
+        />
+        <component
+          v-if="
+            !item.slotName &&
+            !item.textShow &&
+            !item.isSelfCom &&
+            item.comp.includes('tree-select')
+          "
+          :is="item.comp"
+          v-model="formOpts.formData[item.value]"
+          :type="item.type"
+          :placeholder="item.placeholder || getPlaceholder(item)"
+          @change="handleEvent(item.event, formOpts.formData[item.value], item)"
+          v-bind="
+            typeof item.bind == 'function'
+              ? item.bind(item)
+              : { clearable: true, filterable: true, ...item.bind }
+          "
+          :style="{ width: item.width || '100%' }"
+          v-on="cEvent(item)"
+        />
+        <component
+          v-if="
+            !item.slotName &&
+            !item.textShow &&
+            !item.isSelfCom &&
+            !item.comp.includes('date') &&
+            !item.comp.includes('tree-select')
+          "
+          :is="item.comp"
+          v-model="formOpts.formData[item.value]"
+          :type="item.type"
+          :placeholder="item.placeholder || getPlaceholder(item)"
+          @change="handleEvent(item.event, formOpts.formData[item.value], item)"
+          v-bind="
+            typeof item.bind == 'function'
+              ? item.bind(item)
+              : { clearable: true, filterable: true, ...item.bind }
+          "
           :style="{ width: item.width || '100%' }"
           v-on="cEvent(item)"
         >
@@ -123,7 +135,8 @@
             :disabled="value.disabled"
             :label="compChildLabel(item, value)"
             :value="compChildValue(item, value, key)"
-          >{{ compChildShowLabel(item, value) }}</component>
+            >{{ compChildShowLabel(item, value) }}</component
+          >
           <!-- </template> -->
         </component>
       </el-form-item>
@@ -134,9 +147,10 @@
         <slot :name="formOpts.btnSlotName"></slot>
       </template>
       <template
-        v-if="!formOpts.btnSlotName &&
-        formOpts.operatorList &&
-        formOpts.operatorList.length > 0
+        v-if="
+          !formOpts.btnSlotName &&
+          formOpts.operatorList &&
+          formOpts.operatorList.length > 0
         "
       >
         <el-button
@@ -147,17 +161,13 @@
           :icon="val.icon"
           :size="val.size || 'small'"
           :disabled="val.disabled"
-        >{{ val.label }}</el-button>
+          >{{ val.label }}</el-button
+        >
       </template>
     </div>
   </el-form>
 </template>
-<script lang="ts">
-export default {
-  name: 'TForm',
-}
-</script>
-<script setup lang="ts">
+<script setup lang="ts" name="TForm">
 import RenderComp from './renderComp.vue'
 import { ElMessage } from 'element-plus'
 import { computed, ref, watch, onMounted, getCurrentInstance } from 'vue'
@@ -192,8 +202,8 @@ const props = defineProps({
     default: true,
   },
 })
-const cEvent = computed(() => {
-  return ({ eventHandle }, type) => {
+const cEvent: any = computed(() => {
+  return ({ eventHandle }, type = '') => {
     let event = { ...eventHandle }
     let changeEvent = {}
     Object.keys(event).forEach((v) => {
@@ -222,7 +232,7 @@ const selectListType = computed(() => {
   }
 })
 // 子组件名称
-const compChildName = computed(() => {
+const compChildName: any = computed(() => {
   return (opt: any) => {
     switch (opt.type) {
       case 'checkbox':

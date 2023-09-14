@@ -12,13 +12,8 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'TTimerBtn',
-}
-</script>
-<script setup lang="ts">
-import { computed, watch, ref } from 'vue'
+<script setup lang="ts" name="TTimerBtn">
+import { computed, ref } from 'vue'
 const props = defineProps({
   second: {
     type: Number,

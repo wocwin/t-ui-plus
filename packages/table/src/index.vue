@@ -253,12 +253,8 @@
     </footer>
   </div>
 </template>
-<script lang="ts">
-export default {
-  name: 'TTable',
-}
-</script>
-<script setup lang="ts">
+
+<script setup lang="ts" name="TTable">
 import { computed, ref, watch, useSlots, reactive, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import Sortable from 'sortablejs'

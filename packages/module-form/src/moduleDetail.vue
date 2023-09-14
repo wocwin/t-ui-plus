@@ -3,7 +3,7 @@
     <el-collapse v-model="defaultActiveKey">
       <el-collapse-item
         v-for="(val, index) in descData"
-        :class="{ noTitle: !val.title,disabledStyle:val.disabled }"
+        :class="{ noTitle: !val.title, disabledStyle: val.disabled }"
         :key="index"
         :title="val.title"
         :name="val.name"
@@ -21,13 +21,9 @@
     </el-collapse>
   </div>
 </template>
-<script lang="ts">
-export default {
-  name: 'ModuleDetail',
-}
-</script>
-<script setup lang="ts">
-import { computed, ref, useAttrs, useSlots } from 'vue'
+
+<script setup lang="ts" name="moduleDetail">
+import { computed, useAttrs, useSlots } from 'vue'
 const props: any = defineProps({
   descData: {
     type: Object,

@@ -59,12 +59,8 @@
     </div>
   </div>
 </template>
-<script lang="ts">
-export default {
-  name: 'TStepWizard',
-}
-</script>
-<script setup lang="ts">
+
+<script setup lang="ts" name="stepWizard">
 import FixBtn from './fixBtn.vue'
 const props = defineProps({
   // 步骤数据

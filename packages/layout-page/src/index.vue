@@ -1,26 +1,25 @@
 <template>
-  <div ref="TLayoutPageRef" class="t_layout_page" @scroll="(e:any) => scrollTop = e.target.scrollTop">
+  <div
+    ref="TLayoutPageRef"
+    class="t_layout_page"
+    @scroll="(e:any) => scrollTop = e.target.scrollTop"
+  >
     <slot />
   </div>
 </template>
-<script lang="ts">
-export default {
-  name: 'TLayoutPage'
-}
-</script>
-<script setup lang="ts">
+<script setup lang="ts" name="TLayoutPage">
 import { onActivated, ref } from 'vue'
 const props = defineProps({
   keepScrollDisabled: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 })
 const TLayoutPageRef = ref(null)
 const scrollTop = ref(0)
 onActivated(() => {
   if (!props.keepScrollDisabled) {
-    ; (TLayoutPageRef.value as any).scrollTop = scrollTop
+    ;(TLayoutPageRef.value as any).scrollTop = scrollTop
   }
 })
 </script>

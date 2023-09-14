@@ -24,12 +24,8 @@
     </template>
   </el-dropdown>
 </template>
-<script lang="ts">
-export default {
-  name: 'ColumnSet',
-}
-</script>
-<script setup lang="ts">
+
+<script setup lang="ts" name="columnSet">
 import Draggable from 'vuedraggable'
 import { watch, onMounted, reactive, computed,useAttrs } from 'vue'
 const props = defineProps({

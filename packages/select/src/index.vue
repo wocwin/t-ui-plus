@@ -15,12 +15,8 @@
     ></el-option>
   </el-select>
 </template>
-<script lang="ts">
-export default {
-  name: 'TSelect',
-}
-</script>
-<script setup lang="ts">
+
+<script setup lang="ts" name="TSelect">
 import { computed, watch, ref } from 'vue'
 const props = defineProps({
   modelValue: {

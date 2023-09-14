@@ -3,7 +3,7 @@
     <slot />
   </section>
 </template>
-
+<script setup lang="ts" name="TLayoutPageItem"></script>
 <style lang="scss" scoped>
 .t_layout_page_item {
   margin: 8px;

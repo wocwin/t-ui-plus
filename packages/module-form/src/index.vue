@@ -1,25 +1,31 @@
 <template>
-  <div class="t_module_form" :style="{marginBottom:footer!==null?'60px':''}">
+  <div
+    class="t_module_form"
+    :style="{ marginBottom: footer !== null ? '60px' : '' }"
+  >
     <div class="scroll_wrap">
       <!-- 头部 -->
       <el-page-header
-        v-if="title||titleSlot"
+        v-if="title || titleSlot"
         :title="title"
         @back="back"
-        :class="{noContent:!isShow('extra')&&!subTitle,'isShowBack':isShowBack}"
+        :class="{
+          noContent: !isShow('extra') && !subTitle,
+          isShowBack: isShowBack,
+        }"
       >
         <template #title v-if="titleSlot">
           <slot name="title"></slot>
         </template>
         <template #content>
-          <div class="sub_title">{{subTitle}}</div>
+          <div class="sub_title">{{ subTitle }}</div>
           <div class="extra">
             <slot name="extra"></slot>
           </div>
         </template>
       </el-page-header>
       <!-- 表单页面 -->
-      <module-form v-if="handleType==='edit'" v-bind="$attrs" ref="tForm">
+      <module-form v-if="handleType === 'edit'" v-bind="$attrs" ref="tForm">
         <template v-for="(index, name) in slots" v-slot:[name]="data">
           <slot :name="name" v-bind="data"></slot>
         </template>
@@ -33,48 +39,42 @@
       <!-- tabs -->
       <div class="tabs" v-if="tabs">
         <el-tabs
-          v-if="tabs&&tabs.length > 1"
+          v-if="tabs && tabs.length > 1"
           v-model="activeName"
           @tab-click="(tab, event) => emits('tabsChange', tab, event)"
         >
-          <el-tab-pane v-for="tab in tabs" :key="tab.key" :name="tab.key" :label="tab.title">
+          <el-tab-pane
+            v-for="tab in tabs"
+            :key="tab.key"
+            :name="tab.key"
+            :label="tab.title"
+          >
             <slot :name="tab.key"></slot>
           </el-tab-pane>
         </el-tabs>
-        <slot v-else :name="tabs&&tabs[0].key"></slot>
+        <slot v-else :name="tabs && tabs[0].key"></slot>
       </div>
       <slot name="default"></slot>
     </div>
     <!-- 按钮 -->
-    <footer class="handle_wrap" v-if="footer!==null">
+    <footer class="handle_wrap" v-if="footer !== null">
       <slot name="footer" />
       <div v-if="!slots.footer">
         <el-button @click="back">取消</el-button>
         <el-button
           type="primary"
-          v-if="handleType==='edit'"
+          v-if="handleType === 'edit'"
           @click="saveHandle"
           :loading="loading"
-        >{{btnTxt}}</el-button>
+          >{{ btnTxt }}</el-button
+        >
       </div>
     </footer>
   </div>
 </template>
-<script lang="ts">
-export default {
-  name: 'TModuleForm',
-}
-</script>
-<script setup lang="ts">
-import {
-  computed,
-  watch,
-  ref,
-  useAttrs,
-  useSlots,
-  nextTick,
-  onMounted,
-} from 'vue'
+
+<script setup lang="ts" name="TModuleForm">
+import { ref, useAttrs, useSlots, nextTick, onMounted } from 'vue'
 // import { useRouter } from 'vue-router'
 import ModuleDetail from './moduleDetail.vue'
 import ModuleForm from './moduleForm.vue'

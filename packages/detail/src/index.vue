@@ -1,30 +1,50 @@
 <template>
-  <el-descriptions class="t_detail" size="small" v-bind="$attrs" :column="descColumn">
-    <el-descriptions-item v-for="(item, key) in descData" :key="key" :label="item.label" :span="item.span || 1"
-      v-bind="$attrs">
+  <el-descriptions
+    class="t_detail"
+    size="small"
+    v-bind="$attrs"
+    :column="descColumn"
+  >
+    <el-descriptions-item
+      v-for="(item, key) in descData"
+      :key="key"
+      :label="item.label"
+      :span="item.span || 1"
+      v-bind="$attrs"
+    >
       <template v-if="item.slotName">
         <slot :name="item.slotName"></slot>
       </template>
       <span class="tip_class" v-else>
-        <el-tooltip v-bind="$attrs" v-if="item.tooltip" :placement="item.placement || 'bottom'">
+        <el-tooltip
+          v-bind="$attrs"
+          v-if="item.tooltip"
+          :placement="item.placement || 'bottom'"
+        >
           <span>
             <span v-if="item.filters && item.filters.list">
               {{
                 constantEscape(
                   dataList[item.fieldName],
-                listTypeInfo[item.filters.list],
-                item.filters.key || 'value',
-                item.filters.label || 'label'
-                            )
+                  listTypeInfo[item.filters.list],
+                  item.filters.key || 'value',
+                  item.filters.label || 'label'
+                )
               }}
             </span>
             <span v-else>{{ item.value }}</span>
-            <el-icon :size="item.iconSize" :color="item.iconColor" style="cursor: pointer;margin-left:2px;top:1px;">
+            <el-icon
+              :size="item.iconSize"
+              :color="item.iconColor"
+              style="cursor: pointer; margin-left: 2px; top: 1px"
+            >
               <Warning />
             </el-icon>
           </span>
           <template #content v-if="item.tooltip">
-            <span v-if="typeof item.tooltip === 'string'">{{ item.tooltip }}</span>
+            <span v-if="typeof item.tooltip === 'string'">{{
+              item.tooltip
+            }}</span>
             <template v-else-if="typeof item.tooltip === 'function'">
               <render-tooltip :render="item.tooltip" :item="item" />
             </template>
@@ -35,10 +55,10 @@
             {{
               constantEscape(
                 dataList[item.fieldName],
-              listTypeInfo[item.filters.list],
-              item.filters.key || 'value',
-              item.filters.label || 'label'
-                        )
+                listTypeInfo[item.filters.list],
+                item.filters.key || 'value',
+                item.filters.label || 'label'
+              )
             }}
           </span>
           <span v-else>{{ item.value }}</span>
@@ -47,32 +67,28 @@
     </el-descriptions-item>
   </el-descriptions>
 </template>
-<script lang="ts">
-export default {
-  name: "TDetail"
-}
-</script>
-<script setup lang="ts">
-import RenderTooltip from "./renderTooltip.vue"
+
+<script setup lang="ts" name="TDetail">
+import RenderTooltip from './renderTooltip.vue'
 const props = defineProps({
   descColumn: {
     type: Number,
-    default: 4
+    default: 4,
   },
   // 后台数据源
   dataList: {
     type: Object,
-    default: () => ({})
+    default: () => ({}),
   },
   // 需要解析的下拉数据
   listTypeInfo: {
     type: Object,
-    default: () => ({})
+    default: () => ({}),
   },
   descData: {
     type: Array as unknown as any[],
-    default: () => []
-  }
+    default: () => [],
+  },
 })
 /**
  * 下拉数据回显中文过滤器
@@ -81,7 +97,12 @@ const props = defineProps({
  * @param [String,Number] key  数据源的key字段（默认：value）
  * @param {String} label  数据源的label字段（默认：label）
  */
-const constantEscape = (value: any, list: any[], key: string | number, label: string | number) => {
+const constantEscape = (
+  value: any,
+  list: any[],
+  key: string | number,
+  label: string | number
+) => {
   const res = list.find((item) => {
     return item[key] === value
   })

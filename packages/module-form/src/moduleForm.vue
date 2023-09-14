@@ -3,13 +3,16 @@
     <el-collapse v-model="defaultActiveKey">
       <el-collapse-item
         v-for="(formOpt, formIndex) in formOpts"
-        :class="[formOpt.className,{ noTitle: !formOpt.title,disabledStyle:formOpt.disabled }]"
+        :class="[
+          formOpt.className,
+          { noTitle: !formOpt.title, disabledStyle: formOpt.disabled },
+        ]"
         :key="formIndex"
         :name="formOpt.name"
         :disabled="formOpt.disabled"
       >
         <template #title>
-          {{formOpt.title}}
+          {{ formOpt.title }}
           <div class="t_btn" v-if="formOpt.btn">
             <slot :name="formOpt.btn"></slot>
           </div>
@@ -18,9 +21,13 @@
           <slot :name="formOpt.slotName"></slot>
         </template>
         <t-form
-          :ref="(el) => {dashboardRef[formIndex] = el}"
+          :ref="
+            (el) => {
+              dashboardRef[formIndex] = el
+            }
+          "
           :formOpts="formOpt.opts"
-          :widthSize="formOpt.widthSize||3"
+          :widthSize="formOpt.widthSize || 3"
           v-bind="attrs"
           @handleEvent="handleEvent"
         >
@@ -32,12 +39,8 @@
     </el-collapse>
   </div>
 </template>
-<script lang="ts">
-export default {
-  name: 'ModuleForm',
-}
-</script>
-<script setup lang="ts">
+
+<script setup lang="ts" name="ModuleForm">
 import { computed, ref, useAttrs, useSlots } from 'vue'
 const props: any = defineProps({
   // 表单配置项

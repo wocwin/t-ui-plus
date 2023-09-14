@@ -69,12 +69,8 @@
     </template>
   </el-table-column>
 </template>
-<script lang="ts">
-export default {
-  name: 'TTableColumn',
-}
-</script>
-<script setup lang="ts">
+
+<script setup lang="ts" name="TTableColumn">
 import SingleEditCell from './singleEditCell.vue'
 import RenderCol from './renderCol.vue'
 import { useSlots } from 'vue'
