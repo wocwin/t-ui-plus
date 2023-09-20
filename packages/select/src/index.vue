@@ -6,19 +6,25 @@
     v-bind="{ clearable: true, filterable: true, ...$attrs }"
     :multiple="multiple"
   >
-    <el-checkbox v-if="multiple" v-model="selectChecked" @change="selectAll" class="all_checkbox">全选</el-checkbox>
+    <el-checkbox
+      v-if="multiple"
+      v-model="selectChecked"
+      @change="selectAll"
+      class="all_checkbox"
+      >全选</el-checkbox
+    >
     <el-option
       v-for="(item, index) in optionSource"
       :key="index + 'i'"
-      :label="item[labelKey]"
+      :label="customLabel ? customLabelHandler(item) : item[labelKey]"
       :value="item[valueKey]"
     ></el-option>
   </el-select>
 </template>
 
 <script setup lang="ts" name="TSelect">
-import { computed, watch, ref } from 'vue'
-const props = defineProps({
+import { computed } from 'vue'
+const props: any = defineProps({
   modelValue: {
     type: [String, Number, Array],
   },
@@ -40,6 +46,10 @@ const props = defineProps({
   labelKey: {
     type: String,
     default: 'label',
+  },
+  // 是否自定义设置下拉label
+  customLabel: {
+    type: String,
   },
   // 下拉框组件数据源
   optionSource: {
@@ -80,6 +90,10 @@ const selectAll = (val: any) => {
   } else {
     emits('update:modelValue', null)
   }
+}
+// 自定义label显示
+const customLabelHandler = (item) => {
+  return eval(props.customLabel)
 }
 </script>
 <style lang="scss" scoped>
