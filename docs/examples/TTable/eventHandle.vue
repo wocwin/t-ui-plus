@@ -112,7 +112,7 @@ let state: any = reactive({
           label: '日期年',
           type: 'year',
           editComponent: 'el-date-picker',
-          bind: { valueFormat: 'yyyy' },
+          bind: { valueFormat: 'YYYY' },
         },
       },
       {

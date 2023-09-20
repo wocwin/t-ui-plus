@@ -5,14 +5,18 @@
         v-for="(formOpt, formIndex) in formOpts"
         :class="[
           formOpt.className,
-          { noTitle: !formOpt.title, disabledStyle: formOpt.disabled },
+          {
+            noTitle: !formOpt.title,
+            disabledStyle: formOpt.disabled,
+            title_bold: titleBold,
+          },
         ]"
         :key="formIndex"
         :name="formOpt.name"
         :disabled="formOpt.disabled"
       >
         <template #title>
-          {{ formOpt.title }}
+          <span class="collapse-item_title">{{ formOpt.title }}</span>
           <div class="t_btn" v-if="formOpt.btn">
             <slot :name="formOpt.btn"></slot>
           </div>
@@ -48,6 +52,11 @@ const props: any = defineProps({
     type: Object,
     default: () => ({}),
   },
+  // 是否Title文字加粗
+  titleBold: {
+    type: Boolean,
+    default: false,
+  },
 })
 const dashboardRef = ref({})
 const slots = useSlots()
@@ -78,7 +87,6 @@ const handleEvent = (val, type) => {
 .t_form {
   .el-collapse {
     border: none;
-    // background-color: #f0f2f5;
     .el-collapse-item {
       background-color: var(--el-bg-color);
       margin-top: 10px;
@@ -86,33 +94,43 @@ const handleEvent = (val, type) => {
       .el-collapse-item__header {
         border-bottom: 1px solid var(--el-border-color);
         position: relative;
-        padding-left: 15px;
+        padding-left: 35px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .t_btn {
+          margin-right: 15px;
+        }
         .el-collapse-item__arrow {
-          // color: inherit;
-          // font-style: normal;
-          // line-height: 0;
-          // text-align: center;
-          // text-transform: none;
-          // vertical-align: -0.125em;
-          // text-rendering: optimizeLegibility;
-          // -webkit-font-smoothing: antialiased;
-          // -moz-osx-font-smoothing: grayscale;
-          // position: absolute;
-          // top: 50%;
-          // left: 16px;
-          // display: inline-block;
-          // font-size: 12px;
+          color: inherit;
+          font-style: normal;
+          line-height: 0;
+          text-align: center;
+          text-transform: none;
+          vertical-align: -0.125em;
+          text-rendering: optimizeLegibility;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          position: absolute;
+          top: 17px;
+          left: 14px;
+          display: inline-block;
+          font-size: 14px;
         }
       }
-      // &:first-child {
-      //   margin-top: 0;
-      // }
       .el-collapse-item__wrap {
         padding: 16px;
         border: none;
         .el-collapse-item__content {
           padding-bottom: 0;
         }
+      }
+    }
+    // Title文字加粗
+    .title_bold {
+      .collapse-item_title {
+        font-weight: bold;
       }
     }
     // 隐藏手风琴title
@@ -126,10 +144,10 @@ const handleEvent = (val, type) => {
     // 禁用时取消收缩功能及隐藏icon
     .disabledStyle {
       .el-collapse-item__header {
-        color: #000;
+        color: var(--el-collapse-header-text-color);
         cursor: default;
         padding-left: 20px;
-        font-size: 16px;
+        font-size: 14px;
         display: flex;
         align-items: center;
         justify-content: space-between;

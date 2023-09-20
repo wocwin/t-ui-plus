@@ -3,12 +3,21 @@
     <el-collapse v-model="defaultActiveKey">
       <el-collapse-item
         v-for="(val, index) in descData"
-        :class="{ noTitle: !val.title, disabledStyle: val.disabled }"
+        :class="{
+          noTitle: !val.title,
+          disabledStyle: val.disabled,
+          title_bold: titleBold,
+        }"
         :key="index"
-        :title="val.title"
         :name="val.name"
         :disabled="val.disabled"
       >
+        <template #title>
+          {{ val.title }}
+          <div class="t_btn" v-if="val.btn">
+            <slot :name="val.btn"></slot>
+          </div>
+        </template>
         <template v-if="val.slotName">
           <slot :name="val.slotName"></slot>
         </template>
@@ -29,6 +38,11 @@ const props: any = defineProps({
     type: Object,
     default: () => ({}),
   },
+  // 是否Title文字加粗
+  titleBold: {
+    type: Boolean,
+    default: false,
+  },
 })
 const slots = useSlots()
 const attrs: any = useAttrs()
@@ -46,7 +60,6 @@ const defaultActiveKey = computed({
 .t_detail {
   .el-collapse {
     border: none;
-    // background-color: #f6f6f6;
     .el-collapse-item {
       background-color: var(--el-bg-color);
       margin-top: 10px;
@@ -54,22 +67,29 @@ const defaultActiveKey = computed({
       .el-collapse-item__header {
         border-bottom: 1px solid var(--el-border-color);
         position: relative;
-        padding-left: 15px;
+        padding-left: 35px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .t_btn {
+          margin-right: 15px;
+        }
         .el-collapse-item__arrow {
-          // color: inherit;
-          // font-style: normal;
-          // line-height: 0;
-          // text-align: center;
-          // text-transform: none;
-          // vertical-align: -0.125em;
-          // text-rendering: optimizeLegibility;
-          // -webkit-font-smoothing: antialiased;
-          // -moz-osx-font-smoothing: grayscale;
-          // position: absolute;
-          // top: 50%;
-          // left: 16px;
-          // display: inline-block;
-          // font-size: 12px;
+          color: inherit;
+          font-style: normal;
+          line-height: 0;
+          text-align: center;
+          text-transform: none;
+          vertical-align: -0.125em;
+          text-rendering: optimizeLegibility;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          position: absolute;
+          top: 17px;
+          left: 14px;
+          display: inline-block;
+          font-size: 14px;
         }
       }
       .el-collapse-item__wrap {
@@ -78,6 +98,12 @@ const defaultActiveKey = computed({
         .el-collapse-item__content {
           padding-bottom: 0;
         }
+      }
+    }
+    // Title文字加粗
+    .title_bold {
+      .collapse-item_title {
+        font-weight: bold;
       }
     }
     // 隐藏手风琴title
@@ -92,11 +118,18 @@ const defaultActiveKey = computed({
     // 禁用时取消收缩功能及隐藏icon
     .disabledStyle {
       .el-collapse-item__header {
-        color: #303133;
+        color: var(--el-collapse-header-text-color);
         cursor: default;
         padding-left: 20px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         .el-collapse-item__arrow {
           display: none;
+        }
+        .t_btn {
+          margin-right: 15px;
         }
       }
     }

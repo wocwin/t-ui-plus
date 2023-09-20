@@ -1,10 +1,5 @@
 <template>
-  <el-descriptions
-    class="t_detail"
-    size="small"
-    v-bind="$attrs"
-    :column="descColumn"
-  >
+  <el-descriptions class="t_detail" v-bind="$attrs" :column="descColumn">
     <el-descriptions-item
       v-for="(item, key) in descData"
       :key="key"

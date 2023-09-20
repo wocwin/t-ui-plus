@@ -2,16 +2,102 @@
 
 ---
 
-### 表单模块使用
+### 表单-基本使用
 
 ::: demo
-TModuleForm/moduleForm
+TModuleForm/index
+:::
+### 表单-模块插槽使用
+
+::: demo
+TModuleForm/slotName
+:::
+### 表单-模块是否展开
+
+::: demo
+TModuleForm/disabled
+:::
+### 表单-对齐方式
+
+::: demo
+TModuleForm/labelPosition
+:::
+### 表单-表单验证
+
+::: demo
+TModuleForm/rules
+:::
+### 表单-校验错误提示
+
+::: demo
+TModuleForm/validateError
+:::
+### 表单-自定义底部按钮
+
+::: demo
+TModuleForm/footer
+:::
+### 表单-显示tabs
+
+::: demo 注意只显示在最后一个模块;设置属性`isTabMargin`tabs是否与模块隔离
+TModuleForm/tabs
+:::
+### 表单-自定义返回事件
+
+::: demo
+TModuleForm/isGoBackEvent
+:::
+### 表单-没有返回icon
+
+::: demo
+TModuleForm/isShowBack
+:::
+### 表单-Title右侧插槽使用
+
+::: demo
+TModuleForm/extra
 :::
 
-### 详情模块使用
+### 表单-模块Title右侧插槽使用
 
 ::: demo
-TModuleForm/moduleDesc
+TModuleForm/titleBtn
+:::
+
+### 详情-基本使用
+
+::: demo
+TModuleForm/detail
+:::
+### 详情-span设置
+
+::: demo
+TModuleForm/detailspan
+:::
+### 详情-提示项
+
+::: demo
+TModuleForm/tooltip
+:::
+### 详情-模块插槽使用
+
+::: demo
+TModuleForm/detailslot
+:::
+### 详情-value插槽使用
+
+::: demo
+TModuleForm/detailslotName
+:::
+### 详情-模块禁止收缩
+
+::: demo
+TModuleForm/detaildisabled
+:::
+### 详情-模块Title右侧插槽使用
+
+::: demo
+TModuleForm/detailTitleBtn
 :::
 
 ### TModuleForm Attributes
@@ -26,21 +112,16 @@ TModuleForm/moduleDesc
 <!-- 第一种 表单形式 -->
 <t-module-form
   title="模块表单组件运用"
-  subTitle="模块表单222"
   ref="sourceForm"
   :formOpts="formOpts"
   :submit="submit"
-  :tabs="tabs"
-  @handleEvent="handleEvent"
 />
 <!-- 第二种详情展示 根据handleType-->
 <t-module-form
   title="模块详情组件运用"
-  subTitle="模块详情222"
   ref="sourceDetail"
   handleType="desc"
   :descData="descData"
-  :tabs="tabs"
 />
 ```
 
@@ -53,7 +134,12 @@ TModuleForm/moduleDesc
 | subTitle         | 头部副标题                                                                       | string      | 无           |
 | extra            | 操作区，位于 title 行的行尾(右侧)                                                | slot        | 无           |
 | footer           | 底部操作区（默认展示“取消/保存”按钮；使用插槽则隐藏）footer="null"时隐藏底部操作 | String slot | 无           |
-| tabs             | 页面展示是否需要页签（并且 tabs 的 key 是插槽）                                  | Array       | 无           |
+| isTabMargin      | tabs是否跟模块分离                                                               | Boolean     | false        |
+| tabMarginNum     | tabs跟模块分离距离                                                               | Number      | 10           |
+| tabs             | 页面展示是否需要页签（并且 tabs 的 key 是插槽）——只显示在最后一个模块下          | Array       | 无           |
+| btnTxt           | 表单模块-'保存按钮文字'                                                          | string      | '保存'       |
+| titleBold        | 模块Title文字是否加粗                                                            | Boolean     | false        |
+| isShowBack       | header不显示返回icon                                                             | Boolean     | false        |
 | isGoBackEvent    | 点击头部返回（默认返回上一页，设置此值可以自定义 back 事件）                     | Boolean     | false        |
 | handleType       | 显示方式（'edit':form 表单操作，'desc':表详情页面）                              | string      | edit         |
 | ----edit         | handleType=edit 表 form 表单操作的属性                                           | -           | -            |
@@ -120,7 +206,7 @@ TModuleForm/moduleDesc
 | 事件名        | 说明                 | 返回值                                       |
 | :------------ | :------------------- | :------------------------------------------- |
 | handleEvent   | 单个查询条件触发事件 | fieldList 中的 event 值和对应输入的 value 值 |
-| tabsChange    | 点击 tab 切换触发    | 被选中的标签 tab 实例                        |
+| tabsChange    | 点击 tab 切换触发    | 被选中的标签 tabs                            |
 | validateError | 校验失败抛出事件     | obj——每个收缩块的对象                        |
 | back          | 头部标题点击返回事件 | -                                            |
 

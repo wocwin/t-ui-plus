@@ -10,7 +10,7 @@
         :title="title"
         @back="back"
         :class="{
-          noContent: !isShow('extra') && !subTitle,
+          noContent: !subTitle,
           isShowBack: isShowBack,
         }"
       >
@@ -37,11 +37,15 @@
         </template>
       </module-detail>
       <!-- tabs -->
-      <div class="tabs" v-if="tabs">
+      <div
+        class="tabs"
+        v-if="tabs"
+        :style="{ 'margin-top': isTabMargin ? `${tabMarginNum}px` : 0 }"
+      >
         <el-tabs
           v-if="tabs && tabs.length > 1"
           v-model="activeName"
-          @tab-click="(tab, event) => emits('tabsChange', tab, event)"
+          @tab-change="tabsChange"
         >
           <el-tab-pane
             v-for="tab in tabs"
@@ -103,6 +107,16 @@ const props: any = defineProps({
     type: String,
     default: '保存',
   },
+  // tabs是否跟模块分离
+  isTabMargin: {
+    type: Boolean,
+    default: false,
+  },
+  // tabs跟模块分离距离（默认10px）
+  tabMarginNum: {
+    type: Number,
+    default: 10,
+  },
   // 是否显示底部操作按钮 :footer="null"
   footer: Object,
   title: String,
@@ -142,13 +156,9 @@ const saveHandle = async () => {
     const { valid, formData } = await tForm.value
       .getChildRef(formIndex)
       .selfValidate()
-    // const { valid, formData } = await attrs.formOpts[formIndex].ref.validate()
-    // console.log('11111', valid)
     if (valid) {
       successLength = successLength + 1
       form[formIndex] = attrs.formOpts[formIndex].opts.formData
-      // console.log('2222', successLength)
-      // console.log('3333', form)
     }
   })
   setTimeout(async () => {
@@ -198,6 +208,10 @@ const show = (formType) => {
 const setSelectedTab = (key) => {
   activeName.value = key
 }
+// 切换tab
+const tabsChange = (tab) => {
+  emits('tabsChange', tab)
+}
 // 清空表单
 const resetFormFields = () => {
   let formOpts = {}
@@ -245,6 +259,7 @@ defineExpose({
   resetFormFields,
   updateFormFields,
   setSelectedTab,
+  saveHandle,
 })
 </script>
 <style lang="scss">
@@ -255,19 +270,17 @@ defineExpose({
   flex-direction: column;
   height: 100%;
   text-align: left;
-  background-color: var(--el-bg-color);
+  background-color: var(--el-bg-color-page);
   overflow: auto;
   .scroll_wrap {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    // padding-bottom: 8px;
     .el-page-header {
       -webkit-box-sizing: border-box;
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      // color: rgba(0, 0, 0, 0.65);
       color: var(--el-text-color-primary);
       font-size: 14px;
       font-variant: tabular-nums;
@@ -278,6 +291,9 @@ defineExpose({
       position: relative;
       padding: 16px 24px;
       background-color: var(--el-bg-color);
+      .el-page-header__breadcrumb {
+        margin: 0;
+      }
       .el-page-header__left {
         color: var(--el-text-color-primary);
         align-items: center;
@@ -308,15 +324,15 @@ defineExpose({
     }
     .noContent {
       .el-page-header__left {
-        &::after {
-          content: none;
+        .el-divider {
+          display: none;
         }
       }
     }
     // 是否显示返回箭头
     .isShowBack {
       .el-page-header__left {
-        .el-icon-back {
+        .el-page-header__icon {
           display: none;
         }
       }

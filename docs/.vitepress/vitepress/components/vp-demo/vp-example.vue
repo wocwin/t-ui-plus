@@ -92,5 +92,19 @@ onBeforeMount(() => {
       animation-delay: -0.5s;
     }
   }
+  .t_module_form_demo {
+    background-color: var(--el-bg-color-page);
+    :deep(.t_layout_page_item) {
+      margin: 0;
+      padding: 0;
+      .t_module_form {
+        overflow: hidden;
+        margin: 0 !important;
+        .handle_wrap {
+          position: inherit;
+        }
+      }
+    }
+  }
 }
 </style>
