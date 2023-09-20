@@ -17,11 +17,7 @@
     <template #empty>
       <div class="t-table-select__table" :style="{ width: `${tableWidth}px` }">
         <div class="table_query_condition" v-if="isShowQuery">
-          <t-query-condition
-            ref="tQueryConditionRef"
-            :boolEnter="false"
-            v-bind="$attrs"
-          >
+          <t-query-condition ref="tQueryConditionRef" :boolEnter="false" v-bind="$attrs">
             <template v-for="(index, name) in slots" v-slot:[name]="data">
               <slot :name="name" v-bind="data"></slot>
             </template>
