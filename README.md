@@ -1,9 +1,12 @@
 # T-ui-Plus
 
-## [Vue2 基础组件传送门](https://github.com/wocwin/t-ui)
+## [Vue2 基于 Element-ui基础组件传送门](https://github.com/wocwin/t-ui)
 
-> 基于 Element-ui 和 ant-design-vue 二次封装基础组件地址
+> 基于 Element-ui 二次封装基础组件地址
+>
+## [Vue2 基于ant-design-vue基础组件传送门](https://github.com/wocwin/t-antd-ui)
 
+> 基于ant-design-vue 二次封装基础组件地址
 ## 介绍
 
 > 基于 vue3+ ts+ Element-plus 二次封装组件
@@ -35,7 +38,9 @@
 npm i @wocwin/t-ui-plus
 ```
 
-### 全局注册使用
+## 全局注册使用
+
+> ### 前提条件：使用项目必须全局注册 Element-plus组件库
 
 ```js
 // 在main.js中按下引入
@@ -44,7 +49,7 @@ import '@wocwin/t-ui-plus/lib/style.css'
 Vue.use(TuiPlus)
 ```
 
-### 按需引入
+## 按需引入
 
 ```js
 // 在main.js中按下引入
@@ -55,7 +60,7 @@ import '@wocwin/t-ui-plus/lib/style.css'
 </script>
 ```
 
-### t-ui-plus Volar 组件类型提示
+## t-ui-plus Volar 组件类型提示
 
 ```js
 // 需要在使用的项目的tsconfig.json文件中添加以下
@@ -67,8 +72,11 @@ compilerOptions：{
 
 ```
 ## 安装依赖
+> ### 注意: 本地环境版本最好安装 [Node.js 16.x+](https://nodejs.org/en)、[pnpm 7.x+](https://github.com/pnpm/pnpm/)
 
 ```shell
+npm install -g pnpm
+
 pnpm install
 
 ```

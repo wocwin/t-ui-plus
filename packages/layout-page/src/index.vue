@@ -2,6 +2,7 @@
   <div
     ref="TLayoutPageRef"
     class="t_layout_page"
+    :class="{ layout_page_no_margin: isNoMargin }"
     @scroll="(e:any) => scrollTop = e.target.scrollTop"
   >
     <slot />
@@ -11,6 +12,10 @@
 import { onActivated, ref } from 'vue'
 const props = defineProps({
   keepScrollDisabled: {
+    type: Boolean,
+    default: false,
+  },
+  isNoMargin: {
     type: Boolean,
     default: false,
   },
@@ -31,5 +36,8 @@ onActivated(() => {
   width: 100%;
   height: 100%;
   overflow: auto;
+}
+.layout_page_no_margin {
+  padding: 0;
 }
 </style>

@@ -17,7 +17,11 @@
     <template #empty>
       <div class="t-table-select__table" :style="{ width: `${tableWidth}px` }">
         <div class="table_query_condition" v-if="isShowQuery">
-          <t-query-condition ref="tQueryConditionRef" :boolEnter="false" v-bind="$attrs">
+          <t-query-condition
+            ref="tQueryConditionRef"
+            :boolEnter="false"
+            v-bind="$attrs"
+          >
             <template v-for="(index, name) in slots" v-slot:[name]="data">
               <slot :name="name" v-bind="data"></slot>
             </template>
@@ -592,12 +596,14 @@ const removeTag = (tag) => {
 const clear = () => {
   if (props.multiple) {
     selectTable.value.clearSelection()
+    state.defaultValue = []
   } else {
     // 取消高亮
     selectTable.value.setCurrentRow(-1)
     nowIndex.value = -1
     radioVal.value = ''
     forbidden.value = false
+    state.defaultValue = null
     emits('radioChange', {}, null)
   }
 }
@@ -610,7 +616,7 @@ const focus = () => {
   selectRef.value.focus()
 }
 // 暴露方法出去
-defineExpose({ focus, blur })
+defineExpose({ focus, blur, clear })
 </script>
 
 <style lang="scss">
