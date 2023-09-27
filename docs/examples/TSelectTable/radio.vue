@@ -2,16 +2,22 @@
   <t-layout-page>
     <t-layout-page-item>
       <t-select-table
+        ref="selectTable"
         :table="table"
         :columns="table.columns"
         :max-height="400"
         :keywords="{ label: 'name', value: 'id' }"
         @radioChange="radioChange"
       ></t-select-table>
+      <el-button style="margin-left: 15px" type="primary" @click="clear">
+        清空选中</el-button
+      >
     </t-layout-page-item>
   </t-layout-page>
 </template>
 <script setup lang="ts">
+import { ref } from 'vue'
+const selectTable = ref()
 const table = {
   data: [
     { id: 1, code: 1, name: '物料名称1', spec: '物料规格1', unitName: '吨' },
@@ -73,5 +79,9 @@ const table = {
 }
 const radioChange = (row) => {
   console.log('单选--传给后台的值', row)
+}
+const clear = () => {
+  console.log('selectTable.value', selectTable.value)
+  selectTable.value.clear()
 }
 </script>
