@@ -1,11 +1,20 @@
 <template>
-  <el-select
+  <component
+    :is="!useVirtual ? 'el-select' : 'el-select-v2'"
     popper-class="t_select"
     v-model="childSelectedValue"
+    :options="!useVirtual ? null : optionSource"
     :style="{ width: width || '100%' }"
-    v-bind="{ clearable: true, filterable: true, ...$attrs }"
+    v-bind="{
+      clearable: true,
+      filterable: true,
+      ...$attrs,
+    }"
     :multiple="multiple"
   >
+    <template v-for="(index, name) in slots" v-slot:[name]="data">
+      <slot :name="name" v-bind="data" />
+    </template>
     <el-checkbox
       v-if="multiple"
       v-model="selectChecked"
@@ -13,17 +22,36 @@
       class="all_checkbox"
       >全选</el-checkbox
     >
-    <el-option
-      v-for="(item, index) in optionSource"
-      :key="index + 'i'"
-      :label="customLabel ? customLabelHandler(item) : item[labelKey]"
-      :value="item[valueKey]"
-    ></el-option>
-  </el-select>
+    <template v-if="!useVirtual">
+      <el-option
+        v-for="(item, index) in optionSource"
+        :key="index + 'i'"
+        :label="customLabel ? customLabelHandler(item) : item[labelKey]"
+        :value="item[valueKey]"
+      ></el-option>
+      <div class="t_select__pagination" v-if="isShowPagination">
+        <el-pagination
+          v-model:current-page="paginationOption.currentPage"
+          v-model:page-size="paginationOption.pageSize"
+          :layout="
+            paginationOption.layout || 'total, prev, pager, next, jumper'
+          "
+          :pager-count="paginationOption.pagerCount"
+          :total="paginationOption.total"
+          v-bind="{
+            small: true,
+            background: true,
+            ...$attrs,
+            ...paginationOption.bind,
+          }"
+        />
+      </div>
+    </template>
+  </component>
 </template>
 
 <script setup lang="ts" name="TSelect">
-import { computed } from 'vue'
+import { computed, useSlots } from 'vue'
 const props: any = defineProps({
   modelValue: {
     type: [String, Number, Array],
@@ -56,7 +84,30 @@ const props: any = defineProps({
     type: Array as unknown as any[],
     default: () => [],
   },
+  // 是否显示分页
+  isShowPagination: {
+    type: Boolean,
+    default: false,
+  },
+  // 分页配置
+  paginationOption: {
+    type: Object,
+    default: () => {
+      return {
+        pageSize: 6, // 每页显示条数
+        currentPage: 1, // 当前页
+        pagerCount: 5, // 按钮数，超过时会折叠
+        total: 0, // 总条数
+      }
+    },
+  },
+  // 是否开启虚拟列表
+  useVirtual: {
+    type: Boolean,
+    default: false,
+  },
 })
+const slots = useSlots()
 // 抛出事件
 const emits = defineEmits(['update:modelValue'])
 // vue3 v-model简写

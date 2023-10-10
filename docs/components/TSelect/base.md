@@ -18,6 +18,18 @@ TSelect/customLabel
 TSelect/multiple
 :::
 
+### 分页
+
+:::demo 在组件中配置：`isShowPagination` 及 `paginationOption`
+TSelect/pagination
+:::
+
+### 虚拟列表
+
+:::demo 在组件中配置：`use-virtual` 即可
+TSelect/useVirtual
+:::
+
 ### TSelect Attributes
 
 ---
@@ -36,15 +48,29 @@ TSelect/multiple
 />
 ```
 
-### 2、配置参数（Attributes）继承 el-select Attributes
+### 2、配置参数（Attributes）继承 el-select&el-select-v2 Attributes
 
-| 参数         | 说明                                             | 类型                            | 默认值  |
-| :----------- | :----------------------------------------------- | :------------------------------ | :------ |
-| v-model      | 绑定值                                           | boolean / string / number/Array | 无      |
-| multiple     | 是否多选                                         | Boolean                         | false   |
-| optionSource | 下拉数据源                                       | Array                           | 无      |
-| customLabel  | 是否自定义设置下拉label                          | String                          | -       |
-| valueKey     | 传入的 option 数组中，要作为最终选择项的键值 key | String                          | 'key'   |
-| labelKey     | 传入的 option 数组中，要作为显示项的键值名称     | String                          | 'label' |
+| 参数             | 说明                                             | 类型                            | 默认值  |
+| :--------------- | :----------------------------------------------- | :------------------------------ | :------ |
+| v-model          | 绑定值                                           | boolean / string / number/Array | 无      |
+| multiple         | 是否多选                                         | Boolean                         | false   |
+| optionSource     | 下拉数据源                                       | Array                           | 无      |
+| customLabel      | 是否自定义设置下拉label                          | String                          | -       |
+| valueKey         | 传入的 option 数组中，要作为最终选择项的键值 key | String                          | 'key'   |
+| labelKey         | 传入的 option 数组中，要作为显示项的键值名称     | String                          | 'label' |
+| useVirtual       | 是否开启虚拟列表(继承el-select-v2属性)           | Boolean                         | false   |
+| isShowPagination | 是否开启分页                                     | Boolean                         | false   |
+| paginationOption | 分页配置                                         | Object                          | -       |
 
-### 3、继承 el-select events
+### 2-1、paginationOption配置参数（Attributes）继承 el-pagination Attributes
+
+| 参数        | 说明                                                          | 类型   | 默认值                             |
+| :---------- | :------------------------------------------------------------ | :----- | :--------------------------------- |
+| currentPage | 当前页数                                                      | number | 1                                  |
+| pageSize    | 每页显示条目个数                                              | number | 6                                  |
+| pagerCount  | 设置最大页码按钮数。 页码按钮的数量，当总页数超过该值时会折叠 | number | 5                                  |
+| total       | 总条目数                                                      | number | 0                                  |
+| layout      | 组件布局，子组件名用逗号分隔                                  | string | 'total, prev, pager, next, jumper' |
+| bind        | el-pagination属性                                             | Object | -                                  |
+
+### 3、继承 el-select&el-pagination&el-select-v2 events
