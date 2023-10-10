@@ -81,13 +81,10 @@
           v-bind="$attrs"
         >
           <template #default="scope">
-            <span>
-              {{
-                isShowPagination
-                  ? (table.currentPage - 1) * table.pageSize + scope.$index + 1
-                  : scope.$index + 1
-              }}
+            <span v-if="isPaginationCumulative && isShowPagination">
+              {{ (table.currentPage - 1) * table.pageSize + scope.$index + 1 }}
             </span>
+            <span v-else>{{ scope.$index + 1 }}</span>
           </template>
         </el-table-column>
       </template>
@@ -304,6 +301,11 @@ const props = defineProps({
   rowClickRadio: {
     type: Boolean,
     default: true,
+  },
+  // 序列号显示是否分页累加
+  isPaginationCumulative: {
+    type: Boolean,
+    default: false,
   },
   // 是否显示分页
   isShowPagination: {

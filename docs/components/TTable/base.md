@@ -187,6 +187,7 @@ TTable/eventHandle
 | isShowFooterBtn         | 是否显示保存按钮                                                               | Boolean      | false     |
 | title                   | 表格左上标题                                                                   | String /slot | -         |
 | isShowPagination        | 是否显示分页(默认显示分页)                                                     | Boolean      | true      |
+| isPaginationCumulative  | 序列号显示是否分页累加                                                         | Boolean      | false     |
 | isTableColumnHidden     | 是否开启合计行隐藏复选框/单选框                                                | Boolean      | false     |
 | isCopy                  | 是否允许双击单元格复制                                                         | Boolean      | false     |
 | rowClickRadio           | 是否开启点击整行选中单选框                                                     | Boolean      | true      |

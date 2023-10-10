@@ -1,71 +1,98 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-table title="集成分页器" :table="table" :columns="table.columns" />
+      <t-table
+        title="集成分页器--序列号显示-累加"
+        :table="table"
+        :columns="table.columns"
+        @page-change="pageChange"
+        isPaginationCumulative
+      />
     </t-layout-page-item>
   </t-layout-page>
 </template>
 
-<script setup lang="ts">
-// import { onMounted } from 'vue'
-const table = {
-  total: 20,
+<script setup lang="tsx">
+import { onMounted, ref } from 'vue'
+import { ElMessageBox } from 'element-plus'
+import data from './data.json'
+import data1 from './data2.json'
+const table = ref({
+  firstColumn: { type: 'index', width: 80, fixed: true },
+  total: 0,
   currentPage: 1,
   pageSize: 10,
   // 接口返回数据
-  data: [
-    {
-      id: '1',
-      date: '2019-09-25',
-      date1: '2019-09-26',
-      name: '张三',
-      status: '2',
-      address: '广东省广州市天河区',
-    },
-    {
-      id: '2',
-      date: '2019-09-26',
-      date1: '2019-09-27',
-      name: '张三1',
-      status: '1',
-      address: '广东省广州市天广东省广州市天河区2广东省广州市天河区2河区2',
-    },
-    {
-      id: '3',
-      date: '2019-09-26',
-      date1: '2019-09-28',
-      name: '张三1',
-      status: '1',
-      address: '广东省广州市天广东省广州市天河区2广东省广州市天河区2河区2',
-    },
-    {
-      id: '4',
-      date: '2019-09-26',
-      date1: '2019-09-29',
-      name: '张三1',
-      status: '1',
-      address: '广东省广州市天广东省广州市天河区2广东省广州市天河区2河区2',
-    },
-  ],
+  data: [],
   // 表头数据
   columns: [
-    { prop: 'name', label: '姓名', minWidth: '100' },
-    { prop: 'date', label: '日期', minWidth: '180' },
-    { prop: 'status', label: '状态', minWidth: '80' },
-    { prop: 'address', label: '地址', minWidth: '220' },
+    { prop: 'factoryModelIdLabel', label: '工厂', minWidth: 160 },
+    { prop: 'materialTypeLabel', label: '物料分类', minWidth: 120 },
+    { prop: 'materialCode', label: '物料编码', minWidth: 120 },
+    { prop: 'materialName', label: '物料名称', minWidth: 180 },
+    { prop: 'materialSpecs', label: '规格', minWidth: '80' },
+    { prop: 'power', label: '功率', minWidth: '80' },
+    {
+      prop: 'enableStatusLabel',
+      label: '状态',
+      minWidth: 120,
+      render: (text, record) => {
+        return (
+          <el-switch
+            active-value={1}
+            inactive-value={2}
+            v-model={record.enableStatus}
+            onChange={() => handleStatusChange(record)}
+          >
+            {text}
+          </el-switch>
+        )
+      },
+    },
+    { prop: 'materialPropertyLabel', label: '物料属性', minWidth: 120 },
+    { prop: 'baseUnit', label: '基本单位', minWidth: 120 },
+    { prop: 'singleWeight', label: '单重', minWidth: 120 },
+    { prop: 'shortRuleMore', label: '改余', minWidth: 120 },
+    { prop: 'shortRuleLess', label: '改损', minWidth: 120 },
+    { prop: 'materialSourceLabel', label: '数据来源', minWidth: '100' },
+    { prop: 'updateTime', label: '最后更新日期', minWidth: 220 },
+    { prop: 'updateBy', label: '最后更新人', minWidth: 160 },
   ],
+})
+onMounted(() => {
+  getData(1)
+})
+const getData = async (pageNum) => {
+  let res
+  if (pageNum === 1) {
+    res = await data
+  } else {
+    res = await data1
+  }
+  // console.log('获取列表数据', res)
+  if (res.success) {
+    table.value.data = res.data.records
+    table.value.total = res.data.total
+  }
 }
-// onMounted(() => {
-//   table.total = 100
-// })
-// 选择当前展示的总页码
-const handlesSizeChange = (val) => {
-  console.log('选择当前展示的总页码', val)
-  table.pageSize = val
+const handleStatusChange = (row) => {
+  let text = row.enableStatus === 1 ? '启用' : '废止'
+  ElMessageBox.confirm(`确认要${text}这条数据吗？`, '警告', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning',
+  })
+    .then(() => {
+      console.log('点击确定')
+    })
+    .catch(() => {
+      console.log('点击取消')
+    })
 }
 // 选择当前页码
-const handlesCurrentChange = (val) => {
+const pageChange = (val) => {
   console.log('选择当前页码', val)
-  table.currentPage = val
+  table.value.currentPage = val
+  getData(val)
 }
 </script>
