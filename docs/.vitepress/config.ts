@@ -58,6 +58,10 @@ export default defineConfig({
               link: '/components/TSelectTable/base.md',
             },
             {
+              text: 'TAdaptivePage组件',
+              link: '/components/TAdaptivePage/base.md',
+            },
+            {
               text: '条件查询组件',
               link: '/components/TQueryCondition/base.md',
             },

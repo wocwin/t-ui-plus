@@ -2,15 +2,15 @@
   <t-layout-page class="t_adaptive_page">
     <t-layout-page-item class="table_search">
       <t-query-condition v-bind="$attrs">
-        <template v-for="(index, name) in slots" v-slot:[name]>
-          <slot :name="name" />
+        <template v-for="(index, name) in slots" v-slot:[name]="data">
+          <slot :name="name" v-bind="data"/>
         </template>
       </t-query-condition>
     </t-layout-page-item>
     <t-layout-page-item class="table_main">
       <t-table v-bind="$attrs">
-        <template v-for="(index, name) in slots" v-slot:[name]>
-          <slot :name="name" />
+        <template v-for="(index, name) in slots" v-slot:[name]="data">
+          <slot :name="name" v-bind="data"/>
         </template>
       </t-table>
     </t-layout-page-item>
