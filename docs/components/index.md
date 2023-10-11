@@ -37,6 +37,12 @@ compilerOptions：{
 }
 
 ```
+
+### 🔨 项目中安装引入报如下错误的解决方法
+> #### 把项目的vite版本升级到4+
+
+<img src="../public/img/error.png">
+
 ### docs文档结构目录
 ```
 ├─ examples               # VPDemo组件自动解析此文件夹下的所有.vue文件

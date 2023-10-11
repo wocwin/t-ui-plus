@@ -71,6 +71,11 @@ compilerOptions：{
 }
 
 ```
+## 项目中安装引入报如下错误的解决方法
+> #### 把项目的vite版本升级到4+
+
+<img src="./README_GIF/error.png">
+
 ## 安装依赖
 > ### 注意: 本地环境版本最好安装 [Node.js 16.x+](https://nodejs.org/en)、[pnpm 7.x+](https://github.com/pnpm/pnpm/)
 
