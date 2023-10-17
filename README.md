@@ -71,7 +71,7 @@ compilerOptions：{
 }
 
 ```
-## vue3+vite项目中安装引入报如下错误的解决方法
+## 项目中安装引入报如下错误的解决方法
 > #### 把项目的vite版本升级到4+
 
 <img src="./README_GIF/error.png">
@@ -88,7 +88,7 @@ pnpm install
 
 ## 使用[t-ui-plus组件的后台管理系统地址](https://github.com/wocwin/wocwin-admin)
 
-## 本地运行 vitepress 中组件文档
+## 本地运行 vuepress 中组件文档
 
 ```shell
 // docs项目(文档demo示例)基于vue3+vite项目
