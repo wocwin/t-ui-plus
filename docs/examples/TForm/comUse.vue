@@ -86,7 +86,8 @@ const formOpts: any = reactive({
       placeholder: 'TSelect单选',
       type: 'select-arr',
       comp: 't-select',
-      bind: { optionSource: sexList.value, valueKey: 'value' },
+      isSelfCom: true,
+      bind: { optionSource: sexList, valueKey: 'value' },
     },
     {
       label: '状态',
@@ -94,6 +95,7 @@ const formOpts: any = reactive({
       placeholder: 'TSelect单选',
       type: 'select-arr',
       comp: 't-select',
+      isSelfCom: true,
       bind: { optionSource: statusList, valueKey: 'value' },
     },
     {
@@ -101,6 +103,7 @@ const formOpts: any = reactive({
       value: 'hobby',
       placeholder: 'TSelect多选',
       comp: 't-select',
+      isSelfCom: true,
       bind: { multiple: true, optionSource: hobbyList, valueKey: 'value' },
     },
     {
