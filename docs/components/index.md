@@ -38,7 +38,7 @@ compilerOptions：{
 
 ```
 
-### 🔨 项目中安装引入报如下错误的解决方法
+### 🔨  Vue3 + Vite项目中安装引入报如下错误的解决方法
 > #### 把项目的vite版本升级到4+
 
 <img src="../public/img/error.png">
