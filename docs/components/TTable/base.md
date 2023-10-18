@@ -94,7 +94,7 @@ TTable/renderHeader
 
 ### 列--动态显示隐藏且拖动排序
 
-:::demo 属性`columnSetBind`配置更改button样式：继承`el-button`所有属性
+:::demo 属性`columnSetBind`配置更改button样式：继承`el-button`所有属性;`column`配置`isShowHidden`属性更改是否默认隐藏显示（true:默认设置列不显示；反之或者不设置`isShowHidden`属性显示）;`注意：如果isShowHidden设置为true后，即便选中显示，但每次刷新都不会显示`
 TTable/columnSetting
 :::
 
@@ -164,6 +164,7 @@ TTable/eventHandle
 | ----bind                | el-table-column Attributes                                                     | Object       | -         |
 | ----noShowTip           | 是否换行 （设置：noShowTip:true）                                              | Boolean      | false     |
 | ----slotName            | 插槽显示此列数据（其值是具名作用域插槽                                         | String       | -         |
+| ----isShowHidden        | 是否动态显示隐藏列设置（隐藏/显示列）                                          | Boolean      | false     |
 | ----slotNameMerge       | 合并表头插槽显示此列数据（其值是具名作用域插槽）                               | String       | -         |
 | ----------scope         | 具名插槽获取此行数据必须用解构接收{scope}.row 是当前行数据 }                   | Object       | -         |
 | ----canEdit             | 是否开启单元格编辑功能                                                         | Boolean      | false     |

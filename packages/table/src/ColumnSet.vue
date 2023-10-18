@@ -56,23 +56,41 @@ const getColumnSetCache = () => {
   let value: any = localStorage.getItem(
     `t-ui-plus:TTable.columnSet-${props.name || props.title}`
   )
-  // let columnOption = initColumnSet()
-  // let valueArr = JSON.parse(value) || []
-  // columnOption.map(item => {
-  //   let findEle = valueArr.find(ele => ele.label === item.label && ele.prop === item.prop)
-  //   item.hidden = findEle ? findEle.hidden : false
-  // })
-  // value = JSON.stringify(columnOption)
+  let columnOption = initColumnSet()
+  let valueArr = JSON.parse(value) || []
+  columnOption.map(item => {
+    let findEle = valueArr.find(ele => ele.label === item.label && ele.prop === item.prop)
+    item.hidden = findEle ? findEle.hidden : false
+  })
+  initColumnSet().map(val => {
+    columnOption.map(item => {
+       if (Object.hasOwn(val, 'isShowHidden')) {
+          if (val.label === item.label && val.prop === item.prop && val.isShowHidden) {
+            item.hidden = val.isShowHidden
+          }
+          if (val.label === item.label && val.prop === item.prop && !val.isShowHidden) {
+            item.hidden = val.isShowHidden
+          }
+        }
+    })
+  })
+  value = JSON.stringify(columnOption)
   return value ? JSON.parse(value) : initColumnSet()
 }
 // 初始化
 const initColumnSet = () => {
-  const columnSet = props.columns.map((col: any, index) => ({
-    label: col.label,
-    prop: col.prop,
-    hidden: false,
-    checkBoxDisabled: false,
-  }))
+  const columnSet = props.columns.map((col: any, index) => (col.isShowHidden ? {
+      label: col.label,
+      prop: col.prop,
+      hidden: false,
+      checkBoxDisabled: false,
+      isShowHidden: col.isShowHidden
+    } : {
+      label: col.label,
+      prop: col.prop,
+      checkBoxDisabled: false,
+      hidden: false
+    }))
   return columnSet
 }
 // 抛出事件
