@@ -22,7 +22,7 @@
         :render-header="val.renderHeader || val.headerRequired"
         :align="val.align || 'center'"
         :fixed="val.fixed"
-        :show-overflow-tooltip="val.noShowTip ? val.noShowTip : true"
+        :show-overflow-tooltip="val.noShowTip===false ? val.noShowTip : true"
         v-bind="{ ...val.bind, ...$attrs }"
       >
         <template #default="scope">

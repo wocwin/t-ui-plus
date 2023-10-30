@@ -1,12 +1,7 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-table
-        title="表头合并"
-        :table="table"
-        :columns="table.columns"
-        :isShowPagination="false"
-      />
+      <t-table title="表头合并" :table="table" :columns="table.columns" :isShowPagination="false" />
     </t-layout-page-item>
   </t-layout-page>
 </template>
@@ -77,7 +72,14 @@ let table = {
               prop: 'type',
               label: '类型',
               minWidth: '100',
-              children: [{ prop: 'date1', label: '日期2552', minWidth: '180' }],
+              children: [
+                {
+                  prop: 'address',
+                  label: '地址换行',
+                  minWidth: '180',
+                  noShowTip: false,
+                },
+              ],
             },
           ],
         },
@@ -87,7 +89,7 @@ let table = {
           label: '表头合并2',
           minWidth: '180',
           children: [
-            { prop: 'type', label: '类型', minWidth: '100' },
+            { prop: 'status', label: '类型', minWidth: '100' },
             {
               prop: 'date',
               label: '日期',
@@ -130,7 +132,7 @@ let table = {
       label: '表头合并2',
       minWidth: '180',
       children: [
-        { prop: 'type', label: '类型', minWidth: '100' },
+        { prop: 'address', label: '地址22', minWidth: '160', noShowTip: false },
         {
           prop: 'date',
           label: '日期',
@@ -139,7 +141,7 @@ let table = {
         },
       ],
     },
-    { prop: 'address', label: '地址', minWidth: '220' },
+    { prop: 'address', label: '地址', minWidth: '220', noShowTip: false },
     { prop: 'date1', label: '日期', minWidth: '180' },
     { prop: 'address1', label: '地址', minWidth: '220' },
   ],

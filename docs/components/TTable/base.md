@@ -162,7 +162,7 @@ TTable/eventHandle
 | ----sort                | 排序 （设置：sort:true）                                                       | Boolean      | false     |
 | ----renderHeader        | 列标题 Label 区域渲染使用的 Function(val) 可以用 jsx 方式                      | Function     | -         |
 | ----bind                | el-table-column Attributes                                                     | Object       | -         |
-| ----noShowTip           | 是否换行 （设置：noShowTip:true）                                              | Boolean      | false     |
+| ----noShowTip           | 是否换行 （设置：noShowTip:false换行，不设置自动隐藏）                         | Boolean      | -         |
 | ----slotName            | 插槽显示此列数据（其值是具名作用域插槽                                         | String       | -         |
 | ----isShowHidden        | 是否动态显示隐藏列设置（隐藏/显示列）                                          | Boolean      | false     |
 | ----slotNameMerge       | 合并表头插槽显示此列数据（其值是具名作用域插槽）                               | String       | -         |
