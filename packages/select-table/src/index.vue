@@ -455,7 +455,7 @@ const filterMethodHandle = (val) => {
         radioVal.value = ''
       } else {
         tableData.map((item, index) => {
-          if (item.id === state.defaultValue?.id) {
+          if (item[props.keywords.value] === state.defaultValue[props.keywords.value]) {
             radioVal.value = index + 1
           }
         })

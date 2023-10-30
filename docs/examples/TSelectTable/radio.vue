@@ -9,9 +9,7 @@
         :keywords="{ label: 'name', value: 'id' }"
         @radioChange="radioChange"
       ></t-select-table>
-      <el-button style="margin-left: 15px" type="primary" @click="clear">
-        清空选中</el-button
-      >
+      <el-button style="margin-left: 15px" type="primary" @click="clear">清空选中</el-button>
     </t-layout-page-item>
   </t-layout-page>
 </template>
@@ -29,34 +27,6 @@ const table = {
     { id: 7, code: 7, name: '物料名称7', spec: '物料规格7', unitName: '吨' },
     { id: 8, code: 8, name: '物料名称8', spec: '物料规格8', unitName: '吨' },
     { id: 9, code: 9, name: '物料名称9', spec: '物料规格9', unitName: '吨' },
-    {
-      id: 10,
-      code: 10,
-      name: '物料名称10',
-      spec: '物料规格10',
-      unitName: '吨',
-    },
-    {
-      id: 11,
-      code: 11,
-      name: '物料名称11',
-      spec: '物料规格11',
-      unitName: '吨',
-    },
-    {
-      id: 12,
-      code: 12,
-      name: '物料名称12',
-      spec: '物料规格12',
-      unitName: '吨',
-    },
-    {
-      id: 13,
-      code: 13,
-      name: '物料名称13',
-      spec: '物料规格13',
-      unitName: '吨',
-    },
   ],
   columns: [
     { label: '物料编号', width: '100px', prop: 'code' },
