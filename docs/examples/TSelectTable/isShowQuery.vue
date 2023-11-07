@@ -58,6 +58,7 @@ let state = reactive({
     phonenumber: null, // 手机号码
     workshopNum: null,
     date: null,
+    date1: null,
   },
   listTypeInfo: {
     sexList: [
@@ -158,6 +159,15 @@ const opts = computed(() => {
       span: 2,
       bind: {
         valueFormat: 'YYYY-MM-DD',
+      },
+    },
+    date1: {
+      label: '日期组件使用',
+      comp: 't-date-picker',
+      span: 2,
+      bind: {
+        type:'daterange',
+        isPickerOptions: true,
       },
     },
     userName: {

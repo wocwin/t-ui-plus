@@ -31,8 +31,22 @@
       <template v-if="opt.slotName">
         <slot :name="opt.slotName" :param="state.form"></slot>
       </template>
+      <template v-if="opt.isSelfCom">
+        <component
+          :is="opt.comp"
+          v-model="state.form[opt.dataIndex]"
+          :placeholder="opt.placeholder || getPlaceholder(opt)"
+          v-bind="
+          typeof opt.bind == 'function'
+            ? opt.bind(state.form)
+            : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
+        "
+          :style="{ width: opt.width || '100%' }"
+          v-on="cEvent(opt)"
+        />
+      </template>
       <component
-        v-if="!opt.slotName && opt.comp.includes('date')"
+        v-if="!opt.slotName && !opt.isSelfCom && opt.comp.includes('date')"
         :is="opt.comp"
         v-bind="
           typeof opt.bind == 'function'
@@ -45,7 +59,7 @@
         v-on="cEvent(opt)"
       />
       <component
-        v-if="!opt.slotName && opt.comp.includes('tree-select')"
+        v-if="!opt.slotName && !opt.isSelfCom  && opt.comp.includes('tree-select')"
         :is="opt.comp"
         v-bind="
           typeof opt.bind == 'function'
@@ -59,6 +73,7 @@
       />
       <component
         v-if="
+          !opt.isSelfCom &&
           !opt.slotName &&
           !opt.comp.includes('date') &&
           !opt.comp.includes('tree-select')
@@ -300,7 +315,7 @@ const checkHandle = (flagText: any = false) => {
   emits('submit', state.form, flagText)
 }
 // 子组件名称
-const compChildName:any = computed(() => {
+const compChildName: any = computed(() => {
   return (opt: any) => {
     switch (opt.type) {
       case 'checkbox':

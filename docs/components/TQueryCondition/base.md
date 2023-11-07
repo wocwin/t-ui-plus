@@ -80,6 +80,7 @@ TQueryCondition/querybar
 | :---------- | :------------------------------------------------------------------------------- | :--------------- | :----------------------- |
 | label       | 表单字段说明标题                                                                 | string           | -                        |
 | className   | 自定义 class                                                                     | string           | -                        |
+| isSelfCom   | 是否使用自己封装的组件（即不需要el-option）                                      | Boolean          | false                    |
 | placeholder | placeholder 提示语                                                               | string           | -                        |
 | labelRender | 自定义 label（render 函数 jsx 方式编写）                                         | function         | -                        |
 | slotName    | 自定义输入框插槽(作用域插槽解构接收{param}返回当前所有表单初始值)                | string           | -                        |

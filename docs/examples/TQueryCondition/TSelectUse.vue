@@ -91,6 +91,7 @@ const opts = computed(() => {
       comp: 't-select',
       span: 2,
       defaultVal: 'W1',
+      isSelfCom: true,
       bind: {
         optionSource: state.sexList,
       },
@@ -100,6 +101,7 @@ const opts = computed(() => {
       placeholder: '请多选',
       span: 2,
       comp: 't-select',
+      isSelfCom: true,
       bind: {
         valueKey: 'id',
         labelKey: 'name',

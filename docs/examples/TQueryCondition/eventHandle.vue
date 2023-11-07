@@ -23,8 +23,9 @@ const opts = computed(() => {
     likeBookNo: {
       label: 't-select单选',
       comp: 't-select',
-      // defaultVal: 'W1',
+      span: 2,
       placeholder: '请先输入货源编号',
+      isSelfCom: true,
       bind: (row) => {
         return {
           disabled:
