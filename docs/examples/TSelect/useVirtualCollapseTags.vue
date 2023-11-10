@@ -54,8 +54,7 @@ const stepList = Array.from({ length: 1000 }).map((_, idx) => ({
 const selectChange = (val: any, type) => {
   console.log(
     `selectChange--selectVlaue${type}`,
-    val,
-    eval(`selectVlaue${type}`).value
+    val
   )
 }
 </script>

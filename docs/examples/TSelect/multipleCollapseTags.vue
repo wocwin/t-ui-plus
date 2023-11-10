@@ -59,8 +59,7 @@ const stepList = [
 const selectChange = (val: any, type) => {
   console.log(
     `selectChange--selectVlaue${type}`,
-    val,
-    eval(`selectVlaue${type}`).value
+    val
   )
 }
 </script>
