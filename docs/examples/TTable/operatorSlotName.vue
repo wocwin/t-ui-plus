@@ -2,7 +2,7 @@
   <t-layout-page>
     <t-layout-page-item>
       <t-table
-        title="操作列"
+        title="操作按钮插槽方式"
         ref="selectionTable"
         :table="state.table"
         :columns="state.table.columns"
@@ -18,6 +18,11 @@
           >取消选中</el-button>
           <el-button size="default" type="primary" @click="add">新增</el-button>
           <el-button size="default" type="danger" :disabled="state.ids.length < 1" @click="del">删除</el-button>
+        </template>
+        <template #operator="{scope}">
+          <el-button color="#626aef" icon="Edit" @click="viewDetail(scope.row)">查看</el-button>
+          <el-button type="danger" icon="Search" @click="edit(scope.row)">编辑</el-button>
+          <el-button size="default" type="primary" @click="nullify(scope.row)">作废</el-button>
         </template>
       </t-table>
     </t-layout-page-item>
@@ -79,41 +84,15 @@ let state = reactive({
     columns: [
       { prop: 'name', label: '姓名', minWidth: '100' },
       { prop: 'date', label: '日期', minWidth: '180' },
+      { prop: 'status', label: '状态', minWidth: '80' },
+      { prop: 'address', label: '地址', minWidth: '220' },
       {
-        prop: 'status',
-        label: '状态',
-        minWidth: '220',
-      },
-      { prop: 'date1', label: '日期22', minWidth: '180' },
-      {
-        prop: 'address',
-        label: '地址',
-        minWidth: '220',
+        prop: 'operator',
+        label: '操作',
+        minWidth: '320',
+        slotName: 'operator',
       },
     ],
-    // 表格内操作列
-    operator: [
-      {
-        text: '查看',
-        fun: viewDetail,
-        // show: { key: 'status', val: ['1'] },
-        noshow: [{ key: 'status', val: ['1'] }],
-      },
-      {
-        text: '编辑',
-        fun: edit,
-      },
-      {
-        text: '作废',
-        fun: nullify,
-      },
-    ],
-    // 操作列样式
-    operatorConfig: {
-      fixed: 'right', // 固定列表右边（left则固定在左边）
-      width: 200,
-      label: '操作',
-    },
   },
   ids: [],
 })

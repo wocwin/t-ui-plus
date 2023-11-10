@@ -62,10 +62,35 @@ TTable/slotNameMerge
 TTable/operator
 :::
 
+### 自定义操作按钮样式
+
+:::demo 设置`operator`数组中的`bind对象`继承`el-button`所有属性
+TTable/operatorBtn
+:::
+
+### 操作按钮render方式
+
+:::demo 设置`operator`数组中的`render函数``遵循tsx方式`
+TTable/operatorRender
+:::
+
+### 操作按钮插槽方式
+
+:::demo
+TTable/operatorSlotName
+:::
+
 ### 集成分页器
 
 :::demo
 TTable/isShowPagination
+:::
+
+
+### 分页器-设置layout自定义插槽使用
+
+:::demo
+TTable/paginationSlot
 :::
 
 ### 某列 render 渲染
@@ -145,62 +170,67 @@ TTable/eventHandle
 
 ### 2、配置参数（Table Attributes）
 
-| 参数                    | 说明                                                                           | 类型         | 默认值    |
-| :---------------------- | :----------------------------------------------------------------------------- | :----------- | :-------- |
-| table                   | 表格数据对象                                                                   | Object       | {}        |
-| ---data                 | 展示数据                                                                       | Array        | []        |
-| ---toolbar              | 表格外操作栏选中表格某行，可以将其数据传出                                     | Array        | []        |
-| ---operator             | 表格内操作栏数据                                                               | Array        | []        |
-| -------show             | 表格内操作栏根据状态显示                                                       | Object       | -         |
-| -------noshow           | 表格内操作栏根据多种状态不显示                                                 | Array        | -         |
-| ---operatorConfig       | 表格内操作栏样式                                                               | Object       | -         |
-| ---firstColumn          | 表格首列(序号 index,复选框 selection）排列                                     | object       | -         |
-| ---total                | 数据总条数                                                                     | Number       | -         |
-| ---pageSize             | 页数量                                                                         | Number       | -         |
-| ---currentPage          | 是否需要显示切换页条数                                                         | Number       | -         |
-| columns                 | 表头信息                                                                       | Array        | []        |
-| ----sort                | 排序 （设置：sort:true）                                                       | Boolean      | false     |
-| ----renderHeader        | 列标题 Label 区域渲染使用的 Function(val) 可以用 jsx 方式                      | Function     | -         |
-| ----bind                | el-table-column Attributes                                                     | Object       | -         |
-| ----noShowTip           | 是否换行 （设置：noShowTip:false换行，不设置自动隐藏）                         | Boolean      | -         |
-| ----slotName            | 插槽显示此列数据（其值是具名作用域插槽                                         | String       | -         |
-| ----isShowHidden        | 是否动态显示隐藏列设置（隐藏/显示列）                                          | Boolean      | false     |
-| ----slotNameMerge       | 合并表头插槽显示此列数据（其值是具名作用域插槽）                               | String       | -         |
-| ----------scope         | 具名插槽获取此行数据必须用解构接收{scope}.row 是当前行数据 }                   | Object       | -         |
-| ----canEdit             | 是否开启单元格编辑功能                                                         | Boolean      | false     |
-| ----configEdit          | 表格编辑配置（开启编辑功能有效）                                               | Object       | -         |
-| ----------label         | placeholder 显示                                                               | String       | -         |
-| ----------editComponent | 组件名称可直接指定全局注册的组件，也可引入'element/abtd'如：'a-input/el-input' | String       | -         |
-| ----------eventHandle   | 第三方 UI 的 事件（返回两个参数，第一个自己自带，第二个 scope）                | Object       | -         |
-| ----------bind          | 第三方 UI 的 Attributes，如 el-input 中的 clearable 清空功能                   | Object       | -         |
-| ----------event         | 触发 handleEvent 事件的标志                                                    | String       | -         |
-| ----------type          | 下拉或者复选框显示（select-arr/select-obj/checkbox）                           | String       | -         |
-| ----------list          | 下拉选择数据源名称                                                             | String       | -         |
-| ----------arrLabel      | type:select-arr 时对应显示的中文字段                                           | String       | -         |
-| ----------arrKey        | type:select-arr 时对应显示的数字字段                                           | String       | -         |
-| ----filters             | 字典过滤                                                                       | Object       | -         |
-| ----------list          | listTypeInfo 里面对应的下拉数据源命名                                          | String       | -         |
-| ----------key           | 数据源的 key 字段                                                              | String       | 'value'   |
-| ----------label         | 数据源的 label 字段                                                            | String       | 'label'   |
-| listTypeInfo            | 下拉选择数据源                                                                 | Object       | -         |
-| footer                  | 底部操作区（默认隐藏，使用插槽展示“保存”按钮）                                 | slot         | -         |
-| isKeyup                 | 单元格编辑是否开启键盘事件                                                     | Boolean      | false     |
-| isShowFooterBtn         | 是否显示保存按钮                                                               | Boolean      | false     |
-| title                   | 表格左上标题                                                                   | String /slot | -         |
-| isShowPagination        | 是否显示分页(默认显示分页)                                                     | Boolean      | true      |
-| isPaginationCumulative  | 序列号显示是否分页累加                                                         | Boolean      | false     |
-| isTableColumnHidden     | 是否开启合计行隐藏复选框/单选框                                                | Boolean      | false     |
-| isCopy                  | 是否允许双击单元格复制                                                         | Boolean      | false     |
-| rowClickRadio           | 是否开启点击整行选中单选框                                                     | Boolean      | true      |
-| columnSetting           | 是否显示设置（隐藏/显示列）                                                    | Boolean      | false     |
-| name                    | 与 columnSetting 配合使用标记隐藏/显示列唯一性                                 | String       | title     |
-| isRowSort               | 是否开启行拖拽(`row-key` 需要设置)                                             | Boolean      | false     |
-| isTree                  | 是否开启Tree-table样式                                                         | Boolean      | false     |
-| columnSetBind           | 列设置按钮配置（继承`el-button`所有属性）                                      | Object       | -         |
-| ----btnTxt              | 按钮显示文字                                                                   | String       | '列设置'  |
-| ----title               | 点击按钮下拉显示title                                                          | String       | '列设置'  |
-| ----size                | el-button的size                                                                | String       | 'default' |
-| ----icon                | el-button的icon                                                                | String       | 'Setting' |
+| 参数                    | 说明                                                                                   | 类型         | 默认值    |
+| :---------------------- | :------------------------------------------------------------------------------------- | :----------- | :-------- |
+| table                   | 表格数据对象                                                                           | Object       | {}        |
+| ---data                 | 展示数据                                                                               | Array        | []        |
+| ---toolbar              | 表格外操作栏选中表格某行，可以将其数据传出                                             | Array        | []        |
+| ---operator             | 表格内操作栏数据                                                                       | Array        | []        |
+| -------show             | 表格内操作栏根据状态显示                                                               | Object       | -         |
+| -------render           | render函数渲染使用的 Function(val) 可以用 tsx 方式                                     | Function     | -         |
+| -------noshow           | 表格内操作栏根据多种状态不显示                                                         | Array        | -         |
+| -------bind             | 继承el-button所有Attributes(默认值{ type:'primary',link:true,text:true,size:'small',}) | Object       | -         |
+| -------fun              | 事件名                                                                                 | function     | -         |
+| ---operatorConfig       | 表格内操作栏样式                                                                       | Object       | -         |
+| ---firstColumn          | 表格首列(序号 index,复选框 selection）排列                                             | object       | -         |
+| ---total                | 数据总条数                                                                             | Number       | -         |
+| ---pageSize             | 页数量                                                                                 | Number       | -         |
+| ---currentPage          | 是否需要显示切换页条数                                                                 | Number       | -         |
+| columns                 | 表头信息                                                                               | Array        | []        |
+| ----sort                | 排序 （设置：sort:true）                                                               | Boolean      | false     |
+| ----renderHeader        | 列标题 Label 区域渲染使用的 Function(val) 可以用 jsx 方式                              | Function     | -         |
+| ----render              | 某列render函数渲染使用的 Function(val) 可以用 jsx 方式                                 | Function     | -         |
+| ----bind                | el-table-column Attributes                                                             | Object       | -         |
+| ----noShowTip           | 是否换行 （设置：noShowTip:false换行，不设置自动隐藏）                                 | Boolean      | -         |
+| ----slotName            | 插槽显示此列数据（其值是具名作用域插槽                                                 | String       | -         |
+| ----isShowHidden        | 是否动态显示隐藏列设置（隐藏/显示列）                                                  | Boolean      | false     |
+| ----slotNameMerge       | 合并表头插槽显示此列数据（其值是具名作用域插槽）                                       | String       | -         |
+| ----------scope         | 具名插槽获取此行数据必须用解构接收{scope}.row 是当前行数据 }                           | Object       | -         |
+| ----canEdit             | 是否开启单元格编辑功能                                                                 | Boolean      | false     |
+| ----configEdit          | 表格编辑配置（开启编辑功能有效）                                                       | Object       | -         |
+| ----------label         | placeholder 显示                                                                       | String       | -         |
+| ----------editComponent | 组件名称可直接指定全局注册的组件，也可引入'element/abtd'如：'a-input/el-input'         | String       | -         |
+| ----------eventHandle   | 第三方 UI 的 事件（返回两个参数，第一个自己自带，第二个 scope）                        | Object       | -         |
+| ----------bind          | 第三方 UI 的 Attributes，如 el-input 中的 clearable 清空功能                           | Object       | -         |
+| ----------event         | 触发 handleEvent 事件的标志                                                            | String       | -         |
+| ----------type          | 下拉或者复选框显示（select-arr/select-obj/checkbox）                                   | String       | -         |
+| ----------list          | 下拉选择数据源名称                                                                     | String       | -         |
+| ----------arrLabel      | type:select-arr 时对应显示的中文字段                                                   | String       | -         |
+| ----------arrKey        | type:select-arr 时对应显示的数字字段                                                   | String       | -         |
+| ----filters             | 字典过滤                                                                               | Object       | -         |
+| ----------list          | listTypeInfo 里面对应的下拉数据源命名                                                  | String       | -         |
+| ----------key           | 数据源的 key 字段                                                                      | String       | 'value'   |
+| ----------label         | 数据源的 label 字段                                                                    | String       | 'label'   |
+| listTypeInfo            | 下拉选择数据源                                                                         | Object       | -         |
+| footer                  | 底部操作区（默认隐藏，使用插槽展示“保存”按钮）                                         | slot         | -         |
+| pagination              | 分页器自定义内容 设置文案(table设置layout才生效)                                       | slot         | -         |
+| isKeyup                 | 单元格编辑是否开启键盘事件                                                             | Boolean      | false     |
+| isShowFooterBtn         | 是否显示保存按钮                                                                       | Boolean      | false     |
+| title                   | 表格左上标题                                                                           | String /slot | -         |
+| isShowPagination        | 是否显示分页(默认显示分页)                                                             | Boolean      | true      |
+| isPaginationCumulative  | 序列号显示是否分页累加                                                                 | Boolean      | false     |
+| isTableColumnHidden     | 是否开启合计行隐藏复选框/单选框                                                        | Boolean      | false     |
+| isCopy                  | 是否允许双击单元格复制                                                                 | Boolean      | false     |
+| rowClickRadio           | 是否开启点击整行选中单选框                                                             | Boolean      | true      |
+| columnSetting           | 是否显示设置（隐藏/显示列）                                                            | Boolean      | false     |
+| name                    | 与 columnSetting 配合使用标记隐藏/显示列唯一性                                         | String       | title     |
+| isRowSort               | 是否开启行拖拽(`row-key` 需要设置)                                                     | Boolean      | false     |
+| isTree                  | 是否开启Tree-table样式                                                                 | Boolean      | false     |
+| columnSetBind           | 列设置按钮配置（继承`el-button`所有属性）                                              | Object       | -         |
+| ----btnTxt              | 按钮显示文字                                                                           | String       | '列设置'  |
+| ----title               | 点击按钮下拉显示title                                                                  | String       | '列设置'  |
+| ----size                | el-button的size                                                                        | String       | 'default' |
+| ----icon                | el-button的icon                                                                        | String       | 'Setting' |
 
 ### 3、events 其他事件按照 el-table 直接使用（如 sort-change 排序事件）
 

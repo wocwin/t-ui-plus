@@ -2,7 +2,7 @@
   <t-layout-page>
     <t-layout-page-item>
       <t-table
-        title="操作列"
+        title="操作按钮render方式"
         ref="selectionTable"
         :table="state.table"
         :columns="state.table.columns"
@@ -82,7 +82,7 @@ let state = reactive({
       {
         prop: 'status',
         label: '状态',
-        minWidth: '220',
+        minWidth: '80',
       },
       { prop: 'date1', label: '日期22', minWidth: '180' },
       {
@@ -94,24 +94,47 @@ let state = reactive({
     // 表格内操作列
     operator: [
       {
-        text: '查看',
-        fun: viewDetail,
-        // show: { key: 'status', val: ['1'] },
-        noshow: [{ key: 'status', val: ['1'] }],
+        render: (text, row) => {
+          return (
+            <el-button
+              color="#626aef"
+              icon="Edit"
+              onClick={() => viewDetail(row)}
+            >
+              查看
+            </el-button>
+          )
+        },
       },
       {
-        text: '编辑',
-        fun: edit,
+        render: (text, row) => {
+          return (
+            <el-button type="danger" icon="Search" onClick={() => edit(row)}>
+              编辑
+            </el-button>
+          )
+        },
       },
       {
-        text: '作废',
-        fun: nullify,
+        render: (text, row) => {
+          const slots = {
+            reference: () => <el-button>作废</el-button>,
+          }
+          return (
+            <el-popconfirm
+              title="你确定要删除吗？"
+              onConfirm={() => nullify(row)}
+            >
+              {slots}
+            </el-popconfirm>
+          )
+        },
       },
     ],
     // 操作列样式
     operatorConfig: {
       fixed: 'right', // 固定列表右边（left则固定在左边）
-      width: 200,
+      width: 320,
       label: '操作',
     },
   },

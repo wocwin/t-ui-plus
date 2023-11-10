@@ -2,7 +2,7 @@
   <t-layout-page>
     <t-layout-page-item>
       <t-table
-        title="操作列"
+        title="自定义操作按钮样式"
         ref="selectionTable"
         :table="state.table"
         :columns="state.table.columns"
@@ -82,7 +82,7 @@ let state = reactive({
       {
         prop: 'status',
         label: '状态',
-        minWidth: '220',
+        minWidth: '80',
       },
       { prop: 'date1', label: '日期22', minWidth: '180' },
       {
@@ -96,22 +96,39 @@ let state = reactive({
       {
         text: '查看',
         fun: viewDetail,
-        // show: { key: 'status', val: ['1'] },
-        noshow: [{ key: 'status', val: ['1'] }],
+        bind: {
+          text: false,
+          link: false,
+          color: '#626aef',
+          icon: 'Edit',
+        },
       },
       {
         text: '编辑',
         fun: edit,
+        bind: {
+          type: 'danger',
+          text: false,
+          link: false,
+          icon: 'Search',
+        },
       },
       {
         text: '作废',
         fun: nullify,
+        bind: {
+          text: false,
+          link: false,
+          plain: true,
+          color: '#626aef',
+          icon: 'Edit',
+        },
       },
     ],
     // 操作列样式
     operatorConfig: {
       fixed: 'right', // 固定列表右边（left则固定在左边）
-      width: 200,
+      width: 260,
       label: '操作',
     },
   },
