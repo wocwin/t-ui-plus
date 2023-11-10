@@ -1,10 +1,11 @@
 <template>
   <t-layout-page>
     <t-select
-      placeholder="请选择(虚拟列表--单选)"
+      placeholder="请选择(虚拟列表--多选)"
       v-model="selectVlaue"
       :optionSource="stepList"
       useVirtual
+      multiple
       @change="selectChange"
     />
   </t-layout-page>

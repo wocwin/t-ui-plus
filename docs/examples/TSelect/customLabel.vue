@@ -5,7 +5,7 @@
         placeholder="自定义显示下拉项label"
         v-model="selectVlaue"
         :optionSource="stepList"
-        valueKey="label"
+        valueCustom="label"
         customLabel="`${item.label}（${item.id}）`"
         @change="selectChange"
       ></t-select>

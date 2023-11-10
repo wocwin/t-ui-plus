@@ -4,7 +4,7 @@
       placeholder="请选择工序"
       v-model="selectVlaue"
       :optionSource="stepList"
-      valueKey="label"
+      valueCustom="label"
       @change="selectChange"
       width="200px"
     />

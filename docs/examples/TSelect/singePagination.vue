@@ -1,7 +1,7 @@
 <template>
   <t-layout-page>
     <t-select
-      placeholder="请选择工序（多选分页）"
+      placeholder="请选择工序（单选分页）"
       v-model="selectVlaue"
       :optionSource="stepList"
       labelCustom="materialName"
@@ -9,7 +9,6 @@
       @current-change="currentChange"
       @change="selectChange"
       isShowPagination
-      multiple
       :paginationOption="paginationOption"
     />
   </t-layout-page>

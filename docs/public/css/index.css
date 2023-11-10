@@ -73,6 +73,9 @@
 .VPContent .VPDoc.has-aside .content-container {
   max-width: 1200px;
 }
+.vp-doc ul, .vp-doc ol {
+  padding-left: 0;
+}
 
 /* pre{
   background: transparent;

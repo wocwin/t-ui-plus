@@ -8,26 +8,25 @@
     v-bind="{
       clearable: true,
       filterable: true,
+      multiple:multiple,
       ...$attrs,
     }"
-    :multiple="multiple"
   >
     <template v-for="(index, name) in slots" v-slot:[name]="data">
       <slot :name="name" v-bind="data" />
     </template>
-    <el-checkbox
-      v-if="multiple"
-      v-model="selectChecked"
-      @change="selectAll"
-      class="all_checkbox"
-      >全选</el-checkbox
-    >
     <template v-if="!useVirtual">
+      <el-checkbox
+        v-if="multiple && !isShowPagination"
+        v-model="selectChecked"
+        @change="selectAll"
+        class="all_checkbox"
+      >全选</el-checkbox>
       <el-option
         v-for="(item, index) in optionSource"
         :key="index + 'i'"
-        :label="customLabel ? customLabelHandler(item) : item[labelKey]"
-        :value="item[valueKey]"
+        :label="customLabel ? customLabelHandler(item) : item[labelCustom]"
+        :value="item[valueCustom]"
       ></el-option>
       <div class="t_select__pagination" v-if="isShowPagination">
         <el-pagination
@@ -66,12 +65,12 @@ const props: any = defineProps({
     type: String,
   },
   // 传入的option数组中，要作为最终选择项的键值key
-  valueKey: {
+  valueCustom: {
     type: String,
     default: 'key',
   },
   // 传入的option数组中，要作为显示项的键值名称
-  labelKey: {
+  labelCustom: {
     type: String,
     default: 'label',
   },
@@ -135,7 +134,7 @@ const selectAll = (val: any) => {
   const options = JSON.parse(JSON.stringify(props.optionSource))
   if (val) {
     const selectedAllValue = options.map((item) => {
-      return item[props.valueKey]
+      return item[props.valueCustom]
     })
     emits('update:modelValue', selectedAllValue)
   } else {

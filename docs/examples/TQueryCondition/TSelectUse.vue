@@ -103,8 +103,8 @@ const opts = computed(() => {
       comp: 't-select',
       isSelfCom: true,
       bind: {
-        valueKey: 'id',
-        labelKey: 'name',
+        valueCustom: 'id',
+        labelCustom: 'name',
         multiple: true,
         optionSource: state.multipleList,
       },

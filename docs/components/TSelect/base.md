@@ -12,22 +12,46 @@ TSelect/single
 TSelect/customLabel
 :::
 
+### 单选分页
+
+:::demo 在组件中配置：`isShowPagination` 及 `paginationOption`
+TSelect/singePagination
+:::
+
 ### 多选
 
 :::demo
 TSelect/multiple
 :::
 
-### 分页
+### 多选--隐藏多余标签的多选
 
-:::demo 在组件中配置：`isShowPagination` 及 `paginationOption`
+:::demo
+TSelect/multipleCollapseTags
+:::
+
+### 多选分页
+
+:::demo 在组件中配置：`isShowPagination` 及 `paginationOption`；**`多选不支持翻页选中功能`**
 TSelect/pagination
 :::
 
-### 虚拟列表
+### 虚拟列表--单选
 
 :::demo 在组件中配置：`use-virtual` 即可
 TSelect/useVirtual
+:::
+
+### 虚拟列表--多选
+
+:::demo 在组件中配置：`use-virtual` 即可
+TSelect/useVirtualMultiple
+:::
+
+### 虚拟列表--隐藏多余标签的多选
+
+:::demo
+TSelect/useVirtualCollapseTags
 :::
 
 ### TSelect Attributes
@@ -43,7 +67,7 @@ TSelect/useVirtual
   placeholder="请选择工序"
   v-model="selectVlaue"
   :optionSource="state.stepList"
-  valueKey="label"
+  valueCustom="label"
   @change="selectChange"
 />
 ```
@@ -56,8 +80,8 @@ TSelect/useVirtual
 | multiple         | 是否多选                                         | Boolean                         | false   |
 | optionSource     | 下拉数据源                                       | Array                           | 无      |
 | customLabel      | 是否自定义设置下拉label                          | String                          | -       |
-| valueKey         | 传入的 option 数组中，要作为最终选择项的键值 key | String                          | 'key'   |
-| labelKey         | 传入的 option 数组中，要作为显示项的键值名称     | String                          | 'label' |
+| valueCustom      | 传入的 option 数组中，要作为最终选择项的键值 key | String                          | 'key'   |
+| labelCustom      | 传入的 option 数组中，要作为显示项的键值名称     | String                          | 'label' |
 | useVirtual       | 是否开启虚拟列表(继承el-select-v2属性)           | Boolean                         | false   |
 | isShowPagination | 是否开启分页                                     | Boolean                         | false   |
 | paginationOption | 分页配置                                         | Object                          | -       |
