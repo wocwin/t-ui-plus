@@ -9,10 +9,7 @@
         <!-- 表格外操作 -->
         <slot name="toolbar"></slot>
         <!--列设置按钮-->
-        <div
-          class="header_right_wrap"
-          :style="{ marginLeft: isShow('toolbar') ? '12px' : 0 }"
-        >
+        <div class="header_right_wrap" :style="{ marginLeft: isShow('toolbar') ? '12px' : 0 }">
           <slot name="btn" />
           <column-set
             v-if="columnSetting"
@@ -81,9 +78,9 @@
           v-bind="$attrs"
         >
           <template #default="scope">
-            <span v-if="isPaginationCumulative && isShowPagination">
-              {{ (table.currentPage - 1) * table.pageSize + scope.$index + 1 }}
-            </span>
+            <span
+              v-if="isPaginationCumulative && isShowPagination"
+            >{{ (table.currentPage - 1) * table.pageSize + scope.$index + 1 }}</span>
             <span v-else>{{ scope.$index + 1 }}</span>
           </template>
         </el-table-column>
@@ -147,12 +144,12 @@
               <!-- 字典过滤 -->
               <template v-if="item.filters && item.filters.list">
                 {{
-                  constantEscape(
-                    scope.row[item.prop],
-                    table.listTypeInfo[item.filters.list],
-                    item.filters.key || 'value',
-                    item.filters.label || 'label'
-                  )
+                constantEscape(
+                scope.row[item.prop],
+                table.listTypeInfo[item.filters.list],
+                item.filters.key || 'value',
+                item.filters.label || 'label'
+                )
                 }}
               </template>
               <div
@@ -192,21 +189,20 @@
         class-name="operator"
       >
         <template #default="scope">
-          <div
-            class="operator_btn"
-            :style="table.operatorConfig && table.operatorConfig.style"
-          >
+          <div class="operator_btn" :style="table.operatorConfig && table.operatorConfig.style">
             <template v-for="(item, index) in table.operator" :key="index">
               <el-button
                 @click="
                   item.fun && item.fun(scope.row, scope.$index, state.tableData)
                 "
-                :type="item.type ? item.type : 'primary'"
-                link
-                :style="item.style ? item.style : ''"
-                :icon="item.icon ? item.icon : ''"
-                :disabled="item.disabled"
-                :size="item.size ? item.size : 'small'"
+                v-bind="{
+                  type:'primary',
+                  link:true,
+                  text:true,
+                  size:'small',
+                  ...item.bind,
+                  ...$attrs
+                }"
                 v-if="checkIsShow(scope, item)"
               >
                 <!-- render渲染 -->
@@ -233,11 +229,15 @@
       @current-change="handlesCurrentChange"
       :page-sizes="[10, 20, 50, 100]"
       v-model:page-size="table.pageSize"
-      layout="total,sizes, prev, pager, next, jumper"
+      :layout="table.layout || 'total,sizes, prev, pager, next, jumper'"
+      :prev-text="table.prevText"
+      :next-text="table.nextText"
       :total="table.total || 0"
       v-bind="$attrs"
       background
-    ></el-pagination>
+    >
+      <slot name="pagination"></slot>
+    </el-pagination>
     <!-- 表格底部按钮 -->
     <footer
       class="handle_wrap"
@@ -692,6 +692,7 @@ defineExpose({
   :deep(.el-pagination) {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     margin-top: 20px;
     // margin-right: 60px;
     margin-right: calc(2% - 20px);

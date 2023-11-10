@@ -7,7 +7,11 @@
         :columns="table.columns"
         @page-change="pageChange"
         isPaginationCumulative
-      />
+      >
+        <template #pagination>
+          <div>测试插槽</div>
+        </template>
+      </t-table>
     </t-layout-page-item>
   </t-layout-page>
 </template>
@@ -74,7 +78,7 @@ const getData = async (pageNum) => {
   }
   // console.log('获取列表数据', res)
   if (res.success) {
-    table.value.data = res.data.records
+    table.value.data = res.data.records.splice(0, 5)
     table.value.total = res.data.total
   }
 }
