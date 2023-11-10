@@ -35,7 +35,7 @@
     "axios": "^1.1.2",
     "chalk": "^5.2.0",
     "consola": "^3.1.0",
-    "element-plus": "^2.2.18",
+    "element-plus": "^2.4.2",
     "escape-html": "^1.0.3",
     "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
@@ -63,7 +63,7 @@
     "vite-plugin-dts": "^1.7.3",
     "vite-plugin-vue-setup-extend": "^0.4.0",
     "vitepress": "1.0.0-alpha.75",
-    "vue": "3.2.44",
+    "vue": "3.3.4",
     "vue-router": "^4.1.5",
     "vue-tsc": "^0.40.4",
     "vuedraggable": "^4.1.0"
