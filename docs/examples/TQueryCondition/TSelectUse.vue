@@ -14,12 +14,14 @@
 
 <script setup lang="ts">
 import { computed, reactive } from 'vue'
+import cascaderData from './cascaderData.json'
 let state = reactive({
   queryData: {
     userName: null, // 登录名
     workshopNum: null,
     workshopNum2: null,
     date: null,
+    deptCode: null,
   },
   table: {
     data: [
@@ -122,6 +124,22 @@ const opts = computed(() => {
         type: 'daterange',
       },
     },
+    deptCode: {
+      label: 'el-cascader使用',
+      placeholder: '级联选择',
+      span: 2,
+      comp: 'el-cascader',
+      isSelfCom: true,
+      bind: {
+        props: {
+          children: 'children',
+          label: 'deptName',
+          value: 'deptNum',
+        },
+        'show-all-levels': false,
+        options: cascaderData.data,
+      },
+    },
   }
 })
 const radioChange = (val) => {
@@ -130,11 +148,13 @@ const radioChange = (val) => {
 }
 // 最终参数获取
 const getQueryData = computed(() => {
-  const { userName, workshopNum, date, workshopNum2 } = state.queryData
+  const { userName, workshopNum, date, workshopNum2, deptCode } =
+    state.queryData
   return {
     userName,
     workshopNum,
     workshopNum2,
+    deptCode,
     beginDate: date && date[0] ? date[0] : null,
     endDate: date && date[1] ? date[1] : null,
   }

@@ -8,6 +8,7 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
+import cascaderData from './cascaderData.json'
 const hobbyList = ref([
   { label: '吉他', value: '0' },
   { label: '看书', value: '1' },
@@ -113,6 +114,21 @@ const formOpts: any = reactive({
       comp: 't-select',
       isSelfCom: true,
       bind: { multiple: true, optionSource: hobbyList, valueCustom: 'value' },
+    },
+    {
+      label: '部门',
+      value: 'deptCode1',
+      placeholder: 'el-cascader使用',
+      comp: 'el-cascader',
+      isSelfCom: true,
+      bind: {
+        props: {
+          children: 'children',
+          label: 'deptName',
+          value: 'deptNum',
+        },
+        options: cascaderData.data,
+      },
     },
     {
       label: '下拉选择表格-单选',
