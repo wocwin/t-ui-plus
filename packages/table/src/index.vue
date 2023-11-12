@@ -95,7 +95,8 @@
             :type="item.type"
             :label="item.label"
             :prop="item.prop"
-            :min-width="item['min-width'] || item.minWidth || item.width"
+            :min-width="item['min-width'] || item.minWidth"
+            :width="item.width"
             :sortable="item.sort || sortable"
             :align="item.align || 'center'"
             :fixed="item.fixed"
@@ -178,14 +179,12 @@
         v-if="table.operator"
         :fixed="table.operatorConfig && table.operatorConfig.fixed"
         :label="(table.operatorConfig && table.operatorConfig.label) || '操作'"
-        :min-width="
-          (table.operatorConfig &&
-            (table.operatorConfig.width || table.operatorConfig.minWidth)) ||
-          100
-        "
+        :min-width="table.operatorConfig && table.operatorConfig.minWidth"
+        :width="table.operatorConfig && table.operatorConfig.width"
         :align="
           (table.operatorConfig && table.operatorConfig.align) || 'center'
         "
+        v-bind="{ ...operatorConfig.bind, ...$attrs }"
         class-name="operator"
       >
         <template #default="scope">
