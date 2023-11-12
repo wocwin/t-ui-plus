@@ -17,13 +17,16 @@
     <template #empty>
       <div class="t-table-select__table" :style="{ width: `${tableWidth}px` }">
         <div class="table_query_condition" v-if="isShowQuery">
-          <t-query-condition
-            ref="tQueryConditionRef"
-            :boolEnter="false"
-            v-bind="$attrs"
-          >
+          <t-query-condition ref="tQueryConditionRef" :boolEnter="false" v-bind="$attrs">
             <template v-for="(index, name) in slots" v-slot:[name]="data">
               <slot :name="name" v-bind="data"></slot>
+            </template>
+            <template #querybar v-if="isShowBlurBtn">
+              <el-button
+                v-bind=" {type: 'danger',...$attrs,...btnBind}"
+                @click="blur"
+              >{{btnBind.btnTxt||'关闭下拉框'}}</el-button>
+              <slot name="querybar"></slot>
             </template>
           </t-query-condition>
         </div>
@@ -161,6 +164,20 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  // 是否显示隐藏下拉框按钮
+  isShowBlurBtn: {
+    type: Boolean,
+    default: false,
+  },
+  // 显示隐藏下拉框按钮属性
+  btnBind: {
+    type: Object,
+    default: () => {
+      return {
+        btnTxt: '关闭下拉框',
+      }
+    },
+  },
   // 单选框--是否开启点击整行选中
   rowClickRadio: {
     type: Boolean,
@@ -230,7 +247,7 @@ const slots = useSlots()
 const isDefaultSelectVal = ref(true) // 是否已经重新选择了
 const forbidden = ref(true) // 判断单选选中及取消选中
 const isRadio = ref(false)
-const isPagination = ref(false) // 分页点击不隐藏下拉框
+const isVisible = ref(false) // 是否显示隐藏下拉框
 const radioVal = ref('')
 const state: any = reactive({
   defaultSelectValue: props.defaultSelectVal, // 默认选中
@@ -247,7 +264,6 @@ const nowIndex = ref(-1)
 watch(
   () => props.table.data,
   (val) => {
-    // console.log(111, val)
     state.tableData = val
     nextTick(() => {
       state.tableData &&
@@ -256,7 +272,6 @@ watch(
           state.tabularMap[item[props.keywords.value]] =
             item[props.keywords.label]
         })
-      // findLabel()
     })
   },
   { deep: true }
@@ -304,15 +319,35 @@ onMounted(() => {
     defaultSelect(state.defaultSelectValue)
   }
 })
+// 表格显示隐藏回调
+const visibleChange = (visible) => {
+  // console.log('表格显示隐藏回调', visible)
+  isVisible.value = visible
+  if (visible) {
+    if (props.defaultSelectVal && isDefaultSelectVal.value) {
+      defaultSelect(props.defaultSelectVal)
+    }
+    initTableData()
+  } else {
+    findLabel()
+    filterMethodHandle('')
+  }
+}
 // el-select点击了空白区域
-const closeBox = () => {
+const closeBox = (val) => {
   // 获取查询条件组件的项
   if (tQueryConditionRef.value) {
+    selectRef.value.visible = false
     Object.values(tQueryConditionRef.value?.props?.opts).map((val: any) => {
       if (val.comp.includes('select') || val.comp.includes('date')) {
-        isPagination.value = true
+        selectRef.value.visible = true
       }
     })
+    if (isVisible.value && props.isShowQuery) {
+      selectRef.value.visible = true
+    } else {
+      selectRef.value.visible = false
+    }
   }
 }
 // 单选键盘事件
@@ -356,24 +391,12 @@ const selectKeyup = (e) => {
 const findLabel = () => {
   nextTick(() => {
     if (props.multiple) {
-      // if (selectRef.value) {
       selectRef.value.selected?.forEach((item) => {
         item.currentLabel = item.value
-        // this.tableData.map(val => {
-        //   if (val[this.keywords.label] === item.value) {
-        //     item.value = val[this.keywords.value]
-        //   }
-        // })
       })
-      // }
     } else {
-      // if (selectRef.value) {
       selectRef.value.selectedLabel =
         (state.defaultValue && state.defaultValue[props.keywords.label]) || ''
-      // }
-      if (!isPagination.value) {
-        blur()
-      }
     }
   })
 }
@@ -388,7 +411,6 @@ const handlesCurrentChange = (val) => {
   } else {
     clear()
   }
-  isPagination.value = true
   emits('page-change', val)
 }
 // 默认选中（且只能默认选中第一页的数据）
@@ -471,19 +493,7 @@ const filterMethodHandle = (val) => {
     })
   }
 }
-// 表格显示隐藏回调
-const visibleChange = (visible) => {
-  // console.log('表格显示隐藏回调', visible)
-  if (visible) {
-    if (props.defaultSelectVal && isDefaultSelectVal.value) {
-      defaultSelect(props.defaultSelectVal)
-    }
-    initTableData()
-  } else {
-    findLabel()
-    filterMethodHandle('')
-  }
-}
+
 // 获取表格数据
 const initTableData = () => {
   // 表格默认赋值
@@ -624,21 +634,12 @@ defineExpose({ focus, blur, clear })
 
 <style lang="scss">
 .t-select-table {
-  .el-table__cell {
-    // text-align: center;
-  }
-
   // 单选样式
   .radioStyle {
-    .el-table__cell {
-      // text-align: center;
-    }
-
     .el-radio {
       .el-radio__label {
         display: none;
       }
-
       &:focus:not(.is-focus):not(:active):not(.is-disabled) .el-radio__inner {
         box-shadow: none;
       }
@@ -683,7 +684,7 @@ defineExpose({ focus, blur, clear })
 
   .t-table-select__page {
     padding-top: 5px;
-
+    padding-right: 10px;
     .el-pagination {
       display: flex;
       justify-content: flex-end;

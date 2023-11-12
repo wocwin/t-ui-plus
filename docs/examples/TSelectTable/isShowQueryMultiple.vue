@@ -9,9 +9,11 @@
         @radioChange="radioChange"
         :tableWidth="1000"
         isShowQuery
+        multiple
+        isShowBlurBtn
         :opts="opts"
         @submit="conditionEnter"
-      ></t-select-table>
+      />
     </t-layout-page-item>
   </t-layout-page>
 </template>
