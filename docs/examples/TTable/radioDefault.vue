@@ -7,8 +7,8 @@
         :table="table"
         :columns="table.columns"
         @radioChange="radioChange"
-        :rowClickRadio="false"
         :isShowPagination="false"
+        :defaultRadioCol="1"
       />
     </t-layout-page-item>
   </t-layout-page>

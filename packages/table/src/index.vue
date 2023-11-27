@@ -42,46 +42,41 @@
         <!-- 复选框 -->
         <el-table-column
           v-if="table.firstColumn.type === 'selection'"
-          :type="table.firstColumn.type"
-          :width="table.firstColumn.width || 55"
-          :reserve-selection="table.firstColumn.isPaging || false"
-          :label="table.firstColumn.label"
-          :align="table.firstColumn.align || 'center'"
-          :fixed="table.firstColumn.fixed"
-          v-bind="$attrs"
-        ></el-table-column>
-        <!-- 单选框 -->
+          v-bind="{
+            type:'selection',
+            width:table.firstColumn.width || 55,
+            label:table.firstColumn.label,
+            fixed:table.firstColumn.fixed,
+            align:table.firstColumn.align || 'center',
+            'reserve-selection':table.firstColumn.isPaging || false,
+            selectable:table.firstColumn.selectable,
+            ...table.firstColumn.bind
+          }"
+        />
         <el-table-column
-          :type="table.firstColumn.type"
-          :width="table.firstColumn.width || 55"
-          :label="table.firstColumn.label"
-          :fixed="table.firstColumn.fixed"
-          :align="table.firstColumn.align || 'center'"
-          v-if="table.firstColumn.type === 'radio'"
+          v-else
+          v-bind="{
+            type:table.firstColumn.type,
+            width:table.firstColumn.width || 55,
+            label:table.firstColumn.label || table.firstColumn.type === 'radio'&&'单选'||table.firstColumn.type === 'index'&&'序号'||'',
+            fixed:table.firstColumn.fixed,
+            align:table.firstColumn.align || 'center',
+            ...table.firstColumn.bind
+          }"
         >
-          <template #default="scope">
+          <template #default="scope" v-if="table.firstColumn.type !== 'selection'">
             <el-radio
+              v-if="table.firstColumn.type === 'radio'"
               v-model="radioVal"
               :label="scope.$index + 1"
               @click.stop="radioChange($event, scope.row, scope.$index + 1)"
             ></el-radio>
-          </template>
-        </el-table-column>
-        <!-- 序列号 -->
-        <el-table-column
-          :type="table.firstColumn.type"
-          :width="table.firstColumn.width || 55"
-          :label="table.firstColumn.label || '序号'"
-          :fixed="table.firstColumn.fixed"
-          :align="table.firstColumn.align || 'center'"
-          v-if="table.firstColumn.type === 'index'"
-          v-bind="$attrs"
-        >
-          <template #default="scope">
-            <span
-              v-if="isPaginationCumulative && isShowPagination"
-            >{{ (table.currentPage - 1) * table.pageSize + scope.$index + 1 }}</span>
-            <span v-else>{{ scope.$index + 1 }}</span>
+            <template v-if="table.firstColumn.type === 'index'">
+              <span
+                v-if="isPaginationCumulative && isShowPagination"
+              >{{ (table.currentPage - 1) * table.pageSize + scope.$index + 1 }}</span>
+              <span v-else>{{ scope.$index + 1 }}</span>
+            </template>
           </template>
         </el-table-column>
       </template>
@@ -301,6 +296,8 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  // 设置默认选中项（单选）defaultRadioCol值必须大于0！
+  defaultRadioCol: Number,
   // 序列号显示是否分页累加
   isPaginationCumulative: {
     type: Boolean,
@@ -375,8 +372,17 @@ watch(
 )
 onMounted(() => {
   // console.log('onMounted', props.table.firstColumn)
+  // 设置默认选中项（单选）
+  if (props.defaultRadioCol) {
+    defaultRadioSelect(props.defaultRadioCol)
+  }
   initSort()
 })
+// 默认选中（单选项）---index必须是大于等于1（且只能默认选中第一页的数据）
+const defaultRadioSelect = (index) => {
+  radioVal.value = index
+  emits('radioChange', state.tableData[index - 1], radioVal.value)
+}
 // 按钮权限
 // const btnPremissions = computed(() => {
 //   // return store.getters.permissions
@@ -547,14 +553,18 @@ const radioClick = (row, index) => {
 }
 // 点击单选框单元格触发事件
 const radioChange = (e, row, index) => {
+  if (props.rowClickRadio) {
+    return
+  }
   e.preventDefault()
   radioClick(row, index)
 }
 // 点击某行事件
 const rowClick = (row) => {
-  if (props.rowClickRadio) {
-    radioClick(row, state.tableData.indexOf(row) + 1)
+  if (!props.rowClickRadio) {
+    return
   }
+  radioClick(row, state.tableData.indexOf(row) + 1)
 }
 // 复制内容
 const copyDomText = (val) => {

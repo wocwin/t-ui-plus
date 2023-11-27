@@ -2,16 +2,13 @@
   <t-layout-page>
     <t-layout-page-item>
       <t-table
-        title="集成分页器--序列号显示-累加"
+        title="翻页选中功能"
         :table="table"
         :columns="table.columns"
+        @selection-change="selectionChange"
+        :row-key="getRowKey"
         @page-change="pageChange"
-        isPaginationCumulative
-      >
-        <template #pagination>
-          <div>测试插槽</div>
-        </template>
-      </t-table>
+      />
     </t-layout-page-item>
   </t-layout-page>
 </template>
@@ -22,13 +19,10 @@ import { ElMessageBox } from 'element-plus'
 import data from './data.json'
 import data1 from './data2.json'
 const table = ref({
-  firstColumn: { type: 'index', width: 80, fixed: true },
+  firstColumn: { type: 'selection', isPaging: true },
   total: 0,
   currentPage: 1,
   pageSize: 10,
-  layout: 'total,sizes, slot, prev, pager, next, jumper',
-  prevText: '上一页',
-  nextText: '下一页',
   // 接口返回数据
   data: [],
   // 表头数据
@@ -81,6 +75,14 @@ const getData = async (pageNum) => {
     table.value.data = res.data.records
     table.value.total = res.data.total
   }
+}
+// 翻页选中的唯一值
+const getRowKey = (row) => {
+  return row.id
+}
+const selectionChange = (val) => {
+  const chosenIds = val.map((item) => item.id)
+  console.log('翻页选中的所有值', chosenIds)
 }
 const handleStatusChange = (row) => {
   let text = row.enableStatus === 1 ? '启用' : '废止'

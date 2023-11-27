@@ -20,10 +20,23 @@ TTable/border
 TTable/selection
 :::
 
+
+### 复选框表格--翻页选中功能
+
+:::demo 在`table`对象中添加`firstColumn:{ type: 'selection', isPaging: true , fixed: true }`
+TTable/pageCheck
+:::
+
 ### 单选框表格
 
 :::demo 在`table`对象中添加`firstColumn:{ type: 'radio', fixed: true }`,可以再次点击取消选中；添加`@radioChange`事件传当前选中行是数据；默认点击整行选中 可以设置`rowClickRadio：false`,只有点击单选框才选中
 TTable/radio
+:::
+
+### 单选框--默认选中项及开启点击整行选中
+
+:::demo 在`table`对象中添加`firstColumn:{ type: 'radio', fixed: true }`,可以再次点击取消选中；添加`@radioChange`事件传当前选中行是数据；默认点击整行选中,defaultRadioCol: 表默认选中项
+TTable/radioDefault
 :::
 
 ### 序列号表格
@@ -188,7 +201,7 @@ TTable/eventHandle
 | --------minWidth        | 对应列的最小宽度(会把剩余宽度按比例分配给设置了 min-width 的列)                        | string / number  | -         |
 | --------align           | 对齐方式 （left / center / right）                                                     | string           | 'center'  |
 | --------bind            | el-table-column Attributes                                                             | Object           | -         |
-| ---firstColumn          | 表格首列(序号 index,复选框 selection）排列                                             | object           | -         |
+| ---firstColumn          | 表格首列(序号 index,复选框 selection,单选 radio）排列                                  | object           | -         |
 | ---total                | 数据总条数                                                                             | Number           | -         |
 | ---pageSize             | 页数量                                                                                 | Number           | -         |
 | ---currentPage          | 是否需要显示切换页条数                                                                 | Number           | -         |
@@ -229,6 +242,7 @@ TTable/eventHandle
 | isPaginationCumulative  | 序列号显示是否分页累加                                                                 | Boolean          | false     |
 | isTableColumnHidden     | 是否开启合计行隐藏复选框/单选框                                                        | Boolean          | false     |
 | isCopy                  | 是否允许双击单元格复制                                                                 | Boolean          | false     |
+| defaultRadioCol         | 设置默认选中项（单选）defaultRadioCol 值必须大于 0！                                   | Number           | -         |
 | rowClickRadio           | 是否开启点击整行选中单选框                                                             | Boolean          | true      |
 | columnSetting           | 是否显示设置（隐藏/显示列）                                                            | Boolean          | false     |
 | name                    | 与 columnSetting 配合使用标记隐藏/显示列唯一性                                         | String           | title     |
