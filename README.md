@@ -104,9 +104,11 @@ npm run docs:dev
 
 ## 微信交流群
 
+>目前微信群已超过 200 人，需要加微信好友，拉大家进群
+
 |                微信二维码                 |
 | :---------------------------------------: |
-| <img src="./public/weixin.jpg" width=170> |
+| <img src="./public/wocwin.jpg" width=170> |
 
 ## Git 提交规范
 
