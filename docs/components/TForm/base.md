@@ -126,6 +126,8 @@ TForm/isHideItem
 | ---labelWidth       | label 宽度                                                                                              | String           | 120px    |
 | ---rules            | 规则（可依据 elementUI el-form 配置————对应 formData 的值）                                             | Object/Array     | -        |
 | ---operatorList     | 操作按钮 list                                                                                           | Array            | -        |
+| -------bind         | 继承el-button所有Attributes(默认值{ type:'primary',size:'small',})                                      | Object           | -        |
+| -------fun          | 事件名                                                                                                  | function         | -        |
 
 ### 3. events
 
