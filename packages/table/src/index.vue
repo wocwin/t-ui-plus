@@ -184,7 +184,7 @@
         :align="
           (table.operatorConfig && table.operatorConfig.align) || 'center'
         "
-        v-bind="{ ...operatorConfig.bind, ...$attrs }"
+        v-bind="{ ...table.operatorConfig.bind, ...$attrs }"
         class-name="operator"
       >
         <template #default="scope">
