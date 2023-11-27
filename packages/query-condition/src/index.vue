@@ -132,7 +132,7 @@ const props = defineProps({
   },
   labelWidth: {
     type: String,
-    default: '110px',
+    default: '120px',
   },
   // 查询按钮配置
   btnCheckBind: {

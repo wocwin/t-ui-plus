@@ -64,15 +64,18 @@ TQueryCondition/querybar
 
 ### 2、配置参数（Attributes）
 
-| 参数        | 说明                                      | 类型    | 默认值  |
-| :---------- | :---------------------------------------- | :------ | :------ |
-| opts        | 接收筛选器组件配置                        | object  | 无      |
-| loading     | 查询按钮 loading 状态，请求数据时需要体现 | Boolean | false   |
-| reset       | 是否显示“重置”按钮                        | Boolean | true    |
-| boolEnter   | 是否敲回车查询                            | Boolean | true    |
-| isShowOpen  | 是否显示收起和展开                        | Boolean | true    |
-| isExpansion | 是否默认展开                              | Boolean | false   |
-| labelWidth  | labelWidth 宽度                           | String  | '110px' |
+| 参数         | 说明                                      | 类型    | 默认值                           |
+| :----------- | :---------------------------------------- | :------ | :------------------------------- |
+| opts         | 接收筛选器组件配置                        | object  | 无                               |
+| loading      | 查询按钮 loading 状态，请求数据时需要体现 | Boolean | false                            |
+| reset        | 是否显示“重置”按钮                        | Boolean | true                             |
+| boolEnter    | 是否敲回车查询                            | Boolean | true                             |
+| isShowOpen   | 是否显示收起和展开                        | Boolean | true                             |
+| isExpansion  | 是否默认展开                              | Boolean | false                            |
+| labelWidth   | labelWidth 宽度                           | String  | '120px'                          |
+| btnCheckBind | 查询按钮配置（继承`el-button`所有属性）   | object  | `{type: primary, size: default}` |
+| btnResetBind | 重置按钮配置（继承`el-button`所有属性）   | object  | `{ size: default}`               |
+
 
 ### 3、opts Attributes
 
