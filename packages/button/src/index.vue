@@ -40,11 +40,20 @@ const handleClick = () => {
 .t-button-tip {
   padding: 0;
   height: auto;
-  color: var(--color);
-  border: none;
-  background: none;
 }
-.t-button-tip:hover {
-  color: var(--color);
+.t-button-tip:hover,
+.t-button-tip:focus {
+  animation: jump 0.3s;
+}
+@keyframes jump {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 </style>
