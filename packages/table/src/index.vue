@@ -638,13 +638,21 @@ const checkIsShow = (scope, item) => {
   let totalTxt1 = Object.values(scope.row).every((key) => {
     return key !== '全部合计'
   })
+  let haveAuth = false
+  // 按钮权限  支持传入布尔或者函数  例: haveAuth:(row)=>{row.status > 0} || isAdmin
+  if (typeof item.haveAuth === 'function') {
+    haveAuth = item.haveAuth(scope.row)
+  } else {
+    haveAuth = item.haveAuth ?? true
+  }
   return (
     isShow &&
     isNoshow &&
     !scope.row[item.field] &&
     (item.isField ? scope.row[item.isField] : true) &&
     totalTxt &&
-    totalTxt1
+    totalTxt1 && 
+    haveAuth
   )
 }
 // 单个编辑事件
