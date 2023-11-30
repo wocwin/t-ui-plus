@@ -24,4 +24,5 @@ TButton/tip
 | time             | 防抖的时间                                       | number | 1000        |
 | tip             | 提示文字，常用于type="text" 或拥有text，link 属性的button       | string | -        |
 | placement         | Tooltip 组件出现的位置                           | 'top' / 'top-start' / 'top-end' / 'bottom' / 'bottom-start' / 'bottom-end' / 'left' / 'left-start' / 'left-end' / 'right' / 'right-start' / 'right-end' | top        |
+| tipProps         | Tooltip 组件的配置参数，详情可看 element-plus官网                | object | -        |
 

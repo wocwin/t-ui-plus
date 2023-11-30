@@ -9,7 +9,16 @@
       <t-button text type="success" tip="success" icon="Check" />
       <t-button text type="info" tip="info" icon="Message" />
       <t-button text type="warning" tip="warning" icon="Star" />
-      <t-button text type="danger" tip="danger" icon="Delete" />
+      <t-button
+        text
+        type="danger"
+        tip="danger"
+        icon="Delete"
+        :tipProps="{
+          effect: 'light',
+          placement: 'bottom',
+        }"
+      />
     </t-layout-page-item>
   </t-layout-page>
 </template>

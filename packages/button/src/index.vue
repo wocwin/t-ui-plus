@@ -1,5 +1,10 @@
 <template>
-  <el-tooltip v-if="tip" :content="tip" :placement="placement">
+  <el-tooltip
+    v-if="tip"
+    :content="tip"
+    :placement="placement"
+    v-bind="tipProps"
+  >
     <el-button v-bind="$attrs" class="t-button-tip" @click="handleClick">
       <slot />
     </el-button>
@@ -23,6 +28,10 @@ const props = defineProps({
   placement: {
     type: String,
     default: 'top',
+  },
+  tipProps: {
+    type: Object,
+    default: () => ({}),
   },
 })
 // 抛出事件
