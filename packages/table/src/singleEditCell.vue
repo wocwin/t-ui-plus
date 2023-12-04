@@ -1,8 +1,16 @@
 <template>
-  <div class="single_edit_cell">
+  <component
+    :is="isShowRules ? 'el-form-item' : 'div'"
+    :prop="scope.column.property"
+    :rules="configEdit.rules"
+    :class="[configEdit.className, 'single_edit_cell']"
+    v-bind="$attrs"
+  >
     <!-- 编辑组件自定义插槽 -->
     <template v-if="configEdit.editSlotName">
-      <slot />
+      <div :class="prop" @keyup="keyUpHandle">
+        <slot :name="configEdit.editSlotName" :scope="scope" />
+      </div>
     </template>
     <component
       v-if="!configEdit.editSlotName"
@@ -48,7 +56,7 @@
         >
       </template>
     </component>
-  </div>
+  </component>
 </template>
 
 <script setup lang="ts" name="SingleEditCell">
@@ -79,6 +87,11 @@ const props = defineProps({
   prop: {
     type: String,
     default: '',
+  },
+  // 是否走表单验证（表头合并不校验）
+  isShowRules: {
+    type: Boolean,
+    default: true,
   },
   // modelValue: {
   //   type: [String, Number, Array, Boolean],
