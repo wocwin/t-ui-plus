@@ -697,13 +697,13 @@ const save = () => {
     })
   })
   // 所有表单都校验成功
-  if (successLength === rulesList.length) {
-    if (isEditRules.value) {
-      emits('save', state.tableData)
-      return state.tableData
-    }
-  } else {
-    setTimeout(() => {
+  setTimeout(() => {
+    if (successLength === rulesList.length) {
+      if (isEditRules.value) {
+        emits('save', state.tableData)
+        return state.tableData
+      }
+    } else {
       // 校验未通过的prop
       rulesError.map((item) => {
         newArr.map((val) => {
@@ -722,8 +722,8 @@ const save = () => {
       })
       console.log('校验未通过的prop--label', propLabelError)
       emits('validateError', propLabelError)
-    }, 300)
-  }
+    }
+  }, 300)
 }
 // 是否显示表格操作按钮
 const checkIsShow = (scope, item) => {
