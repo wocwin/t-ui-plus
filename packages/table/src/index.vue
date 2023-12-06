@@ -9,7 +9,10 @@
         <!-- 表格外操作 -->
         <slot name="toolbar"></slot>
         <!--列设置按钮-->
-        <div class="header_right_wrap" :style="{ marginLeft: isShow('toolbar') ? '12px' : 0 }">
+        <div
+          class="header_right_wrap"
+          :style="{ marginLeft: isShow('toolbar') ? '12px' : 0 }"
+        >
           <slot name="btn" />
           <column-set
             v-if="columnSetting"
@@ -43,28 +46,35 @@
         <el-table-column
           v-if="table.firstColumn.type === 'selection'"
           v-bind="{
-            type:'selection',
-            width:table.firstColumn.width || 55,
-            label:table.firstColumn.label,
-            fixed:table.firstColumn.fixed,
-            align:table.firstColumn.align || 'center',
-            'reserve-selection':table.firstColumn.isPaging || false,
-            selectable:table.firstColumn.selectable,
-            ...table.firstColumn.bind
+            type: 'selection',
+            width: table.firstColumn.width || 55,
+            label: table.firstColumn.label,
+            fixed: table.firstColumn.fixed,
+            align: table.firstColumn.align || 'center',
+            'reserve-selection': table.firstColumn.isPaging || false,
+            selectable: table.firstColumn.selectable,
+            ...table.firstColumn.bind,
           }"
         />
         <el-table-column
           v-else
           v-bind="{
-            type:table.firstColumn.type,
-            width:table.firstColumn.width || 55,
-            label:table.firstColumn.label || table.firstColumn.type === 'radio'&&'单选'||table.firstColumn.type === 'index'&&'序号'||'',
-            fixed:table.firstColumn.fixed,
-            align:table.firstColumn.align || 'center',
-            ...table.firstColumn.bind
+            type: table.firstColumn.type,
+            width: table.firstColumn.width || 55,
+            label:
+              table.firstColumn.label ||
+              (table.firstColumn.type === 'radio' && '单选') ||
+              (table.firstColumn.type === 'index' && '序号') ||
+              '',
+            fixed: table.firstColumn.fixed,
+            align: table.firstColumn.align || 'center',
+            ...table.firstColumn.bind,
           }"
         >
-          <template #default="scope" v-if="table.firstColumn.type !== 'selection'">
+          <template
+            #default="scope"
+            v-if="table.firstColumn.type !== 'selection'"
+          >
             <el-radio
               v-if="table.firstColumn.type === 'radio'"
               v-model="radioVal"
@@ -72,9 +82,9 @@
               @click.stop="radioChange($event, scope.row, scope.$index + 1)"
             ></el-radio>
             <template v-if="table.firstColumn.type === 'index'">
-              <span
-                v-if="isPaginationCumulative && isShowPagination"
-              >{{ (table.currentPage - 1) * table.pageSize + scope.$index + 1 }}</span>
+              <span v-if="isPaginationCumulative && isShowPagination">{{
+                (table.currentPage - 1) * table.pageSize + scope.$index + 1
+              }}</span>
               <span v-else>{{ scope.$index + 1 }}</span>
             </template>
           </template>
@@ -100,8 +110,18 @@
             "
             v-bind="{ ...item.bind, ...$attrs }"
           >
-            <template #header v-if="item.renderHeader">
-              <render-header :column="item" :render="item.renderHeader" />
+            <template #header v-if="item.headerRequired || item.renderHeader">
+              <render-header
+                v-if="item.renderHeader"
+                :column="item"
+                :render="item.renderHeader"
+              />
+              <div style="display: inline" v-if="item.headerRequired">
+                <span style="color: #f56c6c; fontsize: 16px; marginright: 3px"
+                  >*</span
+                >
+                <span>{{ item.label }}</span>
+              </div>
             </template>
             <template #default="scope">
               <!-- render渲染 -->
@@ -119,33 +139,42 @@
               </template>
               <!-- 单个单元格编辑 -->
               <template v-if="item.canEdit">
-                <single-edit-cell
-                  :canEdit="item.canEdit"
-                  :configEdit="item.configEdit"
-                  v-model="scope.row[scope.column.property]"
-                  :prop="item.prop"
-                  :scope="scope"
-                  @handleEvent="handleEvent($event, scope.$index)"
-                  @keyup-handle="handleKeyup"
-                  v-bind="$attrs"
-                  ref="editCell"
+                <el-form
+                  :model="state.tableData[scope.$index]"
+                  :rules="isEditRules ? table.rules : {}"
+                  class="t_edit_cell_form"
+                  :ref="(el:any) => handleRef(el, scope,item)"
+                  @submit.prevent
                 >
-                  <slot
-                    v-if="item.configEdit && item.configEdit.editSlotName"
-                    :name="item.configEdit.editSlotName"
+                  <single-edit-cell
+                    :canEdit="item.canEdit"
+                    :configEdit="item.configEdit"
+                    v-model="scope.row[scope.column.property]"
+                    :prop="item.prop"
                     :scope="scope"
-                  />
-                </single-edit-cell>
+                    @handleEvent="handleEvent($event, scope.$index)"
+                    @keyup-handle="handleKeyup"
+                    v-bind="$attrs"
+                    ref="editCell"
+                  >
+                    <template
+                      v-for="(index, name) in slots"
+                      v-slot:[name]="data"
+                    >
+                      <slot :name="name" v-bind="data"></slot>
+                    </template>
+                  </single-edit-cell>
+                </el-form>
               </template>
               <!-- 字典过滤 -->
               <template v-if="item.filters && item.filters.list">
                 {{
-                constantEscape(
-                scope.row[item.prop],
-                table.listTypeInfo[item.filters.list],
-                item.filters.key || 'value',
-                item.filters.label || 'label'
-                )
+                  constantEscape(
+                    scope.row[item.prop],
+                    table.listTypeInfo[item.filters.list],
+                    item.filters.key || 'value',
+                    item.filters.label || 'label'
+                  )
                 }}
               </template>
               <div
@@ -183,19 +212,22 @@
         class-name="operator"
       >
         <template #default="scope">
-          <div class="operator_btn" :style="table.operatorConfig && table.operatorConfig.style">
+          <div
+            class="operator_btn"
+            :style="table.operatorConfig && table.operatorConfig.style"
+          >
             <template v-for="(item, index) in table.operator" :key="index">
               <el-button
                 @click="
                   item.fun && item.fun(scope.row, scope.$index, state.tableData)
                 "
                 v-bind="{
-                  type:'primary',
-                  link:true,
-                  text:true,
-                  size:'small',
+                  type: 'primary',
+                  link: true,
+                  text: true,
+                  size: 'small',
                   ...item.bind,
-                  ...$attrs
+                  ...$attrs,
                 }"
                 v-if="checkIsShow(scope, item)"
               >
@@ -249,7 +281,6 @@
 import { computed, ref, watch, useSlots, reactive, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import Sortable from 'sortablejs'
-// import store from '@/store'
 import SingleEditCell from './singleEditCell.vue'
 import ColumnSet from './ColumnSet.vue'
 import RenderCol from './renderCol.vue'
@@ -271,6 +302,13 @@ const props = defineProps({
       return []
     },
     // required: true
+  },
+  // 按钮权限数据集
+  btnPermissions: {
+    type: Array,
+    default: () => {
+      return []
+    },
   },
   // 表格标题
   title: {
@@ -352,6 +390,16 @@ const forbidden = ref(true)
 const TTable: any = ref<HTMLElement | null>(null)
 // 获取t-table ref
 const TTableBox: any = ref<HTMLElement | null>(null)
+// 获取form ref
+const formRef: any = ref({})
+// 动态ref
+const handleRef = (el, scope, item) => {
+  if (el) {
+    formRef.value[
+      `formRef-${scope.$index}-${item.prop || scope.column.property}`
+    ] = el
+  }
+}
 // 抛出事件
 const emits = defineEmits([
   'save',
@@ -359,6 +407,7 @@ const emits = defineEmits([
   'handleEvent',
   'radioChange',
   'rowSort',
+  'validateError',
 ])
 // 获取所有插槽
 const slots = useSlots()
@@ -383,11 +432,6 @@ const defaultRadioSelect = (index) => {
   radioVal.value = index
   emits('radioChange', state.tableData[index - 1], radioVal.value)
 }
-// 按钮权限
-// const btnPremissions = computed(() => {
-//   // return store.getters.permissions
-//   // return store.getters.permissions
-// })
 // 行拖拽
 const initSort = () => {
   if (!props.isRowSort) return
@@ -421,6 +465,13 @@ const constantEscape = (value, list, key, label) => {
   })
   return res && res[label]
 }
+// 单元格编辑是否存在校验
+const isEditRules = computed(() => {
+  return (
+    (props.table.rules && Object.keys(props.table.rules).length > 0) ||
+    props.columns.some((item: any) => item?.configEdit?.rules)
+  )
+})
 // 所有列（表头数据）
 const renderColumns = computed(() => {
   return state.columnSet.length > 0
@@ -598,8 +649,81 @@ const isShow = (name) => {
 }
 // 整行编辑返回数据
 const save = () => {
-  emits('save', state.tableData)
-  return state.tableData
+  // emits('save', state.tableData)
+  // return state.tableData
+  if (!isEditRules.value) {
+    emits('save', state.tableData)
+    return state.tableData
+  }
+  // 表单规则校验
+  let successLength = 0
+  let rulesList: any = []
+  let rulesError: any = []
+  let propError: any = []
+  let propLabelError: any = []
+  // 获取所有的form ref
+  const refList = Object.keys(formRef.value).filter((item) =>
+    item.includes('formRef')
+  )
+  // 获取单独设置规则项
+  const arr = renderColumns.value
+    .filter((val) => {
+      if (val.configEdit?.rules) {
+        return val
+      }
+    })
+    .map((item) => item.prop)
+  // 获取整体设置规则
+  const arr1 = props.table.rules && Object.keys(props.table.rules)
+  // 获取最终设置了哪些规则（其值是设置的--prop）
+  const newArr = [...arr, ...arr1]
+  // 最终需要校验的ref
+  newArr.map((val) => {
+    refList.map((item: any) => {
+      if (item.includes(val)) {
+        rulesList.push(item)
+      }
+    })
+  })
+  console.log('最终需要校验的数据', rulesList, formRef.value)
+  // 表单都校验
+  rulesList.map((val) => {
+    formRef.value[val].validate((valid) => {
+      if (valid) {
+        successLength = successLength + 1
+      } else {
+        rulesError.push(val)
+      }
+    })
+  })
+  // 所有表单都校验成功
+  setTimeout(() => {
+    if (successLength === rulesList.length) {
+      if (isEditRules.value) {
+        emits('save', state.tableData)
+        return state.tableData
+      }
+    } else {
+      // 校验未通过的prop
+      rulesError.map((item) => {
+        newArr.map((val) => {
+          if (item.includes(val)) {
+            propError.push(val)
+          }
+        })
+      })
+      // 去重获取校验未通过的prop--label
+      Array.from(new Set(propError)).map((item) => {
+        renderColumns.value.map((val) => {
+          if (item === val.prop) {
+            propLabelError.push(val.label)
+          }
+        })
+      })
+      console.log('校验未通过的prop--label', propLabelError)
+      emits('validateError', propLabelError)
+    }
+  }, 300)
 }
 // 是否显示表格操作按钮
 const checkIsShow = (scope, item) => {
@@ -629,7 +753,9 @@ const checkIsShow = (scope, item) => {
   // 单独判断
   let isShow = !item.show || item.show.val.includes(scope.row[item.show.key])
   // 按钮权限
-  // let isPermission = item.hasPermi ? btnPremissions.value.includes(item.hasPermi) : true
+  let isPermission = item.hasPermi
+    ? props.btnPermissions?.includes(item.hasPermi)
+    : true
   // table页面合计
   let totalTxt = Object.values(scope.row).every((key) => {
     return key !== '当页合计'
@@ -644,7 +770,8 @@ const checkIsShow = (scope, item) => {
     !scope.row[item.field] &&
     (item.isField ? scope.row[item.isField] : true) &&
     totalTxt &&
-    totalTxt1
+    totalTxt1 &&
+    isPermission
   )
 }
 // 单个编辑事件
@@ -674,6 +801,24 @@ const toggleAllSelection = () => {
 const clearSelection = () => {
   return TTable.value.clearSelection()
 }
+// 清空校验规则
+const clearValidate = () => {
+  const refList = Object.keys(formRef.value).filter((item) =>
+    item.includes('formRef')
+  )
+  refList.map((val) => {
+    formRef.value[val].clearValidate()
+  })
+}
+// 表单进行重置并移除校验结果
+const resetFields = () => {
+  const refList = Object.keys(formRef.value).filter((item) =>
+    item.includes('formRef')
+  )
+  refList.map((val) => {
+    formRef.value[val].resetFields()
+  })
+}
 // 暴露方法出去
 defineExpose({
   clearSelection,
@@ -682,6 +827,9 @@ defineExpose({
   clearSort,
   state,
   radioVal,
+  clearValidate,
+  resetFields,
+  save,
 })
 </script>
 <style lang="scss" scoped>
@@ -718,6 +866,9 @@ defineExpose({
         word-break: break-all;
         padding-left: 10px;
         padding-right: 10px;
+      }
+      .single_edit_cell {
+        overflow: visible;
       }
     }
   }

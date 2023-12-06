@@ -629,7 +629,7 @@ const focus = () => {
   selectRef.value.focus()
 }
 // 暴露方法出去
-defineExpose({ focus, blur, clear })
+defineExpose({ focus, blur, clear, tQueryConditionRef })
 </script>
 
 <style lang="scss">

@@ -5,6 +5,7 @@
         title="操作列"
         ref="selectionTable"
         :table="state.table"
+        :btnPermissions="['operator-view-detail', 'operator-edit']"
         :columns="state.table.columns"
         @selection-change="selectionChange"
         :isShowPagination="false"
@@ -15,9 +16,16 @@
             type="primary"
             :disabled="state.ids.length < 1"
             @click="cancelSelect"
-          >取消选中</el-button>
+            >取消选中</el-button
+          >
           <el-button size="default" type="primary" @click="add">新增</el-button>
-          <el-button size="default" type="danger" :disabled="state.ids.length < 1" @click="del">删除</el-button>
+          <el-button
+            size="default"
+            type="danger"
+            :disabled="state.ids.length < 1"
+            @click="del"
+            >删除</el-button
+          >
         </template>
       </t-table>
     </t-layout-page-item>
@@ -77,18 +85,18 @@ let state = reactive({
     ],
     // 表头数据
     columns: [
-      { prop: 'name', label: '姓名', minWidth: '100' },
-      { prop: 'date', label: '日期', minWidth: '180' },
+      { prop: 'name', label: '姓名', width: '120' },
+      { prop: 'date', label: '日期', width: '180' },
       {
         prop: 'status',
         label: '状态',
-        minWidth: '220',
+        width: '100',
       },
-      { prop: 'date1', label: '日期22', minWidth: '180' },
+      { prop: 'date1', label: '日期22', width: '180' },
       {
         prop: 'address',
         label: '地址',
-        minWidth: '220',
+        width: '220',
       },
     ],
     // 表格内操作列
@@ -96,11 +104,12 @@ let state = reactive({
       {
         text: '查看',
         fun: viewDetail,
-        // show: { key: 'status', val: ['1'] },
+        hasPermi: 'operator-view-detail',
         noshow: [{ key: 'status', val: ['1'] }],
       },
       {
         text: '编辑',
+        hasPermi: 'operator-edit',
         fun: edit,
       },
       {
@@ -133,6 +142,14 @@ const cancelSelect = () => {
 // 新增按钮
 const add = () => {
   console.log('add按钮')
+  state.table.data.push({
+    id: '3',
+    date: '2019-09-26',
+    date1: '2019-09-28',
+    name: 'push新增',
+    status: '1',
+    address: '广东省广州市天广东省广州市天河区2广东省广州市天河区2河区2',
+  })
 }
 // 删除按钮
 const del = () => {

@@ -72,6 +72,12 @@ TSelectTable/isShowQueryMultiple
 TSelectTable/isShowQueryBtnBind
 :::
 
+### 查询条件--样式布局配置
+
+:::demo `tableWidth` table宽度默认550px，`labelWidth`查询条件label的宽度，默认120px,**重点：设置`opts`下的`span`**
+TSelectTable/isShowQuerySpan
+:::
+
 ### TSelectTable 参数配置
 
 ---

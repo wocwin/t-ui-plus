@@ -22,7 +22,7 @@
         :render-header="val.renderHeader || val.headerRequired"
         :align="val.align || 'center'"
         :fixed="val.fixed"
-        :show-overflow-tooltip="val.noShowTip===false ? val.noShowTip : true"
+        :show-overflow-tooltip="val.noShowTip === false ? val.noShowTip : true"
         v-bind="{ ...val.bind, ...$attrs }"
       >
         <template #default="scope">
@@ -42,6 +42,7 @@
           <!-- 单个单元格编辑 -->
           <template v-if="val.canEdit">
             <single-edit-cell
+              :isShowRules="false"
               :canEdit="val.canEdit"
               :configEdit="val.configEdit"
               v-model="scope.row[scope.column.property]"

@@ -3,12 +3,12 @@
     id="t_query_condition"
     v-bind="$attrs"
     :label-width="labelWidth"
-    :form="state.form"
+    :form="queryState.form"
     size="default"
     class="t-query-condition"
     :style="{
       'grid-template-areas': gridAreas,
-      'grid-template-columns': `repeat(${colLength}, minmax(220px, ${
+      'grid-template-columns': `repeat(${colLength}, minmax(0px, ${
         100 / colLength
       }%))`,
     }"
@@ -25,20 +25,20 @@
     >
       <!-- 自定义label -->
       <template #label v-if="opt.labelRender">
-        <render-comp :form="state.form" :render="opt.labelRender" />
+        <render-comp :form="queryState.form" :render="opt.labelRender" />
       </template>
       <!-- 自定义输入框插槽 -->
       <template v-if="opt.slotName">
-        <slot :name="opt.slotName" :param="state.form"></slot>
+        <slot :name="opt.slotName" :param="queryState.form"></slot>
       </template>
       <template v-if="opt.isSelfCom">
         <component
           :is="opt.comp"
-          v-model="state.form[opt.dataIndex]"
+          v-model="queryState.form[opt.dataIndex]"
           :placeholder="opt.placeholder || getPlaceholder(opt)"
           v-bind="
           typeof opt.bind == 'function'
-            ? opt.bind(state.form)
+            ? opt.bind(queryState.form)
             : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
         "
           :style="{ width: opt.width || '100%' }"
@@ -50,12 +50,12 @@
         :is="opt.comp"
         v-bind="
           typeof opt.bind == 'function'
-            ? opt.bind(state.form)
+            ? opt.bind(queryState.form)
             : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
         "
         :placeholder="opt.placeholder || getPlaceholder(opt)"
-        @change="handleEvent(opt.event, state.form[opt.dataIndex])"
-        v-model="state.form[opt.dataIndex]"
+        @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
+        v-model="queryState.form[opt.dataIndex]"
         v-on="cEvent(opt)"
       />
       <component
@@ -63,12 +63,12 @@
         :is="opt.comp"
         v-bind="
           typeof opt.bind == 'function'
-            ? opt.bind(state.form)
+            ? opt.bind(queryState.form)
             : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
         "
         :placeholder="opt.placeholder || getPlaceholder(opt)"
-        @change="handleEvent(opt.event, state.form[opt.dataIndex])"
-        v-model="state.form[opt.dataIndex]"
+        @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
+        v-model="queryState.form[opt.dataIndex]"
         v-on="cEvent(opt)"
       />
       <component
@@ -81,13 +81,13 @@
         :is="opt.comp"
         v-bind="
           typeof opt.bind == 'function'
-            ? opt.bind(state.form)
+            ? opt.bind(queryState.form)
             : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
         "
         :placeholder="opt.placeholder || getPlaceholder(opt)"
-        @change="handleEvent(opt.event, state.form[opt.dataIndex])"
+        @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
         v-on="cEvent(opt)"
-        v-model="state.form[opt.dataIndex]"
+        v-model="queryState.form[opt.dataIndex]"
       >
         <component
           :is="compChildName(opt)"
@@ -166,7 +166,7 @@ const props = defineProps({
   },
 })
 // 初始化表单数据
-let state = reactive({
+let queryState = reactive({
   form: Object.keys(props.opts).reduce((acc: any, field: any) => {
     acc[field] = props.opts[field].defaultVal || null
     return acc
@@ -266,9 +266,9 @@ const cEvent = computed(() => {
     Object.keys(event).forEach((v) => {
       changeEvent[v] = (e) => {
         if (e) {
-          event[v] && event[v](e, state.form)
+          event[v] && event[v](e, queryState.form)
         } else {
-          event[v] && event[v](state.form)
+          event[v] && event[v](queryState.form)
         }
       }
     })
@@ -278,8 +278,8 @@ const cEvent = computed(() => {
 // 初始化表单数据
 const initForm = (opts: any, keepVal = false) => {
   return Object.keys(opts).reduce((acc, field) => {
-    if (keepVal && state.form) {
-      acc[field] = state.form[field]
+    if (keepVal && queryState.form) {
+      acc[field] = queryState.form[field]
     } else if (opts[field].defaultVal) {
       acc[field] = opts[field].defaultVal
     } else {
@@ -302,17 +302,17 @@ const getColLength = () => {
 const emits = defineEmits(['handleEvent', 'submit', 'reset'])
 // 重置
 const resetHandle = () => {
-  state.form = initForm(props.opts)
-  emits('reset', state.form)
+  queryState.form = initForm(props.opts)
+  emits('reset', queryState.form)
   checkHandle('reset')
 }
 // 查询条件change事件
 const handleEvent = (type, val) => {
-  emits('handleEvent', type, val, state.form)
+  emits('handleEvent', type, val, queryState.form)
 }
 // 查询
 const checkHandle = (flagText: any = false) => {
-  emits('submit', state.form, flagText)
+  emits('submit', queryState.form, flagText)
 }
 // 子组件名称
 const compChildName: any = computed(() => {
@@ -429,12 +429,12 @@ onMounted(() => {
 watch(
   () => props.opts,
   (opts, oldValue) => {
-    state.form = initForm(opts, true)
+    queryState.form = initForm(opts, true)
   }
 )
 
 // 暴露方法出去
-defineExpose({ state, props })
+defineExpose({ queryState, props, colLength })
 </script>
 
 <style lang="scss">

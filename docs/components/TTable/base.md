@@ -166,6 +166,13 @@ TTable/singleEditKeyup
 TTable/eventHandle
 :::
 
+### 单元格编辑--校验 rules
+
+:::demo `columns`: `columns`某一项的 rules;`table`: rules
+TTable/rules
+:::
+
+
 ### TTable 参数配置
 
 ---
@@ -186,9 +193,11 @@ TTable/eventHandle
 | 参数                    | 说明                                                                                   | 类型             | 默认值    |
 | :---------------------- | :------------------------------------------------------------------------------------- | :--------------- | :-------- |
 | table                   | 表格数据对象                                                                           | Object           | {}        |
+| ---rules                | 规则（可依据 elementPlus el-form 配置————对应 columns 的 prop 值）                     | Object           | -         |
 | ---data                 | 展示数据                                                                               | Array            | []        |
 | ---toolbar              | 表格外操作栏选中表格某行，可以将其数据传出                                             | Array            | []        |
 | ---operator             | 表格内操作栏数据                                                                       | Array            | []        |
+| -------hasPermi         | 表格内操作栏按钮权限资源（必须传`btnPermissions`属性才生效）                           | String           | -         |
 | -------show             | 表格内操作栏根据状态显示                                                               | Object           | -         |
 | -------render           | render函数渲染使用的 Function(val) 可以用 tsx 方式                                     | Function         | -         |
 | -------noshow           | 表格内操作栏根据多种状态不显示                                                         | Array            | -         |
@@ -219,6 +228,7 @@ TTable/eventHandle
 | ----------scope         | 具名插槽获取此行数据必须用解构接收{scope}.row 是当前行数据 }                           | Object           | -         |
 | ----canEdit             | 是否开启单元格编辑功能                                                                 | Boolean          | false     |
 | ----configEdit          | 表格编辑配置（开启编辑功能有效）                                                       | Object           | -         |
+| ----------rules         | 规则（可依据 elementPlus el-form 配置————对应 columns 的 prop 值）                     | Object           | -         |
 | ----------label         | placeholder 显示                                                                       | String           | -         |
 | ----------editComponent | 组件名称可直接指定全局注册的组件，也可引入'element/abtd'如：'a-input/el-input'         | String           | -         |
 | ----------eventHandle   | 第三方 UI 的 事件（返回两个参数，第一个自己自带，第二个 scope）                        | Object           | -         |
@@ -232,6 +242,7 @@ TTable/eventHandle
 | ----------list          | listTypeInfo 里面对应的下拉数据源命名                                                  | String           | -         |
 | ----------key           | 数据源的 key 字段                                                                      | String           | 'value'   |
 | ----------label         | 数据源的 label 字段                                                                    | String           | 'label'   |
+| btnPermissions          | 按钮权限数据集（后台返回的按钮权限集合）                                               | Array            | -         |
 | listTypeInfo            | 下拉选择数据源                                                                         | Object           | -         |
 | footer                  | 底部操作区（默认隐藏，使用插槽展示“保存”按钮）                                         | slot             | -         |
 | pagination              | 分页器自定义内容 设置文案(table设置layout才生效)                                       | slot             | -         |
@@ -256,19 +267,23 @@ TTable/eventHandle
 
 ### 3、events 其他事件按照 el-table 直接使用（如 sort-change 排序事件）
 
-| 事件名      | 说明                 | 返回值                                        |
-| :---------- | :------------------- | :-------------------------------------------- |
-| page-change | 当前页码             | 当前选中的页码                                |
-| save        | 保存按钮             | 编辑后的所有数据                              |
-| handleEvent | 单个输入触发事件     | configEdit 中的 event 值和对应输入的 value 值 |
-| radioChange | 单选选中事件         | 返回当前选中的整行数据                        |
-| rowSort     | 行拖拽排序后触发事件 | 返回排序后的table数据                         |
+| 事件名        | 说明                         | 返回值                                        |
+| :------------ | :--------------------------- | :-------------------------------------------- |
+| page-change   | 当前页码                     | 当前选中的页码                                |
+| save          | 保存按钮                     | 编辑后的所有数据                              |
+| handleEvent   | 单个输入触发事件             | configEdit 中的 event 值和对应输入的 value 值 |
+| radioChange   | 单选选中事件                 | 返回当前选中的整行数据                        |
+| rowSort       | 行拖拽排序后触发事件         | 返回排序后的table数据                         |
+| validateError | 单元格编辑保存校验不通过触发 | 返回校验不通过的 prop--label 集合             |
 
 ### 4、Methods 方法
 
-| 事件名             | 说明                         | 参数 |
-| :----------------- | :--------------------------- | :--- |
-| clearSelection     | 用于多选表格，清空用户的选择 | -    |
-| clearSort          | 清空排序条件                 | -    |
-| toggleRowSelection | 取消某一项选中项             | -    |
-| toggleAllSelection | 全部选中                     | -    |
+| 事件名             | 说明                                               | 参数 |
+| :----------------- | :------------------------------------------------- | :--- |
+| clearSelection     | 用于多选表格，清空用户的选择                       | -    |
+| clearSort          | 清空排序条件                                       | -    |
+| toggleRowSelection | 取消某一项选中项                                   | -    |
+| toggleAllSelection | 全部选中                                           | -    |
+| save               | 保存方法（返回编辑后的所有数据）                   | -    |
+| resetFields        | 对表单进行重置，并移除校验结果（单元格编辑时生效） | —    |
+| clearValidate      | 清空校验规则（单元格编辑时生效）                   | -    |
