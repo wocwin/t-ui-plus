@@ -1,6 +1,8 @@
 <template>
   <t-layout-page class="t_detail_demo">
-    <t-detail :descData="DataSource.descData" />
+    <t-layout-page-item>
+      <t-detail :descData="DataSource.descData" />
+    </t-layout-page-item>
   </t-layout-page>
 </template>
 <script setup lang="ts">

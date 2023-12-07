@@ -1,11 +1,7 @@
 <template>
   <ClientOnly>
     <div class="example-component">
-      <component
-        :is="dynamicComponent"
-        v-if="dynamicComponent"
-        v-bind="$attrs"
-      />
+      <component :is="dynamicComponent" v-if="dynamicComponent" v-bind="$attrs" />
       <div v-else class="example-component--spin">
         <div></div>
         <div></div>
@@ -75,6 +71,7 @@ onBeforeMount(() => {
 .example-component {
   // min-height: 86px;
   // padding: 1.5rem;
+  background-color: var(--el-bg-color-page);
   &--spin {
     width: 36px;
     height: 36px;
@@ -92,10 +89,14 @@ onBeforeMount(() => {
       animation-delay: -0.5s;
     }
   }
+  :deep(.t_layout_page) {
+    padding: 0;
+  }
+
   .t_module_form_demo {
     background-color: var(--el-bg-color-page);
     :deep(.t_layout_page_item) {
-      margin: 0;
+      // margin: 0;
       padding: 0;
       .t_module_form {
         overflow: hidden;

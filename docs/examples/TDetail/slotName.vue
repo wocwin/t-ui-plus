@@ -1,5 +1,6 @@
 <template>
   <t-layout-page class="t_detail_demo">
+    <t-layout-page-item>
     <t-detail :descData="DataSource.descData" :descColumn="2">
       <template #slotName>
         {{
@@ -7,6 +8,7 @@
         }}
       </template>
     </t-detail>
+    </t-layout-page-item>
   </t-layout-page>
 </template>
 <script setup lang="ts">
