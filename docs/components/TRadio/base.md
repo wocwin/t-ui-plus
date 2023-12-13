@@ -1,7 +1,7 @@
-# 按钮组件(内置防抖功能)
+# 单选组件
 
 ### 基础用法
 
-:::demo `继承el-button所有属性` <br/>新增`time`属性（多少时间内点击；默认 1 秒）<br/>
+:::demo 基于 Element-plus 的 `el-radio` 二次封装的**单选组件**，继承原组件的所有属性
 TRadio/base
 :::

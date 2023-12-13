@@ -1,5 +1,5 @@
 <template>
-  <el-radio-group v-model="radio1" v-bind="$attrs">
+  <el-radio-group v-bind="$attrs">
     <component
       v-for="item in options"
       :key="item.value"
@@ -11,7 +11,6 @@
 </template>
 
 <script setup lang="ts" name="TRadio">
-import { ref } from 'vue'
 const props = defineProps({
   type: {
     type: String,
@@ -22,7 +21,4 @@ const props = defineProps({
     default: () => [],
   },
 })
-// 抛出事件
-const emits = defineEmits(['click'])
-const radio1 = ref('1')
 </script>
