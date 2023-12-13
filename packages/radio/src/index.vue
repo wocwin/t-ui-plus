@@ -1,5 +1,5 @@
 <template>
-  <el-radio-group v-bind="$attrs">
+  <el-radio-group v-bind="$attrs" :size="size">
     <component
       v-for="item in options"
       :key="item.value"
@@ -19,6 +19,12 @@ const props = defineProps({
   options: {
     type: Array,
     default: () => [],
+  },
+  size: {
+    type: String,
+    validator: (value: string) =>
+      ['', 'large', 'default', 'small'].includes(value),
+    default: 'default',
   },
 })
 </script>

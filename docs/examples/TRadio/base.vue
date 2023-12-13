@@ -1,7 +1,7 @@
 <template>
   <t-layout-page class="t_button_demo">
     <t-layout-page-item>
-      <t-radio v-model="value" :options="options">导出</t-radio>
+      <t-radio v-model="value" :options="options" />
     </t-layout-page-item>
   </t-layout-page>
 </template>
