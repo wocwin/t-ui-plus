@@ -11,3 +11,9 @@ TRadio/base
 :::demo 通过 size 属性用来控制单选框的大小
 TRadio/size
 :::
+
+### 按钮样式
+
+:::demo 你可以让单选框看起来像一个按钮一样, 只需要将`type`属性设置为 button
+TRadio/button
+:::

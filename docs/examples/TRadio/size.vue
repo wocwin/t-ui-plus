@@ -11,12 +11,7 @@
         <t-radio v-model="value" :options="options" size="small" />
       </div>
       <div style="margin-top: 20px">
-        <t-radio
-          v-model="value"
-          :options="options"
-          size="small"
-          disabled
-        ></t-radio>
+        <t-radio v-model="value" :options="options" size="small" disabled />
       </div>
     </t-layout-page-item>
   </t-layout-page>
