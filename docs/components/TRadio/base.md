@@ -17,3 +17,9 @@ TRadio/size
 :::demo 你可以让单选框看起来像一个按钮一样, 只需要将`type`属性设置为 button
 TRadio/button
 :::
+
+### 带有边框
+
+:::demo 设置 border 属性为 true 可以渲染为带有边框的单选框。
+TRadio/border
+:::

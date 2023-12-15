@@ -2,36 +2,21 @@
   <t-layout-page>
     <t-layout-page-item>
       <div>
-        <t-radio
-          v-model="value"
-          :options="options"
-          size="large"
-          type="button"
-        />
+        <t-radio v-model="value" :options="options" size="large" border />
       </div>
       <div style="margin-top: 20px">
-        <t-radio
-          v-model="value"
-          :options="options"
-          size="default"
-          type="button"
-        />
+        <t-radio v-model="value" :options="options" size="default" border />
+      </div>
+      <div style="margin-top: 20px">
+        <t-radio v-model="value" :options="options" size="small" border />
       </div>
       <div style="margin-top: 20px">
         <t-radio
           v-model="value"
           :options="options"
           size="small"
-          type="button"
-        />
-      </div>
-      <div style="margin-top: 20px">
-        <t-radio
-          v-model="value"
-          :options="options"
-          size="small"
-          type="button"
           disabled
+          border
         />
       </div>
     </t-layout-page-item>

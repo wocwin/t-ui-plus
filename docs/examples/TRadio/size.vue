@@ -18,15 +18,15 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-const value = ref('export')
+const value = ref('1')
 const options = ref([
   {
-    label: '导出',
-    value: 'export',
+    label: 'Option 1',
+    value: '1',
   },
   {
-    label: '导入',
-    value: 'import',
+    label: 'Option 2',
+    value: 2,
   },
 ])
 </script>
