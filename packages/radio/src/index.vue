@@ -1,13 +1,19 @@
 <template>
   <el-radio-group v-bind="$attrs" :size="size">
-    <component
-      v-for="item in options"
-      :is="radioType"
-      :key="item.value"
-      :label="item.value"
-      :border="border"
-      >{{ item.label }}
-    </component>
+    <slot>
+      <component
+        v-for="({ value, label, slot, ...other }, index) in options"
+        :is="radioType"
+        :key="value"
+        :label="value"
+        :border="border"
+        v-bind="other"
+      >
+        <slot :name="slot" v-bind="{ value, label, index, ...other }">
+          {{ label }}
+        </slot>
+      </component>
+    </slot>
   </el-radio-group>
 </template>
 

@@ -23,3 +23,9 @@ TRadio/button
 :::demo 设置 border 属性为 true 可以渲染为带有边框的单选框。
 TRadio/border
 :::
+
+### 插槽 Slot
+
+:::demo 给选项添加 slot 属性，可以自定义单个插槽。也可以通过默认插槽，实现自定义 radio
+TRadio/slot
+:::
