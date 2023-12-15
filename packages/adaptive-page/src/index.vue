@@ -38,7 +38,7 @@ import { getCurrentInstance, onMounted, ref, useSlots } from 'vue'
 const props: any = defineProps({
   leftWidth: {
     type: [String, Number],
-    default: 280,
+    default: 260,
   },
 })
 const slots = useSlots()

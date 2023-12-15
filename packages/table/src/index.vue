@@ -9,10 +9,7 @@
         <!-- 表格外操作 -->
         <slot name="toolbar"></slot>
         <!--列设置按钮-->
-        <div
-          class="header_right_wrap"
-          :style="{ marginLeft: isShow('toolbar') ? '12px' : 0 }"
-        >
+        <div class="header_right_wrap" :style="{ marginLeft: isShow('toolbar') ? '12px' : 0 }">
           <slot name="btn" />
           <column-set
             v-if="columnSetting"
@@ -71,10 +68,7 @@
             ...table.firstColumn.bind,
           }"
         >
-          <template
-            #default="scope"
-            v-if="table.firstColumn.type !== 'selection'"
-          >
+          <template #default="scope" v-if="table.firstColumn.type !== 'selection'">
             <el-radio
               v-if="table.firstColumn.type === 'radio'"
               v-model="radioVal"
@@ -82,9 +76,11 @@
               @click.stop="radioChange($event, scope.row, scope.$index + 1)"
             ></el-radio>
             <template v-if="table.firstColumn.type === 'index'">
-              <span v-if="isPaginationCumulative && isShowPagination">{{
+              <span v-if="isPaginationCumulative && isShowPagination">
+                {{
                 (table.currentPage - 1) * table.pageSize + scope.$index + 1
-              }}</span>
+                }}
+              </span>
               <span v-else>{{ scope.$index + 1 }}</span>
             </template>
           </template>
@@ -111,15 +107,9 @@
             v-bind="{ ...item.bind, ...$attrs }"
           >
             <template #header v-if="item.headerRequired || item.renderHeader">
-              <render-header
-                v-if="item.renderHeader"
-                :column="item"
-                :render="item.renderHeader"
-              />
+              <render-header v-if="item.renderHeader" :column="item" :render="item.renderHeader" />
               <div style="display: inline" v-if="item.headerRequired">
-                <span style="color: #f56c6c; fontsize: 16px; marginright: 3px"
-                  >*</span
-                >
+                <span style="color: #f56c6c; fontsize: 16px; marginright: 3px">*</span>
                 <span>{{ item.label }}</span>
               </div>
             </template>
@@ -157,10 +147,7 @@
                     v-bind="$attrs"
                     ref="editCell"
                   >
-                    <template
-                      v-for="(index, name) in slots"
-                      v-slot:[name]="data"
-                    >
+                    <template v-for="(index, name) in slots" v-slot:[name]="data">
                       <slot :name="name" v-bind="data"></slot>
                     </template>
                   </single-edit-cell>
@@ -169,12 +156,12 @@
               <!-- 字典过滤 -->
               <template v-if="item.filters && item.filters.list">
                 {{
-                  constantEscape(
-                    scope.row[item.prop],
-                    table.listTypeInfo[item.filters.list],
-                    item.filters.key || 'value',
-                    item.filters.label || 'label'
-                  )
+                constantEscape(
+                scope.row[item.prop],
+                table.listTypeInfo[item.filters.list],
+                item.filters.key || 'value',
+                item.filters.label || 'label'
+                )
                 }}
               </template>
               <div
@@ -208,14 +195,11 @@
         :align="
           (table.operatorConfig && table.operatorConfig.align) || 'center'
         "
-        v-bind="{ ...table.operatorConfig.bind, ...$attrs }"
+        v-bind="table.operatorConfig && table.operatorConfig.bind"
         class-name="operator"
       >
         <template #default="scope">
-          <div
-            class="operator_btn"
-            :style="table.operatorConfig && table.operatorConfig.style"
-          >
+          <div class="operator_btn" :style="table.operatorConfig && table.operatorConfig.style">
             <template v-for="(item, index) in table.operator" :key="index">
               <el-button
                 @click="
@@ -785,9 +769,13 @@ const handlesCurrentChange = (val) => {
 /**
  * 公共方法
  */
-// 清空排序条件
-const clearSort = () => {
-  return TTable.value.clearSort()
+// 清空复选框
+const clearSelection = () => {
+  return TTable.value.clearSelection()
+}
+// 返回当前选中的行
+const getSelectionRows = () => {
+  return TTable.value.getSelectionRows()
 }
 // 取消某一项选中项
 const toggleRowSelection = (row, selected = false) => {
@@ -797,10 +785,43 @@ const toggleRowSelection = (row, selected = false) => {
 const toggleAllSelection = () => {
   return TTable.value.toggleAllSelection()
 }
-// 清空复选框
-const clearSelection = () => {
-  return TTable.value.clearSelection()
+// 用于可扩展的表格或树表格，如果某行被扩展，则切换。 使用第二个参数，您可以直接设置该行应该被扩展或折叠。
+const toggleRowExpansion = (row, expanded) => {
+  return TTable.value.toggleRowExpansion(row, expanded)
 }
+// 用于单选表格，设定某一行为选中行， 如果调用时不加参数，则会取消目前高亮行的选中状态。
+const setCurrentRow = (row) => {
+  return TTable.value.setCurrentRow(row)
+}
+// 清空排序条件
+const clearSort = () => {
+  return TTable.value.clearSort()
+}
+// 传入由columnKey 组成的数组以清除指定列的过滤条件。 如果没有参数，清除所有过滤器
+const clearFilter = (columnKey) => {
+  return TTable.value.clearFilter(columnKey)
+}
+//  Table 进行重新布局
+const doLayout = (columnKey) => {
+  return TTable.value.doLayout(columnKey)
+}
+//  手动排序表格。 参数 prop 属性指定排序列，order 指定排序顺序。
+const sort = (prop: string, order: string) => {
+  return TTable.value.sort(prop, order)
+}
+//  滚动到一组特定坐标。
+const scrollTo = (options: any, yCoord: any) => {
+  return TTable.value.scrollTo(options, yCoord)
+}
+//  设置垂直滚动位置
+const setScrollTop = (top) => {
+  return TTable.value.setScrollTop(top)
+}
+//  设置水平滚动位置
+const setScrollLeft = (left) => {
+  return TTable.value.setScrollLeft(left)
+}
+
 // 清空校验规则
 const clearValidate = () => {
   const refList = Object.keys(formRef.value).filter((item) =>
@@ -822,9 +843,18 @@ const resetFields = () => {
 // 暴露方法出去
 defineExpose({
   clearSelection,
+  getSelectionRows,
   toggleRowSelection,
   toggleAllSelection,
+  toggleRowExpansion,
+  setCurrentRow,
   clearSort,
+  clearFilter,
+  doLayout,
+  sort,
+  scrollTo,
+  setScrollTop,
+  setScrollLeft,
   state,
   radioVal,
   clearValidate,

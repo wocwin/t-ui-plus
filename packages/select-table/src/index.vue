@@ -8,7 +8,7 @@
     :value-key="keywords.value"
     :filterable="filterable"
     :filter-method="filterMethod || filterMethodHandle"
-    v-click-outside="closeBox"
+    v-click-outside:[selectRef]="closeBox"
     @visible-change="visibleChange"
     @remove-tag="removeTag"
     @clear="clear"
@@ -17,15 +17,21 @@
     <template #empty>
       <div class="t-table-select__table" :style="{ width: `${tableWidth}px` }">
         <div class="table_query_condition" v-if="isShowQuery">
-          <t-query-condition ref="tQueryConditionRef" :boolEnter="false" v-bind="$attrs">
+          <t-query-condition
+            ref="tQueryConditionRef"
+            :boolEnter="false"
+            @handleEvent="handleEvent"
+            v-bind="$attrs"
+          >
             <template v-for="(index, name) in slots" v-slot:[name]="data">
               <slot :name="name" v-bind="data"></slot>
             </template>
             <template #querybar v-if="isShowBlurBtn">
               <el-button
-                v-bind=" {type: 'danger',...$attrs,...btnBind}"
+                v-bind="{ type: 'danger', ...btnBind }"
                 @click="blur"
-              >{{btnBind.btnTxt||'关闭下拉框'}}</el-button>
+                >{{ btnBind.btnTxt || '关闭下拉框' }}</el-button
+              >
               <slot name="querybar"></slot>
             </template>
           </t-query-condition>
@@ -78,7 +84,8 @@
             :type="item.type"
             :label="item.label"
             :prop="item.prop"
-            :min-width="item['min-width'] || item.minWidth || item.width"
+            :min-width="item['min-width'] || item.minWidth"
+            :width="item.width"
             :align="item.align || 'center'"
             :fixed="item.fixed"
             :show-overflow-tooltip="item.noShowTip"
@@ -333,13 +340,22 @@ const visibleChange = (visible) => {
     filterMethodHandle('')
   }
 }
+// 查询条件change事件触发
+const handleEvent = () => {
+  // console.log('查询条件change事件触发')
+  selectRef.value.visible = true
+}
 // el-select点击了空白区域
-const closeBox = (val) => {
+const closeBox = () => {
   // 获取查询条件组件的项
-  if (tQueryConditionRef.value) {
-    selectRef.value.visible = false
+  if (tQueryConditionRef.value && props.isShowQuery) {
+    selectRef.value.visible = true
     Object.values(tQueryConditionRef.value?.props?.opts).map((val: any) => {
-      if (val.comp.includes('select') || val.comp.includes('date')) {
+      if (
+        val.comp.includes('select') ||
+        val.comp.includes('picker') ||
+        val.comp.includes('date')
+      ) {
         selectRef.value.visible = true
       }
     })
@@ -695,3 +711,4 @@ defineExpose({ focus, blur, clear, tQueryConditionRef })
   }
 }
 </style>
+./directives

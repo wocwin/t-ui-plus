@@ -114,7 +114,7 @@ TSelectTable/isShowQuerySpan
 | ------scope       | 具名插槽获取此行数据必须用解构接收{scope}                                               | Object                    | 当前行数据 |
 | keywords          | 关键字配置（value-key 配置）                                                            | Object                    | 无         |
 | ------label       | 选项的标签                                                                              | String                    | ‘label’    |
-| ------value       | 选项的值                                                                                | String                    | ‘value’    |
+| ------value       | 选项的值                                                                                | String / number           | ‘value’    |
 | radioTxt          | 单选文案                                                                                | String                    | 单选       |
 | multiple          | 是否开启多选                                                                            | Boolean                   | false      |
 | rowClickRadio     | 是否开启整行选中(单选)                                                                  | boolean                   | true       |

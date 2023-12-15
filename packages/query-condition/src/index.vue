@@ -37,11 +37,12 @@
           v-model="queryState.form[opt.dataIndex]"
           :placeholder="opt.placeholder || getPlaceholder(opt)"
           v-bind="
-          typeof opt.bind == 'function'
-            ? opt.bind(queryState.form)
-            : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
-        "
+            typeof opt.bind == 'function'
+              ? opt.bind(queryState.form)
+              : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
+          "
           :style="{ width: opt.width || '100%' }"
+          @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
           v-on="cEvent(opt)"
         />
       </template>
@@ -59,7 +60,9 @@
         v-on="cEvent(opt)"
       />
       <component
-        v-if="!opt.slotName && !opt.isSelfCom  && opt.comp.includes('tree-select')"
+        v-if="
+          !opt.slotName && !opt.isSelfCom && opt.comp.includes('tree-select')
+        "
         :is="opt.comp"
         v-bind="
           typeof opt.bind == 'function'
@@ -96,7 +99,8 @@
           :disabled="value.disabled"
           :label="compChildLabel(opt, value)"
           :value="compChildValue(opt, value, key)"
-        >{{ compChildShowLabel(opt, value) }}</component>
+          >{{ compChildShowLabel(opt, value) }}</component
+        >
       </component>
     </el-form-item>
     <el-form-item
@@ -105,10 +109,26 @@
       style="grid-area: submit_btn"
       :class="['btn', { flex_end: cellLength % colLength === 0 }]"
     >
-      <el-button class="btn_check" @click="checkHandle" v-bind="queryAttrs" :loading="loading">查询</el-button>
-      <el-button v-if="reset" class="btn_reset" v-bind="resetAttrs" @click="resetHandle">重置</el-button>
+      <el-button
+        class="btn_check"
+        @click="checkHandle"
+        v-bind="queryAttrs"
+        :loading="loading"
+        >查询</el-button
+      >
+      <el-button
+        v-if="reset"
+        class="btn_reset"
+        v-bind="resetAttrs"
+        @click="resetHandle"
+        >重置</el-button
+      >
       <slot name="querybar"></slot>
-      <el-button v-if="originCellLength > colLength && isShowOpen" @click="open = !open" link>
+      <el-button
+        v-if="originCellLength > colLength && isShowOpen"
+        @click="open = !open"
+        link
+      >
         {{ open ? '收起' : '展开' }}
         <el-icon v-if="open">
           <ArrowUp />
