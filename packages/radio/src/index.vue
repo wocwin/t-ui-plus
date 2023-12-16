@@ -2,15 +2,16 @@
   <el-radio-group v-bind="$attrs" :size="size">
     <slot>
       <component
-        v-for="({ value, label, slot, ...other }, index) in options"
+        v-for="(item, index) in options"
+        v-bind="item"
         :is="radioType"
-        :key="value"
-        :label="value"
+        :key="index"
+        :label="item[optionsProps.value]"
         :border="border"
-        v-bind="other"
+        :disabled="item[optionsProps.disabled]"
       >
-        <slot :name="slot" v-bind="{ value, label, index, ...other }">
-          {{ label }}
+        <slot :name="item.slot" v-bind="item">
+          {{ item[optionsProps.label] }}
         </slot>
       </component>
     </slot>
@@ -18,26 +19,31 @@
 </template>
 
 <script setup lang="ts" name="TRadio">
-import { computed } from 'vue'
-const props = defineProps({
+import { computed, ref } from 'vue'
+import type { PropType } from 'vue'
+import type { OptionsProps, RadioItem } from './radio'
+const radioProps = defineProps({
   type: {
-    type: String,
-    validator: (value: string) => ['', 'radio', 'button'].includes(value),
+    type: String as PropType<'radio' | 'button'>,
+    validator: (value: string) => ['radio', 'button'].includes(value),
     default: 'radio',
   },
   options: {
-    type: Array,
+    type: Array as PropType<RadioItem[]>,
     default: () => [],
   },
   size: {
-    type: String,
-    validator: (value: string) =>
-      ['', 'large', 'default', 'small'].includes(value),
+    type: String as PropType<'large' | 'default' | 'small'>,
+    validator: (value: string) => ['large', 'default', 'small'].includes(value),
     default: 'default',
   },
   border: {
     type: Boolean,
     default: false,
+  },
+  props: {
+    type: Object,
+    default: () => ({}),
   },
 })
 const radioType = computed(() => {
@@ -45,6 +51,14 @@ const radioType = computed(() => {
     radio: 'el-radio',
     button: 'el-radio-button',
   }
-  return obj[props.type] ?? 'el-radio'
+  return obj[radioProps.type] ?? 'el-radio'
+})
+const optionsProps = ref<OptionsProps>({
+  ...{
+    value: 'value',
+    label: 'label',
+    disabled: 'disabled',
+  },
+  ...radioProps.props,
 })
 </script>

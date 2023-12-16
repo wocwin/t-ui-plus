@@ -24,8 +24,14 @@ TRadio/button
 TRadio/border
 :::
 
-### 插槽 Slot
+### 插槽使用及自定义
 
 :::demo 给选项添加 slot 属性，可以自定义单个插槽。也可以通过默认插槽，实现自定义 radio
 TRadio/slot
+:::
+
+### 可选项
+
+:::demo 设置 props 属性，可设置 `value`, `label`, `disabled` 取值
+TRadio/props
 :::

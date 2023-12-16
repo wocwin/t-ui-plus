@@ -1,5 +1,5 @@
 <template>
-  <t-layout-page class="t_button_demo">
+  <t-layout-page>
     <t-layout-page-item>
       <t-radio v-model="value" :options="options" />
     </t-layout-page-item>
@@ -9,7 +9,7 @@
 import { ref } from 'vue'
 const value = ref('1')
 const options = ref([
-  { label: 'Option 1', value: '1' },
+  { label: 'Option 1', value: 1 },
   { label: 'Option 2', value: 2 },
 ])
 </script>
