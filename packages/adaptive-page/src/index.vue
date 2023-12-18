@@ -35,7 +35,7 @@ import TLayoutPageItem from '../../layout-page-item/src/index.vue'
 import TTable from '../../table/src/index.vue'
 import TQueryCondition from '../../query-condition/src/index.vue'
 import { getCurrentInstance, onMounted, ref, useSlots } from 'vue'
-const props: any = defineProps({
+defineProps({
   leftWidth: {
     type: [String, Number],
     default: 260,

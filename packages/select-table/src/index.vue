@@ -8,7 +8,7 @@
     :value-key="keywords.value"
     :filterable="filterable"
     :filter-method="filterMethod || filterMethodHandle"
-    v-click-outside:[selectRef]="closeBox"
+    v-click-outside="closeBox"
     @visible-change="visibleChange"
     @remove-tag="removeTag"
     @clear="clear"
@@ -143,7 +143,9 @@ import {
   reactive,
   onMounted,
 } from 'vue'
-import { ClickOutside as vClickOutside, ElMessage } from 'element-plus'
+// import { ClickOutside as vClickOutside, ElMessage } from 'element-plus'
+import { ElMessage } from 'element-plus'
+import ClickOutside from '../../utils/directives/click-outside/index'
 const props = defineProps({
   // 选择值
   value: {
@@ -250,10 +252,13 @@ const selectAttr = computed(() => {
     ...useAttrs(),
   }
 })
+// 自定义指令
+const vClickOutside = ClickOutside
 const slots = useSlots()
 const isDefaultSelectVal = ref(true) // 是否已经重新选择了
 const forbidden = ref(true) // 判断单选选中及取消选中
 const isRadio = ref(false)
+const isQueryVisible = ref(false) // 查询条件是否显示隐藏下拉框
 const isVisible = ref(false) // 是否显示隐藏下拉框
 const radioVal = ref('')
 const state: any = reactive({
@@ -330,6 +335,9 @@ onMounted(() => {
 const visibleChange = (visible) => {
   // console.log('表格显示隐藏回调', visible)
   isVisible.value = visible
+  if (isQueryVisible.value) {
+    selectRef.value.visible = true
+  }
   if (visible) {
     if (props.defaultSelectVal && isDefaultSelectVal.value) {
       defaultSelect(props.defaultSelectVal)
@@ -345,17 +353,25 @@ const handleEvent = () => {
   // console.log('查询条件change事件触发')
   selectRef.value.visible = true
 }
+// 条件查询组件的visible-change事件
+const queryVisibleChange = (val) => {
+  // console.log('selectVisibleChange---999', val)
+  isQueryVisible.value = val
+}
 // el-select点击了空白区域
 const closeBox = () => {
+  // console.log('select点击了空白区域')
   // 获取查询条件组件的项
   if (tQueryConditionRef.value && props.isShowQuery) {
-    selectRef.value.visible = true
     Object.values(tQueryConditionRef.value?.props?.opts).map((val: any) => {
       if (
         val.comp.includes('select') ||
         val.comp.includes('picker') ||
         val.comp.includes('date')
       ) {
+        val.eventHandle = {
+          'visible-change': ($event) => queryVisibleChange($event),
+        }
         selectRef.value.visible = true
       }
     })
