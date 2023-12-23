@@ -1,16 +1,16 @@
 <template>
   <t-layout-page class="t_detail_demo">
-    <el-radio-group
-      v-model="descColumn"
-      size="small"
-      style="margin-bottom: 15px"
-    >
-      <el-radio-button :label="1">一行展示</el-radio-button>
-      <el-radio-button :label="2">一行展示2项</el-radio-button>
-      <el-radio-button :label="3">一行展示3项</el-radio-button>
-      <el-radio-button :label="4">一行展示4项</el-radio-button>
-    </el-radio-group>
-    <t-detail :descData="DataSource.descData" :descColumn="descColumn" />
+    <t-layout-page-item>
+      <el-radio-group v-model="descColumn" size="small" style="margin-bottom: 15px">
+        <el-radio-button :label="1">一行展示</el-radio-button>
+        <el-radio-button :label="2">一行展示2项</el-radio-button>
+        <el-radio-button :label="3">一行展示3项</el-radio-button>
+        <el-radio-button :label="4">一行展示4项</el-radio-button>
+      </el-radio-group>
+    </t-layout-page-item>
+    <t-layout-page-item>
+      <t-detail :descData="DataSource.descData" :descColumn="descColumn" />
+    </t-layout-page-item>
   </t-layout-page>
 </template>
 <script setup lang="ts">

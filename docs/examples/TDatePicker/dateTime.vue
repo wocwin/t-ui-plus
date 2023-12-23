@@ -62,8 +62,6 @@ const change = (event, type, value) => {
 <style lang="scss" scoped>
 .dateTime {
   .t_layout_page_item {
-    margin: 0;
-    padding: 0;
     .box_content {
       display: flex;
       padding: 10px;

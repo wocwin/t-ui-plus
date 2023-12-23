@@ -44,11 +44,11 @@ const change = (event) => {
   console.log(`v-model绑定的值是：`, date.value)
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .slotCustomize {
   .t_layout_page_item {
-    margin: 0 !important;
-    padding: 0 !important;
+    // margin: 0 !important;
+    // padding: 0 !important;
     .box_content {
       display: flex;
       padding: 10px;

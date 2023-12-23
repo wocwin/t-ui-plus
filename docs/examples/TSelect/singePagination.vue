@@ -1,16 +1,18 @@
 <template>
   <t-layout-page>
-    <t-select
-      placeholder="请选择工序（单选分页）"
-      v-model="selectVlaue"
-      :optionSource="stepList"
-      labelCustom="materialName"
-      valueCustom="id"
-      @current-change="currentChange"
-      @change="selectChange"
-      isShowPagination
-      :paginationOption="paginationOption"
-    />
+    <t-layout-page-item>
+      <t-select
+        placeholder="请选择工序（单选分页）"
+        v-model="selectVlaue"
+        :optionSource="stepList"
+        labelCustom="materialName"
+        valueCustom="id"
+        @current-change="currentChange"
+        @change="selectChange"
+        isShowPagination
+        :paginationOption="paginationOption"
+      />
+    </t-layout-page-item>
   </t-layout-page>
 </template>
 <script setup lang="ts" name="Pagination">

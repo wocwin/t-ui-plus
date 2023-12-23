@@ -316,6 +316,7 @@ watch(
   { deep: true }
 )
 onMounted(() => {
+  // console.log('tform.value.$.exposed--', tform.value.$)
   const entries = Object.entries(tform.value.$.exposed)
   // console.log('111', entries)
   for (const [key, value] of entries) {

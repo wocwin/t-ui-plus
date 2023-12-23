@@ -1,13 +1,15 @@
 <template>
   <t-layout-page>
-    <t-select
-      placeholder="请选择工序"
-      v-model="selectVlaue"
-      :optionSource="stepList"
-      valueCustom="label"
-      @change="selectChange"
-      multiple
-    />
+    <t-layout-page-item>
+      <t-select
+        placeholder="请选择工序"
+        v-model="selectVlaue"
+        :optionSource="stepList"
+        valueCustom="label"
+        @change="selectChange"
+        multiple
+      />
+    </t-layout-page-item>
   </t-layout-page>
 </template>
 <script setup lang="ts" name="Multiple">

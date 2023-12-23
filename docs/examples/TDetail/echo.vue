@@ -1,17 +1,19 @@
 <template>
   <t-layout-page class="t_detail_demo">
-    <t-detail
-      :listTypeInfo="DataSource.listTypeInfo"
-      :dataList="DataSource.dataList"
-      :descData="DataSource.descData"
-      :descColumn="2"
-    >
-      <template #slotName>
-        <span>{{ DataSource.dataList.stocktakePlanNo }}</span>
-        <span>--</span>
-        <span>{{ DataSource.dataList.planStocktakeUserName }}</span>
-      </template>
-    </t-detail>
+    <t-layout-page-item>
+      <t-detail
+        :listTypeInfo="DataSource.listTypeInfo"
+        :dataList="DataSource.dataList"
+        :descData="DataSource.descData"
+        :descColumn="2"
+      >
+        <template #slotName>
+          <span>{{ DataSource.dataList.stocktakePlanNo }}</span>
+          <span>--</span>
+          <span>{{ DataSource.dataList.planStocktakeUserName }}</span>
+        </template>
+      </t-detail>
+    </t-layout-page-item>
   </t-layout-page>
 </template>
 <script setup lang="ts">

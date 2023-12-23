@@ -56,7 +56,7 @@ TSelectTable/isShowPagination
 
 ### 显示查询条件
 
-:::demo `isShowQuery` 是否开启查询条件配置，其配置继承查询条件组件（TQueryCondition组件）的所有属性及事件；`table` 数据源及表头信息；`keywords` 选项中的 value（选项的值）,label(选项的标签);**`注意：`查询筛选后，选择完，`单选：`需要`选中下拉数据`或者`点击下拉选择框`才会隐藏下拉框；`多选：`只能`点击下拉选择框`才会隐藏下拉框**
+:::demo `isShowQuery` 是否开启查询条件配置，其配置继承查询条件组件（TQueryCondition组件）的所有属性及事件；`table` 数据源及表头信息；`keywords` 选项中的 value（选项的值）,label(选项的标签);
 TSelectTable/isShowQuery
 :::
 
@@ -114,7 +114,7 @@ TSelectTable/isShowQuerySpan
 | ------scope       | 具名插槽获取此行数据必须用解构接收{scope}                                               | Object                    | 当前行数据 |
 | keywords          | 关键字配置（value-key 配置）                                                            | Object                    | 无         |
 | ------label       | 选项的标签                                                                              | String                    | ‘label’    |
-| ------value       | 选项的值                                                                                | String                    | ‘value’    |
+| ------value       | 选项的值                                                                                | String / number           | ‘value’    |
 | radioTxt          | 单选文案                                                                                | String                    | 单选       |
 | multiple          | 是否开启多选                                                                            | Boolean                   | false      |
 | rowClickRadio     | 是否开启整行选中(单选)                                                                  | boolean                   | true       |

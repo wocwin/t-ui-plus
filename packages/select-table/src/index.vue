@@ -17,15 +17,21 @@
     <template #empty>
       <div class="t-table-select__table" :style="{ width: `${tableWidth}px` }">
         <div class="table_query_condition" v-if="isShowQuery">
-          <t-query-condition ref="tQueryConditionRef" :boolEnter="false" v-bind="$attrs">
+          <t-query-condition
+            ref="tQueryConditionRef"
+            :boolEnter="false"
+            @handleEvent="handleEvent"
+            v-bind="$attrs"
+          >
             <template v-for="(index, name) in slots" v-slot:[name]="data">
               <slot :name="name" v-bind="data"></slot>
             </template>
             <template #querybar v-if="isShowBlurBtn">
               <el-button
-                v-bind=" {type: 'danger',...$attrs,...btnBind}"
+                v-bind="{ type: 'danger', ...btnBind }"
                 @click="blur"
-              >{{btnBind.btnTxt||'关闭下拉框'}}</el-button>
+                >{{ btnBind.btnTxt || '关闭下拉框' }}</el-button
+              >
               <slot name="querybar"></slot>
             </template>
           </t-query-condition>
@@ -78,7 +84,8 @@
             :type="item.type"
             :label="item.label"
             :prop="item.prop"
-            :min-width="item['min-width'] || item.minWidth || item.width"
+            :min-width="item['min-width'] || item.minWidth"
+            :width="item.width"
             :align="item.align || 'center'"
             :fixed="item.fixed"
             :show-overflow-tooltip="item.noShowTip"
@@ -136,7 +143,9 @@ import {
   reactive,
   onMounted,
 } from 'vue'
-import { ClickOutside as vClickOutside, ElMessage } from 'element-plus'
+// import { ClickOutside as vClickOutside, ElMessage } from 'element-plus'
+import { ElMessage } from 'element-plus'
+import ClickOutside from '../../utils/directives/click-outside/index'
 const props = defineProps({
   // 选择值
   value: {
@@ -243,10 +252,13 @@ const selectAttr = computed(() => {
     ...useAttrs(),
   }
 })
+// 自定义指令
+const vClickOutside = ClickOutside
 const slots = useSlots()
 const isDefaultSelectVal = ref(true) // 是否已经重新选择了
 const forbidden = ref(true) // 判断单选选中及取消选中
 const isRadio = ref(false)
+const isQueryVisible = ref(false) // 查询条件是否显示隐藏下拉框
 const isVisible = ref(false) // 是否显示隐藏下拉框
 const radioVal = ref('')
 const state: any = reactive({
@@ -323,6 +335,9 @@ onMounted(() => {
 const visibleChange = (visible) => {
   // console.log('表格显示隐藏回调', visible)
   isVisible.value = visible
+  if (isQueryVisible.value) {
+    selectRef.value.visible = true
+  }
   if (visible) {
     if (props.defaultSelectVal && isDefaultSelectVal.value) {
       defaultSelect(props.defaultSelectVal)
@@ -333,13 +348,30 @@ const visibleChange = (visible) => {
     filterMethodHandle('')
   }
 }
+// 查询条件change事件触发
+const handleEvent = () => {
+  // console.log('查询条件change事件触发')
+  selectRef.value.visible = true
+}
+// 条件查询组件的visible-change事件
+const queryVisibleChange = (val) => {
+  // console.log('selectVisibleChange---999', val)
+  isQueryVisible.value = val
+}
 // el-select点击了空白区域
-const closeBox = (val) => {
+const closeBox = () => {
+  // console.log('select点击了空白区域')
   // 获取查询条件组件的项
-  if (tQueryConditionRef.value) {
-    selectRef.value.visible = false
+  if (tQueryConditionRef.value && props.isShowQuery) {
     Object.values(tQueryConditionRef.value?.props?.opts).map((val: any) => {
-      if (val.comp.includes('select') || val.comp.includes('date')) {
+      if (
+        val.comp.includes('select') ||
+        val.comp.includes('picker') ||
+        val.comp.includes('date')
+      ) {
+        val.eventHandle = {
+          'visible-change': ($event) => queryVisibleChange($event),
+        }
         selectRef.value.visible = true
       }
     })
@@ -695,3 +727,4 @@ defineExpose({ focus, blur, clear, tQueryConditionRef })
   }
 }
 </style>
+./directives
