@@ -29,6 +29,7 @@
       "@": [
         "packages"
       ],
+      "@vue/shared": ["./node_modules/@vue/shared"],
       "@/*": [
         "packages/*"
       ]

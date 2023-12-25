@@ -31,6 +31,7 @@
     "@typescript-eslint/parser": "^5.40.0",
     "@vitejs/plugin-vue": "^3.1.0",
     "@vitejs/plugin-vue-jsx": "^2.0.1",
+    "@vue/shared": "^3.3.13",
     "@vueuse/core": "^9.13.0",
     "axios": "^1.1.2",
     "chalk": "^5.2.0",
