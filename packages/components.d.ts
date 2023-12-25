@@ -1,4 +1,3 @@
-
 import TLayoutPage from './layout-page/src/index.vue'
 import TLayoutPageItem from './layout-page-item/src/index.vue'
 import TQueryCondition from './query-condition/src/index.vue'
@@ -13,6 +12,7 @@ import TTimerBtn from './timer-btn/src/index.vue'
 import TModuleForm from './module-form/src/index.vue'
 import TAdaptivePage from './adaptive-page/src/index.vue'
 import TDatePicker from './date-picker/src/index.vue'
+import TRadio from './radio/index'
 
 declare module 'vue' {
   export interface GlobalComponents {
@@ -30,5 +30,6 @@ declare module 'vue' {
     TModuleForm: typeof TModuleForm
     TAdaptivePage: typeof TAdaptivePage
     TDatePicker: typeof TDatePicker
+    TRadio: typeof TRadio
   }
 }

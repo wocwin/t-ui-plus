@@ -46,6 +46,7 @@ export default defineConfig({
             { text: '下拉选择组件', link: '/components/TSelect/base.md' },
             { text: '详情组件', link: '/components/TDetail/base.md' },
             { text: 'Button组件', link: '/components/TButton/base.md' },
+            { text: 'Radio组件', link: '/components/TRadio/base.md' },
             { text: '日期组件', link: '/components/TDatePicker/base.md' },
             { text: '步骤组件', link: '/components/TStepWizard/base.md' },
           ],
