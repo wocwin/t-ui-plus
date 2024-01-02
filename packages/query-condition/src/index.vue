@@ -34,6 +34,7 @@
       <template v-if="opt.isSelfCom">
         <component
           :is="opt.comp"
+          :ref="opt.comp === 't-select-table' ? (el:any) => handleRef(el, i) : ''"
           v-model="queryState.form[opt.dataIndex]"
           :placeholder="opt.placeholder || getPlaceholder(opt)"
           v-bind="
@@ -156,11 +157,13 @@ const props = defineProps({
   },
   // 查询按钮配置
   btnCheckBind: {
-    type: [Object],
+    type: Object,
+    default: () => ({}),
   },
   // 重置按钮配置
   btnResetBind: {
-    type: [Object],
+    type: Object,
+    default: () => ({}),
   },
   loading: {
     type: Boolean,
@@ -329,9 +332,27 @@ const getColLength = () => {
   return colLength
 }
 const emits = defineEmits(['handleEvent', 'submit', 'reset'])
+// 下拉选择表格组件 ref
+const tselecttableref: any = ref({})
+// 下拉选择表格组件 动态ref
+const handleRef = (el, key) => {
+  if (el) {
+    tselecttableref.value[`tselecttableref-${key}`] = el
+  }
+}
 // 重置
 const resetHandle = () => {
   queryState.form = initForm(props.opts)
+  // 获取所有下拉选择表格组件
+  const refList = Object.keys(tselecttableref.value).filter((item) =>
+    item.includes('tselecttableref')
+  )
+  if (refList.length > 0 && tselecttableref.value) {
+    refList.map((val) => {
+      // console.log('9999', val)
+      tselecttableref.value[val].clear()
+    })
+  }
   emits('reset', queryState.form)
   checkHandle('reset')
 }

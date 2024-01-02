@@ -13,11 +13,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref, toRefs } from 'vue'
 import cascaderData from './cascaderData.json'
 let state = reactive({
   queryData: {
     userName: null, // 登录名
+    userName2: null, // 登录名
     workshopNum: null,
     workshopNum2: null,
     date: null,
@@ -71,12 +72,15 @@ let state = reactive({
     },
   ],
 })
+const userName = ref()
+const userName2 = ref()
 const opts = computed(() => {
   return {
     userName: {
       label: '下拉选择表格组件',
       comp: 't-select-table',
       span: 2,
+      isSelfCom: true,
       bind: {
         maxHeight: 400,
         isKeyup: true,
@@ -86,6 +90,22 @@ const opts = computed(() => {
       },
       eventHandle: {
         radioChange: (val) => radioChange(val),
+      },
+    },
+    userName2: {
+      label: '下拉表格组件2',
+      comp: 't-select-table',
+      span: 2,
+      isSelfCom: true,
+      bind: {
+        maxHeight: 400,
+        isKeyup: true,
+        keywords: { label: 'name', value: 'id' },
+        table: state.table,
+        columns: state.table.columns,
+      },
+      eventHandle: {
+        radioChange: (val) => radioChange2(val),
       },
     },
     workshopNum: {
@@ -144,14 +164,19 @@ const opts = computed(() => {
 })
 const radioChange = (val) => {
   console.log('下拉选择表格组件--单选', val)
-  state.queryData.userName = val.id
+  userName.value = val.name
+}
+const radioChange2 = (val) => {
+  console.log('下拉选择表格组件--单选222', val)
+  userName2.value = val.name
 }
 // 最终参数获取
 const getQueryData = computed(() => {
-  const { userName, workshopNum, date, workshopNum2, deptCode } =
-    state.queryData
+  const { userName, userName2, workshopNum, date, workshopNum2, deptCode } =
+    toRefs(state.queryData)
   return {
     userName,
+    userName2,
     workshopNum,
     workshopNum2,
     deptCode,
@@ -172,6 +197,8 @@ const handleEvent = (type, val) => {
 const conditionEnter = (data: any) => {
   console.log(1122, data)
   state.queryData = data
+  state.queryData.userName = userName.value
+  state.queryData.userName2 = userName2.value
   console.log('最终参数', getQueryData.value)
 }
 </script>
