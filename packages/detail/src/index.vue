@@ -5,7 +5,7 @@
       :key="key"
       :label="item.label"
       :span="item.span || 1"
-      v-bind="$attrs"
+      v-bind="{ ...item.bind, ...$attrs }"
     >
       <template v-if="item.slotName">
         <slot :name="item.slotName"></slot>

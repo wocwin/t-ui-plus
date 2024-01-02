@@ -1,7 +1,11 @@
 <template>
   <t-layout-page class="t_detail_demo">
     <t-layout-page-item>
-      <el-radio-group v-model="descColumn" size="small" style="margin-bottom: 15px">
+      <el-radio-group
+        v-model="descColumn"
+        size="small"
+        style="margin-bottom: 15px"
+      >
         <el-radio-button :label="1">一行展示</el-radio-button>
         <el-radio-button :label="2">一行展示2项</el-radio-button>
         <el-radio-button :label="3">一行展示3项</el-radio-button>
@@ -54,6 +58,7 @@ const DataSource: any = reactive({
     {
       label: '计划盘点日期：',
       fieldName: 'planStocktakeDate',
+      bind: { 'label-class-name': 'custom_name' },
       value: '',
     },
     {
