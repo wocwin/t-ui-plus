@@ -79,12 +79,14 @@
 
 <script setup lang="ts" name="TModuleForm">
 import { ref, useAttrs, useSlots, nextTick, onMounted } from 'vue'
+import type { PropType } from 'vue'
 // import { useRouter } from 'vue-router'
 import ModuleDetail from './moduleDetail.vue'
 import ModuleForm from './moduleForm.vue'
 const props: any = defineProps({
   handleType: {
-    type: String,
+    type: String as PropType<'edit' | 'desc'>,
+    validator: (value: string) => ['edit', 'desc'].includes(value),
     default: 'edit', // edit表form表单操作，desc表详情页面
   },
   // 是否使用插槽显示title

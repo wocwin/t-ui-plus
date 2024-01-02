@@ -35,7 +35,9 @@
         </template>
         <!-- 文本展示值 -->
         <template v-if="item.textShow">
-          <span class="text_show">{{ item.textValue || formOpts.formData[item.value] }}</span>
+          <span class="text_show">{{
+            item.textValue || formOpts.formData[item.value]
+          }}</span>
         </template>
         <template v-if="item.isSelfCom">
           <component
@@ -133,7 +135,8 @@
             :disabled="value.disabled"
             :label="compChildLabel(item, value)"
             :value="compChildValue(item, value, key)"
-          >{{ compChildShowLabel(item, value) }}</component>
+            >{{ compChildShowLabel(item, value) }}</component
+          >
           <!-- </template> -->
         </component>
       </el-form-item>
@@ -155,11 +158,12 @@
           :key="index"
           @click="val.fun(val)"
           v-bind="{
-            type:'primary',
-            size:'small',
-            ...val.bind
+            type: 'primary',
+            size: 'small',
+            ...val.bind,
           }"
-        >{{ val.label }}</el-button>
+          >{{ val.label }}</el-button
+        >
       </template>
     </div>
   </el-form>
@@ -168,6 +172,7 @@
 import RenderComp from './renderComp.vue'
 import { ElMessage } from 'element-plus'
 import { computed, ref, watch, onMounted, getCurrentInstance } from 'vue'
+import type { PropType } from 'vue'
 const props = defineProps({
   // 自定义类名
   className: {
@@ -187,11 +192,9 @@ const props = defineProps({
   },
   // 一行显示几个输入项;最大值4
   widthSize: {
-    type: Number,
+    type: Number as PropType<1 | 2 | 3 | 4>,
+    validator: (value: number) => [1, 2, 3, 4].includes(value),
     default: 2,
-    validator: (value: any) => {
-      return value <= 4
-    },
   },
   // 全局是否开启清除前后空格
   isTrim: {

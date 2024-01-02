@@ -15,6 +15,7 @@
 </template>
 <script setup lang="ts" name="TDatePicker">
 import { computed, useAttrs, useSlots, watch, reactive, ref } from 'vue'
+import type { PropType } from 'vue'
 const props = defineProps({
   value: {
     type: [String, Date, Array],
@@ -30,7 +31,33 @@ const props = defineProps({
    * datetime日期和时间点;datetimerange日期和时间点范围
    */
   type: {
-    type: String,
+    type: String as PropType<
+      | 'date'
+      | 'week'
+      | 'month'
+      | 'year'
+      | 'dates'
+      | 'months'
+      | 'years'
+      | 'daterange'
+      | 'monthrange'
+      | 'datetime'
+      | 'datetimerange'
+    >,
+    validator: (value: string) =>
+      [
+        'date',
+        'week',
+        'month',
+        'year',
+        'dates',
+        'months',
+        'years',
+        'daterange',
+        'monthrange',
+        'datetime',
+        'datetimerange',
+      ].includes(value),
     default: 'date',
   },
   // 快捷配置
