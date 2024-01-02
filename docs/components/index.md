@@ -16,6 +16,7 @@ pnpm add @wocwin/t-ui-plus -S
 
 
 ### 使用
+> #### 前提条件：使用项目必须全局注册 Element-plus组件库
 
 ```js
 // main.ts

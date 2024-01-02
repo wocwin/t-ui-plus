@@ -37,7 +37,7 @@ import TQueryCondition from '../../query-condition/src/index.vue'
 import { getCurrentInstance, onMounted, ref, useSlots } from 'vue'
 defineProps({
   leftWidth: {
-    type: [String, Number],
+    type: Number,
     default: 260,
   },
 })
