@@ -172,6 +172,11 @@ TTable/eventHandle
 TTable/rules
 :::
 
+### 展开行 
+
+:::demo 在`table`对象中添加`firstColumn:{ type: 'expand', fixed: true }` `expand`作用域插槽，结构传出`{scope}`
+TTable/expand
+:::
 
 ### TTable 参数配置
 
@@ -210,7 +215,7 @@ TTable/rules
 | --------minWidth        | 对应列的最小宽度(会把剩余宽度按比例分配给设置了 min-width 的列)                        | string / number  | -         |
 | --------align           | 对齐方式 （left / center / right）                                                     | string           | 'center'  |
 | --------bind            | el-table-column Attributes                                                             | Object           | -         |
-| ---firstColumn          | 表格首列(序号 index,复选框 selection,单选 radio）排列                                  | object           | -         |
+| ---firstColumn          | 表格首列(序号 index,复选框 selection,单选 radio,展开行 expand）排列                    | object           | -         |
 | ---total                | 数据总条数                                                                             | Number           | -         |
 | ---pageSize             | 页数量                                                                                 | Number           | -         |
 | ---currentPage          | 是否需要显示切换页条数                                                                 | Number           | -         |
@@ -287,3 +292,17 @@ TTable/rules
 | save               | 保存方法（返回编辑后的所有数据）                   | -    |
 | resetFields        | 对表单进行重置，并移除校验结果（单元格编辑时生效） | —    |
 | clearValidate      | 清空校验规则（单元格编辑时生效）                   | -    |
+
+### 5、Slots插槽
+
+| 插槽名     | 说明                                              | 参数  |
+| :--------- | :------------------------------------------------ | :---- |
+| title      | TTable 左侧Title                                  | -     |
+| toolbar    | TTable 右侧toolbar                                | -     |
+| expand     | table.firstColumn.type：`expand` 展开行插槽       | scope |
+| -          | el-table-column某列自定义插槽（slotName命名）     | scope |
+| -          | el-table-column单元格编辑插槽（editSlotName命名） | scope |
+| -          | el-table-column表头合并插槽（slotNameMerge命名）  | scope |
+| -          | 操作列前一列自定义默认内容插槽                    | -     |
+| footer     | 底部操作区（默认隐藏，使用插槽展示“保存”按钮）    | -     |
+| pagination | 分页器自定义内容 设置文案(table设置layout才生效)  | -     |
