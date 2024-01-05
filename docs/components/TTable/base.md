@@ -174,7 +174,7 @@ TTable/rules
 
 ### 展开行 
 
-:::demo 在`table`对象中添加`firstColumn:{ type: 'expand', fixed: true }` `expand`作用域插槽，结构传出`{scope}`
+:::demo 在`table`对象中添加`firstColumn:{ type: 'expand', fixed: true }` `expand`作用域插槽，解构传出`{scope}`
 TTable/expand
 :::
 
@@ -281,17 +281,13 @@ TTable/expand
 | rowSort       | 行拖拽排序后触发事件         | 返回排序后的table数据                         |
 | validateError | 单元格编辑保存校验不通过触发 | 返回校验不通过的 prop--label 集合             |
 
-### 4、Methods 方法
+### 4、Methods 方法 继承el-table所有方法
 
-| 事件名             | 说明                                               | 参数 |
-| :----------------- | :------------------------------------------------- | :--- |
-| clearSelection     | 用于多选表格，清空用户的选择                       | -    |
-| clearSort          | 清空排序条件                                       | -    |
-| toggleRowSelection | 取消某一项选中项                                   | -    |
-| toggleAllSelection | 全部选中                                           | -    |
-| save               | 保存方法（返回编辑后的所有数据）                   | -    |
-| resetFields        | 对表单进行重置，并移除校验结果（单元格编辑时生效） | —    |
-| clearValidate      | 清空校验规则（单元格编辑时生效）                   | -    |
+| 事件名        | 说明                                               | 参数 |
+| :------------ | :------------------------------------------------- | :--- |
+| save          | 保存方法（返回编辑后的所有数据）                   | -    |
+| resetFields   | 对表单进行重置，并移除校验结果（单元格编辑时生效） | —    |
+| clearValidate | 清空校验规则（单元格编辑时生效）                   | -    |
 
 ### 5、Slots插槽
 
