@@ -1,7 +1,12 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-form ref="TFormDemo" v-model="formOpts.ref" :formOpts="formOpts" :widthSize="1" />
+      <t-form
+        ref="TFormDemo"
+        v-model="formOpts.ref"
+        :formOpts="formOpts"
+        :widthSize="1"
+      />
     </t-layout-page-item>
   </t-layout-page>
 </template>
@@ -56,9 +61,7 @@ const submitForm = () => {
 // }
 // 重置form表单
 const resetForm = () => {
-  formOpts.formData = {}
-  // 清空校验
-  TFormDemo.value.clearValidate()
+  TFormDemo.value.selfResetFields()
 }
 const radioChange = (row) => {
   console.log('下拉选择表格-单选', row)

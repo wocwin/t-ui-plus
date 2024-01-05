@@ -43,6 +43,7 @@
           <component
             v-if="item.comp === 't-select-table'"
             :is="item.comp"
+            :ref="(el:any) => handleRef(el, index)"
             :placeholder="item.placeholder || getPlaceholder(item)"
             v-bind="{ clearable: true, filterable: true, ...item.bind }"
             :style="{ width: item.width || '100%' }"
@@ -388,8 +389,29 @@ const selfValidate = () => {
     })
   })
 }
+// 下拉选择表格组件 ref
+const tselecttableref: any = ref({})
+// 下拉选择表格组件 动态ref
+const handleRef = (el, key) => {
+  if (el) {
+    tselecttableref.value[`tselecttableref-${key}`] = el
+  }
+}
+const selfResetFields = () => {
+  // 获取所有下拉选择表格组件
+  const refList = Object.keys(tselecttableref.value).filter((item) =>
+    item.includes('tselecttableref')
+  )
+  if (refList.length > 0 && tselecttableref.value) {
+    refList.map((val) => {
+      // console.log('9999', val)
+      tselecttableref.value[val].clear()
+    })
+  }
+  tform.value.resetFields()
+}
 // 暴露方法出去
-defineExpose({ ...instance.exposed, selfValidate })
+defineExpose({ ...instance.exposed, selfValidate, selfResetFields })
 </script>
 
 <style lang="scss">

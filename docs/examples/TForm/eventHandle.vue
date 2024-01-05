@@ -29,9 +29,7 @@ const submitForm = () => {
 // }
 // 重置form表单
 const resetForm = () => {
-  formOpts.formData = {}
-  // 清空校验
-  TFormDemo.value.clearValidate()
+  TFormDemo.value.resetFields()
 }
 // 清除校验
 const clearValidate = () => {
@@ -52,7 +50,7 @@ const nameBlur = ({ type }) => {
 const formOpts: any = reactive({
   ref: null,
   formData: {
-    account: null, // *用户账号
+    account: 'wocwin', // *用户账号
     password: null, // *用户密码
     name: null, // *用户昵称
     qq: null, // qq

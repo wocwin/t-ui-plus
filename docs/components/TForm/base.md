@@ -137,8 +137,9 @@ TForm/isHideItem
 
 ### 4. Methods 继承 element-plus 的 methods
 
-| 事件名       | 说明       | 返回值                        |
-| :----------- | :--------- | :---------------------------- |
-| selfValidate | 自定义校验 | valid:Boolean;formData:object |
+| 事件名          | 说明                                           | 返回值                        |
+| :-------------- | :--------------------------------------------- | :---------------------------- |
+| selfValidate    | 自定义校验                                     | valid:Boolean;formData:object |
+| selfResetFields | 自定义重置方法（主要清空使用TSelectTable组件） | -                             |
 
 ### 5. 关于 element-plus el-form/el-form-item 提供的一些方法/属性可直接使用，无需其他配置

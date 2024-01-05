@@ -35,14 +35,12 @@ const submitForm = () => {
 // }
 // 重置form表单
 const resetForm = () => {
-  formOpts.formData = {}
-  // 清空校验
-  TFormDemo.value.clearValidate()
+  TFormDemo.value.resetFields()
 }
 const formOpts: any = reactive({
   ref: null,
   formData: {
-    account: null, // *用户账号
+    account: 'wocwin', // *用户账号
     name: null, // *用户昵称
     valDate: null, // el日期选择范围
     email: null, // 邮箱
