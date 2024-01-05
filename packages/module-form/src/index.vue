@@ -6,7 +6,7 @@
     <div class="scroll_wrap">
       <!-- 头部 -->
       <el-page-header
-        v-if="title || titleSlot"
+        v-if="!isShowHeader && (title || titleSlot)"
         :title="title"
         @back="back"
         :class="{
@@ -88,6 +88,11 @@ const props: any = defineProps({
     type: String as PropType<'edit' | 'desc'>,
     validator: (value: string) => ['edit', 'desc'].includes(value),
     default: 'edit', // edit表form表单操作，desc表详情页面
+  },
+  // 是否显示header
+  isShowHeader: {
+    type: Boolean,
+    default: false,
   },
   // 是否使用插槽显示title
   titleSlot: {

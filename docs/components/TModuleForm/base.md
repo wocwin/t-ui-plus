@@ -64,6 +64,12 @@ TModuleForm/extra
 TModuleForm/titleBtn
 :::
 
+### 表单-不显示header
+
+::: demo 添加属性`isShowHeader`，将不显示头部
+TModuleForm/isShowHeader
+:::
+
 ### 详情-基本使用
 
 ::: demo
@@ -134,6 +140,7 @@ TModuleForm/detailTitleBtn
 | subTitle         | 头部副标题                                                                       | string      | 无           |
 | extra            | 操作区，位于 title 行的行尾(右侧)                                                | slot        | 无           |
 | footer           | 底部操作区（默认展示“取消/保存”按钮；使用插槽则隐藏）footer="null"时隐藏底部操作 | String slot | 无           |
+| isShowHeader     | 不显示header                                                                     | Boolean     | false        |
 | isTabMargin      | tabs是否跟模块分离                                                               | Boolean     | false        |
 | tabMarginNum     | tabs跟模块分离距离                                                               | Number      | 10           |
 | tabs             | 页面展示是否需要页签（并且 tabs 的 key 是插槽）——只显示在最后一个模块下          | Array       | 无           |
