@@ -13,6 +13,7 @@ import TModuleForm from './module-form/src/index.vue'
 import TAdaptivePage from './adaptive-page/src/index.vue'
 import TDatePicker from './date-picker/src/index.vue'
 import TRadio from './radio/src/index.vue'
+import TCheckbox from './checkbox/src/index.vue'
 
 declare module 'vue' {
   export interface GlobalComponents {
@@ -31,5 +32,6 @@ declare module 'vue' {
     TAdaptivePage: typeof TAdaptivePage
     TDatePicker: typeof TDatePicker
     TRadio: typeof TRadio
+    TCheckbox: typeof TCheckbox
   }
 }
