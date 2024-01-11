@@ -12,7 +12,7 @@ import TTimerBtn from './timer-btn/src/index.vue'
 import TModuleForm from './module-form/src/index.vue'
 import TAdaptivePage from './adaptive-page/src/index.vue'
 import TDatePicker from './date-picker/src/index.vue'
-import TRadio from './radio/index'
+import TRadio from './radio/src/index.vue'
 
 declare module 'vue' {
   export interface GlobalComponents {
