@@ -8,19 +8,19 @@ TCheckbox/base
 
 ### 尺寸大小
 
-:::demo 通过 size 属性用来控制单选框的大小
+:::demo 通过 size 属性用来控制多选框的大小
 TCheckbox/size
 :::
 
 ### 按钮样式
 
-:::demo 你可以让单选框看起来像一个按钮一样, 只需要将`type`属性设置为 button
+:::demo 你可以让多选框看起来像一个按钮一样, 只需要将`type`属性设置为 button
 TCheckbox/button
 :::
 
 ### 带有边框
 
-:::demo 设置 border 属性为 true 可以渲染为带有边框的单选框。
+:::demo 设置 border 属性为 true 可以渲染为带有边框的多选框。
 TCheckbox/border
 :::
 
@@ -42,8 +42,8 @@ TCheckbox/props
 | :-------------------- | :------------------- | :---------------------------- | :-------- |
 | model-value / v-model | 绑定值               | Array                         | 无        |
 | option                | 单选数据源           | Array                         | 无        |
-| size                  | 单选框的尺寸         | 'large' / 'default' / 'small' | 'default' |
-| type                  | 按钮样式             | 'radio' / 'button'            | 'radio'   |
+| size                  | 多选框的尺寸         | 'large' / 'default' / 'small' | 'default' |
+| type                  | 按钮样式             | 'check' / 'button'            | 'check'   |
 | props                 | 配置选项，具体看下表 | object                        | -         |
 | border                | 是否显示边框         | boolean                       | false     |
 

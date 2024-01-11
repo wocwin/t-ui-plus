@@ -5,8 +5,8 @@ export interface OptionsProps {
 }
 
 export interface CheckboxItem {
-  value: string
+  value: string | number | boolean
   label: string
-  slot: string
-  disabled: boolean
+  slot?: string
+  disabled?: boolean
 }
