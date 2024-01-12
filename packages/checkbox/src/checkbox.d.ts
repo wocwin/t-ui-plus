@@ -4,7 +4,7 @@ export interface OptionsProps {
   disabled: string
 }
 
-export interface RadioItem {
+export interface CheckboxItem {
   value: string | number | boolean
   label: string
   slot?: string

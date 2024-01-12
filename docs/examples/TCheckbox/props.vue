@@ -1,7 +1,7 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-radio
+      <t-checkbox
         v-model="value"
         :options="options"
         :props="{ label: 'name', value: 'id', disabled: 'isSelected' }"
@@ -11,7 +11,7 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-const value = ref('1')
+const value = ref([])
 const options = ref([
   { id: '2016-05-02', name: '上海市普陀区金沙江路 1518 弄', isSelected: false },
   { id: '2016-05-04', name: '上海市普陀区金沙江路 1517 弄', isSelected: false },
