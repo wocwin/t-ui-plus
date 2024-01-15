@@ -18,6 +18,7 @@ import TAdaptivePage from './adaptive-page'
 import TDatePicker from './date-picker'
 import TRadio from './radio'
 import TCheckbox from './checkbox'
+import TChart from './chart'
 
 // 存储组件列表
 const components: {
@@ -39,6 +40,7 @@ const components: {
   TDatePicker,
   TRadio,
   TCheckbox,
+  TChart,
 }
 // 插件声明：声明所有插件
 // 插件注册：在 Vue 项目的入口文件中，通过 ( app.use(插件) ) 进行注册
@@ -80,6 +82,7 @@ export {
   TDatePicker,
   TRadio,
   TCheckbox,
+  TChart,
 }
 export default {
   // 导出的对象必须具有 install，才能被 Vue.use() 方法安装
