@@ -30,18 +30,21 @@ const props = defineProps({
 
 const echartRef = ref<HTMLDivElement>()
 const chart = ref()
-const emit = defineEmits()
+const emits = defineEmits()
 // 图表初始化
 const renderChart = () => {
   chart.value = markRaw(proxy.$echarts.init(echartRef.value))
   setOption(props.options)
 
+  // 返回chart实例
+  emits('chart', chart.value)
+
   // 监听图表事件
   const events = Object.entries(useAttrs())
   events.forEach(([key, value]) => {
-    if (key.startsWith('on')) {
+    if (key.startsWith('on') && !key.startsWith('onChart')) {
       const on = toLine(key).substring(3)
-      chart.value.on(on, (...args) => emit(on, ...args))
+      chart.value.on(on, (...args) => emits(on, ...args))
     }
   })
 

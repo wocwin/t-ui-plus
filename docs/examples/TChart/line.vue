@@ -15,6 +15,7 @@
         @mouseout="mouseout"
         @globalout="globalout"
         @contextmenu="contextmenu"
+        @chart="chart"
       />
     </t-layout-page-item>
   </t-layout-page>
@@ -64,5 +65,10 @@ const globalout = (e) => {
 }
 const contextmenu = (e) => {
   console.log('contextmenu-----', e)
+}
+
+const chartRef = ref(null)
+const chart = (dom) => {
+  chartRef.value = dom
 }
 </script>
