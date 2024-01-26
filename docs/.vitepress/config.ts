@@ -51,6 +51,7 @@ export default defineConfig({
             { text: '多选框组组件', link: '/components/TCheckbox/base.md' },
             { text: '日期组件', link: '/components/TDatePicker/base.md' },
             { text: '步骤组件', link: '/components/TStepWizard/base.md' },
+            { text: '地图坐标选择组件', link: '/components/TMap/base.md' },
           ],
         },
         {

@@ -30,5 +30,25 @@ export default {
     ctx.app.use(TuiPlus)
 
     ctx.app.component('Demo', VPDemo)
+
+    try {
+      // 引入高德资源
+      window['_AMapSecurityConfig'] = {
+        securityJsCode: '9d5543a8fdd49c93803180581cdc7317', //测试使用
+      }
+      let script = document.createElement('script')
+      script.src =
+        'https://webapi.amap.com/maps?v=2.0&key=b1ec3562e5d1704fc54c1612455b02b3&plugin=AMap.PlaceSearch,AMap.Geocoder,AMap.AutoComplete'
+      // 将 <script> 元素添加到页面的 <head> 或 <body> 标签内部
+      document.getElementsByTagName('head')[0].appendChild(script) // 放在头部
+      
+      let uiScript = document.createElement('script')
+      script.src = 'https://webapi.amap.com/ui/1.1/main.js?v=1.0.11'
+      // 将 <script> 元素添加到页面的 <head> 或 <body> 标签内部
+      document.getElementsByTagName('head')[0].appendChild(script) // 放在头部
+      document.getElementsByTagName('head')[0].appendChild(uiScript) // 放在头部
+    } catch (error) {
+      console.log('高德地图加载error', error)
+    }
   },
 }
