@@ -12,8 +12,9 @@ import {
   nextTick,
   onBeforeUnmount,
   markRaw,
+  useAttrs,
 } from 'vue'
-import { debounce } from '../../utils'
+import { debounce, toLine } from '../../utils'
 const { proxy } = getCurrentInstance() as any
 const props = defineProps({
   options: {
@@ -28,11 +29,20 @@ const props = defineProps({
 
 const echartRef = ref<HTMLDivElement>()
 const chart = ref()
-
+const emit = defineEmits()
 // 图表初始化
 const renderChart = () => {
   chart.value = markRaw(proxy.$echarts.init(echartRef.value))
   setOption(props.options)
+
+  // 监听图表事件
+  const events = Object.entries(useAttrs())
+  events.forEach(([key, value]) => {
+    if (key.startsWith('on')) {
+      const on = toLine(key).substring(3)
+      chart.value.on(on, (...args) => emit(on, ...args))
+    }
+  })
 }
 
 // 重绘图表函数
@@ -60,15 +70,11 @@ watch(
 onMounted(() => {
   renderChart()
   // 大小自适应
-  window.addEventListener('resize', (e) => {
-    resizeChart()
-  })
+  window.addEventListener('resize', resizeChart)
 })
 onBeforeUnmount(() => {
   // 取消监听
-  window.removeEventListener('resize', (e) => {
-    console.log('onBeforeUnmount-e-----', e)
-  })
+  window.removeEventListener('resize', resizeChart)
   // 销毁echarts实例
   chart.value.dispose()
   chart.value = null

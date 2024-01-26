@@ -1,7 +1,18 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-chart :options="options" style="width: 100%; height: 500px" />
+      <t-chart
+        :options="options"
+        style="width: 100%; height: 500px"
+        @click="click"
+        @dblclick="addData()"
+        @mousedown="mousedown"
+        @mousemove="mousemove"
+        @mouseover="mouseover"
+        @mouseout="mouseout"
+        @globalout="globalout"
+        @contextmenu="contextmenu"
+      />
       <el-button @click="addData()">增加数据</el-button>
     </t-layout-page-item>
   </t-layout-page>
@@ -29,5 +40,26 @@ const addData = () => {
     'test' + Math.random().toString(36).substring(2, 8)
   )
   options.value.series[0].data.push(Math.random() * 200)
+}
+const click = (e) => {
+  console.log('click-----', e)
+}
+const mousedown = (e) => {
+  console.log('mousedown-----', e)
+}
+const mousemove = (e) => {
+  console.log('mousemove-----', e)
+}
+const mouseover = (e) => {
+  console.log('mouseover-----', e)
+}
+const mouseout = (e) => {
+  console.log('mouseout-----', e)
+}
+const globalout = (e) => {
+  console.log('globalout-----', e)
+}
+const contextmenu = (e) => {
+  console.log('contextmenu-----', e)
 }
 </script>

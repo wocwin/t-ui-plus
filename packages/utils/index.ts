@@ -1,11 +1,11 @@
-/**
- * @param func 函数
- * @param delay 防抖时间
- * @param immediate 是否立即执行
- * @param resultCallback
- */
 type Func = (...args: any[]) => any
-
+/**
+ * 防抖函数
+ * @param { Function } func 函数
+ * @param { Number } delay 防抖时间
+ * @param { Boolean } immediate 是否立即执行
+ * @param { Function } resultCallback
+ */
 export function debounce(
   func: Func,
   delay: number = 500,
@@ -50,9 +50,10 @@ export function debounce(
 }
 
 /**
- * @param func
- * @param interval
- * @param options
+ * 节流函数
+ * @param { Function } func
+ * @param { Boolean } interval
+ * @param { Object } options
  * leading:初始 trailing:结尾
  */
 export function throttle(
@@ -89,4 +90,12 @@ export function throttle(
     lastTime = 0
   }
   return _throttle
+}
+
+/**
+ * 驼峰转换下划线
+ * @param { String } name
+ */
+export function toLine(name: string) {
+  return name.replace(/([A-Z])/g, '_$1').toLowerCase()
 }
