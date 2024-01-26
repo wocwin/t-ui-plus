@@ -2,6 +2,7 @@
   <t-layout-page>
     <t-layout-page-item>
       <t-chart :options="options" style="width: 100%; height: 500px" />
+      <el-button @click="addData()">增加数据</el-button>
     </t-layout-page-item>
   </t-layout-page>
 </template>
@@ -22,4 +23,11 @@ const options = ref({
     },
   ],
 })
+
+const addData = () => {
+  options.value.xAxis.data.push(
+    'test' + Math.random().toString(36).substring(2, 8)
+  )
+  options.value.series[0].data.push(Math.random() * 200)
+}
 </script>

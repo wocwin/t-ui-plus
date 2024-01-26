@@ -4,7 +4,15 @@
 </template>
 
 <script setup lang="ts" name="TChart">
-import { onMounted, getCurrentInstance, ref } from 'vue'
+import {
+  onMounted,
+  getCurrentInstance,
+  ref,
+  watch,
+  nextTick,
+  onBeforeUnmount,
+  markRaw,
+} from 'vue'
 import { debounce } from '../../utils'
 const { proxy } = getCurrentInstance() as any
 const props = defineProps({
@@ -20,19 +28,50 @@ const props = defineProps({
 
 const echartRef = ref<HTMLDivElement>()
 const chart = ref()
-//重绘图表函数
-const resizeHandler = debounce(() => {
-  chart.value.resize()
+
+// 图表初始化
+const renderChart = () => {
+  chart.value = markRaw(proxy.$echarts.init(echartRef.value))
+  setOption(props.options)
+}
+
+// 重绘图表函数
+const resizeChart = debounce(() => {
+  chart.value?.resize()
 }, 300)
 
+// 设置图表函数
+const setOption = debounce(async (data) => {
+  if (!chart.value) return
+  chart.value.setOption(data, true, true)
+  await nextTick()
+  resizeChart()
+}, 300)
+
+watch(
+  () => props.options,
+  async (nw) => {
+    await nextTick()
+    setOption(nw)
+  },
+  { deep: true }
+)
+
 onMounted(() => {
-  // 图表初始化
-  chart.value = proxy.$echarts.init(echartRef.value)
-  chart.value.setOption(props.options)
+  renderChart()
   // 大小自适应
   window.addEventListener('resize', (e) => {
-    resizeHandler()
+    resizeChart()
   })
+})
+onBeforeUnmount(() => {
+  // 取消监听
+  window.removeEventListener('resize', (e) => {
+    console.log('onBeforeUnmount-e-----', e)
+  })
+  // 销毁echarts实例
+  chart.value.dispose()
+  chart.value = null
 })
 </script>
 
