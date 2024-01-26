@@ -1,7 +1,10 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
+      <el-button @click="isShow = !isShow">显示隐藏</el-button>
+      <el-button @click="addData()">增加数据</el-button>
       <t-chart
+        v-show="isShow"
         :options="options"
         style="width: 100%; height: 500px"
         @click="click"
@@ -13,7 +16,6 @@
         @globalout="globalout"
         @contextmenu="contextmenu"
       />
-      <el-button @click="addData()">增加数据</el-button>
     </t-layout-page-item>
   </t-layout-page>
 </template>
@@ -35,6 +37,7 @@ const options = ref({
   ],
 })
 
+const isShow = ref(true)
 const addData = () => {
   options.value.xAxis.data.push(
     'test' + Math.random().toString(36).substring(2, 8)

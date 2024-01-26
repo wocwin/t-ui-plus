@@ -14,6 +14,7 @@ import {
   markRaw,
   useAttrs,
 } from 'vue'
+import { useResizeObserver } from '@vueuse/core'
 import { debounce, toLine } from '../../utils'
 const { proxy } = getCurrentInstance() as any
 const props = defineProps({
@@ -43,20 +44,33 @@ const renderChart = () => {
       chart.value.on(on, (...args) => emit(on, ...args))
     }
   })
+
+  // 监听元素变化
+  useResizeObserver(echartRef.value, resizeChart)
+  // 大小自适应
+  // window.addEventListener('resize', resizeChart)
 }
 
 // 重绘图表函数
-const resizeChart = debounce(() => {
-  chart.value?.resize()
-}, 300)
+const resizeChart = debounce(
+  () => {
+    chart.value?.resize()
+  },
+  300,
+  true
+)
 
 // 设置图表函数
-const setOption = debounce(async (data) => {
-  if (!chart.value) return
-  chart.value.setOption(data, true, true)
-  await nextTick()
-  resizeChart()
-}, 300)
+const setOption = debounce(
+  async (data) => {
+    if (!chart.value) return
+    chart.value.setOption(data, true, true)
+    await nextTick()
+    resizeChart()
+  },
+  300,
+  true
+)
 
 watch(
   () => props.options,
@@ -69,12 +83,10 @@ watch(
 
 onMounted(() => {
   renderChart()
-  // 大小自适应
-  window.addEventListener('resize', resizeChart)
 })
 onBeforeUnmount(() => {
   // 取消监听
-  window.removeEventListener('resize', resizeChart)
+  // window.removeEventListener('resize', resizeChart)
   // 销毁echarts实例
   chart.value.dispose()
   chart.value = null
