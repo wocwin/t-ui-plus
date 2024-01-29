@@ -18,6 +18,7 @@ import TAdaptivePage from './adaptive-page'
 import TDatePicker from './date-picker'
 import TRadio from './radio'
 import TCheckbox from './checkbox'
+import TChart from './chart'
 import TMap from './map'
 
 // 存储组件列表
@@ -40,6 +41,7 @@ const components: {
   TDatePicker,
   TRadio,
   TCheckbox,
+  TChart,
   TMap
 }
 // 插件声明：声明所有插件
@@ -82,6 +84,7 @@ export {
   TDatePicker,
   TRadio,
   TCheckbox,
+  TChart,
   TMap
 }
 export default {

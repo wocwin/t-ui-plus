@@ -88,5 +88,8 @@
     "二次封装组件",
     "封装组件",
     "components"
-  ]
+  ],
+  "dependencies": {
+    "echarts": "^5.4.3"
+  }
 }
