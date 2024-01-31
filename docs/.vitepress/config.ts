@@ -47,9 +47,9 @@ export default defineConfig({
             { text: '详情组件', link: '/components/TDetail/base.md' },
             { text: 'Button组件', link: '/components/TButton/base.md' },
             { text: 'Radio组件', link: '/components/TRadio/base.md' },
-            { text: 'Chart图表组件', link: '/components/TChart/base.md' },
             { text: '多选框组组件', link: '/components/TCheckbox/base.md' },
             { text: '日期组件', link: '/components/TDatePicker/base.md' },
+            { text: 'Tabs组件', link: '/components/TTabs/base.md' },
             { text: '步骤组件', link: '/components/TStepWizard/base.md' },
             { text: '地图坐标选择组件', link: '/components/TMap/base.md' },
           ],
@@ -57,6 +57,7 @@ export default defineConfig({
         {
           text: '复杂组件',
           items: [
+            { text: 'Chart图表组件', link: '/components/TChart/base.md' },
             {
               text: '下拉选择表格组件',
               link: '/components/TSelectTable/base.md',

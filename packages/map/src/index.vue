@@ -14,7 +14,7 @@ interface Props {
     dragEnable?: boolean
   }
   disabled?: boolean
-  size: 'large' | 'default' | 'small'
+  size?: 'large' | 'default' | 'small'
   placeholder?: string
   top?: string
   width?: string
@@ -200,60 +200,61 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <el-input
-    class="map-input"
-    :placeholder="props.placeholder"
-    readonly
-    :size="props.size"
-    :disabled="disabled"
-    v-model="modelValue[2]"
-    @click="handleOpenDialog"
-  >
-    <template #suffix v-if="!disabled">
-      <el-icon v-if="modelValue[2]" class="input-close-icon" @click="clearValue"
-        ><CircleClose
-      /></el-icon>
-    </template>
-  </el-input>
-  <el-dialog
-    v-model="dialogVisible"
-    title="请选择坐标"
-    :width="props.width"
-    :top="props.top"
-    :close-on-click-modal="false"
-  >
-    <div class="map-container" v-if="dialogVisible">
-      <el-autocomplete
-        v-model="keyword"
-        :disabled="disabled"
-        placeholder="请输入关键字选择地点"
-        class="map-container-search"
-        :debounce="700"
-        style="margin-bottom: 15px; width: 100%"
-        clearable
-        @input="inputChange"
-        :fetch-suggestions="querySearch"
-        @select="handleSelect"
-        @keyup.enter.native="handleSelect({ name: keyword })"
-        :validate-event="false"
-      >
-        <template #default="{ item }">
-          {{ item.name }} <span class="district">{{ item.district }}</span>
-        </template>
-      </el-autocomplete>
-      <div class="map-container-inner">
-        <div id="container"></div>
-        <div id="map-search-result"></div>
+  <div class="t_map">
+    <el-input
+      class="map-input"
+      :placeholder="placeholder"
+      readonly
+      :size="size"
+      :disabled="disabled"
+      v-model="modelValue[2]"
+      @click="handleOpenDialog"
+    >
+      <template #suffix v-if="!disabled">
+        <el-icon v-if="modelValue[2]" class="input-close-icon" @click="clearValue">
+          <CircleClose />
+        </el-icon>
+      </template>
+    </el-input>
+    <el-dialog
+      v-model="dialogVisible"
+      title="请选择坐标"
+      :width="width"
+      :top="top"
+      :close-on-click-modal="false"
+    >
+      <div class="map-container" v-if="dialogVisible">
+        <el-autocomplete
+          v-model="keyword"
+          :disabled="disabled"
+          placeholder="请输入关键字选择地点"
+          class="map-container-search"
+          :debounce="700"
+          style="margin-bottom: 15px; width: 100%"
+          clearable
+          @input="inputChange"
+          :fetch-suggestions="querySearch"
+          @select="handleSelect"
+          @keyup="handleSelect({ name: keyword })"
+          :validate-event="false"
+        >
+          <template #default="{ item }">
+            {{ item.name }}
+            <span class="district">{{ item.district }}</span>
+          </template>
+        </el-autocomplete>
+        <div class="map-container-inner">
+          <div id="container"></div>
+          <div id="map-search-result"></div>
+        </div>
       </div>
-    </div>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button type="primary" :disabled="disabled" @click="handleConfirm">
-          确定
-        </el-button>
-      </span>
-    </template>
-  </el-dialog>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button type="primary" :disabled="disabled" @click="handleConfirm">确定</el-button>
+        </span>
+      </template>
+    </el-dialog>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -277,7 +278,7 @@ onUnmounted(() => {
       position: relative;
       width: 100%;
       height: 500px;
-      :deep .amap-marker img {
+      :deep(.amap-marker) img {
         width: 25px;
         height: 34px;
       }

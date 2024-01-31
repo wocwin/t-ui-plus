@@ -15,6 +15,8 @@ import TDatePicker from './date-picker/src/index.vue'
 import TRadio from './radio/src/index.vue'
 import TCheckbox from './checkbox/src/index.vue'
 import TChart from './chart/src/index.vue'
+import TMap from './map/src/index.vue'
+import TTabs from './tabs/src/index.vue'
 
 declare module 'vue' {
   export interface GlobalComponents {
@@ -35,5 +37,7 @@ declare module 'vue' {
     TRadio: typeof TRadio
     TCheckbox: typeof TCheckbox
     TChart: typeof TChart
+    TTabs: typeof TTabs
+    TMap: typeof TMap
   }
 }

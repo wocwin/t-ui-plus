@@ -5,8 +5,8 @@ export interface OptionsProps {
 }
 
 export interface RadioItem {
-  value: string | number | boolean
+  value: string
   label: string
-  slot?: string
-  disabled?: boolean
+  slot: string
+  disabled: boolean
 }
