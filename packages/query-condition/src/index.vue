@@ -100,36 +100,19 @@
           :disabled="value.disabled"
           :label="compChildLabel(opt, value)"
           :value="compChildValue(opt, value, key)"
-          >{{ compChildShowLabel(opt, value) }}</component
-        >
+        >{{ compChildShowLabel(opt, value) }}</component>
       </component>
     </el-form-item>
     <el-form-item
       v-if="Object.keys(cOpts).length > 0"
       label-width="0"
       style="grid-area: submit_btn"
-      :class="['btn', { flex_end: cellLength % colLength === 0 }]"
+      :class="['btn', { flex_end: cellLength % colLength === 0 },{ btn_flex_end: (Object.keys(cOpts).length === 4 ||cellLength>3)}]"
     >
-      <el-button
-        class="btn_check"
-        @click="checkHandle"
-        v-bind="queryAttrs"
-        :loading="loading"
-        >查询</el-button
-      >
-      <el-button
-        v-if="reset"
-        class="btn_reset"
-        v-bind="resetAttrs"
-        @click="resetHandle"
-        >重置</el-button
-      >
+      <el-button class="btn_check" @click="checkHandle" v-bind="queryAttrs" :loading="loading">查询</el-button>
+      <el-button v-if="reset" class="btn_reset" v-bind="resetAttrs" @click="resetHandle">重置</el-button>
       <slot name="querybar"></slot>
-      <el-button
-        v-if="originCellLength > colLength && isShowOpen"
-        @click="open = !open"
-        link
-      >
+      <el-button v-if="originCellLength > colLength && isShowOpen" @click="open = !open" link>
         {{ open ? '收起' : '展开' }}
         <el-icon v-if="open">
           <ArrowUp />
@@ -507,17 +490,20 @@ defineExpose({ queryState, props, colLength })
 
     .el-form-item__content {
       display: flex;
-      justify-content: flex-end;
+      // justify-content: flex-end;
       align-items: center;
       overflow: visible !important;
     }
   }
 
   .btn {
-    text-align: end;
-
     .el-form-item__content {
       display: flex;
+      // justify-content: flex-end;
+    }
+  }
+  .btn_flex_end {
+    .el-form-item__content {
       justify-content: flex-end;
     }
   }
