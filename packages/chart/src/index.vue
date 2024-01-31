@@ -1,4 +1,3 @@
-<!--  线 + 柱混合图 -->
 <template>
   <div class="t-chart" :id="id" ref="echartRef" />
 </template>
@@ -26,21 +25,25 @@ const props = defineProps({
     type: String,
     default: () => Math.random().toString(36).substring(2, 8),
   },
+  theme: {
+    type: String,
+    default: '',
+  },
 })
 
 const echartRef = ref<HTMLDivElement>()
 const chart = ref()
 const emits = defineEmits()
+const events = Object.entries(useAttrs())
+
 // 图表初始化
 const renderChart = () => {
-  chart.value = markRaw(proxy.$echarts.init(echartRef.value))
+  chart.value = markRaw(proxy.$echarts.init(echartRef.value, props.theme))
   setOption(props.options)
-
   // 返回chart实例
   emits('chart', chart.value)
 
   // 监听图表事件
-  const events = Object.entries(useAttrs())
   events.forEach(([key, value]) => {
     if (key.startsWith('on') && !key.startsWith('onChart')) {
       const on = toLine(key).substring(3)
@@ -82,6 +85,14 @@ watch(
     setOption(nw)
   },
   { deep: true }
+)
+
+watch(
+  () => props.theme,
+  async () => {
+    chart.value.dispose()
+    renderChart()
+  }
 )
 
 onMounted(() => {

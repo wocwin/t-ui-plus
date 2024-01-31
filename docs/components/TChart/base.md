@@ -41,12 +41,19 @@ TChart/pie
 TChart/radar
 :::
 
+### 主题切换
+
+:::demo
+TChart/theme
+:::
+
 ### 2、配置参数
 
-| 参数   | 说明                        | 类型   | 默认值 |
-| :----- | :-------------------------- | :----- | :----- |
-| option | echarts 配置                | object | -      |
-| id     | 容器 ref 值，默认六位随机数 | string | -      |
+| 参数   | 说明                           | 类型   | 默认值 |
+| :----- | :----------------------------- | :----- | :----- |
+| option | echarts 配置                   | object | -      |
+| id     | 容器 ref 值，默认六位随机数    | string | -      |
+| theme  | echarts 主题，具体请看官方文档 | string | -      |
 
 ### 3、事件（events）集成 echarts 的事件
 
