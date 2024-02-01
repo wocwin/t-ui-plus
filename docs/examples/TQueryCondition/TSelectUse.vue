@@ -1,13 +1,8 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-query-condition
-        labelWidth="140px"
-        :opts="opts"
-        isExpansion
-        @submit="conditionEnter"
-        @handleEvent="handleEvent"
-      />
+      <t-query-condition labelWidth="140px" :opts="opts" isExpansion @submit="conditionEnter"
+        @handleEvent="handleEvent" />
     </t-layout-page-item>
   </t-layout-page>
 </template>
@@ -21,6 +16,7 @@ let state = reactive({
     userName2: null, // 登录名
     workshopNum: null,
     workshopNum2: null,
+    workshopNum3: null,
     date: null,
     deptCode: null,
   },
@@ -72,6 +68,11 @@ let state = reactive({
     },
   ],
 })
+const initials = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+const stepList = Array.from({ length: 1000 }).map((_, idx) => ({
+  value: `Option ${idx + 1}`,
+  label: `${initials[idx % 10]}${idx}`,
+}))
 const userName = ref()
 const userName2 = ref()
 const opts = computed(() => {
@@ -131,6 +132,17 @@ const opts = computed(() => {
         optionSource: state.multipleList,
       },
     },
+    workshopNum3: {
+      label: '虚拟列表',
+      placeholder: 'TSelect虚拟列表',
+      span: 2,
+      comp: 't-select',
+      isSelfCom: true,
+      bind: {
+        useVirtual: true,
+        optionSource: stepList
+      },
+    },
     date: {
       label: '装炉时间',
       comp: 'el-date-picker',
@@ -172,13 +184,14 @@ const radioChange2 = (val) => {
 }
 // 最终参数获取
 const getQueryData = computed(() => {
-  const { userName, userName2, workshopNum, date, workshopNum2, deptCode } =
+  const { userName, userName2, workshopNum, date, workshopNum2, workshopNum3, deptCode } =
     toRefs(state.queryData)
   return {
     userName,
     userName2,
     workshopNum,
     workshopNum2,
+    workshopNum3,
     deptCode,
     beginDate: date && date[0] ? date[0] : null,
     endDate: date && date[1] ? date[1] : null,

@@ -29,6 +29,11 @@ const statusList = ref([
   { label: '启用', value: 1 },
   { label: '停用', value: 0 },
 ])
+const initials = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+const stepList = Array.from({ length: 1000 }).map((_, idx) => ({
+  value: `Option ${idx + 1}`,
+  label: `${initials[idx % 10]}${idx}`,
+}))
 const tableData = ref([
   { id: 1, code: 1, name: '物料名称1', spec: '物料规格1', unitName: '吨' },
   { id: 2, code: 2, name: '物料名称2', spec: '物料规格2', unitName: '吨' },
@@ -78,6 +83,7 @@ const formOpts: any = reactive({
     sex: null,
     hobby: null,
     hobby1: null,
+    hobby2: null,
     status: null,
     wechat: null,
     deptCode: null,
@@ -117,6 +123,14 @@ const formOpts: any = reactive({
       comp: 't-select',
       isSelfCom: true,
       bind: { multiple: true, optionSource: hobbyList, valueCustom: 'value' },
+    },
+    {
+      label: '虚拟列表',
+      value: 'hobby2',
+      placeholder: 'TSelect虚拟列表',
+      comp: 't-select',
+      isSelfCom: true,
+      bind: { useVirtual: true, optionSource: stepList },
     },
     {
       label: '部门',
