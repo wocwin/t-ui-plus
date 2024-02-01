@@ -1,6 +1,8 @@
 <!--  线 + 柱混合图 -->
 <template>
-  <div class="t-chart" :id="id" ref="echartRef" />
+  <div class="t-chart" :id="id" ref="echartRef">
+    <slot></slot>
+  </div>
 </template>
 
 <script setup lang="ts" name="TChart">
@@ -100,5 +102,6 @@ onBeforeUnmount(() => {
 .t-chart {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 </style>
