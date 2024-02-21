@@ -1,5 +1,15 @@
 <template>
-  <div class="t-chart" :id="id" ref="echartRef" />
+  <div class="t-chart" v-bind="$attrs">
+    <div
+      v-show="!formatEmpty"
+      class="t-chart-container"
+      :id="id"
+      ref="echartRef"
+    />
+    <slot v-if="formatEmpty" name="empty">
+      <el-empty v-bind="$attrs" :description="description" />
+    </slot>
+  </div>
 </template>
 
 <script setup lang="ts" name="TChart">
@@ -15,6 +25,7 @@ import {
 } from 'vue'
 import { useResizeObserver } from '@vueuse/core'
 import { debounce, toLine } from '../../utils'
+import { computed } from 'vue'
 const { proxy } = getCurrentInstance() as any
 const props = defineProps({
   options: {
@@ -28,6 +39,14 @@ const props = defineProps({
   theme: {
     type: String,
     default: '',
+  },
+  isEmpty: {
+    type: [Boolean, Function],
+    default: false,
+  },
+  description: {
+    type: String,
+    default: '暂无数据',
   },
 })
 
@@ -78,6 +97,13 @@ const setOption = debounce(
   true
 )
 
+const formatEmpty = computed(() => {
+  if (typeof props.isEmpty === 'function') {
+    return props.isEmpty(props.options)
+  }
+  return props.isEmpty
+})
+
 watch(
   () => props.options,
   async (nw) => {
@@ -111,5 +137,9 @@ onBeforeUnmount(() => {
 .t-chart {
   width: 100%;
   height: 100%;
+  &-container {
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>
