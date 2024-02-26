@@ -1,10 +1,7 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-chart
-        :options="options"
-        style="width: 100%; height: 500px; position: relative"
-      >
+      <t-chart :options="options" style="width: 100%; height: 500px">
         <el-radio-group
           v-model="accessType"
           style="position: absolute; right: 10px; top: 0px"

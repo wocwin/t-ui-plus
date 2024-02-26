@@ -136,6 +136,7 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 .t-chart {
+  position: relative;
   width: 100%;
   height: 100%;
   &-container {
