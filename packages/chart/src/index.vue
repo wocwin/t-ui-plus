@@ -1,6 +1,14 @@
-<!--  线 + 柱混合图 -->
 <template>
-  <div class="t-chart" :id="id" ref="echartRef">
+  <div class="t-chart" v-bind="$attrs">
+    <div
+      v-show="!formatEmpty"
+      class="t-chart-container"
+      :id="id"
+      ref="echartRef"
+    />
+    <slot v-if="formatEmpty" name="empty">
+      <el-empty v-bind="$attrs" :description="description" />
+    </slot>
     <slot></slot>
   </div>
 </template>
@@ -18,6 +26,7 @@ import {
 } from 'vue'
 import { useResizeObserver } from '@vueuse/core'
 import { debounce, toLine } from '../../utils'
+import { computed } from 'vue'
 const { proxy } = getCurrentInstance() as any
 const props = defineProps({
   options: {
@@ -28,21 +37,33 @@ const props = defineProps({
     type: String,
     default: () => Math.random().toString(36).substring(2, 8),
   },
+  theme: {
+    type: String,
+    default: '',
+  },
+  isEmpty: {
+    type: [Boolean, Function],
+    default: false,
+  },
+  description: {
+    type: String,
+    default: '暂无数据',
+  },
 })
 
 const echartRef = ref<HTMLDivElement>()
 const chart = ref()
 const emits = defineEmits()
+const events = Object.entries(useAttrs())
+
 // 图表初始化
 const renderChart = () => {
-  chart.value = markRaw(proxy.$echarts.init(echartRef.value))
+  chart.value = markRaw(proxy.$echarts.init(echartRef.value, props.theme))
   setOption(props.options)
-
   // 返回chart实例
   emits('chart', chart.value)
 
   // 监听图表事件
-  const events = Object.entries(useAttrs())
   events.forEach(([key, value]) => {
     if (key.startsWith('on') && !key.startsWith('onChart')) {
       const on = toLine(key).substring(3)
@@ -77,6 +98,13 @@ const setOption = debounce(
   true
 )
 
+const formatEmpty = computed(() => {
+  if (typeof props.isEmpty === 'function') {
+    return props.isEmpty(props.options)
+  }
+  return props.isEmpty
+})
+
 watch(
   () => props.options,
   async (nw) => {
@@ -84,6 +112,14 @@ watch(
     setOption(nw)
   },
   { deep: true }
+)
+
+watch(
+  () => props.theme,
+  async () => {
+    chart.value.dispose()
+    renderChart()
+  }
 )
 
 onMounted(() => {
@@ -100,8 +136,12 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 .t-chart {
+  position: relative;
   width: 100%;
   height: 100%;
-  position: relative;
+  &-container {
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>

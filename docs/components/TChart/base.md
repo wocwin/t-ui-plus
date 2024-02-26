@@ -41,15 +41,43 @@ TChart/pie
 TChart/radar
 :::
 
-### 2、配置参数
+### 主题切换
 
-| 参数   | 说明                        | 类型   | 默认值 |
-| :----- | :-------------------------- | :----- | :----- |
-| option | echarts 配置                | object | -      |
-| id     | 容器 ref 值，默认六位随机数 | string | -      |
+:::demo
+TChart/theme
+:::
+
+### 空状态
+
+设置 isEmpty=true，即可显示空状态
+:::demo
+TChart/empty
+:::
+
+### 插槽
+
+:::demo
+TChart/slot
+:::
+
+### 2、配置参数 继承 el-empty Attributes
+
+| 参数    | 说明                           | 类型                      | 默认值 |
+| :------ | :----------------------------- | :------------------------ | :----- |
+| options | echarts 配置                   | object                    | -      |
+| id      | 容器 ref 值，默认六位随机数    | string                    | -      |
+| theme   | echarts 主题，具体请看官方文档 | string                    | -      |
+| isEmpty | 是否显示空状态                 | Boolean,Function(options) | false  |
 
 ### 3、事件（events）集成 echarts 的事件
 
 | 事件名 | 说明              | 回调参数        |
 | :----- | :---------------- | :-------------- |
 | chart  | 返回的 chart 实例 | 返回 chart 实例 |
+
+### 4、插槽
+
+| 插槽名  | 说明       |
+| :------ | :--------- |
+| default | 默认插槽   |
+| empty   | 空状态插槽 |
