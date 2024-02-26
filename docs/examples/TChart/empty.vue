@@ -13,7 +13,7 @@
       <t-chart
         :options="options"
         :isEmpty="isEmptyFn"
-        image="https://contrib.rocks/image?repo=wocwin/t-ui-plus"
+        image="/t-ui-plus/img/hero.jpg"
         :image-size="400"
         description="empty 组件的描述信息"
         style="width: 100%; height: 500px"

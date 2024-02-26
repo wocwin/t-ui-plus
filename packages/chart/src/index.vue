@@ -9,6 +9,7 @@
     <slot v-if="formatEmpty" name="empty">
       <el-empty v-bind="$attrs" :description="description" />
     </slot>
+    <slot></slot>
   </div>
 </template>
 

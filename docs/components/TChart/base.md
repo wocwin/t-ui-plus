@@ -54,6 +54,12 @@ TChart/theme
 TChart/empty
 :::
 
+### 插槽
+
+:::demo
+TChart/slot
+:::
+
 ### 2、配置参数 继承 el-empty Attributes
 
 | 参数    | 说明                           | 类型                      | 默认值 |
