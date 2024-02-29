@@ -53,6 +53,7 @@ const formOpts: any = reactive({
     password: null, // *用户密码
     name: null, // *用户昵称
     sex: null, // *性别: 0:男 1:女
+    sex1: null, // *性别: 0:男 1:女
     hobby: [], // *爱好: 0:男 1:女
     phone: null, // 手机号码
     valDate: null, // el日期选择范围
@@ -86,6 +87,13 @@ const formOpts: any = reactive({
       list: 'sexList',
       arrLabel: 'key',
       arrKey: 'value',
+    },
+    {
+      label: '性别单选',
+      value: 'sex1',
+      type: 'radio',
+      comp: 'el-radio-group',
+      list: 'sexList1',
     },
     {
       label: '状态',
@@ -153,6 +161,10 @@ const formOpts: any = reactive({
       { label: '美剧', value: '2' },
       { label: '旅游', value: '3' },
       { label: '音乐', value: '4' },
+    ],
+    sexList1: [
+      { label: '女', value: 1 },
+      { label: '男', value: 0 },
     ],
     sexList: [
       { key: '女', value: 1 },

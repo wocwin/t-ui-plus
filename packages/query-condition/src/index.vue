@@ -109,8 +109,8 @@
       style="grid-area: submit_btn"
       :class="['btn', { flex_end: cellLength % colLength === 0 },{ btn_flex_end: (Object.keys(cOpts).length === 4 ||cellLength>3)}]"
     >
-      <el-button class="btn_check" @click="checkHandle" v-bind="queryAttrs" :loading="loading">查询</el-button>
-      <el-button v-if="reset" class="btn_reset" v-bind="resetAttrs" @click="resetHandle">重置</el-button>
+      <el-button class="btn_check" @click="checkHandle" v-bind="queryAttrs" :loading="loading">{{queryAttrs.btnTxt}}</el-button>
+      <el-button v-if="reset" class="btn_reset" v-bind="resetAttrs" @click="resetHandle">{{resetAttrs.btnTxt}}</el-button>
       <slot name="querybar"></slot>
       <el-button v-if="originCellLength > colLength && isShowOpen" @click="open = !open" link>
         {{ open ? '收起' : '展开' }}
@@ -188,11 +188,11 @@ if (props.isExpansion) {
 }
 // 查询按钮配置
 const queryAttrs = computed(() => {
-  return { type: 'primary', size: 'default', ...props.btnCheckBind }
+  return { type: 'primary', size: 'default',btnTxt:'查询', ...props.btnCheckBind }
 })
 // 重置按钮配置
 const resetAttrs = computed(() => {
-  return { size: 'default', ...props.btnResetBind }
+  return { size: 'default',btnTxt:'重置', ...props.btnResetBind }
 })
 const originCellLength = computed(() => {
   let length = 0
