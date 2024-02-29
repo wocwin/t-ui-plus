@@ -9,15 +9,15 @@
         <slot name="leftContent" />
       </div>
     </div>
-    <t-layout-page class="right_content">
-      <t-layout-page-item class="table_search">
+    <t-layout-page class="right_content" :style="pageStyle">
+      <t-layout-page-item class="table_search" :style="queryPageStyle">
         <t-query-condition v-bind="$attrs" ref="TQueryConditionPage">
           <template v-for="(index, name) in slots" #[name]="data">
             <slot :name="name" v-bind="data" />
           </template>
         </t-query-condition>
       </t-layout-page-item>
-      <t-layout-page-item class="table_main">
+      <t-layout-page-item class="table_main" :style="tablePageStyle">
         <t-table v-bind="$attrs" ref="TTablePage">
           <template v-for="(index, name) in slots" #[name]="data">
             <slot :name="name" v-bind="data" />
@@ -39,6 +39,18 @@ defineProps({
   leftWidth: {
     type: Number,
     default: 260,
+  },
+   pageStyle: {
+    type: Object,
+    default: ()=>{},
+  },
+   queryPageStyle: {
+    type: Object,
+    default: ()=>{},
+  },
+   tablePageStyle: {
+    type: Object,
+    default: ()=>{},
   },
 })
 const slots = useSlots()

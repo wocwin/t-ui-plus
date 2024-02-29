@@ -4,6 +4,7 @@
     title="用户管理列表"
     row-key="path"
     isCopy
+    :queryPageStyle="{marginBottom: '0px'}"
     :table="state.table"
     :columns="state.table.columns"
     :opts="opts"

@@ -39,8 +39,11 @@ TAdaptivePage/lefttree
 
 ### 2、配置参数（Attributes）继承 TTable 及 TQueryCondition 组件的所有属性、事件、插槽、方法
 
-| 参数      | 说明     | 类型          | 默认值 |
-| :-------- | :------- | :------------ | :----- |
-| leftWidth | 左侧宽度 | number,String | 260    |
+| 参数           | 说明                                     | 类型          | 默认值 |
+| :------------- | :--------------------------------------- | :------------ | :----- |
+| leftWidth      | 左侧宽度                                 | number,String | 260    |
+| pageStyle      | t-layout-page行内样式                    | object        | -      |
+| queryPageStyle | 查询条件组件的t-layout-page-item行内样式 | object        | -      |
+| tablePageStyle | table组件的t-layout-page-item行内样式    | object        | -      |
 
 
