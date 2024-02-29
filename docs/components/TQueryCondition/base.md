@@ -73,8 +73,8 @@ TQueryCondition/querybar
 | isShowOpen   | 是否显示收起和展开                        | Boolean | true                             |
 | isExpansion  | 是否默认展开                              | Boolean | false                            |
 | labelWidth   | labelWidth 宽度                           | String  | '120px'                          |
-| btnCheckBind | 查询按钮配置（继承`el-button`所有属性）   | object  | `{type: primary, size: default}` |
-| btnResetBind | 重置按钮配置（继承`el-button`所有属性）   | object  | `{ size: default}`               |
+| btnCheckBind | 查询按钮配置（继承`el-button`所有属性）   | object  | `{type: primary, size: default,btnTxt:'查询'}` |
+| btnResetBind | 重置按钮配置（继承`el-button`所有属性）   | object  | `{ size: default,btnTxt:'重置'}`               |
 
 
 ### 3、opts Attributes

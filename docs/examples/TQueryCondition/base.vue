@@ -5,7 +5,7 @@
         :opts="opts"
         @submit="conditionEnter"
         @handleEvent="handleEvent"
-        :btnResetBind="{ size: 'small' }"
+        :btnResetBind="{ size: 'small',btnTxt:'搜索', icon:'Search'}"
       />
     </t-layout-page-item>
   </t-layout-page>
