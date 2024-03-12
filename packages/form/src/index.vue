@@ -45,7 +45,11 @@
             :is="item.comp"
             :ref="(el:any) => handleRef(el, index)"
             :placeholder="item.placeholder || getPlaceholder(item)"
-            v-bind="{ clearable: true, filterable: true, ...item.bind }"
+            v-bind="
+              typeof item.bind == 'function'
+                ? item.bind(item)
+                : { clearable: true, filterable: true, ...item.bind }
+            "
             :style="{ width: item.width || '100%' }"
             v-on="cEvent(item, 't-select-table')"
           />
@@ -54,7 +58,11 @@
             :is="item.comp"
             v-model="formOpts.formData[item.value]"
             :placeholder="item.placeholder || getPlaceholder(item)"
-            v-bind="{ clearable: true, filterable: true, ...item.bind }"
+            v-bind="
+              typeof item.bind == 'function'
+                ? item.bind(item)
+                : { clearable: true, filterable: true, ...item.bind }
+            "
             :style="{ width: item.width || '100%' }"
             v-on="cEvent(item)"
           />
@@ -326,7 +334,20 @@ onMounted(() => {
   for (const [key, value] of entries) {
     instance.exposed[key] = value
   }
-  // console.log(789, instance)
+  // 默认赋值触发handleEvent事件
+  let event = null
+  let item = null
+  Object.keys(props.formOpts.formData).forEach((key) => {
+    if (props.formOpts.formData[key]) {
+      props.formOpts.fieldList.map((val) => {
+        if (val.value == key) {
+          event = val.event
+          item = val
+        }
+      })
+      handleEvent(event, props.formOpts.formData[key], item, false)
+    }
+  })
   // 将form实例返回到父级
   emits('update:modelValue', tform.value)
 })
@@ -356,9 +377,10 @@ const getPlaceholder = (row: any) => {
   return placeholder
 }
 // 查询条件change事件
-const handleEvent = (type, val, item) => {
+const handleEvent = (type, val, item, flag = true) => {
   // 去除前后空格
   if (
+    flag &&
     props.isTrim &&
     !item.isTrim &&
     item.comp.includes('el-input') &&
@@ -368,6 +390,7 @@ const handleEvent = (type, val, item) => {
     props.formOpts.formData[item.value] =
       props.formOpts.formData[item.value].trim()
   }
+
   emits('handleEvent', type, val)
 }
 // 自定义校验
@@ -380,7 +403,6 @@ const selfValidate = () => {
           formData: props.formOpts.formData,
         })
       } else {
-        // eslint-disable-next-line prefer-promise-reject-errors
         reject({
           valid,
           formData: null,
