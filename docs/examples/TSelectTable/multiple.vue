@@ -1,6 +1,6 @@
 <template>
   <t-layout-page>
-    <t-layout-page-item>
+    <t-layout-page-item style="display: flex">
       <t-select-table
         ref="selectTable"
         :table="table"

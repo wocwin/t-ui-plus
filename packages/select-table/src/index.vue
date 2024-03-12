@@ -1,8 +1,9 @@
 <template>
   <el-select
     ref="selectRef"
-    v-model="state.defaultValue"
+    :model-value="multiple ? state.defaultValue : selectDefaultLabel"
     popper-class="t-select-table"
+    :style="{ width: selectWidth ? `${selectWidth}px` : '100%' }"
     :multiple="multiple"
     v-bind="selectAttr"
     :value-key="keywords.value"
@@ -143,10 +144,13 @@ import {
   reactive,
   onMounted,
 } from 'vue'
-// import { ClickOutside as vClickOutside, ElMessage } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import ClickOutside from '../../utils/directives/click-outside/index'
 const props = defineProps({
+  modelValue: {
+    type: [Array, String, Number, Boolean, Object],
+    default: undefined,
+  },
   // 选择值
   value: {
     type: [String, Number, Array],
@@ -236,9 +240,13 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  // select 宽度
+  selectWidth: {
+    type: [String, Number],
+  },
   // table宽度
   tableWidth: {
-    type: Number,
+    type: [String, Number],
     default: 550,
   },
   // 设置默认选中项--keywords.value值（单选是String, Number类型；多选时是数组）
@@ -261,6 +269,7 @@ const isRadio = ref(false)
 const isQueryVisible = ref(false) // 查询条件是否显示隐藏下拉框
 const isVisible = ref(false) // 是否显示隐藏下拉框
 const radioVal = ref('')
+const selectDefaultLabel: any = ref(props.modelValue) // 单选赋值
 const state: any = reactive({
   defaultSelectValue: props.defaultSelectVal, // 默认选中
   tableData: props.table.data, // table数据
@@ -289,32 +298,6 @@ watch(
   { deep: true }
 )
 watch(
-  () => props.value,
-  (val) => {
-    // console.log(111, val)
-    state.tableData = val
-    nextTick(() => {
-      // 多选
-      if (props.multiple) {
-        state.defaultValue = Array.isArray(props.value)
-          ? props.value
-          : typeof props.value === 'string'
-          ? props.value.split(',')
-          : []
-        state.defaultValue = (state.defaultValue || []).map((item) => {
-          return item
-        })
-      } else {
-        state.defaultValue = props.value
-          ? { [props.keywords.value]: props.value }
-          : ''
-      }
-      findLabel()
-    })
-  },
-  { deep: true }
-)
-watch(
   () => props.defaultSelectVal,
   (val) => {
     // console.log('props.defaultSelectVal---watch', val)
@@ -336,7 +319,7 @@ const visibleChange = (visible) => {
   // console.log('表格显示隐藏回调', visible)
   isVisible.value = visible
   if (isQueryVisible.value) {
-    selectRef.value.visible = true
+    selectRef.value.expanded = true
   }
   if (visible) {
     if (props.defaultSelectVal && isDefaultSelectVal.value) {
@@ -351,7 +334,7 @@ const visibleChange = (visible) => {
 // 查询条件change事件触发
 const handleEvent = () => {
   // console.log('查询条件change事件触发')
-  selectRef.value.visible = true
+  selectRef.value.expanded = true
 }
 // 条件查询组件的visible-change事件
 const queryVisibleChange = (val) => {
@@ -372,13 +355,13 @@ const closeBox = () => {
         val.eventHandle = {
           'visible-change': ($event) => queryVisibleChange($event),
         }
-        selectRef.value.visible = true
+        selectRef.value.expanded = true
       }
     })
     if (isVisible.value && props.isShowQuery) {
-      selectRef.value.visible = true
+      selectRef.value.expanded = true
     } else {
-      selectRef.value.visible = false
+      selectRef.value.expanded = false
     }
   }
 }
@@ -427,13 +410,15 @@ const findLabel = () => {
         item.currentLabel = item.value
       })
     } else {
-      selectRef.value.selectedLabel =
+      selectDefaultLabel.value =
         (state.defaultValue && state.defaultValue[props.keywords.label]) || ''
     }
   })
 }
+
 // 抛出事件
 const emits = defineEmits(['page-change', 'selectionChange', 'radioChange'])
+
 // 当前页码
 const handlesCurrentChange = (val) => {
   if (props.multiple) {
@@ -468,7 +453,7 @@ const defaultSelect = (defaultSelectVal) => {
           selectTable.value.toggleRowSelection(arr[0], true)
         }
       })
-      selectRef.value.selected.forEach((item) => {
+      selectRef.value?.selected?.forEach((item) => {
         item.currentLabel = item.value
       })
     }, 0)
@@ -483,7 +468,7 @@ const defaultSelect = (defaultSelectVal) => {
     radioVal.value = index + 1
     state.defaultValue = row
     setTimeout(() => {
-      selectRef.value.selectedLabel = row[props.keywords.label]
+      selectDefaultLabel.value = row[props.keywords.label]
     }, 0)
   }
 }
@@ -510,8 +495,8 @@ const filterMethodHandle = (val) => {
       } else {
         tableData.map((item, index) => {
           if (
-            item[props.keywords.value] === state.defaultValue &&
-            state.defaultValue[props.keywords.value]
+            item[props.keywords.value] === selectDefaultLabel.value &&
+            selectDefaultLabel.value[props.keywords.value]
           ) {
             radioVal.value = index + 1
           }
@@ -531,7 +516,7 @@ const initTableData = () => {
   // 表格默认赋值
   nextTick(() => {
     if (props.multiple) {
-      state.defaultValue.forEach((row) => {
+      state.defaultValue?.forEach((row) => {
         const arr = state.tableData.filter(
           (item) => item[props.keywords.value] === row[props.keywords.value]
         )
@@ -542,8 +527,8 @@ const initTableData = () => {
     } else {
       const arr = state.tableData.filter(
         (item) =>
-          item[props.keywords.value] === state.defaultValue &&
-          state.defaultValue[props.keywords.value]
+          item[props.keywords.value] === selectDefaultLabel.value &&
+          selectDefaultLabel.value[props.keywords.value]
       )
       selectTable.value.setCurrentRow(arr[0])
     }
@@ -648,6 +633,7 @@ const clear = () => {
     nowIndex.value = -1
     radioVal.value = ''
     forbidden.value = false
+    selectDefaultLabel.value = null
     state.defaultValue = null
     emits('radioChange', {}, null)
   }
