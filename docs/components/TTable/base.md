@@ -162,7 +162,7 @@ TTable/singleEditKeyup
 
 ### 单元格编辑--使用组件事件
 
-:::demo
+:::demo `eventHandle`继承第三方组件事件，根据第三方组件事件传参，若第三方组件事件`本身有参数`则返回`三`个参数不然就是后`两`个参数：第一个就是本身自己带的参数，第二个是`porp`，第三个是`scope`(`scope.row`)--就是当前行的数据；`scope.$index`就是当前行数
 TTable/eventHandle
 :::
 
@@ -236,7 +236,7 @@ TTable/expand
 | ----------rules         | 规则（可依据 elementPlus el-form 配置————对应 columns 的 prop 值）                     | Object           | -         |
 | ----------label         | placeholder 显示                                                                       | String           | -         |
 | ----------editComponent | 组件名称可直接指定全局注册的组件，也可引入'element/abtd'如：'a-input/el-input'         | String           | -         |
-| ----------eventHandle   | 第三方 UI 的 事件（返回两个参数，第一个自己自带，第二个 scope）                        | Object           | -         |
+| ----------eventHandle   | 第三方 UI 的 事件（返回三个参数，第一个自己自带，第二个prop，第三个scope）             | Object           | -         |
 | ----------bind          | 第三方 UI 的 Attributes，如 el-input 中的 clearable 清空功能                           | Object           | -         |
 | ----------event         | 触发 handleEvent 事件的标志                                                            | String           | -         |
 | ----------type          | 下拉或者复选框显示（select-arr/select-obj/checkbox）                                   | String           | -         |

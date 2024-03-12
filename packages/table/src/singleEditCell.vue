@@ -8,7 +8,7 @@
   >
     <!-- 编辑组件自定义插槽 -->
     <template v-if="configEdit.editSlotName">
-      <div :class="prop" @keyup="keyUpHandle">
+      <div :class="[prop, 'slot_edit_name']" @keyup="keyUpHandle">
         <slot :name="configEdit.editSlotName" :scope="scope" />
       </div>
     </template>
@@ -127,9 +127,9 @@ const cEvent = computed(() => {
     Object.keys(event).forEach((v) => {
       changeEvent[v] = (e) => {
         if (e) {
-          event[v] && event[v](e, props.prop)
+          event[v] && event[v](e, props.prop,props.scope)
         } else {
-          event[v] && event[v](props.prop)
+          event[v] && event[v](props.prop,props.scope)
         }
       }
     })
@@ -218,5 +218,8 @@ const handleEvent = (type, val, editCom) => {
 <style lang="scss">
 .single_edit_cell {
   cursor: pointer;
+  .slot_edit_name{
+    width: 100%;
+  }
 }
 </style>

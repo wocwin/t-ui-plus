@@ -9,10 +9,7 @@
         <!-- 表格外操作 -->
         <slot name="toolbar"></slot>
         <!--列设置按钮-->
-        <div
-          class="header_right_wrap"
-          :style="{ marginLeft: isShow('toolbar') ? '12px' : 0 }"
-        >
+        <div class="header_right_wrap" :style="{ marginLeft: isShow('toolbar') ? '12px' : 0 }">
           <slot name="btn" />
           <column-set
             v-if="columnSetting"
@@ -72,20 +69,17 @@
             ...table.firstColumn.bind,
           }"
         >
-          <template
-            #default="scope"
-            v-if="table.firstColumn.type !== 'selection'"
-          >
+          <template #default="scope" v-if="table.firstColumn.type !== 'selection'">
             <el-radio
               v-if="table.firstColumn.type === 'radio'"
               v-model="radioVal"
               :label="scope.$index + 1"
-              @click.stop="radioChange($event, scope.row, scope.$index + 1)"
+              @click="radioHandleChange(scope.row, scope.$index + 1)"
             ></el-radio>
             <template v-if="table.firstColumn.type === 'index'">
               <span v-if="isPaginationCumulative && isShowPagination">
                 {{
-                  (table.currentPage - 1) * table.pageSize + scope.$index + 1
+                (table.currentPage - 1) * table.pageSize + scope.$index + 1
                 }}
               </span>
               <span v-else>{{ scope.$index + 1 }}</span>
@@ -117,15 +111,9 @@
             v-bind="{ ...item.bind, ...$attrs }"
           >
             <template #header v-if="item.headerRequired || item.renderHeader">
-              <render-header
-                v-if="item.renderHeader"
-                :column="item"
-                :render="item.renderHeader"
-              />
+              <render-header v-if="item.renderHeader" :column="item" :render="item.renderHeader" />
               <div style="display: inline" v-if="item.headerRequired">
-                <span style="color: #f56c6c; fontsize: 16px; marginright: 3px"
-                  >*</span
-                >
+                <span style="color: #f56c6c; font-size: 16px; margin-right: 3px">*</span>
                 <span>{{ item.label }}</span>
               </div>
             </template>
@@ -163,10 +151,7 @@
                     v-bind="$attrs"
                     ref="editCell"
                   >
-                    <template
-                      v-for="(index, name) in slots"
-                      v-slot:[name]="data"
-                    >
+                    <template v-for="(index, name) in slots" v-slot:[name]="data">
                       <slot :name="name" v-bind="data"></slot>
                     </template>
                   </single-edit-cell>
@@ -175,12 +160,12 @@
               <!-- 字典过滤 -->
               <template v-if="item.filters && item.filters.list">
                 {{
-                  constantEscape(
-                    scope.row[item.prop],
-                    table.listTypeInfo[item.filters.list],
-                    item.filters.key || 'value',
-                    item.filters.label || 'label'
-                  )
+                constantEscape(
+                scope.row[item.prop],
+                table.listTypeInfo[item.filters.list],
+                item.filters.key || 'value',
+                item.filters.label || 'label'
+                )
                 }}
               </template>
               <div
@@ -218,10 +203,7 @@
         class-name="operator"
       >
         <template #default="scope">
-          <div
-            class="operator_btn"
-            :style="table.operatorConfig && table.operatorConfig.style"
-          >
+          <div class="operator_btn" :style="table.operatorConfig && table.operatorConfig.style">
             <template v-for="(item, index) in table.operator" :key="index">
               <el-button
                 @click="
@@ -609,11 +591,10 @@ const radioClick = (row, index) => {
   }
 }
 // 点击单选框单元格触发事件
-const radioChange = (e, row, index) => {
+const radioHandleChange = (row, index) => {
   if (props.rowClickRadio) {
     return
   }
-  e.preventDefault()
   radioClick(row, index)
 }
 // 点击某行事件
