@@ -1,7 +1,12 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-form ref="TFormDemo" v-model="formOpts.ref" :formOpts="formOpts" />
+      <t-form
+        ref="TFormDemo"
+        v-model="formOpts.ref"
+        :formOpts="formOpts"
+        @handleEvent="handleEvent"
+      />
     </t-layout-page-item>
   </t-layout-page>
 </template>
@@ -33,9 +38,9 @@ const resetForm = () => {
   // 清空校验
   TFormDemo.value.resetFields()
 }
-// 清除校验
-const clearValidate = () => {
-  TFormDemo.value.clearValidate()
+// 表单事件
+const handleEvent = (type, val) => {
+  console.log('表单事件--base', type, val)
 }
 const accountFocus = ({ type }) => {
   console.log('账号聚焦事件', type)
@@ -50,7 +55,7 @@ const formOpts: any = reactive({
   ref: null,
   formData: {
     account: 'wocwin', // *用户账号
-    password: null, // *用户密码
+    password: 123456, // *用户密码
     name: null, // *用户昵称
     sex: null, // *性别: 0:男 1:女
     sex1: null, // *性别: 0:男 1:女
@@ -77,7 +82,13 @@ const formOpts: any = reactive({
         blur: (val) => accountBlur(val),
       },
     },
-    { label: '密码', value: 'password', type: 'password', comp: 'el-input' },
+    {
+      label: '密码',
+      value: 'password',
+      type: 'password',
+      comp: 'el-input',
+      bind: { 'show-password': true },
+    },
     { label: '昵称', value: 'name', type: 'input', comp: 'el-input' },
     {
       label: '性别',

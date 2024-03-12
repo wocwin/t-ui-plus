@@ -14,17 +14,17 @@
       <div>
         <h4>默认插槽</h4>
         <t-checkbox v-model="value2" :options="options2" size="large">
-          <el-checkbox label="上海" />
-          <el-checkbox label="北京" />
-          <el-checkbox label="广州" />
-          <el-checkbox label="深圳" />
+          <el-checkbox value="上海" />
+          <el-checkbox value="北京" />
+          <el-checkbox value="广州" />
+          <el-checkbox value="深圳" />
         </t-checkbox>
         <br />
         <t-checkbox v-model="value2" :options="options2" size="large">
-          <el-checkbox-button label="上海" />
-          <el-checkbox-button label="北京" />
-          <el-checkbox-button label="广州" />
-          <el-checkbox-button label="深圳" />
+          <el-checkbox-button value="上海" />
+          <el-checkbox-button value="北京" />
+          <el-checkbox-button value="广州" />
+          <el-checkbox-button value="深圳" />
         </t-checkbox>
       </div>
     </t-layout-page-item>

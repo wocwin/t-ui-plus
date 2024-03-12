@@ -6,9 +6,9 @@
         size="small"
         style="margin-bottom: 15px"
       >
-        <el-radio-button label="left">左对齐</el-radio-button>
-        <el-radio-button label="right">右对齐</el-radio-button>
-        <el-radio-button label="top">顶部对齐</el-radio-button>
+        <el-radio-button value="left">左对齐</el-radio-button>
+        <el-radio-button value="right">右对齐</el-radio-button>
+        <el-radio-button value="top">顶部对齐</el-radio-button>
       </el-radio-group>
       <t-form
         ref="TFormDemo"

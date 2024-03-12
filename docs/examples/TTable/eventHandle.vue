@@ -16,17 +16,27 @@ import { reactive } from 'vue'
 const nameFocus = (val, scope) => {
   console.log('姓名聚焦事件', val.type, scope)
 }
-const nameBlur = (val, scope) => {
-  console.log('姓名失焦事件', val.type, scope)
+const nameBlur = (val, type, scope) => {
+  console.log('姓名失焦事件', val, type, scope.row[type], scope.$index)
+  state.table.data[scope.$index].remake = `${scope.row[type]}动态设置`
 }
 const nameClear = (scope) => {
   console.log('姓名清空事件', scope)
+}
+// 数量change事件
+const numChange = (val, type, scope) => {
+  console.log('数量change事件', val, type, scope.row[type])
+  state.table.data[scope.$index].amount =
+    val * state.table.data[scope.$index].price
 }
 let state: any = reactive({
   table: {
     data: [
       {
         name: null,
+        num: null,
+        price: 6,
+        amount: null,
         hobby: null,
         hobby1: [],
         hobby2: [],
@@ -37,6 +47,9 @@ let state: any = reactive({
       },
       {
         name: '李四',
+        num: 2,
+        price: 6,
+        amount: 12,
         hobby: '2',
         hobby1: ['0', '2'],
         hobby2: ['0', '2'],
@@ -65,7 +78,57 @@ let state: any = reactive({
           eventHandle: {
             focus: (val, scope) => nameFocus(val, scope),
             clear: (scope) => nameClear(scope),
-            blur: (val, scope) => nameBlur(val, scope),
+            blur: (val, type, scope) => nameBlur(val, type, scope),
+          },
+        },
+      },
+      {
+        prop: 'num',
+        label: '数量',
+        minWidth: '160',
+        canEdit: true,
+        headerRequired: true,
+        configEdit: {
+          label: '数量',
+          editComponent: 'el-input-number',
+          bind: {
+            controls: false,
+          },
+          rules: {
+            required: true,
+            message: '请输入数量',
+            trigger: 'blur',
+          },
+          eventHandle: {
+            change: (val, type, scope) => numChange(val, type, scope),
+          },
+        },
+      },
+      {
+        prop: 'price',
+        label: '单价',
+        minWidth: '160',
+        canEdit: true,
+        configEdit: {
+          label: '单价',
+          type: 'input',
+          editComponent: 'el-input',
+          bind: {
+            disabled: true,
+          },
+        },
+      },
+      {
+        prop: 'amount',
+        label: '金额',
+        minWidth: '160',
+        canEdit: true,
+        configEdit: {
+          label: '金额',
+          type: 'input',
+          editComponent: 'el-input',
+          bind: {
+            disabled: true,
           },
         },
       },

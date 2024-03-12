@@ -2,14 +2,18 @@
   <t-layout-page class="single_Date">
     <t-layout-page-item>
       <el-radio-group v-model="size" label="size control" size="small">
-        <el-radio-button label="large">large</el-radio-button>
-        <el-radio-button label="default">default</el-radio-button>
-        <el-radio-button label="small">small</el-radio-button>
+        <el-radio-button value="large">large</el-radio-button>
+        <el-radio-button value="default">default</el-radio-button>
+        <el-radio-button value="small">small</el-radio-button>
       </el-radio-group>
       <div class="box_content">
         <div class="box_flex">
           <div>选择日期</div>
-          <t-date-picker v-model="date" :size="size" @change="change($event, 'date', date)" />
+          <t-date-picker
+            v-model="date"
+            :size="size"
+            @change="change($event, 'date', date)"
+          />
         </div>
         <div class="box_flex">
           <div>选择周</div>

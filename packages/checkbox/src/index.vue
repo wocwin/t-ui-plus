@@ -6,7 +6,7 @@
         v-bind="item"
         :is="checkType"
         :key="index"
-        :label="item[optionsProps.value]"
+        :value="item[optionsProps.value]"
         :border="border"
         :disabled="item[optionsProps.disabled]"
       >
@@ -29,7 +29,7 @@ const checkProps = defineProps({
     default: 'check',
   },
   options: {
-    type: Array as PropType<CheckboxItem[]>,
+    type: Array as unknown as any[],
     default: () => [],
   },
   size: {

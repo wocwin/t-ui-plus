@@ -6,10 +6,10 @@
         size="small"
         style="margin-bottom: 15px"
       >
-        <el-radio-button :label="1">一行展示</el-radio-button>
-        <el-radio-button :label="2">一行展示2项</el-radio-button>
-        <el-radio-button :label="3">一行展示3项</el-radio-button>
-        <el-radio-button :label="4">一行展示4项</el-radio-button>
+        <el-radio-button :value="1">一行展示</el-radio-button>
+        <el-radio-button :value="2">一行展示2项</el-radio-button>
+        <el-radio-button :value="3">一行展示3项</el-radio-button>
+        <el-radio-button :value="4">一行展示4项</el-radio-button>
       </el-radio-group>
       <t-form
         ref="TFormDemo"

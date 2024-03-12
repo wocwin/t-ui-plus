@@ -2,10 +2,10 @@
   <t-layout-page>
     <t-layout-page-item>
       <el-radio-group v-model="tabPosition" style="margin-bottom: 10px">
-        <el-radio-button label="top">top</el-radio-button>
-        <el-radio-button label="right">right</el-radio-button>
-        <el-radio-button label="bottom">bottom</el-radio-button>
-        <el-radio-button label="left">left</el-radio-button>
+        <el-radio-button value="top">top</el-radio-button>
+        <el-radio-button value="right">right</el-radio-button>
+        <el-radio-button value="bottom">bottom</el-radio-button>
+        <el-radio-button value="left">left</el-radio-button>
       </el-radio-group>
       <t-tabs :tabs="tabs" :tab-position="tabPosition" @tab-click="tabsChange">
         <template #tab1>

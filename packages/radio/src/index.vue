@@ -6,7 +6,7 @@
         v-bind="item"
         :is="radioType"
         :key="index"
-        :label="item[optionsProps.value]"
+        :value="item[optionsProps.value]"
         :border="border"
         :disabled="item[optionsProps.disabled]"
       >
@@ -21,7 +21,7 @@
 <script setup lang="ts" name="TRadio">
 import { computed, ref } from 'vue'
 import type { PropType } from 'vue'
-import type { OptionsProps, RadioItem } from './radio'
+import type { OptionsProps } from './radio'
 const radioProps = defineProps({
   type: {
     type: String as PropType<'radio' | 'button'>,
@@ -29,7 +29,7 @@ const radioProps = defineProps({
     default: 'radio',
   },
   options: {
-    type: Array as PropType<RadioItem[]>,
+    type: Array as unknown as any[],
     default: () => [],
   },
   size: {
