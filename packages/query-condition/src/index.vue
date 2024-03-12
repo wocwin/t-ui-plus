@@ -461,8 +461,8 @@ onMounted(() => {
 })
 watch(
   () => props.opts,
-  (opts, oldValue) => {
-    queryState.form = initForm(opts, true)
+  (opts) => {
+    queryState.form = initForm(opts)
   }
 )
 
