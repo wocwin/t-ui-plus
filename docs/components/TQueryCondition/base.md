@@ -86,7 +86,7 @@ TQueryCondition/querybar
 | isSelfCom   | 是否使用自己封装的组件（即不需要el-option）                                      | Boolean          | false                    |
 | placeholder | placeholder 提示语                                                               | string           | -                        |
 | labelRender | 自定义 label（render 函数 jsx 方式编写）                                         | function         | -                        |
-| slotName    | 自定义输入框插槽(作用域插槽解构接收{param}返回当前所有表单初始值)                | string           | -                        |
+| slotName    | 自定义输入框插槽(作用域插槽解构接收{param/scope}返回当前所有表单初始值)                | string           | -                        |
 | comp        | 组件名称，可直接指定全局注册的组件，也可引入'elmentUI'如：Button 或者'el-button' | string,component | -                        |
 | span        | 控件占用的列宽，默认占用 1 列，最多 4 列 (独占一行)                              | number           | 1                        |
 | defaultVal  | 默认值                                                                           | -                | -                        |

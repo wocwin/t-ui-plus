@@ -3,12 +3,21 @@
     <t-layout-page-item>
       <t-query-condition
         :opts="opts"
+        labelWidth="140px"
         @submit="conditionEnter"
         @handleEvent="handleEvent"
       >
         <template #date1="{ param }">
           <el-date-picker
             v-model="param.date1"
+            type="date"
+            placeholder="请选择日期"
+            value-format="YYYY-MM-DD"
+          />
+        </template>
+        <template #date2="{ scope }">
+          <el-date-picker
+            v-model="scope.date2"
             type="date"
             placeholder="请选择日期"
             value-format="YYYY-MM-DD"
@@ -28,6 +37,7 @@ let state = reactive({
     workshopNum: null,
     date: null,
     date1: null,
+    date2: null,
   },
   listTypeInfo: {
     sexList: [
@@ -61,8 +71,12 @@ const opts = computed(() => {
       listTypeInfo: state.listTypeInfo,
     },
     date1: {
-      label: '插槽使用',
+      label: '插槽使用(param)',
       slotName: 'date1',
+    },
+     date2: {
+      label: '插槽使用(scope)',
+      slotName: 'date2',
     },
     date: {
       label: '装炉时间',
@@ -81,13 +95,14 @@ const opts = computed(() => {
 })
 // 最终参数获取
 const getQueryData = computed(() => {
-  const { userName, phonenumber, workshopNum, date, date1 } = state.queryData
+  const { userName, phonenumber, workshopNum, date, date1,date2 } = state.queryData
   console.log(444, userName, phonenumber, date1)
   return {
     userName,
     workshopNum,
     phonenumber,
     date1,
+    date2,
     beginDate: date && date[0] ? date[0] : null,
     endDate: date && date[1] ? date[1] : null,
   }

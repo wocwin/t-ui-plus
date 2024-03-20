@@ -130,11 +130,12 @@ const complete = () => {
   .content-step-main {
     .step-last {
       .icon-success {
-        color: #67c23a;
+        color: var(--el-color-primary);
         font-size: 95px;
         margin-top: 40px;
       }
       .success-margin {
+        color: var(--el-color-primary);
         margin-bottom: 70px;
       }
     }

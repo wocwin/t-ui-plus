@@ -28,7 +28,7 @@
         row_sort: isRowSort,
         tree_style: isTree,
         highlightCurrentRow: highlightCurrentRow,
-        radioStyle: table.firstColumn && table.firstColumn.type === 'radio',
+        radioStyle: radioStyleClass,
       }"
       v-bind="$attrs"
       :highlight-current-row="highlightCurrentRow"
@@ -38,7 +38,7 @@
       :cell-class-name="cellClassNameFuc"
     >
       <!-- 复选框/单选框/序列号 -->
-      <template v-if="table.firstColumn">
+      <template v-if="!Array.isArray(table.firstColumn)&&table.firstColumn">
         <!-- 复选框 -->
         <el-table-column
           v-if="table.firstColumn.type === 'selection'"
@@ -89,6 +89,62 @@
             </template>
           </template>
         </el-table-column>
+      </template>
+      <template v-if="Array.isArray(table.firstColumn)">
+        <template v-for="(item, index) in table.firstColumn">
+          <!-- 复选框 -->
+          <el-table-column
+            :key="index+1"
+            v-if="item.type === 'selection'"
+            v-bind="{
+            type: 'selection',
+            width: item.width || 55,
+            label: item.label,
+            fixed: item.fixed,
+            align: item.align || 'center',
+            'reserve-selection': item.isPaging || false,
+            selectable: item.selectable,
+            ...item.bind,
+          }"
+          />
+          <el-table-column
+            v-else
+            :key="index + 'k'"
+            v-bind="{
+            type: item.type,
+            width: item.width || 55,
+            label:
+              item.label ||
+              (item.type === 'radio' && '单选') ||
+              (item.type === 'index' && '序号') ||
+              (item.type === 'expand' && '') ||
+              '',
+            fixed: item.fixed,
+            align: item.align || 'center',
+            ...item.bind,
+          }"
+          >
+            <template #default="scope" v-if="item.type !== 'selection'">
+              <el-radio
+                v-if="item.type === 'radio'"
+                v-model="radioVal"
+                :label="scope.$index + 1"
+                @click="radioHandleChange(scope.row, scope.$index + 1)"
+              ></el-radio>
+              <template v-if="item.type === 'index'">
+                <span v-if="isPaginationCumulative && isShowPagination">
+                  {{
+                  (table.currentPage - 1) * table.pageSize + scope.$index + 1
+                  }}
+                </span>
+                <span v-else>{{ scope.$index + 1 }}</span>
+              </template>
+              <template v-if="item.type === 'expand'">
+                <slot name="expand" :scope="scope"></slot>
+              </template>
+            </template>
+          </el-table-column>
+        </template>
       </template>
       <!-- 主体内容 -->
       <template v-for="(item, index) in renderColumns">
@@ -266,7 +322,15 @@
 </template>
 
 <script setup lang="ts" name="TTable">
-import { computed, ref, watch, useSlots, reactive, onMounted } from 'vue'
+import {
+  computed,
+  ref,
+  watch,
+  useSlots,
+  reactive,
+  onMounted,
+  onUpdated,
+} from 'vue'
 import { ElMessage } from 'element-plus'
 import Sortable from 'sortablejs'
 import SingleEditCell from './singleEditCell.vue'
@@ -415,6 +479,9 @@ onMounted(() => {
   }
   initSort()
 })
+onUpdated(() => {
+  TTable.value.doLayout()
+})
 // 默认选中（单选项）---index必须是大于等于1（且只能默认选中第一页的数据）
 const defaultRadioSelect = (index) => {
   radioVal.value = index
@@ -453,6 +520,14 @@ const constantEscape = (value, list, key, label) => {
   })
   return res && res[label]
 }
+// // 第一列单选显示类
+const radioStyleClass = computed(() => {
+  if (Array.isArray(props.table.firstColumn)) {
+    return props.table.firstColumn.some((item) => item.type === 'radio')
+  } else {
+    return props.table.firstColumn && props.table.firstColumn.type === 'radio'
+  }
+})
 // 单元格编辑是否存在校验
 const isEditRules = computed(() => {
   return (

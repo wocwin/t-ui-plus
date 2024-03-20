@@ -29,7 +29,7 @@
       </template>
       <!-- 自定义输入框插槽 -->
       <template v-if="opt.slotName">
-        <slot :name="opt.slotName" :param="queryState.form"></slot>
+        <slot :name="opt.slotName" :param="queryState.form" :scope="queryState.form"></slot>
       </template>
       <template v-if="opt.isSelfCom">
         <component

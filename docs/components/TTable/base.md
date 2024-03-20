@@ -45,6 +45,18 @@ TTable/radioDefault
 TTable/serialNum
 :::
 
+### 第一列显示复选框和序列号
+
+:::demo
+TTable/selectionIndex
+:::
+
+### 第一列显示单选框和序列号
+
+:::demo
+TTable/radioIndex
+:::
+
 ### 双击单元格复制(默认不开启)
 
 :::demo 若需要关闭（在 TTable 标签中设置属性：`isCopy:true`）
@@ -215,7 +227,7 @@ TTable/expand
 | --------minWidth        | 对应列的最小宽度(会把剩余宽度按比例分配给设置了 min-width 的列)                        | string / number  | -         |
 | --------align           | 对齐方式 （left / center / right）                                                     | string           | 'center'  |
 | --------bind            | el-table-column Attributes                                                             | Object           | -         |
-| ---firstColumn          | 表格首列(序号 index,复选框 selection,单选 radio,展开行 expand）排列                    | object           | -         |
+| ---firstColumn          | 表格首列(序号 index,复选框 selection,单选 radio,展开行 expand）排列                    | object/Array           | -         |
 | ---total                | 数据总条数                                                                             | Number           | -         |
 | ---pageSize             | 页数量                                                                                 | Number           | -         |
 | ---currentPage          | 是否需要显示切换页条数                                                                 | Number           | -         |
