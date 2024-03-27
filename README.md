@@ -4,9 +4,9 @@
 
 > 基于 Element-ui 二次封装基础组件地址
 >
-## [Vue2 基于ant-design-vue基础组件传送门](https://github.com/wocwin/t-antd-ui)
+## [T-ui-Plus使用Demo项目](https://github.com/wocwin/wocwin-admin)
 
-> 基于ant-design-vue 二次封装基础组件地址
+>`wocwin-admin`是基于 Vue3.3、TypeScript、Vite4、Pinia、Element-Plus 开源的一套后台管理模板；此项目全面使用了`T-ui-Plus`二次封装基础组件库
 ## 介绍
 
 > 基于 vue3+ ts+ Element-plus 二次封装组件
@@ -104,7 +104,7 @@ npm run docs:dev
 
 ## 微信交流群
 
->目前微信群已超过 200 人，需要加微信好友，拉大家进群
+>目前微信群已超过 200 人，需要加微信好友(请备注 T-ui-Plus)，拉大家进群
 
 |                微信二维码                 |
 | :---------------------------------------: |
