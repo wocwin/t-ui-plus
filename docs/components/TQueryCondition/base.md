@@ -8,6 +8,12 @@
 TQueryCondition/base
 :::
 
+### 设置默认折叠span数量——默认4
+
+::: demo  通过设置`collapseLength`
+TQueryCondition/collapseLength
+:::
+
 ### 收起&展开——默认展开
 
 ::: demo 通过设置`isExpansion`

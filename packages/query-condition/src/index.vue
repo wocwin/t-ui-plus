@@ -112,7 +112,7 @@
       <el-button class="btn_check" @click="checkHandle" v-bind="queryAttrs" :loading="loading">{{queryAttrs.btnTxt}}</el-button>
       <el-button v-if="reset" class="btn_reset" v-bind="resetAttrs" @click="resetHandle">{{resetAttrs.btnTxt}}</el-button>
       <slot name="querybar"></slot>
-      <el-button v-if="originCellLength > colLength && isShowOpen" @click="open = !open" link>
+      <el-button v-if="originCellLength > props.collapseLength && isShowOpen" @click="open = !open" link>
         {{ open ? '收起' : '展开' }}
         <el-icon v-if="open">
           <ArrowUp />
@@ -170,6 +170,13 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+
+  // 折叠数量
+  collapseLength: {
+    type: Number,
+    default: 4,
+  },
+
 })
 // 初始化表单数据
 let queryState = reactive({
@@ -214,7 +221,7 @@ const cOpts = computed(() => {
     // 收起、展开操作
     if (props.isShowOpen) {
       renderSpan += opt.span ?? 1
-      if (!open.value && renderSpan - 1 >= colLength.value) return acc
+      if (!open.value && renderSpan - 1 >= props.collapseLength) return acc
     }
     opt.dataIndex = field
     acc[field] = opt
