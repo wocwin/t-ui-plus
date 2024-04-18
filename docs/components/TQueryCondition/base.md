@@ -10,7 +10,7 @@ TQueryCondition/base
 
 ### 设置默认折叠span数量——默认4
 
-::: demo  通过设置`collapseLength`
+::: demo  通过设置`collapseLength`控制开始折叠的位置，默认4个条件后折叠，每+4为多展示一行
 TQueryCondition/collapseLength
 :::
 
@@ -81,6 +81,7 @@ TQueryCondition/querybar
 | labelWidth   | labelWidth 宽度                           | String  | '120px'                          |
 | btnCheckBind | 查询按钮配置（继承`el-button`所有属性）   | object  | `{type: primary, size: default,btnTxt:'查询'}` |
 | btnResetBind | 重置按钮配置（继承`el-button`所有属性）   | object  | `{ size: default,btnTxt:'重置'}`               |
+| collapseLength | 折叠条件数量，默认4个条件后折叠，每+4为多展示一行 | number | 4 | 
 
 
 ### 3、opts Attributes
