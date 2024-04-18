@@ -16,7 +16,10 @@
     @keyup="selectKeyup"
   >
     <template #empty>
-      <div class="t-table-select__table" :style="{ width: `${tableWidth}px` }">
+      <div
+        class="t-table-select__table"
+        :style="{ width: tableWidth ? `${tableWidth}px` : '100%' }"
+      >
         <div class="table_query_condition" v-if="isShowQuery">
           <t-query-condition
             ref="tQueryConditionRef"
@@ -31,8 +34,7 @@
               <el-button
                 v-bind="{ type: 'danger', ...btnBind }"
                 @click="blur"
-                >{{ btnBind.btnTxt || '关闭下拉框' }}</el-button
-              >
+              >{{ btnBind.btnTxt || '关闭下拉框' }}</el-button>
               <slot name="querybar"></slot>
             </template>
           </t-query-condition>
@@ -177,6 +179,11 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  // 是否清空搜索条件
+  isClearQuery: {
+    type: Boolean,
+    default: false,
+  },
   // 是否显示隐藏下拉框按钮
   isShowBlurBtn: {
     type: Boolean,
@@ -243,6 +250,7 @@ const props = defineProps({
   // select 宽度
   selectWidth: {
     type: [String, Number],
+    default: 550,
   },
   // table宽度
   tableWidth: {
@@ -321,12 +329,21 @@ const visibleChange = (visible) => {
   if (isQueryVisible.value) {
     selectRef.value.expanded = true
   }
+  // console.log('表格显示隐藏回调--222', visible)
   if (visible) {
     if (props.defaultSelectVal && isDefaultSelectVal.value) {
       defaultSelect(props.defaultSelectVal)
     }
     initTableData()
   } else {
+    if (
+      tQueryConditionRef.value &&
+      props.isShowQuery &&
+      props.isClearQuery &&
+      !selectRef.value.expanded
+    ) {
+      tQueryConditionRef.value?.resetHandle()
+    }
     findLabel()
     filterMethodHandle('')
   }
@@ -343,9 +360,10 @@ const queryVisibleChange = (val) => {
 }
 // el-select点击了空白区域
 const closeBox = () => {
-  // console.log('select点击了空白区域')
+  // console.log('select点击了空白区域', tQueryConditionRef.value)
   // 获取查询条件组件的项
   if (tQueryConditionRef.value && props.isShowQuery) {
+    selectRef.value.expanded = true
     Object.values(tQueryConditionRef.value?.props?.opts).map((val: any) => {
       if (
         val.comp.includes('select') ||
@@ -355,6 +373,8 @@ const closeBox = () => {
         val.eventHandle = {
           'visible-change': ($event) => queryVisibleChange($event),
         }
+        // queryVisibleChange(true)
+        // isQueryVisible.value = true
         selectRef.value.expanded = true
       }
     })
