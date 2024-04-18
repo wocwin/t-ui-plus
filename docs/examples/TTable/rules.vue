@@ -14,9 +14,7 @@
         isShowFooterBtn
       >
         <template #toolbar>
-          <el-button type="primary" @click="save"
-            >另一种获取table数据</el-button
-          >
+          <el-button type="primary" @click="save">另一种获取table数据</el-button>
           <el-button @click="clearValidate">清除校验规则</el-button>
           <el-button type="primary" @click="reset">重置表单</el-button>
         </template>
@@ -39,14 +37,18 @@
 <script setup lang="tsx">
 import { ElMessage } from 'element-plus'
 import { reactive, ref } from 'vue'
-const singleEdit: any = ref<HTMLElement | null>(null)
+// const singleEdit: any = (ref < HTMLElement) | (null > null)
+const singleEdit: any = ref(null)
 // 保存
-const save = (tableData) => {
-  console.log('另一种获取的table数据', singleEdit.value.save())
+const save = () => {
+  // console.log('另一种获取的table--ref', singleEdit.value)
+  singleEdit.value.save((data) => {
+    console.log('调用方法获取返回数据---save', data)
+  })
 }
 // 点击保存获取table数据
 const singleSave = (data) => {
-  console.log('单个单元格编辑保存', data)
+  console.log('单个单元格编辑保存--saveshijian', data)
 }
 // 编辑单元格监听事件
 const handleEvent = (type, val, index) => {

@@ -1,7 +1,7 @@
 <template>
   <div class="t-table" ref="TTableBox">
     <div class="header_wrap">
-      <div class="header_title">
+      <div class="header_title" v-if="title||isShow('title')">
         {{ title }}
         <slot name="title" />
       </div>
@@ -19,6 +19,9 @@
           />
         </div>
       </div>
+    </div>
+    <div class="title-tip" v-if="isShow('titleTip')">
+      <slot name="titleTip" />
     </div>
     <el-table
       ref="TTable"
@@ -338,7 +341,7 @@ import ColumnSet from './ColumnSet.vue'
 import RenderCol from './renderCol.vue'
 import RenderHeader from './renderHeader.vue'
 import TTableColumn from './TTableColumn.vue'
-const props = defineProps({
+const props: any = defineProps({
   // table所需数据
   table: {
     type: Object,
@@ -710,12 +713,10 @@ const isShow = (name) => {
   return Object.keys(slots).includes(name)
 }
 // 整行编辑返回数据
-const save = () => {
-  // emits('save', state.tableData)
-  // return state.tableData
+const save = (callback) => {
   if (!isEditRules.value) {
     emits('save', state.tableData)
-    return state.tableData
+    callback && callback(state.tableData)
   }
   // 表单规则校验
   let successLength = 0
@@ -747,7 +748,7 @@ const save = () => {
       }
     })
   })
-  console.log('最终需要校验的数据', rulesList, formRef.value)
+  // console.log('最终需要校验的数据', rulesList, formRef.value)
   // 表单都校验
   rulesList.map((val) => {
     formRef.value[val].validate((valid) => {
@@ -758,12 +759,13 @@ const save = () => {
       }
     })
   })
-  // 所有表单都校验成功
   setTimeout(() => {
-    if (successLength === rulesList.length) {
+    // 所有表单都校验成功
+    if (successLength == rulesList.length) {
       if (isEditRules.value) {
+        // console.log('所有表单都校验成功--', state.tableData)
         emits('save', state.tableData)
-        return state.tableData
+        callback && callback(state.tableData)
       }
     } else {
       // 校验未通过的prop
@@ -1021,9 +1023,9 @@ defineExpose({
     align-items: center;
 
     .toolbar_top {
-      flex: 0 70%;
+      flex: 1;
       display: flex;
-      padding: 10px 0;
+      padding-bottom: 10px;
       align-items: center;
       justify-content: flex-end;
 
@@ -1046,14 +1048,20 @@ defineExpose({
     .header_title {
       display: flex;
       align-items: center;
-      flex: 0 30%;
-      padding: 10px 0;
+      flex: 1;
+      padding-bottom: 10px;
       font-size: 16px;
       font-weight: bold;
       line-height: 35px;
       margin-left: 10px;
       color: var(--el-text-color-primary);
     }
+  }
+  .title-tip {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 14px;
   }
 
   .marginBttom {

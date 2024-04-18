@@ -180,7 +180,7 @@ TTable/eventHandle
 
 ### 单元格编辑--校验 rules
 
-:::demo `columns`: `columns`某一项的 rules;`table`: rules
+:::demo `columns`: `columns`某一项的 rules;`table`: rules; `save方法`:singleEdit.value.save((data) => {console.log('callback返回数据', data)})
 TTable/rules
 :::
 
@@ -227,7 +227,7 @@ TTable/expand
 | --------minWidth        | 对应列的最小宽度(会把剩余宽度按比例分配给设置了 min-width 的列)                        | string / number  | -         |
 | --------align           | 对齐方式 （left / center / right）                                                     | string           | 'center'  |
 | --------bind            | el-table-column Attributes                                                             | Object           | -         |
-| ---firstColumn          | 表格首列(序号 index,复选框 selection,单选 radio,展开行 expand）排列                    | object/Array           | -         |
+| ---firstColumn          | 表格首列(序号 index,复选框 selection,单选 radio,展开行 expand）排列                    | object/Array     | -         |
 | ---total                | 数据总条数                                                                             | Number           | -         |
 | ---pageSize             | 页数量                                                                                 | Number           | -         |
 | ---currentPage          | 是否需要显示切换页条数                                                                 | Number           | -         |
@@ -295,17 +295,18 @@ TTable/expand
 
 ### 4、Methods 方法 继承el-table所有方法
 
-| 事件名        | 说明                                               | 参数 |
-| :------------ | :------------------------------------------------- | :--- |
-| save          | 保存方法（返回编辑后的所有数据）                   | -    |
-| resetFields   | 对表单进行重置，并移除校验结果（单元格编辑时生效） | —    |
-| clearValidate | 清空校验规则（单元格编辑时生效）                   | -    |
+| 事件名        | 说明                                               | 返回值              |
+| :------------ | :------------------------------------------------- | :------------------ |
+| save          | 单元格编辑保存方法                                 | callback(tableData) |
+| resetFields   | 对表单进行重置，并移除校验结果（单元格编辑时生效） | —                   |
+| clearValidate | 清空校验规则（单元格编辑时生效）                   | -                   |
 
 ### 5、Slots插槽
 
 | 插槽名     | 说明                                              | 参数  |
 | :--------- | :------------------------------------------------ | :---- |
 | title      | TTable 左侧Title                                  | -     |
+| titleTip   | TTable 头部tip                                    | -     |
 | toolbar    | TTable 右侧toolbar                                | -     |
 | expand     | table.firstColumn.type：`expand` 展开行插槽       | scope |
 | -          | el-table-column某列自定义插槽（slotName命名）     | scope |
