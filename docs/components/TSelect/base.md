@@ -18,6 +18,18 @@ TSelect/customLabel
 TSelect/singePagination
 :::
 
+### 单选禁用
+
+:::demo 在组件中数据源：`optionSource` 不满足条件时，新增`disabled`属性，设置为`true`即可
+TSelect/singleDisabled
+:::
+
+### 多选禁用
+
+:::demo 在组件中数据源：`optionSource` 不满足条件时，新增`disabled`属性，设置为`true`即可
+TSelect/multipleDisabled
+:::
+
 ### 多选
 
 :::demo
