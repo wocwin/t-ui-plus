@@ -5,6 +5,7 @@
         :opts="opts"
         @submit="conditionEnter"
         @handleEvent="handleEvent"
+        isExpansion
         :btnResetBind="{ size: 'small',btnTxt:'搜索', icon:'Search'}"
       />
     </t-layout-page-item>
@@ -13,11 +14,13 @@
 
 <script setup lang="ts">
 import { computed, reactive } from 'vue'
-let state = reactive({
+let state: any = reactive({
   queryData: {
     userName: null, // 登录名
     phonenumber: null, // 手机号码
     workshopNum: null,
+    start_time: null,
+    end_time: null,
     date: null,
     date1: null,
   },
@@ -34,6 +37,7 @@ let state = reactive({
     ],
   },
 })
+
 const opts = computed(() => {
   return {
     userName: {
@@ -52,11 +56,40 @@ const opts = computed(() => {
       list: 'sexList',
       listTypeInfo: state.listTypeInfo,
     },
+    start_time: {
+      label: '开始时间',
+      comp: 'el-date-picker',
+      bind: {
+        valueFormat: 'YYYY-MM-DD',
+      },
+    },
+    end_time: {
+      label: '结束时间',
+      comp: 'el-date-picker',
+      bind: (formData) => {
+        return {
+          valueFormat: 'YYYY-MM-DD',
+          disabled:
+            formData.start_time == null || formData.start_time == ''
+              ? true
+              : false,
+          'disabled-date': (time) => {
+            return (
+              time.getTime() <
+              new Date(formData.start_time).getTime() - 86400000
+            )
+          },
+        }
+      },
+    },
     date1: {
       label: '日期',
       comp: 'el-date-picker',
       bind: {
         valueFormat: 'YYYY-MM-DD',
+        'disabled-date': (time) => {
+          return time.getTime() < new Date()
+        },
       },
     },
     date: {
@@ -76,12 +109,22 @@ const opts = computed(() => {
 })
 // 最终参数获取
 const getQueryData = computed(() => {
-  const { userName, phonenumber, workshopNum, date, date1 } = state.queryData
+  const {
+    userName,
+    phonenumber,
+    workshopNum,
+    date,
+    date1,
+    start_time,
+    end_time,
+  } = state.queryData
   console.log(444, userName, phonenumber, date1)
   return {
     userName,
     workshopNum,
     phonenumber,
+    start_time,
+    end_time,
     date1,
     beginDate: date && date[0] ? date[0] : null,
     endDate: date && date[1] ? date[1] : null,

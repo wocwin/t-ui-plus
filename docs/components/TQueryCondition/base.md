@@ -8,12 +8,6 @@
 TQueryCondition/base
 :::
 
-### 设置默认折叠span数量——默认4
-
-::: demo  通过设置`collapseLength`控制开始折叠的位置，默认4个条件后折叠，每+4为多展示一行
-TQueryCondition/collapseLength
-:::
-
 ### 收起&展开——默认展开
 
 ::: demo 通过设置`isExpansion`
@@ -70,18 +64,17 @@ TQueryCondition/querybar
 
 ### 2、配置参数（Attributes）
 
-| 参数         | 说明                                      | 类型    | 默认值                           |
-| :----------- | :---------------------------------------- | :------ | :------------------------------- |
-| opts         | 接收筛选器组件配置                        | object  | 无                               |
-| loading      | 查询按钮 loading 状态，请求数据时需要体现 | Boolean | false                            |
-| reset        | 是否显示“重置”按钮                        | Boolean | true                             |
-| boolEnter    | 是否敲回车查询                            | Boolean | true                             |
-| isShowOpen   | 是否显示收起和展开                        | Boolean | true                             |
-| isExpansion  | 是否默认展开                              | Boolean | false                            |
-| labelWidth   | labelWidth 宽度                           | String  | '120px'                          |
+| 参数         | 说明                                      | 类型    | 默认值                                         |
+| :----------- | :---------------------------------------- | :------ | :--------------------------------------------- |
+| opts         | 接收筛选器组件配置                        | object  | 无                                             |
+| loading      | 查询按钮 loading 状态，请求数据时需要体现 | Boolean | false                                          |
+| reset        | 是否显示“重置”按钮                        | Boolean | true                                           |
+| boolEnter    | 是否敲回车查询                            | Boolean | true                                           |
+| isShowOpen   | 是否显示收起和展开                        | Boolean | true                                           |
+| isExpansion  | 是否默认展开                              | Boolean | false                                          |
+| labelWidth   | labelWidth 宽度                           | String  | '120px'                                        |
 | btnCheckBind | 查询按钮配置（继承`el-button`所有属性）   | object  | `{type: primary, size: default,btnTxt:'查询'}` |
 | btnResetBind | 重置按钮配置（继承`el-button`所有属性）   | object  | `{ size: default,btnTxt:'重置'}`               |
-| collapseLength | 折叠条件数量，默认4个条件后折叠，每+4为多展示一行 | number | 4 | 
 
 
 ### 3、opts Attributes
@@ -93,7 +86,7 @@ TQueryCondition/querybar
 | isSelfCom   | 是否使用自己封装的组件（即不需要el-option）                                      | Boolean          | false                    |
 | placeholder | placeholder 提示语                                                               | string           | -                        |
 | labelRender | 自定义 label（render 函数 jsx 方式编写）                                         | function         | -                        |
-| slotName    | 自定义输入框插槽(作用域插槽解构接收{param/scope}返回当前所有表单初始值)                | string           | -                        |
+| slotName    | 自定义输入框插槽(作用域插槽解构接收{param/scope}返回当前所有表单初始值)          | string           | -                        |
 | comp        | 组件名称，可直接指定全局注册的组件，也可引入'elmentUI'如：Button 或者'el-button' | string,component | -                        |
 | span        | 控件占用的列宽，默认占用 1 列，最多 4 列 (独占一行)                              | number           | 1                        |
 | defaultVal  | 默认值                                                                           | -                | -                        |
@@ -113,3 +106,11 @@ TQueryCondition/querybar
 | 插槽名   | 说明                             |
 | :------- | :------------------------------- |
 | querybar | 按钮操作插槽（位置基于重置后面） |
+
+#### 6、Exposes（Method）
+
+| Method      | 说明                   | 类型     |
+| :---------- | :--------------------- | :------- |
+| queryState  | 初始化表单数据         | object   |
+| resetData   | 重置表单不调用查询接口 | Function |
+| resetHandle | 重置表单调用查询接口   | Function |
