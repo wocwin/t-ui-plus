@@ -35,9 +35,11 @@
         </template>
         <!-- 文本展示值 -->
         <template v-if="item.textShow">
-          <span class="text_show">{{
+          <span class="text_show">
+            {{
             item.textValue || formOpts.formData[item.value]
-          }}</span>
+            }}
+          </span>
         </template>
         <template v-if="item.isSelfCom">
           <component
@@ -144,8 +146,7 @@
             :disabled="value.disabled"
             :label="compChildLabel(item, value)"
             :value="compChildValue(item, value, key)"
-            >{{ compChildShowLabel(item, value) }}</component
-          >
+          >{{ compChildShowLabel(item, value) }}</component>
           <!-- </template> -->
         </component>
       </el-form-item>
@@ -171,8 +172,7 @@
             size: 'small',
             ...val.bind,
           }"
-          >{{ val.label }}</el-button
-        >
+        >{{ val.label }}</el-button>
       </template>
     </div>
   </el-form>
@@ -337,17 +337,18 @@ onMounted(() => {
   // 默认赋值触发handleEvent事件
   let event = null
   let item = null
-  Object.keys(props.formOpts.formData).forEach((key) => {
-    if (props.formOpts.formData[key]) {
-      props.formOpts.fieldList.map((val) => {
-        if (val.value == key) {
-          event = val.event
-          item = val
-        }
-      })
-      handleEvent(event, props.formOpts.formData[key], item, false)
-    }
-  })
+  props.formOpts.formData &&
+    Object.keys(props?.formOpts?.formData).forEach((key) => {
+      if (props.formOpts.formData[key]) {
+        props.formOpts.fieldList.map((val) => {
+          if (val.value == key) {
+            event = val.event
+            item = val
+          }
+        })
+        handleEvent(event, props.formOpts.formData[key], item, false)
+      }
+    })
   // 将form实例返回到父级
   emits('update:modelValue', tform.value)
 })
