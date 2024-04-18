@@ -112,7 +112,7 @@
       <el-button class="btn_check" @click="checkHandle" v-bind="queryAttrs" :loading="loading">{{queryAttrs.btnTxt}}</el-button>
       <el-button v-if="reset" class="btn_reset" v-bind="resetAttrs" @click="resetHandle">{{resetAttrs.btnTxt}}</el-button>
       <slot name="querybar"></slot>
-      <el-button v-if="originCellLength > colLength && isShowOpen" @click="open = !open" link>
+      <el-button v-if="originCellLength > collapseLength && isShowOpen" @click="open = !open" link>
         {{ open ? '收起' : '展开' }}
         <el-icon v-if="open">
           <ArrowUp />
@@ -170,6 +170,12 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  // 条件显示数量，大于这个数量值就会折叠起来，默认为4，每+4为多展示一行。
+  collapseLength: {
+    type: Number,
+    default: 4,
+  },
+
 })
 // 初始化表单数据
 let queryState = reactive({
@@ -186,6 +192,10 @@ if (props.isExpansion) {
 } else {
   open.value = false
 }
+
+// 默认显示条件数量, 4个条件开始折叠
+let collapseLength = ref(props.collapseLength)
+
 // 查询按钮配置
 const queryAttrs = computed(() => {
   return { type: 'primary', size: 'default',btnTxt:'查询', ...props.btnCheckBind }
@@ -214,7 +224,7 @@ const cOpts = computed(() => {
     // 收起、展开操作
     if (props.isShowOpen) {
       renderSpan += opt.span ?? 1
-      if (!open.value && renderSpan - 1 >= colLength.value) return acc
+      if (!open.value && renderSpan - 1 >= collapseLength.value) return acc
     }
     opt.dataIndex = field
     acc[field] = opt
