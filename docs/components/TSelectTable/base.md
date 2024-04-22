@@ -30,9 +30,21 @@ TSelectTable/dynamicMultiple
 TSelectTable/isShowFirstColumn
 :::
 
+### 动态赋默认选中值(单选)
+
+::: demo
+TSelectTable/radioDynamicDefaultSelectVal
+:::
+
+### 动态赋默认选中值(多选)
+
+::: demo
+TSelectTable/multipleDynamicDefaultSelectVal
+:::
+
 ### 单选（默认选中）
 
-:::demo `table` 数据源及表头信息;`keywords` 选项中的 value（选项的值）,label(选项的标签);`@radioChange` 选中事件，传出当前选中对象;`defaultSelectVal` 设置`第一页`默认选中项（即`keywords.value`值）是`String, Number`类型（即：keywords.value 是"id",那么需要默认选中哪项就输入该项 table.data 数据的 id 值即可）
+:::demo `table` 数据源及表头信息;`keywords` 选项中的 value（选项的值）,label(选项的标签);`@radioChange` 选中事件，传出当前选中对象;`defaultSelectVal` 设置`第一页`默认选中项（即`keywords.value`值）是`Array`类型`且只有一个值`（即：keywords.value 是"id",那么需要默认选中哪项就输入该项 table.data 数据的 id 值即可）
 TSelectTable/radioDefaultSelectVal
 :::
 
@@ -119,7 +131,7 @@ TSelectTable/isShowQuerySpan
 | multiple          | 是否开启多选                                                                            | Boolean                   | false      |
 | rowClickRadio     | 是否开启整行选中(单选)                                                                  | boolean                   | true       |
 | isShowFirstColumn | 是否显示首列(单选)                                                                      | boolean                   | true       |
-| defaultSelectVal  | 设置第一页默认选中项--keywords.value 值（单选是 String, Number 类型；多选时是数组）     | Number / string / Array   | -          |
+| defaultSelectVal  | 设置第一页默认选中项--keywords.value 值                                                 | Array                     | -          |
 | filterable        | 是否开启过滤(根据 keywords 的 label 值进行过滤)                                         | Boolean                   | true       |
 | reserveSelection  | 是否支持翻页选中                                                                        | Boolean                   | true       |
 | isShowPagination  | 开启分页                                                                                | Boolean                   | false      |
@@ -128,6 +140,7 @@ TSelectTable/isShowQuerySpan
 | isShowQuery       | 是否允许配置查询条件(继承TQueryCondition的所有属性、事件、插槽)                         | Boolean                   | false      |
 | isShowBlurBtn     | 条件查询组件是否显示隐藏下拉框按钮                                                      | Boolean                   | false      |
 | btnBind           | 显示下拉框按钮配置，继承`el-button`所有属性;`默认值{type:'danger',btnTxt:'关闭下拉框'}` | Object                    | -          |
+| isClearQuery      | 关闭下拉框是否清空搜索条件                                                              | Boolean                   | false      |
 
 ### 3、事件（events）继承 el-table 及 el-select 属性
 

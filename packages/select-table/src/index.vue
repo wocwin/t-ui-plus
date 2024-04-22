@@ -34,7 +34,8 @@
               <el-button
                 v-bind="{ type: 'danger', ...btnBind }"
                 @click="blur"
-              >{{ btnBind.btnTxt || '关闭下拉框' }}</el-button>
+                >{{ btnBind.btnTxt || '关闭下拉框' }}</el-button
+              >
               <slot name="querybar"></slot>
             </template>
           </t-query-condition>
@@ -259,7 +260,8 @@ const props = defineProps({
   },
   // 设置默认选中项--keywords.value值（单选是String, Number类型；多选时是数组）
   defaultSelectVal: {
-    type: [String, Number, Array],
+    type: Array,
+    default: () => [],
   },
 })
 const selectAttr = computed(() => {
@@ -308,9 +310,9 @@ watch(
 watch(
   () => props.defaultSelectVal,
   (val) => {
-    // console.log('props.defaultSelectVal---watch', val)
+    console.log('props.defaultSelectVal---watch', val, isDefaultSelectVal.value)
     state.defaultSelectValue = val
-    if (val && isDefaultSelectVal.value) {
+    if (val.length > 0 && isDefaultSelectVal.value) {
       defaultSelect(val)
     }
   },
@@ -318,7 +320,11 @@ watch(
 )
 onMounted(() => {
   // 设置默认选中项（单选）
-  if (state.defaultSelectValue && isDefaultSelectVal.value) {
+  if (
+    state.defaultSelectValue &&
+    state.defaultSelectValue.length > 0 &&
+    isDefaultSelectVal.value
+  ) {
     defaultSelect(state.defaultSelectValue)
   }
 })
@@ -331,8 +337,12 @@ const visibleChange = (visible) => {
   }
   // console.log('表格显示隐藏回调--222', visible)
   if (visible) {
-    if (props.defaultSelectVal && isDefaultSelectVal.value) {
-      defaultSelect(props.defaultSelectVal)
+    if (
+      state.defaultSelectValue &&
+      state.defaultSelectValue.length > 0 &&
+      isDefaultSelectVal.value
+    ) {
+      defaultSelect(state.defaultSelectValue)
     }
     initTableData()
   } else {
@@ -452,7 +462,7 @@ const handlesCurrentChange = (val) => {
 }
 // 默认选中（且只能默认选中第一页的数据）
 const defaultSelect = (defaultSelectVal) => {
-  if (typeof defaultSelectVal === 'object' && props.multiple) {
+  if (props.multiple) {
     let multipleList: any = []
     defaultSelectVal.map((val) => {
       state.tableData.forEach((row: any) => {
@@ -480,7 +490,7 @@ const defaultSelect = (defaultSelectVal) => {
   } else {
     let row, index
     state.tableData.map((val, i) => {
-      if (val[props.keywords.value] === defaultSelectVal) {
+      if (val[props.keywords.value] === defaultSelectVal[0]) {
         row = val
         index = i
       }
@@ -488,8 +498,9 @@ const defaultSelect = (defaultSelectVal) => {
     radioVal.value = index + 1
     state.defaultValue = row
     setTimeout(() => {
-      selectDefaultLabel.value = row[props.keywords.label]
+      selectDefaultLabel.value = row && row[props.keywords.label]
     }, 0)
+    emits('radioChange', row, row && row[props.keywords.value])
   }
 }
 // 复选框(多选)
@@ -498,6 +509,10 @@ const handlesSelectionChange = (val) => {
   isDefaultSelectVal.value = false
   state.defaultValue = val.map((item) => item[props.keywords.label])
   state.ids = val.map((item) => item[props.keywords.value])
+  if (val.length === 0) {
+    isDefaultSelectVal.value = true
+    state.defaultSelectValue = []
+  }
   emits('selectionChange', val, state.ids)
 }
 // 搜索后表格勾选不取消
@@ -598,6 +613,8 @@ const radioClick = (row, index) => {
       radioVal.value = ''
       isForbidden()
       state.defaultValue = {}
+      state.defaultSelectValue = []
+      isDefaultSelectVal.value = true
       emits('radioChange', {}, null) // 取消勾选就把回传数据清除
       blur()
     } else {
@@ -640,18 +657,24 @@ const rowClick = async (row) => {
 // tags删除后回调
 const removeTag = (tag) => {
   const row = state.tableData.find((item) => item[props.keywords.label] === tag)
+  console.log('tags删除后回调', row)
   selectTable.value.toggleRowSelection(row, false)
+  isDefaultSelectVal.value = true
 }
 // 清空后的回调
 const clear = () => {
   if (props.multiple) {
     selectTable.value.clearSelection()
+    isDefaultSelectVal.value = true
+    state.defaultSelectValue = []
     state.defaultValue = []
   } else {
     // 取消高亮
     selectTable.value.setCurrentRow(-1)
     nowIndex.value = -1
     radioVal.value = ''
+    isDefaultSelectVal.value = true
+    state.defaultSelectValue = []
     forbidden.value = false
     selectDefaultLabel.value = null
     state.defaultValue = null

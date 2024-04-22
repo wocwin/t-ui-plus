@@ -1,11 +1,17 @@
 <template>
   <t-layout-page>
-    <t-layout-page-item>
+    <t-layout-page-item style="display: flex; flex-direction: column">
+      <el-button
+        type="danger"
+        style="margin-bottom: 10px; width: 200px"
+        @click="mod"
+        >动态赋值</el-button
+      >
       <t-select-table
         :table="table"
         :columns="table.columns"
         :max-height="400"
-        :defaultSelectVal="[2]"
+        :defaultSelectVal="defaultSelectVal"
         :keywords="{ label: 'name', value: 'id' }"
         @radioChange="radioChange"
       ></t-select-table>
@@ -13,6 +19,11 @@
   </t-layout-page>
 </template>
 <script setup lang="ts">
+import { ref } from 'vue'
+const defaultSelectVal = ref()
+const mod = () => {
+  defaultSelectVal.value = [2]
+}
 const table = {
   data: [
     { id: 1, code: 1, name: '物料名称1', spec: '物料规格1', unitName: '吨' },
@@ -72,7 +83,7 @@ const table = {
     { label: '单位111', width: '110px', prop: 'unitName' },
   ],
 }
-const radioChange = (row) => {
-  console.log('单选--传给后台的值', row)
+const radioChange = (val) => {
+  console.log('单选框', val)
 }
 </script>

@@ -9,9 +9,7 @@
         :keywords="{ label: 'name', value: 'id' }"
         @radioChange="radioChange"
       ></t-select-table>
-      <el-button style="margin-left: 15px" type="primary" @click="clear"
-        >清空选中</el-button
-      >
+      <el-button style="margin-left: 15px" type="primary" @click="clear">清空选中</el-button>
     </t-layout-page-item>
   </t-layout-page>
 </template>

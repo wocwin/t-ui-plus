@@ -8,7 +8,7 @@
             :columns="table.columns"
             :max-height="400"
             placeholder="使用下拉选择表格组件"
-            :defaultSelectVal="formOpts.formData.wechat"
+            :defaultSelectVal="[formOpts.formData.wechat]"
             :keywords="{ label: 'name', value: 'id' }"
             @radioChange="radioChange"
           ></t-select-table>
@@ -119,7 +119,7 @@ const resetForm = () => {
 }
 const radioChange = (row) => {
   console.log('单选--传给后台的值', row)
-  formOpts.formData.wechat = row.id
+  formOpts.formData.wechat = row?.id
 }
 const formOpts: any = reactive({
   ref: null,
