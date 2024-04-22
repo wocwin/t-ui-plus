@@ -19,7 +19,7 @@ import TDatePicker from './date-picker'
 import TRadio from './radio'
 import TCheckbox from './checkbox'
 import TChart from './chart'
-import TMap from './map'
+// import TMap from './map'
 import TTabs from './tabs'
 
 // 存储组件列表
@@ -43,7 +43,7 @@ const components: {
   TRadio,
   TCheckbox,
   TChart,
-  TMap,
+  // TMap,
   TTabs
 }
 // 插件声明：声明所有插件
@@ -87,7 +87,7 @@ export {
   TRadio,
   TCheckbox,
   TChart,
-  TMap,
+  // TMap,
   TTabs
 }
 export default {
