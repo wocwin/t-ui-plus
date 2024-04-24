@@ -14,6 +14,12 @@ TQueryCondition/base
 TQueryCondition/isExpansion
 :::
 
+### 设置折叠时默认显示的最大 span 值——默认为 4
+
+::: demo 通过设置`maxVisibleSpans`来设置折叠时默认显示的最大span 值，默认为 4 ,超过后就折叠显示。 此 Demo 展示maxVisibleSpans设置为 6 的效果
+TQueryCondition/maxVisibleSpans
+:::
+
 ### Tsx 用法
 
 ::: demo

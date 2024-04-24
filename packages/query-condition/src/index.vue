@@ -122,7 +122,7 @@
         @click="resetHandle"
       >{{resetAttrs.btnTxt}}</el-button>
       <slot name="querybar"></slot>
-      <el-button v-if="originCellLength > colLength && isShowOpen" @click="open = !open" link>
+      <el-button v-if="originCellLength > maxVisibleSpans && isShowOpen" @click="open = !open" link>
         {{ open ? '收起' : '展开' }}
         <el-icon v-if="open">
           <ArrowUp />
@@ -137,7 +137,7 @@
 
 <script setup lang="ts" name="TQueryCondition">
 import RenderComp from './renderComp.vue'
-import { computed, ref, watch, onMounted, reactive } from 'vue'
+import { computed, ref, watch, onMounted, reactive, toRef } from 'vue'
 const props = defineProps({
   opts: {
     type: Object,
@@ -180,7 +180,15 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  // 设置展开的最大 span 数量
+  maxVisibleSpans: {
+    type: Number,
+    default: 4,
+  },
 })
+
+const maxVisibleSpans = toRef(props, 'maxVisibleSpans')
+
 // 初始化表单数据
 let queryState = reactive({
   form: Object.keys(props.opts).reduce((acc: any, field: any) => {
@@ -229,7 +237,7 @@ const cOpts = computed(() => {
     // 收起、展开操作
     if (props.isShowOpen) {
       renderSpan += opt.span ?? 1
-      if (!open.value && renderSpan - 1 >= colLength.value) return acc
+      if (!open.value && renderSpan - 1 >= maxVisibleSpans.value) return acc
     }
     opt.dataIndex = field
     acc[field] = opt
