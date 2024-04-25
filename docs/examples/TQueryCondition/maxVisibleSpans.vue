@@ -3,7 +3,7 @@
     <t-layout-page-item>
       <t-query-condition
         :opts="opts"
-        :collapseLength="6"
+        :maxVisibleSpans="6"
         @submit="conditionEnter"
         @handleEvent="handleEvent"
         :btnResetBind="{ size: 'small',btnTxt:'搜索', icon:'Search'}"
