@@ -56,6 +56,14 @@ const table = {
       prop: 'status',
       label: 'render方式',
       minWidth: '220',
+      renderHeader: () => {
+        return (
+          <div>
+            <span style="color:red">render方式</span>
+            <search style="width: 1em; height: 1em; margin-right: 8px" />
+          </div>
+        )
+      },
       render: (val) => {
         let label
         switch (val) {

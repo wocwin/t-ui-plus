@@ -200,9 +200,8 @@
                   @submit.prevent
                 >
                   <single-edit-cell
-                    :canEdit="item.canEdit"
                     :configEdit="item.configEdit"
-                    v-model="scope.row[scope.column.property]"
+                    v-model="scope.row[item.prop]"
                     :prop="item.prop"
                     :scope="scope"
                     @handleEvent="handleEvent($event, scope.$index)"
@@ -241,7 +240,7 @@
           </el-table-column>
         </template>
         <!-- 表头合并单元格 -->
-        <t-table-column v-else :key="index + 'm'" :item="item">
+        <t-table-column v-else :key="index + 'm'" :item="item" v-bind="$attrs">
           <template v-for="(index, name) in slots" v-slot:[name]="data">
             <slot :name="name" v-bind="data"></slot>
           </template>
@@ -712,11 +711,12 @@ const cellDblclick = (row, column) => {
 const isShow = (name) => {
   return Object.keys(slots).includes(name)
 }
+
 // 整行编辑返回数据
-const save = (callback) => {
+const save = () => {
   if (!isEditRules.value) {
     emits('save', state.tableData)
-    callback && callback(state.tableData)
+    return
   }
   // 表单规则校验
   let successLength = 0
@@ -765,7 +765,6 @@ const save = (callback) => {
       if (isEditRules.value) {
         // console.log('所有表单都校验成功--', state.tableData)
         emits('save', state.tableData)
-        callback && callback(state.tableData)
       }
     } else {
       // 校验未通过的prop
@@ -849,6 +848,82 @@ const handlesCurrentChange = (val) => {
 /**
  * 公共方法
  */
+// 单元格编辑调用save方法返回数据
+const saveMethod = (callback) => {
+  if (!isEditRules.value) {
+    callback && callback(state.tableData)
+    return
+  }
+  // 表单规则校验
+  let successLength = 0
+  let rulesList: any = []
+  let rulesError: any = []
+  let propError: any = []
+  let propLabelError: any = []
+  // 获取所有的form ref
+  const refList = Object.keys(formRef.value).filter((item) =>
+    item.includes('formRef')
+  )
+  // 获取单独设置规则项
+  const arr = renderColumns.value
+    .filter((val) => {
+      if (val.configEdit?.rules) {
+        return val
+      }
+    })
+    .map((item) => item.prop)
+  // 获取整体设置规则
+  const arr1 = props.table.rules && Object.keys(props.table.rules)
+  // 获取最终设置了哪些规则（其值是设置的--prop）
+  const newArr = [...arr, ...arr1]
+  // 最终需要校验的ref
+  newArr.map((val) => {
+    refList.map((item: any) => {
+      if (item.includes(val)) {
+        rulesList.push(item)
+      }
+    })
+  })
+  // console.log('最终需要校验的数据', rulesList, formRef.value)
+  // 表单都校验
+  rulesList.map((val) => {
+    formRef.value[val].validate((valid) => {
+      if (valid) {
+        successLength = successLength + 1
+      } else {
+        rulesError.push(val)
+      }
+    })
+  })
+  setTimeout(() => {
+    // 所有表单都校验成功
+    if (successLength == rulesList.length) {
+      if (isEditRules.value) {
+        // console.log('所有表单都校验成功--', state.tableData)
+        callback && callback(state.tableData)
+      }
+    } else {
+      // 校验未通过的prop
+      rulesError.map((item) => {
+        newArr.map((val) => {
+          if (item.includes(val)) {
+            propError.push(val)
+          }
+        })
+      })
+      // 去重获取校验未通过的prop--label
+      Array.from(new Set(propError)).map((item) => {
+        renderColumns.value.map((val) => {
+          if (item === val.prop) {
+            propLabelError.push(val.label)
+          }
+        })
+      })
+      console.log('校验未通过的prop--label', propLabelError)
+      emits('validateError', propLabelError)
+    }
+  }, 300)
+}
 // 清空复选框
 const clearSelection = () => {
   return TTable.value.clearSelection()
@@ -922,6 +997,7 @@ const resetFields = () => {
 }
 // 暴露方法出去
 defineExpose({
+  defaultRadioSelect,
   clearSelection,
   getSelectionRows,
   toggleRowSelection,
@@ -939,7 +1015,7 @@ defineExpose({
   radioVal,
   clearValidate,
   resetFields,
-  save,
+  saveMethod,
 })
 </script>
 <style lang="scss" scoped>

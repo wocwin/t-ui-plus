@@ -4,7 +4,8 @@
     :label="item.label"
     :type="item.type"
     :align="item.align || 'center'"
-    :min-width="item['min-width'] || item.minWidth || item.width"
+    :min-width="item['min-width'] || item.minWidth"
+    :width="item.width"
     :fixed="item.fixed"
   >
     <template v-for="(val, index) of item.children">
@@ -15,11 +16,13 @@
       </t-table-column>
       <el-table-column
         v-else
+        :key="val.prop"
         :prop="val.prop"
         :label="val.label"
-        :min-width="val['min-width'] || val.minWidth || val.width"
+        :min-width="val['min-width'] || val.minWidth"
+        :width="val.width"
         :sortable="val.sort"
-        :render-header="val.renderHeader || val.headerRequired"
+        :render-header="val.renderHeader"
         :align="val.align || 'center'"
         :fixed="val.fixed"
         :show-overflow-tooltip="val.noShowTip === false ? val.noShowTip : true"
@@ -43,7 +46,6 @@
           <template v-if="val.canEdit">
             <single-edit-cell
               :isShowRules="false"
-              :canEdit="val.canEdit"
               :configEdit="val.configEdit"
               v-model="scope.row[scope.column.property]"
               :prop="val.prop"
@@ -53,13 +55,10 @@
                   $emit('handleEvent', event, model, scope.$index)
               "
               v-bind="$attrs"
-              ref="editCell"
             >
-              <slot
-                v-if="val.configEdit && val.configEdit.editSlotName"
-                :name="val.configEdit.editSlotName"
-                :scope="scope"
-              />
+              <template v-for="(index, name) in slots" v-slot:[name]="data">
+                <slot :name="name" v-bind="data"></slot>
+              </template>
             </single-edit-cell>
           </template>
           <div v-if="!val.render && !val.slotNameMerge && !val.canEdit">
@@ -71,7 +70,7 @@
   </el-table-column>
 </template>
 
-<script setup lang="ts" name="TTableColumn">
+<script setup lang="tsx" name="TTableColumn">
 import SingleEditCell from './singleEditCell.vue'
 import RenderCol from './renderCol.vue'
 import { useSlots } from 'vue'
@@ -86,4 +85,5 @@ defineProps({
 })
 // 获取所有插槽
 const slots = useSlots()
+
 </script>

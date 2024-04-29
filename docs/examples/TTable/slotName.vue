@@ -77,7 +77,14 @@ const table = {
         return <div>{label}</div>
       },
     },
-    { prop: 'date1', label: '插槽渲染', minWidth: '180', slotName: 'date1' },
+    { prop: 'date1', label: '插槽渲染',renderHeader: () => {
+        return (
+          <div>
+            <span style="color:red">插槽渲染</span>
+            <search style="width: 1em; height: 1em; margin-right: 8px" />
+          </div>
+        )
+      }, minWidth: '180', slotName: 'date1' },
     {
       prop: 'address',
       label: '地址',

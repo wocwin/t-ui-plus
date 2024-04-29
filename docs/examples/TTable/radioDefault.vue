@@ -2,21 +2,25 @@
   <t-layout-page>
     <t-layout-page-item>
       <t-table
-        title="单选框"
+        title="单选框(默认选中)"
         ref="selectionTable"
         :table="table"
         :columns="table.columns"
         @radioChange="radioChange"
         :isShowPagination="false"
         :defaultRadioCol="1"
-      />
+      >
+        <template #toolbar>
+          <el-button size="default" type="primary" @click="RadioSelect">选中第二条</el-button>
+        </template>
+      </t-table>
     </t-layout-page-item>
   </t-layout-page>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-let table = {
+let table = ref({
   firstColumn: { type: 'radio', fixed: true },
   // 接口返回数据
   data: [
@@ -60,11 +64,15 @@ let table = {
     { prop: 'status', label: '状态', minWidth: '80' },
     { prop: 'address', label: '地址', minWidth: '220' },
   ],
-}
+})
 // 获取ref
 const selectionTable: any = ref<HTMLElement | null>(null)
 // 选择单选框
 const radioChange = (val: any) => {
   console.log('选择单选框', val)
+}
+// 选中第二条
+const RadioSelect = () => {
+  selectionTable.value.defaultRadioSelect(2)
 }
 </script>

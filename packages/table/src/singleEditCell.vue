@@ -1,66 +1,43 @@
 <template>
-  <component
-    :is="isShowRules ? 'el-form-item' : 'div'"
-    :prop="scope.column.property"
-    :rules="configEdit.rules"
-    :class="[configEdit.className, 'single_edit_cell']"
-    v-bind="$attrs"
-  >
+  <component :is="isShowRules ? 'el-form-item' : 'div'" :prop="prop" :rules="configEdit.rules"
+    :class="[configEdit.className, 'single_edit_cell']" v-bind="$attrs">
     <!-- 编辑组件自定义插槽 -->
     <template v-if="configEdit.editSlotName">
       <div :class="[prop, 'slot_edit_name']" @keyup="keyUpHandle">
         <slot :name="configEdit.editSlotName" :scope="scope" />
       </div>
     </template>
-    <component
-      v-if="!configEdit.editSlotName"
-      :is="configEdit.editComponent || 'el-input'"
-      v-model="scope.row[prop]"
-      :type="configEdit.type"
-      :placeholder="configEdit.placeholder || getPlaceholder(configEdit)"
-      ref="parentCom"
-      :class="prop"
-      @change="
-        handleEvent(configEdit.event, scope.row[prop], configEdit.editComponent)
-      "
-      @keyup="keyUpHandle"
-      :style="{ width: configEdit.width || '100%' }"
-      v-on="cEvent(configEdit)"
-      v-bind="
-        typeof configEdit.bind == 'function'
+    <component v-if="!configEdit.editSlotName" :is="configEdit.editComponent || 'el-input'" v-model="childValue"
+      :type="configEdit.type" :placeholder="configEdit.placeholder || getPlaceholder(configEdit)" ref="parentCom"
+      :class="prop" @change="
+        handleEvent(configEdit.event, childValue, configEdit.editComponent)
+        " @keyup="keyUpHandle" :style="{ width: configEdit.width || '100%' }" v-on="cEvent(configEdit)" v-bind="typeof configEdit.bind == 'function'
           ? configEdit.bind(scope)
           : { clearable: true, filterable: true, ...configEdit.bind }
-      "
-    >
+        ">
       <!-- 前置文本 -->
       <template #prepend v-if="configEdit.prepend">{{
         configEdit.prepend
-      }}</template>
+        }}</template>
       <!-- 后置文本 -->
       <template #append v-if="configEdit.append">{{
         configEdit.append
-      }}</template>
+        }}</template>
       <!-- 子组件自定义插槽 -->
       <!-- <template v-if="configEdit.childSlotName">
         <slot />
       </template>-->
       <template v-if="!configEdit.editComponent.includes('date')">
-        <component
-          :is="compChildName(configEdit)"
-          v-for="(value, key, index) in listTypeInfo[configEdit.list]"
-          :key="index"
-          :disabled="value.disabled"
-          :label="compChildLabel(configEdit, value)"
-          :value="compChildValue(configEdit, value, key)"
-          >{{ compChildShowLabel(configEdit, value) }}</component
-        >
+        <component :is="compChildName(configEdit)" v-for="(value, key, index) in selectListType(configEdit)"
+          :key="index" :disabled="value.disabled" :label="compChildLabel(configEdit, value)"
+          :value="compChildValue(configEdit, value, key)">{{ compChildShowLabel(configEdit, value) }}</component>
       </template>
     </component>
   </component>
 </template>
 
 <script setup lang="ts" name="SingleEditCell">
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 const props = defineProps({
   /** 编辑配置项说明
    * label: '爱好', // placeholder显示
@@ -82,39 +59,37 @@ const props = defineProps({
   },
   scope: {
     type: Object,
-    default: {},
+    default: () => ({}),
   },
   prop: {
     type: String,
-    default: '',
+    default: 'prop',
   },
   // 是否走表单验证（表头合并不校验）
   isShowRules: {
     type: Boolean,
     default: true,
   },
-  // modelValue: {
-  //   type: [String, Number, Array, Boolean],
-  // },
+  modelValue: {
+    type: [String, Number, Array, Boolean],
+  },
 })
 // 抛出事件
 const emits = defineEmits(['handleEvent', 'update:modelValue', 'keyupHandle'])
-// const childValue = ref(props.scope?.row[props?.prop])
 // vue3 v-model简写
-// let childValue: any = computed({
-//   get() {
-//     return props.scope?.row[props.scope?.column?.property]
-//     // return props.scope?.row[props?.prop]
-//   },
-//   set(val) {
-//     console.log('update:modelValue', val)
-//     emits('update:modelValue', val)
-//   },
-// })
-// watch(
-//   () => childValue.value,
-//   (data) => emits('update:modelValue', data)
-// )
+let childValue: any = computed({
+  get() {
+    return props?.modelValue
+  },
+  set(val) {
+    // console.log('update:modelValue', val)
+    emits('update:modelValue', val)
+  },
+})
+watch(
+  () => childValue.value,
+  (data) => emits('update:modelValue', data)
+)
 // 键盘事件
 const keyUpHandle = ($event) => {
   emits('keyupHandle', $event, props.scope.$index, props.prop)
@@ -127,13 +102,22 @@ const cEvent = computed(() => {
     Object.keys(event).forEach((v) => {
       changeEvent[v] = (e) => {
         if (e) {
-          event[v] && event[v](e, props.prop,props.scope)
+          event[v] && event[v](e, props.prop, props.scope)
         } else {
-          event[v] && event[v](props.prop,props.scope)
+          event[v] && event[v](props.prop, props.scope)
         }
       }
     })
     return { ...changeEvent }
+  }
+})
+const selectListType = computed(() => {
+  return (item: any) => {
+    if (props.listTypeInfo) {
+      return props.listTypeInfo[item.list]
+    } else {
+      return []
+    }
   }
 })
 // 子组件名称
@@ -218,7 +202,8 @@ const handleEvent = (type, val, editCom) => {
 <style lang="scss">
 .single_edit_cell {
   cursor: pointer;
-  .slot_edit_name{
+
+  .slot_edit_name {
     width: 100%;
   }
 }

@@ -41,7 +41,8 @@ const nullify = (val) => {
   console.log('nullify', val)
 }
 // 获取ref
-const selectionTable: any = (ref < HTMLElement) | (null > null)
+// const selectionTable: any = (ref < HTMLElement) | (null > null)
+const selectionTable: any = ref(null)
 let state = reactive({
   table: {
     firstColumn: { type: 'selection', fixed: true },

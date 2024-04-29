@@ -1,17 +1,12 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-table
-        title="字典过滤渲染"
-        :table="table"
-        :columns="table.columns"
-        :isShowPagination="false"
-      />
+      <t-table title="字典过滤渲染" :table="table" :columns="table.columns" :isShowPagination="false" />
     </t-layout-page-item>
   </t-layout-page>
 </template>
 
-<script setup lang="ts">
+<script setup lang="tsx">
 let table = {
   // 接口返回数据
   data: [
@@ -54,8 +49,11 @@ let table = {
     { prop: 'date', label: '日期', minWidth: '180' },
     {
       prop: 'status',
-      label: '字典过滤',
+      // label: '字典过滤',
       minWidth: '80',
+      renderHeader: () => {
+        return <span style="color:red">字典过滤</span>
+      },
       filters: { list: 'statusList', key: 'id', label: 'label' },
     },
     { prop: 'address', label: '地址', minWidth: '220' },

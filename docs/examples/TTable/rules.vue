@@ -42,8 +42,8 @@ const singleEdit: any = ref(null)
 // 保存
 const save = () => {
   // console.log('另一种获取的table--ref', singleEdit.value)
-  singleEdit.value.save((data) => {
-    console.log('调用方法获取返回数据---save', data)
+  singleEdit.value.saveMethod((data) => {
+    console.log('调用方法获取返回数据---saveMethod', data)
   })
 }
 // 点击保存获取table数据
