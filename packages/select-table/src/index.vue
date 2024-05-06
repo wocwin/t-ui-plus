@@ -34,8 +34,7 @@
               <el-button
                 v-bind="{ type: 'danger', ...btnBind }"
                 @click="blur"
-                >{{ btnBind.btnTxt || '关闭下拉框' }}</el-button
-              >
+              >{{ btnBind.btnTxt || '关闭下拉框' }}</el-button>
               <slot name="querybar"></slot>
             </template>
           </t-query-condition>
@@ -258,6 +257,16 @@ const props = defineProps({
     type: [String, Number],
     default: 550,
   },
+  // 是否始终显示下拉框
+  selfExpanded: {
+    type: Boolean,
+    default: false,
+  },
+  // 显示下拉框
+  isExpanded: {
+    type: Boolean,
+    default: false,
+  },
   // 设置默认选中项--keywords.value值（单选是String, Number类型；多选时是数组）
   defaultSelectVal: {
     type: Array,
@@ -327,6 +336,9 @@ onMounted(() => {
   ) {
     defaultSelect(state.defaultSelectValue)
   }
+  if (props.selfExpanded) {
+    selectRef.value.expanded = true
+  }
 })
 // 表格显示隐藏回调
 const visibleChange = (visible) => {
@@ -350,12 +362,16 @@ const visibleChange = (visible) => {
       tQueryConditionRef.value &&
       props.isShowQuery &&
       props.isClearQuery &&
-      !selectRef.value.expanded
+      !selectRef.value.expanded &&
+      !props.selfExpanded
     ) {
-      tQueryConditionRef.value?.resetHandle()
+      tQueryConditionRef.value?.resetData()
     }
     findLabel()
     filterMethodHandle('')
+  }
+  if (props.selfExpanded) {
+    selectRef.value.expanded = true
   }
 }
 // 查询条件change事件触发
@@ -365,12 +381,14 @@ const handleEvent = () => {
 }
 // 条件查询组件的visible-change事件
 const queryVisibleChange = (val) => {
-  // console.log('selectVisibleChange---999', val)
   isQueryVisible.value = val
 }
 // el-select点击了空白区域
 const closeBox = () => {
   // console.log('select点击了空白区域', tQueryConditionRef.value)
+  // if(props.selfExpanded){
+  //   selectRef.value.expanded = true
+  // }
   // 获取查询条件组件的项
   if (tQueryConditionRef.value && props.isShowQuery) {
     selectRef.value.expanded = true
@@ -616,19 +634,26 @@ const radioClick = (row, index) => {
       state.defaultSelectValue = []
       isDefaultSelectVal.value = true
       emits('radioChange', {}, null) // 取消勾选就把回传数据清除
-      blur()
+      // blur()
     } else {
       isForbidden()
       radioVal.value = index
       state.defaultValue = row
       emits('radioChange', row, row[props.keywords.value])
-      blur()
+      // blur()
     }
   } else {
     isForbidden()
     radioVal.value = index
     state.defaultValue = row
     emits('radioChange', row, row[props.keywords.value])
+  }
+  // 是否显示下拉框
+  if (props.isExpanded) {
+    selectDefaultLabel.value =
+      (state.defaultValue && state.defaultValue[props.keywords.label]) || ''
+    selectRef.value.expanded = true
+  } else {
     blur()
   }
 }
@@ -690,7 +715,7 @@ const focus = () => {
   selectRef.value.focus()
 }
 // 暴露方法出去
-defineExpose({ focus, blur, clear, tQueryConditionRef })
+defineExpose({ focus, blur, clear, tQueryConditionRef, selectRef })
 </script>
 
 <style lang="scss">

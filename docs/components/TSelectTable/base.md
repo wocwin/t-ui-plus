@@ -6,6 +6,12 @@
 TSelectTable/radio
 :::
 
+### 是否显示下拉框
+
+::: demo 若设置`selfExpanded`为`true`，下拉框将始终不会关闭；另一种方式： 设置`isExpanded` 为`true`;
+TSelectTable/expanded
+:::
+
 ### 单选 -- 开启键盘事件（上下选择高亮，回车选中）
 
 ::: demo `table` 数据源及表头信息;`keywords` 选项中的 value（选项的值）,label(选项的标签);`@radioChange` 选中事件，传出当前选中对象；`isKeyup` 是否开启键盘事件（默认不开启）上下选择高亮，回车选中
@@ -68,7 +74,7 @@ TSelectTable/isShowPagination
 
 ### 显示查询条件
 
-:::demo `isShowQuery` 是否开启查询条件配置，其配置继承查询条件组件（TQueryCondition组件）的所有属性及事件；`table` 数据源及表头信息；`keywords` 选项中的 value（选项的值）,label(选项的标签);
+:::demo `isShowQuery` 是否开启查询条件配置，其配置继承查询条件组件（TQueryCondition组件）的所有属性/插槽/事件；注意：`不可设置TQueryCondition组件的maxVisibleSpans属性` ;
 TSelectTable/isShowQuery
 :::
 
@@ -141,6 +147,8 @@ TSelectTable/isShowQuerySpan
 | isShowBlurBtn     | 条件查询组件是否显示隐藏下拉框按钮                                                      | Boolean                   | false      |
 | btnBind           | 显示下拉框按钮配置，继承`el-button`所有属性;`默认值{type:'danger',btnTxt:'关闭下拉框'}` | Object                    | -          |
 | isClearQuery      | 关闭下拉框是否清空搜索条件                                                              | Boolean                   | false      |
+| selfExpanded      | 是否始终显示下拉框                                                                      | Boolean                   | false      |
+| isExpanded        | 是否显示下拉框                                                                          | Boolean                   | false      |
 
 ### 3、事件（events）继承 el-table 及 el-select 属性
 
