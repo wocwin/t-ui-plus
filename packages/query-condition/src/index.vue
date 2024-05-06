@@ -500,7 +500,8 @@ watch(
   () => props.opts,
   (opts) => {
     queryState.form = initForm(opts)
-  }
+  },
+  { deep: true }
 )
 
 // 暴露方法出去
