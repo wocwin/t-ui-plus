@@ -50,7 +50,7 @@
             width: table.firstColumn.width || 55,
             label: table.firstColumn.label,
             fixed: table.firstColumn.fixed,
-            align: table.firstColumn.align || 'center',
+            align: table.firstColumn.align || align,
             'reserve-selection': table.firstColumn.isPaging || false,
             selectable: table.firstColumn.selectable,
             ...table.firstColumn.bind,
@@ -68,7 +68,7 @@
               (table.firstColumn.type === 'expand' && '') ||
               '',
             fixed: table.firstColumn.fixed,
-            align: table.firstColumn.align || 'center',
+            align: table.firstColumn.align || align,
             ...table.firstColumn.bind,
           }"
         >
@@ -162,7 +162,7 @@
             :min-width="item['min-width'] || item.minWidth"
             :width="item.width"
             :sortable="item.sort || sortable"
-            :align="item.align || 'center'"
+            :align="item.align || align"
             :fixed="item.fixed"
             :show-overflow-tooltip="
               item.noShowTip === false ? item.noShowTip : true
@@ -240,7 +240,7 @@
           </el-table-column>
         </template>
         <!-- 表头合并单元格 -->
-        <t-table-column v-else :key="index + 'm'" :item="item" v-bind="$attrs">
+        <t-table-column v-else :key="index + 'm'" :item="item" :align="align" v-bind="$attrs">
           <template v-for="(index, name) in slots" v-slot:[name]="data">
             <slot :name="name" v-bind="data"></slot>
           </template>
@@ -255,7 +255,7 @@
         :min-width="table.operatorConfig && table.operatorConfig.minWidth"
         :width="table.operatorConfig && table.operatorConfig.width"
         :align="
-          (table.operatorConfig && table.operatorConfig.align) || 'center'
+          (table.operatorConfig && table.operatorConfig.align) || align
         "
         v-bind="table.operatorConfig && table.operatorConfig.bind"
         class-name="operator"
@@ -333,6 +333,7 @@ import {
   onMounted,
   onUpdated,
 } from 'vue'
+import type { PropType } from 'vue'
 import { ElMessage } from 'element-plus'
 import Sortable from 'sortablejs'
 import SingleEditCell from './singleEditCell.vue'
@@ -367,6 +368,12 @@ const props: any = defineProps({
   // 表格标题
   title: {
     type: String,
+  },
+  // table对齐方式
+  align: {
+    type: String as PropType<'left' | 'center' | 'right'>,
+    // validator: (value: string) => ['left' | 'center' | 'right' | ''].includes(value),
+    default: 'center',
   },
   // 是否开启Tree-table
   isTree: {
@@ -1050,8 +1057,6 @@ defineExpose({
         overflow: hidden;
         text-overflow: ellipsis;
         word-break: break-all;
-        padding-left: 10px;
-        padding-right: 10px;
       }
       .single_edit_cell {
         overflow: visible;

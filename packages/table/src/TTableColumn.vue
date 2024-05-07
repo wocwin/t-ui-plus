@@ -3,7 +3,7 @@
     :prop="item.prop"
     :label="item.label"
     :type="item.type"
-    :align="item.align || 'center'"
+    :align="item.align || align"
     :min-width="item['min-width'] || item.minWidth"
     :width="item.width"
     :fixed="item.fixed"
@@ -23,7 +23,7 @@
         :width="val.width"
         :sortable="val.sort"
         :render-header="val.renderHeader"
-        :align="val.align || 'center'"
+        :align="val.align || align"
         :fixed="val.fixed"
         :show-overflow-tooltip="val.noShowTip === false ? val.noShowTip : true"
         v-bind="{ ...val.bind, ...$attrs }"
@@ -31,12 +31,7 @@
         <template #default="scope">
           <!-- render渲染 -->
           <template v-if="val.render">
-            <render-col
-              :column="val"
-              :row="scope.row"
-              :render="val.render"
-              :index="scope.$index"
-            />
+            <render-col :column="val" :row="scope.row" :render="val.render" :index="scope.$index" />
           </template>
           <!-- 自定义插槽 -->
           <template v-if="val.slotNameMerge">
@@ -61,9 +56,7 @@
               </template>
             </single-edit-cell>
           </template>
-          <div v-if="!val.render && !val.slotNameMerge && !val.canEdit">
-            {{ scope.row[val.prop] }}
-          </div>
+          <div v-if="!val.render && !val.slotNameMerge && !val.canEdit">{{ scope.row[val.prop] }}</div>
         </template>
       </el-table-column>
     </template>
@@ -82,8 +75,11 @@ defineProps({
     },
     required: true,
   },
+  align: {
+    type: String,
+    default: 'center',
+  },
 })
 // 获取所有插槽
 const slots = useSlots()
-
 </script>

@@ -14,6 +14,12 @@ TTable/base
 TTable/border
 :::
 
+### 对齐方式
+
+:::demo 在`TTable`组件中添加`align:'center'`设置整个table对齐方式，在`columns`中设置`align`设置每列对齐方式（`columns优先级`高于`整体的对齐方式`）----`align`可选值`left`、`center`、`right`
+TTable/align
+:::
+
 ### 复选框表格
 
 :::demo 在`table`对象中添加`firstColumn:{ type: 'selection', fixed: true }`
@@ -239,6 +245,7 @@ TTable/expand
 | ---currentPage          | 是否需要显示切换页条数                                                                 | Number           | -         |
 | columns                 | 表头信息                                                                               | Array            | []        |
 | ----sort                | 排序 （设置：sort:true）                                                               | Boolean          | false     |
+| ----align               | 对齐方式 （left / center / right）                                                     | string           | 'center'  |
 | ----renderHeader        | 列标题 Label 区域渲染使用的 Function(val) 可以用 jsx 方式                              | Function         | -         |
 | ----render              | 某列render函数渲染使用的 Function(val) 可以用 jsx 方式                                 | Function         | -         |
 | ----bind                | el-table-column Attributes                                                             | Object           | -         |
@@ -287,6 +294,7 @@ TTable/expand
 | ----title               | 点击按钮下拉显示title                                                                  | String           | '列设置'  |
 | ----size                | el-button的size                                                                        | String           | 'default' |
 | ----icon                | el-button的icon                                                                        | String           | 'Setting' |
+| align                   | table对齐方式 可选值`left`、`center`、`right`                                          | String           | 'center'  |
 
 ### 3、events 其他事件按照 el-table 直接使用（如 sort-change 排序事件）
 
@@ -299,7 +307,7 @@ TTable/expand
 | rowSort       | 行拖拽排序后触发事件         | 返回排序后的table数据                         |
 | validateError | 单元格编辑保存校验不通过触发 | 返回校验不通过的 prop--label 集合             |
 
-### 4、Methods 方法 继承el-table所有方法
+### 4、Methods 方法 继承el-table所有方法(Expose)
 
 | 事件名             | 说明                                                          | 返回值              |
 | :----------------- | :------------------------------------------------------------ | :------------------ |
