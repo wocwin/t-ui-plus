@@ -38,6 +38,7 @@ let state = reactive({
     date: null,
     date1: null,
     date2: null,
+    likeTransportNo: null,
   },
   listTypeInfo: {
     sexList: [
@@ -50,6 +51,10 @@ let state = reactive({
         dictValue: 'W2',
       },
     ],
+    hobbyList: [
+      { label: '点击类', value: 1 },
+      { label: '回复类', value: 2 },
+    ]
   },
 })
 const opts = computed(() => {
@@ -61,6 +66,15 @@ const opts = computed(() => {
     phonenumber: {
       label: '手机号码',
       comp: 'el-input',
+    },
+    likeTransportNo: {
+      label: '多选',
+      defaultVal: [1],
+      comp: 'el-checkbox-group',
+      type: 'checkbox',
+      list: 'hobbyList',
+      listTypeInfo: state.listTypeInfo,
+      span: 2,
     },
     workshopNum: {
       label: '车间',
@@ -95,7 +109,7 @@ const opts = computed(() => {
 })
 // 最终参数获取
 const getQueryData = computed(() => {
-  const { userName, phonenumber, workshopNum, date, date1,date2 } = state.queryData
+  const { userName, phonenumber, workshopNum, date, date1,date2 ,likeTransportNo} = state.queryData
   console.log(444, userName, phonenumber, date1)
   return {
     userName,
@@ -103,6 +117,7 @@ const getQueryData = computed(() => {
     phonenumber,
     date1,
     date2,
+    likeTransportNo,
     beginDate: date && date[0] ? date[0] : null,
     endDate: date && date[1] ? date[1] : null,
   }

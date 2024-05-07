@@ -135,13 +135,15 @@ TSelectTable/isShowQuerySpan
 | ------value       | 选项的值                                                                                | String / number           | ‘value’    |
 | radioTxt          | 单选文案                                                                                | String                    | 单选       |
 | multiple          | 是否开启多选                                                                            | Boolean                   | false      |
+| filterMethod      | 自定义过滤                                                                              | function                  | -          |
 | rowClickRadio     | 是否开启整行选中(单选)                                                                  | boolean                   | true       |
 | isShowFirstColumn | 是否显示首列(单选)                                                                      | boolean                   | true       |
-| defaultSelectVal  | 设置第一页默认选中项--keywords.value 值                                                 | Array                     | -          |
+| defaultSelectVal  | 设置第一页默认选中项--keywords.value 值                                                 | Array                     | []         |
 | filterable        | 是否开启过滤(根据 keywords 的 label 值进行过滤)                                         | Boolean                   | true       |
 | reserveSelection  | 是否支持翻页选中                                                                        | Boolean                   | true       |
 | isShowPagination  | 开启分页                                                                                | Boolean                   | false      |
-| tableWidth        | table 宽度                                                                              | Number                    | 550        |
+| tableWidth        | table 宽度(单位：px) 若设置0，宽度100%                                                  | Number/String             | 550        |
+| selectWidth       | select 宽度(单位：px) 若设置0，宽度100%                                                 | Number/String             | 550        |
 | isKeyup           | 单选是否开启键盘事件                                                                    | Boolean                   | false      |
 | isShowQuery       | 是否允许配置查询条件(继承TQueryCondition的所有属性、事件、插槽)                         | Boolean                   | false      |
 | isShowBlurBtn     | 条件查询组件是否显示隐藏下拉框按钮                                                      | Boolean                   | false      |
@@ -158,10 +160,13 @@ TSelectTable/isShowQuerySpan
 | selectionChange | 多选事件                                             | 返回选中的项数据及选中项的 keywords.value 集合 |
 | radioChange     | 单选                                                 | 返回当前项所有数据                             |
 
-### 4、方法（Methods）继承 el-table 及 el-select 属性
+### 4、Expose 方法（Methods）
 
-| 方法名 | 说明                            | 回调参数 |
-| :----- | :------------------------------ | :------- |
-| clear  | 清空选中项                      |          |
-| focus  | 使 input 获取焦点               |          |
-| blur   | 使 input 失去焦点，并隐藏下拉框 |          |
+| 方法名             | 说明                            | 回调参数 |
+| :----------------- | :------------------------------ | :------- |
+| clear              | 清空选中项                      |          |
+| focus              | 使 input 获取焦点               |          |
+| blur               | 使 input 失去焦点，并隐藏下拉框 |          |
+| tQueryConditionRef | 条件查询组件实例                |          |
+| selectRef          | 下拉选择实例                    |          |
+| selectTable        | el-table实例                    |          |

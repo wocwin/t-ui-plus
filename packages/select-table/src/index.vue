@@ -267,7 +267,7 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  // 设置默认选中项--keywords.value值（单选是String, Number类型；多选时是数组）
+  // 设置默认选中项--keywords.value值
   defaultSelectVal: {
     type: Array,
     default: () => [],
@@ -715,7 +715,7 @@ const focus = () => {
   selectRef.value.focus()
 }
 // 暴露方法出去
-defineExpose({ focus, blur, clear, tQueryConditionRef, selectRef })
+defineExpose({ focus, blur, clear, props, tQueryConditionRef, selectRef, selectTable })
 </script>
 
 <style lang="scss">
