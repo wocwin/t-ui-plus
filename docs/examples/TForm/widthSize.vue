@@ -10,6 +10,7 @@
         <el-radio-button :value="2">一行展示2项</el-radio-button>
         <el-radio-button :value="3">一行展示3项</el-radio-button>
         <el-radio-button :value="4">一行展示4项</el-radio-button>
+        <el-radio-button :value="5">一行展示5项</el-radio-button>
       </el-radio-group>
       <t-form
         ref="TFormDemo"

@@ -201,8 +201,8 @@ const props = defineProps({
   },
   // 一行显示几个输入项;最大值4
   widthSize: {
-    type: Number as PropType<1 | 2 | 3 | 4>,
-    validator: (value: number) => [1, 2, 3, 4].includes(value),
+    type: Number as PropType<1 | 2 | 3 | 4 | 5 | 6>,
+    validator: (value: number) => [1, 2, 3, 4, 5, 6].includes(value),
     default: 2,
   },
   // 全局是否开启清除前后空格
@@ -318,9 +318,9 @@ watch(
 watch(
   () => props.widthSize,
   (val) => {
-    if (val > 4) {
-      ElMessage.warning('widthSize值不能大于4！')
-      colSize.value = 4
+    if (val > 6) {
+      ElMessage.warning('widthSize值不能大于6！')
+      colSize.value = 6
     } else {
       colSize.value = val
     }

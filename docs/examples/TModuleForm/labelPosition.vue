@@ -33,6 +33,7 @@ const formOpts: any = reactive({
     title: '向上对齐',
     name: 'goodsInformation',
     ref: null,
+    widthSize:6,
     opts: {
       labelPosition: 'top',
       formData: {
