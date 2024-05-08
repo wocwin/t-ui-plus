@@ -4,10 +4,11 @@
       <t-form ref="TFormDemo" v-model="formOpts.ref" :formOpts="formOpts" :widthSize="1">
         <template #wechat>
           <t-select-table
+            ref="selectTableRef"
             :table="table"
             :columns="table.columns"
             :max-height="400"
-            placeholder="使用下拉选择表格组件"
+            placeholder="插槽使用下拉选择表格组件"
             :defaultSelectVal="[formOpts.formData.wechat]"
             :keywords="{ label: 'name', value: 'id' }"
             @radioChange="radioChange"
@@ -96,6 +97,7 @@ const statusList = ref([
 ])
 // 获取ref
 const TFormDemo: any = ref<HTMLElement | null>(null)
+const selectTableRef: any = ref<HTMLElement | null>(null)
 // 提交formOpts.ref 方式form表单
 const submitForm = () => {
   formOpts.ref.validate((valid) => {
@@ -115,11 +117,17 @@ const submitForm = () => {
 // }
 // 重置form表单
 const resetForm = () => {
-  TFormDemo.value.resetFields()
+  // 清空下拉选择表格数组数据
+  selectTableRef.value.clear()
+  // 清空校验
+  TFormDemo.value.selfResetFields()
 }
 const radioChange = (row) => {
   console.log('单选--传给后台的值', row)
   formOpts.formData.wechat = row?.id
+}
+const radioChange1 = (row) => {
+  formOpts.formData.deptCode = row?.id
 }
 const formOpts: any = reactive({
   ref: null,
@@ -132,6 +140,7 @@ const formOpts: any = reactive({
     status: null, // *状态: 0：停用，1：启用(默认为1)',
     desc: null, // 描述
     wechat: null,
+    deptCode: null,
   },
   fieldList: [
     {
@@ -183,6 +192,25 @@ const formOpts: any = reactive({
       slotName: 'wechat',
     },
     {
+      label: '用户名称',
+      value: 'deptCode',
+      placeholder: 't-select-table表单内置使用',
+      comp: 't-select-table',
+      isSelfCom: true,
+      bind: {
+        isKeyup: true,
+        maxHeight: 400,
+        selectWidth: 500,
+        defaultSelectVal: [],
+        keywords: { label: 'name', value: 'id' },
+        table: table,
+        columns: table.columns,
+      },
+      eventHandle: {
+        radioChange: (val: any) => radioChange1(val),
+      },
+    },
+    {
       label: '描述',
       value: 'desc',
       type: 'textarea',
@@ -209,7 +237,13 @@ const getData = () => {
     desc: '8888', // 描述
     status: 1, // *状态: 0：停用，1：启用(默认为1)',
     wechat: 3,
+    deptCode: 5,
   }
   formOpts.formData = objShow
+  formOpts.fieldList.map((item: any) => {
+    if (item.value === 'deptCode') {
+      item.bind.defaultSelectVal = [objShow.deptCode]
+    }
+  })
 }
 </script>

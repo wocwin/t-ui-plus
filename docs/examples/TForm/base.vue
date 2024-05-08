@@ -9,6 +9,7 @@
       >
         <template #wechat>
           <t-select-table
+            ref="selectTableRef"
             placeholder="下拉选择表格组件插槽使用"
             :table="state.table"
             :columns="state.table.columns"
@@ -31,7 +32,8 @@ import { ref, reactive, onMounted } from 'vue'
 import data from '../TSelectTable/data.json'
 import data1 from '../TSelectTable/data2.json'
 // 获取ref
-const TFormDemo: any = (ref < HTMLElement) | (null > null)
+const TFormDemo: any = ref(null)
+const selectTableRef: any = ref(null)
 // 提交formOpts.ref 方式form表单
 const submitForm = () => {
   formOpts.ref.validate((valid) => {
@@ -133,8 +135,10 @@ const selectionChange = (val, ids) => {
 // 重置form表单
 const resetForm = () => {
   // formOpts.formData = {}
+  // 清空下拉选择表格数组数据
+  selectTableRef.value.clear()
   // 清空校验
-  TFormDemo.value.resetFields()
+  TFormDemo.value.selfResetFields()
 }
 // 表单事件
 const handleEvent = (type, val) => {
