@@ -17,7 +17,7 @@
 import { computed, useAttrs, useSlots, watch, reactive, ref } from 'vue'
 import type { PropType } from 'vue'
 const props = defineProps({
-  value: {
+  modelValue: {
     type: [String, Date, Array],
   },
   // 日期范围是否显示00:00:00 23:59:59时分秒
@@ -78,7 +78,7 @@ const slots = useSlots()
 // vue3 v-model简写
 let time: any = computed({
   get() {
-    return props.value
+    return props.modelValue
   },
   set(val) {
     // console.log(777, val)

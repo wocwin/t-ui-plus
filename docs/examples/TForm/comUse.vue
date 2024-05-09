@@ -1,12 +1,7 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-form
-        ref="TFormDemo"
-        v-model="formOpts.ref"
-        :formOpts="formOpts"
-        :widthSize="1"
-      />
+      <t-form ref="TFormDemo" v-model="formOpts.ref" :formOpts="formOpts" :widthSize="1" />
     </t-layout-page-item>
   </t-layout-page>
 </template>
@@ -88,6 +83,11 @@ const formOpts: any = reactive({
     wechat: null,
     deptCode: null,
     createDeptCode: null,
+    createDate: null,
+    valDate1: null,
+    valDate2: null,
+    valDate3: null,
+    date: null,
   },
   fieldList: [
     {
@@ -123,6 +123,37 @@ const formOpts: any = reactive({
       comp: 't-select',
       isSelfCom: true,
       bind: { multiple: true, optionSource: hobbyList, valueCustom: 'value' },
+    },
+    {
+      label: '年份',
+      value: 'createDate',
+      placeholder: 'TDatePicker选择年份',
+      bind: { type: 'year' },
+      comp: 't-date-picker',
+    },
+    {
+      label: '日期',
+      value: 'date',
+      placeholder: 'TDatePicker选择日期',
+      comp: 't-date-picker',
+    },
+    {
+      label: '月份范围',
+      value: 'valDate1',
+      comp: 't-date-picker',
+      bind: { type: 'monthrange', isPickerOptions: true },
+    },
+    {
+      label: '日期范围',
+      value: 'valDate2',
+      comp: 't-date-picker',
+      bind: { type: 'daterange', isPickerOptions: true },
+    },
+    {
+      label: '时间范围',
+      value: 'valDate3',
+      comp: 't-date-picker',
+      bind: { type: 'datetimerange', isPickerOptions: true },
     },
     {
       label: '虚拟列表',
