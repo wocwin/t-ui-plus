@@ -96,6 +96,12 @@ TSelectTable/isShowQueryBtnBind
 TSelectTable/isShowQuerySpan
 :::
 
+### 下拉框插槽使用
+
+:::demo 设置`el-table`:头部插槽`toolbar`（位置：查询条件下面）;底部插槽`footer`（位置：分页器上面）
+TSelectTable/slotUse
+:::
+
 ### TSelectTable 参数配置
 
 ---
@@ -151,6 +157,8 @@ TSelectTable/isShowQuerySpan
 | isClearQuery      | 关闭下拉框是否清空搜索条件                                                              | Boolean                   | false      |
 | selfExpanded      | 是否始终显示下拉框                                                                      | Boolean                   | false      |
 | isExpanded        | 是否显示下拉框                                                                          | Boolean                   | false      |
+| toolbar           | el-table 头部插槽（位置：查询条件下面）                                                 | slot                      | -          |
+| footer            | el-table 底部插槽（位置：分页器上面）                                                   | slot                      | -          |
 
 ### 3、事件（events）继承 el-table 及 el-select 属性
 

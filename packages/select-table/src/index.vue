@@ -39,6 +39,7 @@
             </template>
           </t-query-condition>
         </div>
+        <slot name="toolbar"></slot>
         <el-table
           ref="selectTable"
           :data="state.tableData"
@@ -115,6 +116,7 @@
           </el-table-column>
           <slot></slot>
         </el-table>
+        <slot name="footer"></slot>
         <div class="t-table-select__page" v-if="isShowPagination">
           <el-pagination
             v-model:current-page="table.currentPage"
@@ -715,7 +717,15 @@ const focus = () => {
   selectRef.value.focus()
 }
 // 暴露方法出去
-defineExpose({ focus, blur, clear, props, tQueryConditionRef, selectRef, selectTable })
+defineExpose({
+  focus,
+  blur,
+  clear,
+  props,
+  tQueryConditionRef,
+  selectRef,
+  selectTable,
+})
 </script>
 
 <style lang="scss">
