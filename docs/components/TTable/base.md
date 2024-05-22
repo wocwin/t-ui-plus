@@ -142,6 +142,12 @@ TTable/render
 TTable/treeTable
 :::
 
+### TreTable 复选框
+
+:::demo 按照`el-table`方式配置
+TTable/treeMenuTable
+:::
+
 ### 某列 作用域插槽渲染
 
 :::demo

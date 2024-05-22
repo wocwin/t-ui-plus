@@ -714,7 +714,7 @@ const cellDblclick = (row, column) => {
     ElMessage.error('复制失败')
   }
 }
-// 判断是否使用漏了某个插槽
+// 判断是否使用了某个插槽
 const isShow = (name) => {
   return Object.keys(slots).includes(name)
 }
