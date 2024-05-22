@@ -25,7 +25,7 @@
 import { ref, useSlots } from 'vue'
 const props: any = defineProps({
   tabs: {
-    type: Array,
+    type: Array as unknown as any[],
     default: () => {
       return []
     },

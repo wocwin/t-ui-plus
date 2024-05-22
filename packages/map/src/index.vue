@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-declare let AMap: any
-import { onUnmounted, ref, nextTick, toRefs, watch } from 'vue'
 import { ElMessage } from 'element-plus'
-
+import { onUnmounted, ref, nextTick, toRefs, watch } from 'vue'
+let AMap: any
 interface Props {
   modelValue: [number, number, string] | [number, number, string] | []
   options?: {
