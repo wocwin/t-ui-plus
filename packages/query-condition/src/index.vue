@@ -109,35 +109,44 @@
       style="grid-area: submit_btn"
       :class="['btn', { flex_end: cellLength % colLength === 0 },{ btn_flex_end: (Object.keys(cOpts).length === 4 ||cellLength>3)}]"
     >
-      <el-button
-        class="btn_check"
-        @click="checkHandle"
-        v-bind="queryAttrs"
-        :loading="loading"
-      >{{queryAttrs.btnTxt}}</el-button>
-      <el-button
-        v-if="reset"
-        class="btn_reset"
-        v-bind="resetAttrs"
-        @click="resetHandle"
-      >{{resetAttrs.btnTxt}}</el-button>
-      <slot name="querybar"></slot>
-      <el-button v-if="originCellLength > maxVisibleSpans && isShowOpen" @click="open = !open" link>
-        {{ open ? '收起' : '展开' }}
-        <el-icon v-if="open">
-          <ArrowUp />
-        </el-icon>
-        <el-icon v-else>
-          <ArrowDown />
-        </el-icon>
-      </el-button>
+      <template v-if="footer !== null">
+        <slot name="footer" />
+        <template v-if="!slots.footer">
+          <el-button
+            class="btn_check"
+            @click="checkHandle"
+            v-bind="queryAttrs"
+            :loading="loading"
+          >{{queryAttrs.btnTxt}}</el-button>
+          <el-button
+            v-if="reset"
+            class="btn_reset"
+            v-bind="resetAttrs"
+            @click="resetHandle"
+          >{{resetAttrs.btnTxt}}</el-button>
+          <slot name="querybar"></slot>
+          <el-button
+            v-if="originCellLength > maxVisibleSpans && isShowOpen"
+            @click="open = !open"
+            link
+          >
+            {{ open ? packUpTxt : unfoldTxt }}
+            <el-icon v-if="open">
+              <ArrowUp />
+            </el-icon>
+            <el-icon v-else>
+              <ArrowDown />
+            </el-icon>
+          </el-button>
+        </template>
+      </template>
     </el-form-item>
   </el-form>
 </template>
 
 <script setup lang="ts" name="TQueryCondition">
 import RenderComp from './renderComp.vue'
-import { computed, ref, watch, onMounted, reactive, toRef } from 'vue'
+import { computed, ref, watch, useSlots, onMounted, reactive, toRef } from 'vue'
 const props = defineProps({
   opts: {
     type: Object,
@@ -185,10 +194,23 @@ const props = defineProps({
     type: Number,
     default: 4,
   },
+  packUpTxt: {
+    type: String,
+    default: '收起',
+  },
+  unfoldTxt: {
+    type: String,
+    default: '展开',
+  },
+  // 是否显示底部操作按钮 :footer="null"
+  footer: Object,
 })
-
+const slots = useSlots()
 const maxVisibleSpans = toRef(props, 'maxVisibleSpans')
-
+// 判断是否使用了某个插槽
+const isShow = (name) => {
+  return Object.keys(slots).includes(name)
+}
 // 初始化表单数据
 let queryState = reactive({
   form: Object.keys(props.opts).reduce((acc: any, field: any) => {
@@ -495,6 +517,10 @@ onMounted(() => {
       }
     }
   }
+  // 使用自定义按钮插槽默认展开所有查询条件
+  if (isShow('footer')) {
+    open.value = true
+  }
 })
 watch(
   () => props.opts,
@@ -505,7 +531,14 @@ watch(
 )
 
 // 暴露方法出去
-defineExpose({ queryState, props, colLength, resetData, resetHandle })
+defineExpose({
+  queryState,
+  props,
+  colLength,
+  resetData,
+  resetHandle,
+  checkHandle,
+})
 </script>
 
 <style lang="scss">

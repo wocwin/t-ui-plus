@@ -49,6 +49,12 @@ TQueryCondition/TSelectUse
 TQueryCondition/querybar
 :::
 
+### 自定义按钮
+
+::: demo 设置`footer`插槽，可以自定义按钮
+TQueryCondition/footer
+:::
+
 ### TQueryCondition 参数配置
 
 ---
@@ -70,18 +76,21 @@ TQueryCondition/querybar
 
 ### 2、配置参数（Attributes）
 
-| 参数         | 说明                                      | 类型    | 默认值                                         |
-| :----------- | :---------------------------------------- | :------ | :--------------------------------------------- |
-| opts         | 接收筛选器组件配置                        | object  | 无                                             |
-| loading      | 查询按钮 loading 状态，请求数据时需要体现 | Boolean | false                                          |
-| reset        | 是否显示“重置”按钮                        | Boolean | true                                           |
-| maxVisibleSpans | 设置展开的最大 span 数量                  | Number  | 4  |
-| boolEnter    | 是否敲回车查询                            | Boolean | true                                           |
-| isShowOpen   | 是否显示收起和展开                        | Boolean | true                                           |
-| isExpansion  | 是否默认展开                              | Boolean | false                                          |
-| labelWidth   | labelWidth 宽度                           | String  | '120px'                                        |
-| btnCheckBind | 查询按钮配置（继承`el-button`所有属性）   | object  | `{type: primary, size: default,btnTxt:'查询'}` |
-| btnResetBind | 重置按钮配置（继承`el-button`所有属性）   | object  | `{ size: default,btnTxt:'重置'}`               |
+| 参数            | 说明                                      | 类型        | 默认值                                         |
+| :-------------- | :---------------------------------------- | :---------- | :--------------------------------------------- |
+| opts            | 接收筛选器组件配置                        | object      | 无                                             |
+| loading         | 查询按钮 loading 状态，请求数据时需要体现 | Boolean     | false                                          |
+| reset           | 是否显示“重置”按钮                        | Boolean     | true                                           |
+| maxVisibleSpans | 设置展开的最大 span 数量                  | Number      | 4                                              |
+| boolEnter       | 是否敲回车查询                            | Boolean     | true                                           |
+| isShowOpen      | 是否显示收起和展开                        | Boolean     | true                                           |
+| packUpTxt       | 收起文案                                  | String      | '收起'                                         |
+| unfoldTxt       | 展开文案                                  | String      | '展开'                                         |
+| isExpansion     | 是否默认展开                              | Boolean     | false                                          |
+| labelWidth      | labelWidth 宽度                           | String      | '120px'                                        |
+| btnCheckBind    | 查询按钮配置（继承`el-button`所有属性）   | object      | `{type: primary, size: default,btnTxt:'查询'}` |
+| btnResetBind    | 重置按钮配置（继承`el-button`所有属性）   | object      | `{ size: default,btnTxt:'重置'}`               |
+| footer          | 自定义按钮(设置:footer="null"不显示按钮)  | object/slot | -                                              |
 
 
 ### 3、opts Attributes
@@ -113,6 +122,7 @@ TQueryCondition/querybar
 | 插槽名   | 说明                             |
 | :------- | :------------------------------- |
 | querybar | 按钮操作插槽（位置基于重置后面） |
+| footer   | 按钮操作插槽                     |
 
 #### 6、Exposes（Method）
 
@@ -121,3 +131,4 @@ TQueryCondition/querybar
 | queryState  | 初始化表单数据         | object   |
 | resetData   | 重置表单不调用查询接口 | Function |
 | resetHandle | 重置表单调用查询接口   | Function |
+| checkHandle | 查询操作               | Function |
