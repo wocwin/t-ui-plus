@@ -6,7 +6,11 @@
         v-model="formOpts.ref"
         :formOpts="formOpts"
         :widthSize="1"
-      />
+      >
+        <template #desc>
+          <div style="color: red">描述</div>
+        </template>
+      </t-form>
     </t-layout-page-item>
   </t-layout-page>
 </template>
@@ -51,6 +55,7 @@ const formOpts: any = reactive({
       labelRender: () => {
         return <div style="color:red;">账号</div>
       },
+      placeholder: '请输入账号',
       value: 'account',
       type: 'input',
       comp: 'el-input',
@@ -60,6 +65,7 @@ const formOpts: any = reactive({
       labelRender: () => {
         return <div style="color:blue;">昵称</div>
       },
+      placeholder: '请输入昵称',
       value: 'name',
       type: 'input',
       comp: 'el-input',
@@ -91,12 +97,14 @@ const formOpts: any = reactive({
       labelRender: () => {
         return <div style="color:green;">邮箱</div>
       },
+      placeholder: '请输入邮箱',
       value: 'email',
       type: 'input',
       comp: 'el-input',
     },
     {
-      label: '描述',
+      labelSlotName: 'desc',
+      placeholder: '使用插槽自定义label',
       value: 'desc',
       type: 'textarea',
       comp: 'el-input',
@@ -104,8 +112,8 @@ const formOpts: any = reactive({
     },
   ],
   operatorList: [
-    { label: '提交', type: 'danger', fun: submitForm },
-    { label: '重置', type: 'primary', fun: resetForm },
+    { label: '提交', bind:{type: 'danger'}, fun: submitForm },
+    { label: '重置', bind:{type: 'primary'}, fun: resetForm },
   ],
 })
 </script>

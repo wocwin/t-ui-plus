@@ -219,8 +219,8 @@ const formOpts: any = reactive({
     },
   ],
   operatorList: [
-    { label: '提交', type: 'danger', fun: submitForm },
-    { label: '重置', type: 'primary', fun: resetForm },
+    { label: '提交', bind:{type: 'danger'}, fun: submitForm },
+    { label: '重置', bind:{type: 'primary'}, fun: resetForm },
   ],
 })
 onMounted(() => {

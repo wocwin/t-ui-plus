@@ -40,7 +40,7 @@ TForm/rules
 
 ### 自定义 label jsx 渲染
 
-:::demo 使用`tsx`方式—————配置`labelRender`**当`labelRender`与`label`同时存在时：优先渲染`labelRender`**
+:::demo 第一种：`tsx`方式—————配置`labelRender`**当`labelRender`与`label`同时存在时：优先渲染`labelRender`**；第二种：使用`labelSlotName`插槽
 TForm/labelRender
 :::
 
@@ -68,7 +68,13 @@ TForm/comUse
 TForm/echo
 :::
 
-### 密码在新增显示，编辑不显示
+### 联动选择
+
+:::demo
+TForm/linkage
+:::
+
+### 弹窗显示表单
 
 :::demo
 TForm/isHideItem
@@ -107,7 +113,7 @@ TForm/isHideItem
 | ------slotName      | 自定义表单某一项输入框                                                                                  | slot             | -        |
 | ------childSlotName | 自定义表单某一下拉选择项子组件插槽（el-option）                                                         | slot             | -        |
 | ------comp          | form 表单每一项组件是输入框还是下拉选择等（可使用第三方 UI 如 el-select/el-input 也可以使用自定义组件） | String           | -        |
-| ------bind          | 表单每一项属性（继承第三方 UI 的 Attributes，如 el-input 中的 clearable 清空功能）默认清空及下拉过滤    | Object/funnction | -        |
+| ------bind          | 继承第三方 UI 的 Attributes,function传出formData                                                        | Object/funnction | -        |
 | ------isSelfCom     | 是否使用自己封装的组件（即不需要嵌套el-option等）                                                       | Boolean          | false    |
 | ------isTrim        | 是否不清除前后空格(comp 为 el-input 且 type 不等于'password')                                           | Boolean          | false    |
 | ------type          | form 表单每一项类型                                                                                     | String           | -        |
@@ -117,11 +123,13 @@ TForm/isHideItem
 | ------arrKey        | type=select-arr 时，每个下拉显示的中文传后台的数字                                                      | String           | key      |
 | ------label         | form 表单每一项 title                                                                                   | String           | -        |
 | ------labelRender   | 自定义某一项 title                                                                                      | function         | -        |
+| ------labelSlotName | 自定义某一项 title（插槽名：就是labelSlotName值                                                         | slot             | -        |
 | ------value         | form 表单每一项传给后台的参数                                                                           | String           | -        |
 | ------rules         | 每一项输入框的表单校验规则                                                                              | Object/Array     | -        |
 | ------list          | 下拉选择数据源（仅仅对 type:'select'有效）                                                              | String           | -        |
 | ------event         | 表单每一项事件标志（即是：handleEvent 事件第一个参数值）                                                | String           | -        |
 | ------eventHandle   | 继承 comp 组件的事件                                                                                    | Object           | -        |
+| ------ref           | 当前使用组件的ref标识（可以通过getRefs事件返回）                                                        | String           | -        |
 | ---formData         | 表单提交数据(对应 fieldList 每一项的 value 值)                                                          | Object           | -        |
 | ---labelWidth       | label 宽度                                                                                              | String           | 120px    |
 | ---rules            | 规则（可依据 elementUI el-form 配置————对应 formData 的值）                                             | Object/Array     | -        |
@@ -131,9 +139,10 @@ TForm/isHideItem
 
 ### 3. events
 
-| 事件名      | 说明                 | 返回值                                                   |
-| :---------- | :------------------- | :------------------------------------------------------- |
-| handleEvent | 单个查询条件触发事件 | fieldList 中 type/查询条件输入的值/fieldList 中 event 值 |
+| 事件名      | 说明                   | 返回值                                                   |
+| :---------- | :--------------------- | :------------------------------------------------------- |
+| handleEvent | 单个查询条件触发事件   | fieldList 中 type/查询条件输入的值/fieldList 中 event 值 |
+| getRefs     | 获取TForm使用组件的ref | fieldList 中 最好需要传ref标识来区分是哪个组件的ref      |
 
 ### 4. Methods 继承 element-plus 的 methods
 

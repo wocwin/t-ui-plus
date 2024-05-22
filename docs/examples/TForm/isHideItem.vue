@@ -3,6 +3,7 @@
     <t-layout-page-item>
       <el-button type="danger" @click="add">新增</el-button>
       <el-button type="danger" @click="edit">编辑</el-button>
+      <el-button type="primary" @click="onDisabled">禁用输入框</el-button>
     </t-layout-page-item>
     <el-dialog :title="title" width="40%" v-model="dialogSelectEnt" draggable>
       <t-form
@@ -24,6 +25,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 const dialogSelectEnt = ref(false)
+const isDisabled = ref(false)
 const title = ref('新增数据')
 const hobbyList = ref([
   { label: '吉他', value: '0' },
@@ -41,7 +43,7 @@ const statusList = ref([
   { label: '停用', value: 0 },
 ])
 // 获取ref
-const TFormDemo: any = (ref < HTMLElement) | (null > null)
+const TFormDemo: any = ref(null)
 // 提交formOpts.ref 方式form表单
 const submitForm = () => {
   formOpts.ref.validate((valid) => {
@@ -55,6 +57,7 @@ const submitForm = () => {
 }
 const add = () => {
   title.value = '新增数据'
+  isDisabled.value = false
   formOpts.fieldList.map((val) => {
     if (val.value === 'password') {
       val.isHideItem = false
@@ -63,12 +66,18 @@ const add = () => {
   dialogSelectEnt.value = true
 }
 const edit = () => {
-  title.value = '编辑数据'
+  title.value = '编辑数据--少密码输入框'
+  isDisabled.value = false
   formOpts.fieldList.map((val) => {
     if (val.value === 'password') {
       val.isHideItem = true
     }
   })
+  dialogSelectEnt.value = true
+}
+const onDisabled = () => {
+  title.value = '禁用输入框数据'
+  isDisabled.value = true
   dialogSelectEnt.value = true
 }
 // 提交form表单
@@ -99,14 +108,24 @@ const formOpts: any = reactive({
       comp: 'el-input',
       event: 'account',
       rules: { required: true, message: '请输入账号', trigger: 'blur' },
+      bind: () => {
+        return {
+          disabled: isDisabled.value,
+        }
+      },
     },
     {
       label: '密码',
       value: 'password',
       type: 'password',
       comp: 'el-input',
-      bind: { 'show-password': true },
-      FisHideItem: false,
+      bind: () => {
+        return {
+          'show-password': true,
+          disabled: isDisabled.value,
+        }
+      },
+      isHideItem: false,
     },
     {
       label: '昵称',
@@ -114,34 +133,54 @@ const formOpts: any = reactive({
       type: 'input',
       comp: 'el-input',
       rules: { required: true, message: '请输入昵称', trigger: 'blur' },
+      bind: () => {
+        return {
+          disabled: isDisabled.value,
+        }
+      },
     },
     {
       label: '性别',
       value: 'sex',
       placeholder: 'TSelect单选',
-      type: 'select-arr',
       comp: 't-select',
       isSelfCom: true,
-      bind: { optionSource: sexList.value, valueCustom: 'value' },
+      bind: () => {
+        return {
+          optionSource: sexList.value,
+          valueCustom: 'value',
+          disabled: isDisabled.value,
+        }
+      },
     },
     {
       label: '状态',
       value: 'status',
       placeholder: 'TSelect单选',
-      type: 'select-arr',
       comp: 't-select',
       isSelfCom: true,
-      bind: { optionSource: statusList, valueCustom: 'value' },
+      bind: () => {
+        return {
+          optionSource: statusList.value,
+          valueCustom: 'value',
+          disabled: isDisabled.value,
+        }
+      },
     },
     {
       label: '爱好',
       value: 'hobby',
       placeholder: 'TSelect多选',
-      type: 'select-arr',
       comp: 't-select',
-      list: 'hobbyList',
       isSelfCom: true,
-      bind: { multiple: true, optionSource: hobbyList, valueCustom: 'value' },
+      bind: () => {
+        return {
+          multiple: true,
+          optionSource: hobbyList.value,
+          valueCustom: 'value',
+          disabled: isDisabled.value,
+        }
+      },
     },
     {
       label: '描述',
@@ -149,6 +188,11 @@ const formOpts: any = reactive({
       type: 'textarea',
       comp: 'el-input',
       widthSize: 1,
+      bind: () => {
+        return {
+          disabled: isDisabled.value,
+        }
+      },
     },
   ],
 })

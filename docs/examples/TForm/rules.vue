@@ -154,9 +154,9 @@ const formOpts: any = reactive({
     ],
   },
   operatorList: [
-    { label: '提交', type: 'danger', fun: submitForm },
-    { label: '重置', type: 'primary', fun: resetForm },
-    { label: '清除校验', type: 'danger', fun: clearValidate },
+     { label: '提交', bind:{type: 'danger'}, fun: submitForm },
+    { label: '重置', bind:{type: 'primary'}, fun: resetForm },
+    { label: '清除校验',bind:{type: 'danger'}, fun: clearValidate },
   ],
   // 相关列表
   listTypeInfo: {

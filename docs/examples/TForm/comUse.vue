@@ -1,13 +1,19 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-form ref="TFormDemo" v-model="formOpts.ref" :formOpts="formOpts" :widthSize="1" />
+      <t-form
+        ref="TFormDemo"
+        v-model="formOpts.ref"
+        :formOpts="formOpts"
+        @getRefs="getRefs"
+        :widthSize="1"
+      />
     </t-layout-page-item>
   </t-layout-page>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import cascaderData from './cascaderData.json'
 const hobbyList = ref([
   { label: '吉他', value: '0' },
@@ -71,6 +77,15 @@ const selectionChangeHandler = (row, ids) => {
   console.log('下拉选择表格--复选框', row, ids)
   formOpts.formData.createDeptCode = ids
 }
+const allRefs = ref({})
+const getRefs = (el, item, index) => {
+  if (el && item.ref) {
+    allRefs.value[item.ref] = el
+  }
+}
+onMounted(() => {
+  console.log('获取所有的ref', allRefs.value)
+})
 const formOpts: any = reactive({
   ref: null,
   labelWidth: '140px',
@@ -96,6 +111,7 @@ const formOpts: any = reactive({
       placeholder: 'TSelect单选',
       type: 'select-arr',
       comp: 't-select',
+      ref: 'adioSelect',
       isSelfCom: true,
       bind: { optionSource: sexList, valueCustom: 'value' },
     },
@@ -130,6 +146,9 @@ const formOpts: any = reactive({
       placeholder: 'TDatePicker选择年份',
       bind: { type: 'year' },
       comp: 't-date-picker',
+      eventHandle: {
+        change: (val) => createDateChange(val),
+      },
     },
     {
       label: '日期',
@@ -228,8 +247,12 @@ const formOpts: any = reactive({
     },
   ],
   operatorList: [
-    { label: '提交', type: 'danger', fun: submitForm },
-    { label: '重置', type: 'primary', fun: resetForm },
+    { label: '提交', bind:{type: 'danger'}, fun: submitForm },
+    { label: '重置', bind:{type: 'primary'}, fun: resetForm },
   ],
 })
+
+const createDateChange = (val) => {
+  console.log('年份选择', val)
+}
 </script>
