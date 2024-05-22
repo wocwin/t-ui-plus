@@ -317,14 +317,14 @@ const dateChange = (val: any[]) => {
 if (props.isPickerOptions) {
   state.dateOptions = getShortcuts(props.type)
 }
-watch(
-  () => props.value,
-  (val) => {
-    // console.log(111, val)
-    time.value = val
-  },
-  { deep: true }
-)
+// watch(
+//   () => props.value,
+//   (val) => {
+//     // console.log(111, val)
+//     time.value = val
+//   },
+//   { deep: true }
+// )
 watch(
   () => props.shortcuts,
   (val) => {
