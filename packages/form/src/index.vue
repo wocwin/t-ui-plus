@@ -26,8 +26,15 @@
         v-bind="$attrs"
       >
         <!-- 自定义label -->
-        <template #label v-if="item.labelRender">
-          <render-comp :render="item.labelRender" :item="item" />
+        <template #label v-if="item.labelSlotName || item.labelRender">
+          <render-comp
+            v-if="item.labelRender"
+            :render="item.labelRender"
+            :item="item"
+          />
+          <template v-if="item.labelSlotName">
+            <slot :name="item.labelSlotName" :scope="item"></slot>
+          </template>
         </template>
         <!-- 自定义输入框插槽 -->
         <template v-if="item.slotName">
@@ -36,9 +43,7 @@
         <!-- 文本展示值 -->
         <template v-if="item.textShow">
           <span class="text_show">
-            {{
-            item.textValue || formOpts.formData[item.value]
-            }}
+            {{ item.textValue || formOpts.formData[item.value] }}
           </span>
         </template>
         <template v-if="item.isSelfCom">
@@ -49,7 +54,7 @@
             :placeholder="item.placeholder || getPlaceholder(item)"
             v-bind="
               typeof item.bind == 'function'
-                ? item.bind(item)
+                ? item.bind(formOpts.formData)
                 : { clearable: true, filterable: true, ...item.bind }
             "
             :style="{ width: item.width || '100%' }"
@@ -60,9 +65,10 @@
             :is="item.comp"
             v-model="formOpts.formData[item.value]"
             :placeholder="item.placeholder || getPlaceholder(item)"
+            :ref="(el) => getRefs(el, item, index)"
             v-bind="
               typeof item.bind == 'function'
-                ? item.bind(item)
+                ? item.bind(formOpts.formData)
                 : { clearable: true, filterable: true, ...item.bind }
             "
             :style="{ width: item.width || '100%' }"
@@ -81,9 +87,10 @@
           :type="item.type"
           :placeholder="item.placeholder || getPlaceholder(item)"
           @change="handleEvent(item.event, formOpts.formData[item.value], item)"
+          :ref="(el) => getRefs(el, item, index)"
           v-bind="
             typeof item.bind == 'function'
-              ? item.bind(item)
+              ? item.bind(formOpts.formData)
               : { clearable: true, filterable: true, ...item.bind }
           "
           :style="{ width: item.width || '100%' }"
@@ -101,9 +108,10 @@
           :type="item.type"
           :placeholder="item.placeholder || getPlaceholder(item)"
           @change="handleEvent(item.event, formOpts.formData[item.value], item)"
+          :ref="(el) => getRefs(el, item, index)"
           v-bind="
             typeof item.bind == 'function'
-              ? item.bind(item)
+              ? item.bind(formOpts.formData)
               : { clearable: true, filterable: true, ...item.bind }
           "
           :style="{ width: item.width || '100%' }"
@@ -122,9 +130,10 @@
           :type="item.type"
           :placeholder="item.placeholder || getPlaceholder(item)"
           @change="handleEvent(item.event, formOpts.formData[item.value], item)"
+          :ref="(el) => getRefs(el, item, index)"
           v-bind="
             typeof item.bind == 'function'
-              ? item.bind(item)
+              ? item.bind(formOpts.formData)
               : { clearable: true, filterable: true, ...item.bind }
           "
           :style="{ width: item.width || '100%' }"
@@ -146,7 +155,8 @@
             :disabled="value.disabled"
             :label="compChildLabel(item, value)"
             :value="compChildValue(item, value, key)"
-          >{{ compChildShowLabel(item, value) }}</component>
+            >{{ compChildShowLabel(item, value) }}</component
+          >
           <!-- </template> -->
         </component>
       </el-form-item>
@@ -172,7 +182,8 @@
             size: 'small',
             ...val.bind,
           }"
-        >{{ val.label }}</el-button>
+          >{{ val.label }}</el-button
+        >
       </template>
     </div>
   </el-form>
@@ -305,7 +316,7 @@ const tform: any = ref<HTMLElement | null>(null)
 // 获取实例方法
 const instance: any = getCurrentInstance()
 // 抛出事件
-const emits = defineEmits(['update:modelValue', 'handleEvent'])
+const emits = defineEmits(['update:modelValue', 'handleEvent', 'getRefs'])
 watch(
   () => props.formOpts.formData,
   (val) => {
@@ -411,6 +422,10 @@ const selfValidate = () => {
       }
     })
   })
+}
+// 获取所有ref
+const getRefs = (el, item, index) => {
+  emits('getRefs', el, item, index)
 }
 // 下拉选择表格组件 ref
 const tselecttableref: any = ref({})
@@ -525,7 +540,7 @@ defineExpose({ ...instance.exposed, selfValidate, selfResetFields })
       label {
         min-width: 108px;
         color: var(--el-text-color-primary);
-        text-align: right;
+        // text-align: right;
         margin-right: 12px;
       }
     }
