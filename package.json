@@ -1,6 +1,6 @@
 {
   "name": "@wocwin/t-ui-plus",
-  "version": "1.3.0",
+  "version": "1.4.4",
   "description": "Vue3 中基于Element-plus二次封装基础组件文档",
   "author": "wocwin",
   "license": "MIT",
@@ -16,14 +16,21 @@
     "lib",
     "global.d.ts"
   ],
+  "unpkg": "lib/t-ui-plus.iife.js",
+  "jsdelivr": "lib/t-ui-plus.iife.js",
   "scripts": {
-    "lib": "rimraf lib && vite build",
+    "lib": "rimraf lib && run-p type-check build:es build:browser",
+    "type-check": "vue-tsc --noEmit",
+    "build:es": "vite build",
+    "build:browser": "vite -f iife build",
     "deploy": "deploy.sh",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs"
   },
   "devDependencies": {
     "@element-plus/icons-vue": "^2.0.10",
+    "@rollup/plugin-replace": "^5.0.5",
+    "@rollup/plugin-terser": "^0.4.4",
     "@types/node": "18.7.18",
     "@types/nprogress": "^0.2.0",
     "@types/path-browserify": "^1.0.0",
@@ -46,7 +53,9 @@
     "jsencrypt": "3.0.0-rc.1",
     "markdown-it": "^13.0.1",
     "markdown-it-container": "^3.0.0",
+    "minimist": "^1.2.8",
     "normalize.css": "^8.0.1",
+    "npm-run-all": "^4.1.5",
     "nprogress": "^0.2.0",
     "path-browserify": "^1.0.1",
     "pinia": "^2.0.23",

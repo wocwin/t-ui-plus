@@ -61,7 +61,19 @@ import '@wocwin/t-ui-plus/lib/style.css'
   import {TDetail, TForm} from "@wocwin/t-ui-plus"
 </script>
 ```
+## Use CDN in Project(暂不支持)
 
+```html
+<head>
+  <!-- Import style -->
+  <link rel="stylesheet" href="//unpkg.com/@wocwin/t-ui-plus/lib/style.css" />
+  <!-- Import Vue 3 -->
+  <script src="//unpkg.com/vue@3"></script>
+  <!-- Import component library -->
+  <script src="https://unpkg.com/@wocwin/t-ui-plus@latest"></script>
+</head>
+<script src="https://unpkg.com/@wocwin/t-ui-plus@latest"></script>
+```
 ## t-ui-plus Volar 组件类型提示
 
 ```js
