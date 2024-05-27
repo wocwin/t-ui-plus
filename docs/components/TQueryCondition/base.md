@@ -5,7 +5,9 @@
 ### 基础用法
 
 ::: demo
+
 TQueryCondition/base
+
 :::
 
 ### 收起&展开——默认展开
@@ -105,6 +107,8 @@ TQueryCondition/footer
 | slotName    | 自定义输入框插槽(作用域插槽解构接收{param/scope}返回当前所有表单初始值)          | string           | -                        |
 | comp        | 组件名称，可直接指定全局注册的组件，也可引入'elmentUI'如：Button 或者'el-button' | string,component | -                        |
 | span        | 控件占用的列宽，默认占用 1 列，最多 4 列 (独占一行)                              | number           | 1                        |
+| arrLabel    | type=select-arr 时，每个下拉显示的中文                                           | String           | dictLabel                |
+| arrKey      | type=select-arr 时，每个下拉显示的中文传后台的数字                               | String           | dictValue                |
 | defaultVal  | 默认值                                                                           | -                | -                        |
 | bind        | 渲染时组件会调用 v-bind 指定设置该配置更新元素的属性(继承第三方组件属性)         | object，function | 无                       |
 | eventHandle | 配置组件事件，与写组件时change 等同理                                            | object           | 本身值，当前formData数据 |

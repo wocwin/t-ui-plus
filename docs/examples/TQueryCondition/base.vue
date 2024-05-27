@@ -27,12 +27,12 @@ let state: any = reactive({
   listTypeInfo: {
     sexList: [
       {
-        dictLabel: '前纺一车间',
-        dictValue: 'W1',
+        label: '前纺一车间',
+        value: 'W1',
       },
       {
-        dictLabel: '前纺二车间',
-        dictValue: 'W2',
+        label: '前纺二车间',
+        value: 'W2',
       },
     ],
   },
@@ -54,6 +54,8 @@ const opts = computed(() => {
       changeEvent: 'change',
       type: 'select-arr',
       list: 'sexList',
+      arrLabel: 'label',
+      arrKey: 'value',
       listTypeInfo: state.listTypeInfo,
     },
     start_time: {

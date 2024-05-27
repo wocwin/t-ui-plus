@@ -72,7 +72,6 @@ import '@wocwin/t-ui-plus/lib/style.css'
   <!-- Import component library -->
   <script src="https://unpkg.com/@wocwin/t-ui-plus@latest"></script>
 </head>
-<script src="https://unpkg.com/@wocwin/t-ui-plus@latest"></script>
 ```
 ## t-ui-plus Volar 组件类型提示
 
