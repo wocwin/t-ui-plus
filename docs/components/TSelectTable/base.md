@@ -102,6 +102,12 @@ TSelectTable/isShowQuerySpan
 TSelectTable/slotUse
 :::
 
+### input框显示
+
+:::demo 设置`isShowInput`显示input框，可以动态更改`isShowInput`值来切换显示下拉框；input框的双向绑定是：`v-model:input-value`
+
+TSelectTable/isShowInput
+:::
 ### TSelectTable 参数配置
 
 ---
@@ -120,45 +126,49 @@ TSelectTable/slotUse
 
 ### 2、配置参数（Attributes）继承 el-table 及 el-select 属性
 
-| 参数              | 说明                                                                                    | 类型                      | 默认值     |
-| :---------------- | :-------------------------------------------------------------------------------------- | :------------------------ | :--------- |
-| v-model           | 绑定值                                                                                  | boolean / string / number | 仅显示     |
-| table             | 表格数据对象                                                                            | Object                    | {}         |
-| ---data           | 展示下拉数据源                                                                          | Array                     | []         |
-| ---total          | 数据总条数                                                                              | Number                    | -          |
-| ---pageSize       | 每页显示条目个数                                                                        | Number                    | -          |
-| ---currentPage    | 当前页数                                                                                | Number                    | -          |
-| columns           | 表头信息                                                                                | Array                     | []         |
-| ----bind          | el-table-column Attributes                                                              | Object                    | -          |
-| ----noShowTip     | 是否换行 （设置：noShowTip:true）                                                       | Boolean                   | false      |
-| ----fixed         | 列是否固定( left, right)                                                                | string, boolean           | -          |
-| ----align         | 对齐方式(left/center/right)                                                             | String                    | center     |
-| ----render        | 返回三个参数(text：当前值,row：当前整条数据 ,index：当前行)                             | function                  | -          |
-| ----slotName      | 插槽显示此列数据（其值是具名作用域插槽）                                                | String                    | -          |
-| ------scope       | 具名插槽获取此行数据必须用解构接收{scope}                                               | Object                    | 当前行数据 |
-| keywords          | 关键字配置（value-key 配置）                                                            | Object                    | 无         |
-| ------label       | 选项的标签                                                                              | String                    | ‘label’    |
-| ------value       | 选项的值                                                                                | String / number           | ‘value’    |
-| radioTxt          | 单选文案                                                                                | String                    | 单选       |
-| multiple          | 是否开启多选                                                                            | Boolean                   | false      |
-| filterMethod      | 自定义过滤                                                                              | function                  | -          |
-| rowClickRadio     | 是否开启整行选中(单选)                                                                  | boolean                   | true       |
-| isShowFirstColumn | 是否显示首列(单选)                                                                      | boolean                   | true       |
-| defaultSelectVal  | 设置第一页默认选中项--keywords.value 值                                                 | Array                     | []         |
-| filterable        | 是否开启过滤(根据 keywords 的 label 值进行过滤)                                         | Boolean                   | true       |
-| reserveSelection  | 是否支持翻页选中                                                                        | Boolean                   | true       |
-| isShowPagination  | 开启分页                                                                                | Boolean                   | false      |
-| tableWidth        | table 宽度(单位：px) 若设置0，宽度100%                                                  | Number/String             | 550        |
-| selectWidth       | select 宽度(单位：px) 若设置0，宽度100%                                                 | Number/String             | 550        |
-| isKeyup           | 单选是否开启键盘事件                                                                    | Boolean                   | false      |
-| isShowQuery       | 是否允许配置查询条件(继承TQueryCondition的所有属性、事件、插槽)                         | Boolean                   | false      |
-| isShowBlurBtn     | 条件查询组件是否显示隐藏下拉框按钮                                                      | Boolean                   | false      |
-| btnBind           | 显示下拉框按钮配置，继承`el-button`所有属性;`默认值{type:'danger',btnTxt:'关闭下拉框'}` | Object                    | -          |
-| isClearQuery      | 关闭下拉框是否清空搜索条件                                                              | Boolean                   | false      |
-| selfExpanded      | 是否始终显示下拉框                                                                      | Boolean                   | false      |
-| isExpanded        | 是否显示下拉框                                                                          | Boolean                   | false      |
-| toolbar           | el-table 头部插槽（位置：查询条件下面）                                                 | slot                      | -          |
-| footer            | el-table 底部插槽（位置：分页器上面）                                                   | slot                      | -          |
+| 参数                | 说明                                                                                    | 类型                      | 默认值     |
+| :------------------ | :-------------------------------------------------------------------------------------- | :------------------------ | :--------- |
+| v-model             | 绑定值                                                                                  | boolean / string / number | 仅显示     |
+| v-model:input-value | 输入框回显值                                                                            | boolean / string / number | -          |
+| isShowInput         | 是否输入框显示                                                                          | Boolean                   | false      |
+| table               | 表格数据对象                                                                            | Object                    | {}         |
+| ---data             | 展示下拉数据源                                                                          | Array                     | []         |
+| ---total            | 数据总条数                                                                              | Number                    | -          |
+| ---pageSize         | 每页显示条目个数                                                                        | Number                    | -          |
+| ---currentPage      | 当前页数                                                                                | Number                    | -          |
+| columns             | 表头信息                                                                                | Array                     | []         |
+| ----bind            | el-table-column Attributes                                                              | Object                    | -          |
+| ----noShowTip       | 是否换行 （设置：noShowTip:true）                                                       | Boolean                   | false      |
+| ----fixed           | 列是否固定( left, right)                                                                | string, boolean           | -          |
+| ----align           | 对齐方式(left/center/right)                                                             | String                    | center     |
+| ----render          | 返回三个参数(text：当前值,row：当前整条数据 ,index：当前行)                             | function                  | -          |
+| ----slotName        | 插槽显示此列数据（其值是具名作用域插槽）                                                | String                    | -          |
+| ------scope         | 具名插槽获取此行数据必须用解构接收{scope}                                               | Object                    | 当前行数据 |
+| keywords            | 关键字配置（value-key 配置）                                                            | Object                    | 无         |
+| ------label         | 选项的标签                                                                              | String                    | ‘label’    |
+| ------value         | 选项的值                                                                                | String / number           | ‘value’    |
+| radioTxt            | 单选文案                                                                                | String                    | 单选       |
+| multiple            | 是否开启多选                                                                            | Boolean                   | false      |
+| filterMethod        | 自定义过滤                                                                              | function                  | -          |
+| rowClickRadio       | 是否开启整行选中(单选)                                                                  | boolean                   | true       |
+| isShowFirstColumn   | 是否显示首列(单选)                                                                      | boolean                   | true       |
+| defaultSelectVal    | 设置第一页默认选中项--keywords.value 值                                                 | Array                     | []         |
+| filterable          | 是否开启过滤(根据 keywords 的 label 值进行过滤)                                         | Boolean                   | true       |
+| reserveSelection    | 是否支持翻页选中                                                                        | Boolean                   | true       |
+| isShowPagination    | 开启分页                                                                                | Boolean                   | false      |
+| tableWidth          | table 宽度(单位：px) 若设置0，宽度100%                                                  | Number/String             | 550        |
+| selectWidth         | select 宽度(单位：px) 若设置0，宽度100%                                                 | Number/String             | 550        |
+| inputWidth          | input输入框的宽度(单位：px) 若设置0，宽度100%                                           | Number/String             | 550        |
+| inputAttr           | 继承所有el-input的属性                                                                  | Object                    | -          |
+| isKeyup             | 单选是否开启键盘事件                                                                    | Boolean                   | false      |
+| isShowQuery         | 是否允许配置查询条件(继承TQueryCondition的所有属性、事件、插槽)                         | Boolean                   | false      |
+| isShowBlurBtn       | 条件查询组件是否显示隐藏下拉框按钮                                                      | Boolean                   | false      |
+| btnBind             | 显示下拉框按钮配置，继承`el-button`所有属性;`默认值{type:'danger',btnTxt:'关闭下拉框'}` | Object                    | -          |
+| isClearQuery        | 关闭下拉框是否清空搜索条件                                                              | Boolean                   | false      |
+| selfExpanded        | 是否始终显示下拉框                                                                      | Boolean                   | false      |
+| isExpanded          | 是否显示下拉框                                                                          | Boolean                   | false      |
+| toolbar             | el-table 头部插槽（位置：查询条件下面）                                                 | slot                      | -          |
+| footer              | el-table 底部插槽（位置：分页器上面）                                                   | slot                      | -          |
 
 ### 3、事件（events）继承 el-table 及 el-select 属性
 
@@ -167,6 +177,10 @@ TSelectTable/slotUse
 | page-change     | 页码改变事件(避免与el-table的current-change事件冲突) | 返回选中的页码                                 |
 | selectionChange | 多选事件                                             | 返回选中的项数据及选中项的 keywords.value 集合 |
 | radioChange     | 单选                                                 | 返回当前项所有数据                             |
+| input-focus     | 输入框聚焦                                           | -                                              |
+| input-blur      | 输入框失焦                                           | -                                              |
+| input-click     | 输入框点击                                           | -                                              |
+| input-clear     | 输入框清空                                           | -                                              |
 
 ### 4、Expose 方法（Methods）
 

@@ -1,5 +1,20 @@
 <template>
+  <el-input
+    v-if="isShowInput"
+    v-model="selectInputVal"
+    v-bind="{clearable: true,...inputAttr}"
+    @focus="()=>emits('input-focus')"
+    @blur="()=>emits('input-blur')"
+    @click="()=>emits('input-click')"
+    @clear="()=>emits('input-clear')"
+    :style="{ width: inputWidth ? `${inputWidth}px` : '100%' }"
+  >
+    <template v-for="(index, name) in slots" v-slot:[name]="data">
+      <slot :name="name" v-bind="data" />
+    </template>
+  </el-input>
   <el-select
+    v-else
     ref="selectRef"
     :model-value="multiple ? state.defaultValue : selectDefaultLabel"
     popper-class="t-select-table"
@@ -151,9 +166,31 @@ import {
 import { ElMessage } from 'element-plus'
 import ClickOutside from '../../utils/directives/click-outside/index'
 const props = defineProps({
+  // input输入框的值（modelValue）
+  inputValue: {
+    type: [Array, String, Number, Boolean, Object],
+    default: undefined,
+  },
   modelValue: {
     type: [Array, String, Number, Boolean, Object],
     default: undefined,
+  },
+  // 是否显示input框回显
+  isShowInput: {
+    type: Boolean,
+    default: false,
+  },
+  // input框的宽度
+  inputWidth: {
+    type: [String, Number],
+    default: 550,
+  },
+  // input属性
+  inputAttr: {
+    type: Object,
+    default: () => {
+      return {}
+    },
   },
   // 选择值
   value: {
@@ -283,6 +320,17 @@ const selectAttr = computed(() => {
 })
 // 自定义指令
 const vClickOutside = ClickOutside
+// 抛出事件
+const emits = defineEmits([
+  'page-change',
+  'selectionChange',
+  'radioChange',
+  'update:inputValue',
+  'input-focus',
+  'input-blur',
+  'input-clear',
+  'input-click',
+])
 const slots = useSlots()
 const isDefaultSelectVal = ref(true) // 是否已经重新选择了
 const forbidden = ref(true) // 判断单选选中及取消选中
@@ -291,6 +339,16 @@ const isQueryVisible = ref(false) // 查询条件是否显示隐藏下拉框
 const isVisible = ref(false) // 是否显示隐藏下拉框
 const radioVal = ref('')
 const selectDefaultLabel: any = ref(props.modelValue) // 单选赋值
+// input回显值
+let selectInputVal: any = computed({
+  get() {
+    return props.inputValue
+  },
+  set(val) {
+    // console.log(777, val)
+    emits('update:inputValue', val)
+  },
+})
 const state: any = reactive({
   defaultSelectValue: props.defaultSelectVal, // 默认选中
   tableData: props.table.data, // table数据
@@ -465,9 +523,6 @@ const findLabel = () => {
     }
   })
 }
-
-// 抛出事件
-const emits = defineEmits(['page-change', 'selectionChange', 'radioChange'])
 
 // 当前页码
 const handlesCurrentChange = (val) => {
