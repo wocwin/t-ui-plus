@@ -15,7 +15,8 @@
 </template>
 
 <script setup lang="ts">
-let table = {
+import { ref } from 'vue'
+let table = ref({
   // 接口返回数据
   data: [
     {
@@ -58,5 +59,5 @@ let table = {
     { prop: 'status', label: '状态', minWidth: '80', isShowHidden: true },
     { prop: 'address', label: '地址', minWidth: '220' },
   ],
-}
+})
 </script>

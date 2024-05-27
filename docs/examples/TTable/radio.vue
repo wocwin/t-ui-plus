@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-let table = {
+let table = ref({
   firstColumn: { type: 'radio', fixed: true },
   // 接口返回数据
   data: [
@@ -60,7 +60,7 @@ let table = {
     { prop: 'status', label: '状态', minWidth: '80' },
     { prop: 'address', label: '地址', minWidth: '220' },
   ],
-}
+})
 // 获取ref
 const selectionTable: any = ref<HTMLElement | null>(null)
 // 选择单选框

@@ -7,7 +7,8 @@
 </template>
 
 <script setup lang="ts">
-let table = {
+import { ref } from 'vue'
+let table = ref({
   // 接口返回数据
   data: [
     {
@@ -145,5 +146,5 @@ let table = {
     { prop: 'date1', label: '日期', minWidth: '180' },
     { prop: 'address1', label: '地址', minWidth: '220' },
   ],
-}
+})
 </script>

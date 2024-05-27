@@ -15,7 +15,8 @@
 </template>
 
 <script setup lang="ts">
-let table = {
+import { ref } from 'vue'
+let table = ref({
   // 接口返回数据
   data: [
     {
@@ -58,7 +59,7 @@ let table = {
     { prop: 'status', label: '状态', minWidth: '80' },
     { prop: 'address', label: '地址', minWidth: '220' },
   ],
-}
+})
 const rowSort = (list) => {
   console.log('行拖拽后的数据---', list)
 }

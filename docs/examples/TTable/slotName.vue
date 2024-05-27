@@ -17,7 +17,8 @@
 </template>
 
 <script setup lang="tsx">
-const table = {
+import { ref } from 'vue'
+const table = ref({
   // 接口返回数据
   data: [
     {
@@ -91,5 +92,5 @@ const table = {
       minWidth: '220',
     },
   ],
-}
+})
 </script>

@@ -39,7 +39,7 @@
 <script setup lang="ts">
 import type { TabsPaneContext } from 'element-plus'
 import { ref } from 'vue'
-let table = {
+let table = ref({
   firstColumn: { type: 'expand', fixed: true },
   data: [
     {
@@ -81,10 +81,10 @@ let table = {
     { prop: 'status', label: '状态', minWidth: '80' },
     { prop: 'address', label: '地址', minWidth: '220' },
   ],
-}
+})
 const activeName = ref('name')
 const selectVlaue = ref<any>()
-const stepList = [
+const stepList = ref([
   { label: '开始' },
   { label: 'POSUI' },
   { label: '11' },
@@ -93,7 +93,7 @@ const stepList = [
   { label: '车间仓库' },
   { label: 'ui3333' },
   { label: 'hhh333' },
-]
+])
 const selectChange = (val: any) => {
   console.log('selectChange', val, selectVlaue.value)
 }

@@ -13,7 +13,8 @@
 </template>
 
 <script setup lang="ts">
-const table = {
+import { ref } from 'vue'
+const table = ref({
   // border: true,
   // 接口返回数据
   data: [
@@ -57,5 +58,5 @@ const table = {
     { prop: 'status', label: '状态', minWidth: '80' },
     { prop: 'address', label: '地址', minWidth: '220' },
   ],
-}
+})
 </script>
