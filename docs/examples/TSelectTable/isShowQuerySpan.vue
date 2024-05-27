@@ -19,7 +19,7 @@
 </template>
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
-const table = {
+const table = reactive({
   data: [
     { id: 1, code: 1, name: '物料名称1', spec: '物料规格1', unitName: '吨' },
     { id: 2, code: 2, name: '物料名称2', spec: '物料规格2', unitName: '吨' },
@@ -49,7 +49,7 @@ const table = {
     { label: '规格111', width: '149px', prop: 'spec' },
     { label: '单位111', width: '110px', prop: 'unitName' },
   ],
-}
+})
 const tSelectTableDemo: any = ref()
 let state = reactive({
   queryData: {

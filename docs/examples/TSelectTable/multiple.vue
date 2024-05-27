@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 const selectTable = ref()
-let table = {
+let table = ref({
   total: 100,
   data: [
     { id: 1, code: 1, name: '物料名称1', spec: '物料规格1', unitName: '吨' },
@@ -78,7 +78,7 @@ let table = {
     { label: '规格111', width: '149px', prop: 'spec' },
     { label: '单位111', width: '110px', prop: 'unitName' },
   ],
-}
+})
 const selectionChange = (val, ids) => {
   console.log('复选框', val)
   console.log('复选框--id', ids)
