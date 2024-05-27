@@ -5,6 +5,7 @@
     v-model="childSelectedValue"
     :options="!useVirtual ? null : optionSource"
     :style="{ width: width || '100%' }"
+    @change="handlesChange"
     v-bind="{
       clearable: true,
       filterable: true,
@@ -21,8 +22,7 @@
         v-model="selectChecked"
         @change="selectAll"
         class="all_checkbox"
-        >全选</el-checkbox
-      >
+      >全选</el-checkbox>
       <el-option
         v-for="(item, index) in optionSource"
         :key="index + 'i'"
@@ -114,7 +114,7 @@ const props: any = defineProps({
 })
 const slots = useSlots()
 // 抛出事件
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue', 'change'])
 // vue3 v-model简写
 let childSelectedValue: any = computed({
   get() {
@@ -125,6 +125,10 @@ let childSelectedValue: any = computed({
     emits('update:modelValue', val)
   },
 })
+const handlesChange = (val: any) => {
+  // console.log(val)
+  emits('change', val)
+}
 // 设置全选
 const selectChecked = computed({
   get() {
