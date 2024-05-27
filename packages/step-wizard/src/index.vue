@@ -1,6 +1,6 @@
 <template>
   <div class="step-wizard">
-    <el-steps :active="active" simple finish-status="success" v-bind="$attrs">
+    <el-steps :active="active" finish-status="success" v-bind="$attrs">
       <el-step
         v-bind="$attrs"
         v-for="(item,index) in stepData"
@@ -8,7 +8,11 @@
         :title="`${index+1} ${item.title}`"
         :icon="item.icon?item.icon:''"
         :description="item.description?item.description:''"
-      ></el-step>
+      >
+        <template v-for="(index, name) in slots" v-slot:[name]="data">
+          <slot :name="name" v-bind="data" />
+        </template>
+      </el-step>
     </el-steps>
     <div class="content-step-main step-content">
       <div
@@ -20,7 +24,7 @@
         <template v-if="val.slotName">
           <slot :name="val.slotName"></slot>
         </template>
-        <fix-btn>
+        <div class="step_btn">
           <el-button
             v-for="(val1,key1) in val.btnArr"
             :key="key1"
@@ -28,7 +32,7 @@
             @click="val1.fn(val1)"
             :disabled="val.disable||false"
           >{{val1.btnTitle}}</el-button>
-        </fix-btn>
+        </div>
       </div>
       <div
         class="step-last flex-box flex-col flex-ver"
@@ -40,7 +44,7 @@
           </el-icon>
         </div>
         <h2 class="success-margin" v-html="successTitle"></h2>
-        <fix-btn>
+        <div class="step_btn">
           <el-button
             v-if="!stepData[stepData.length-1].lastBtnArr"
             type="danger"
@@ -54,14 +58,14 @@
             @click="item.fn(item)"
             :disabled="item.disable||false"
           >{{item.btnTitle}}</el-button>
-        </fix-btn>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts" name="stepWizard">
-import FixBtn from './fixBtn.vue'
+import { useSlots } from 'vue'
 const props = defineProps({
   // 步骤数据
   stepData: {
@@ -91,6 +95,7 @@ const props = defineProps({
     default: true,
   },
 })
+const slots = useSlots()
 const stepContent = () => {
   return props.isShowLastSuccess
     ? props.stepData && props.stepData.slice(0, props.stepData.length - 1)
@@ -125,8 +130,13 @@ const complete = () => {
 .step-wizard {
   position: relative;
   .el-steps--simple {
-    border-radius: 0px;
+    .el-step__head {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
+
   .content-step-main {
     .step-last {
       .icon-success {
@@ -138,6 +148,15 @@ const complete = () => {
         color: var(--el-color-primary);
         margin-bottom: 70px;
       }
+    }
+    .step_btn {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: var(--el-bg-color);
     }
   }
 }
