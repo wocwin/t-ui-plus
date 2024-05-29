@@ -1,28 +1,12 @@
 <template>
-  <el-form
-    id="t_query_condition"
-    v-bind="$attrs"
-    :label-width="labelWidth"
-    :form="queryState.form"
-    size="default"
-    class="t-query-condition"
-    :style="{
-      'grid-template-areas': gridAreas,
-      'grid-template-columns': `repeat(${colLength}, minmax(0px, ${
-        100 / colLength
+  <el-form id="t_query_condition" v-bind="$attrs" :label-width="labelWidth" :form="queryState.form" size="default"
+    class="t-query-condition" :style="{
+    'grid-template-areas': gridAreas,
+    'grid-template-columns': `repeat(${colLength}, minmax(0px, ${100 / colLength
       }%))`,
-    }"
-    @submit.prevent
-  >
-    <el-form-item
-      v-for="(opt, i) in cOpts"
-      :key="i"
-      :label="opt.label"
-      :label-width="opt.labelWidth"
-      v-bind="$attrs"
-      :style="{ gridArea: i }"
-      :class="[opt.className, { render_label: opt.labelRender }]"
-    >
+  }" @submit.prevent>
+    <el-form-item v-for="(opt, i) in cOpts" :key="i" :label="opt.label" :label-width="opt.labelWidth" v-bind="$attrs"
+      :style="{ gridArea: i }" :class="[opt.className, { render_label: opt.labelRender }]">
       <!-- 自定义label -->
       <template #label v-if="opt.labelRender">
         <render-comp :form="queryState.form" :render="opt.labelRender" />
@@ -32,104 +16,52 @@
         <slot :name="opt.slotName" :param="queryState.form" :scope="queryState.form"></slot>
       </template>
       <template v-if="opt.isSelfCom">
-        <component
-          :is="opt.comp"
-          :ref="opt.comp === 't-select-table' ? (el:any) => handleRef(el, i) : ''"
-          v-model="queryState.form[opt.dataIndex]"
-          :placeholder="opt.placeholder || getPlaceholder(opt)"
-          v-bind="
-            typeof opt.bind == 'function'
-              ? opt.bind(queryState.form)
-              : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
-          "
-          :style="{ width: opt.width || '100%' }"
-          @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
-          v-on="cEvent(opt)"
-        />
+        <component :is="opt.comp" :ref="opt.comp === 't-select-table' ? (el: any) => handleRef(el, i) : ''"
+          v-model="queryState.form[opt.dataIndex]" :placeholder="opt.placeholder || getPlaceholder(opt)" v-bind="typeof opt.bind == 'function'
+    ? opt.bind(queryState.form)
+    : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
+    " :style="{ width: opt.width || '100%' }" @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
+          v-on="cEvent(opt)" />
       </template>
-      <component
-        v-if="!opt.slotName && !opt.isSelfCom && opt.comp.includes('date')"
-        :is="opt.comp"
-        v-bind="
-          typeof opt.bind == 'function'
-            ? opt.bind(queryState.form)
-            : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
-        "
-        :placeholder="opt.placeholder || getPlaceholder(opt)"
-        @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
-        v-model="queryState.form[opt.dataIndex]"
-        v-on="cEvent(opt)"
-      />
-      <component
-        v-if="
-          !opt.slotName && !opt.isSelfCom && opt.comp.includes('tree-select')
-        "
-        :is="opt.comp"
-        v-bind="
-          typeof opt.bind == 'function'
-            ? opt.bind(queryState.form)
-            : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
-        "
-        :placeholder="opt.placeholder || getPlaceholder(opt)"
-        @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
-        v-model="queryState.form[opt.dataIndex]"
-        v-on="cEvent(opt)"
-      />
-      <component
-        v-if="
-          !opt.isSelfCom &&
-          !opt.slotName &&
-          !opt.comp.includes('date') &&
-          !opt.comp.includes('tree-select')
-        "
-        :is="opt.comp"
-        v-bind="
-          typeof opt.bind == 'function'
-            ? opt.bind(queryState.form)
-            : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
-        "
-        :placeholder="opt.placeholder || getPlaceholder(opt)"
-        @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
-        v-on="cEvent(opt)"
-        v-model="queryState.form[opt.dataIndex]"
-      >
-        <component
-          :is="compChildName(opt)"
-          v-for="(value, key, index) in selectListType(opt)"
-          :key="index"
-          :disabled="value.disabled"
-          :label="compChildLabel(opt, value)"
-          :value="compChildValue(opt, value, key)"
-        >{{ compChildShowLabel(opt, value) }}</component>
+      <component v-if="!opt.slotName && !opt.isSelfCom && opt.comp.includes('date')" :is="opt.comp" v-bind="typeof opt.bind == 'function'
+    ? opt.bind(queryState.form)
+    : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
+    " :placeholder="opt.placeholder || getPlaceholder(opt)"
+        @change="handleEvent(opt.event, queryState.form[opt.dataIndex])" v-model="queryState.form[opt.dataIndex]"
+        v-on="cEvent(opt)" />
+      <component v-if="!opt.slotName && !opt.isSelfCom && opt.comp.includes('tree-select')
+    " :is="opt.comp" v-bind="typeof opt.bind == 'function'
+    ? opt.bind(queryState.form)
+    : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
+    " :placeholder="opt.placeholder || getPlaceholder(opt)"
+        @change="handleEvent(opt.event, queryState.form[opt.dataIndex])" v-model="queryState.form[opt.dataIndex]"
+        v-on="cEvent(opt)" />
+      <component v-if="!opt.isSelfCom &&
+    !opt.slotName &&
+    !opt.comp.includes('date') &&
+    !opt.comp.includes('tree-select')
+    " :is="opt.comp" v-bind="typeof opt.bind == 'function'
+    ? opt.bind(queryState.form)
+    : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
+    " :placeholder="opt.placeholder || getPlaceholder(opt)"
+        @change="handleEvent(opt.event, queryState.form[opt.dataIndex])" v-on="cEvent(opt)"
+        v-model="queryState.form[opt.dataIndex]">
+        <component :is="compChildName(opt)" v-for="(value, key, index) in selectListType(opt)" :key="index"
+          :disabled="value.disabled" :label="compChildLabel(opt, value)" :value="compChildValue(opt, value, key)">{{
+    compChildShowLabel(opt, value) }}</component>
       </component>
     </el-form-item>
-    <el-form-item
-      v-if="Object.keys(cOpts).length > 0"
-      label-width="0"
-      style="grid-area: submit_btn"
-      :class="['btn', { flex_end: cellLength % colLength === 0 },{ btn_flex_end: (Object.keys(cOpts).length === 4 ||cellLength>3)}]"
-    >
+    <el-form-item v-if="Object.keys(cOpts).length > 0" label-width="0" style="grid-area: submit_btn"
+      :class="['btn', { flex_end: cellLength % colLength === 0 }, { btn_flex_end: (Object.keys(cOpts).length === 4 || cellLength > 3) }]">
       <template v-if="footer !== null">
         <slot name="footer" />
         <template v-if="!slots.footer">
-          <el-button
-            class="btn_check"
-            @click="checkHandle"
-            v-bind="queryAttrs"
-            :loading="loading"
-          >{{queryAttrs.btnTxt}}</el-button>
-          <el-button
-            v-if="reset"
-            class="btn_reset"
-            v-bind="resetAttrs"
-            @click="resetHandle"
-          >{{resetAttrs.btnTxt}}</el-button>
+          <el-button class="btn_check" @click="checkHandle" v-bind="queryAttrs" :loading="loading">{{ queryAttrs.btnTxt
+            }}</el-button>
+          <el-button v-if="reset" class="btn_reset" v-bind="resetAttrs" @click="resetHandle">{{ resetAttrs.btnTxt
+            }}</el-button>
           <slot name="querybar"></slot>
-          <el-button
-            v-if="originCellLength > maxVisibleSpans && isShowOpen"
-            @click="open = !open"
-            link
-          >
+          <el-button v-if="originCellLength > maxVisibleSpans && isShowOpen" @click="open = !open" link>
             {{ open ? packUpTxt : unfoldTxt }}
             <el-icon v-if="open">
               <ArrowUp />
@@ -145,8 +77,8 @@
 </template>
 
 <script setup lang="ts" name="TQueryCondition">
-import RenderComp from './renderComp.vue'
-import { computed, ref, watch, useSlots, onMounted, reactive, toRef } from 'vue'
+import { computed, onMounted, reactive, ref, toRef, useSlots, watch } from 'vue';
+import RenderComp from './renderComp.vue';
 const props = defineProps({
   opts: {
     type: Object,
@@ -525,7 +457,7 @@ onMounted(() => {
 watch(
   () => props.opts,
   (opts) => {
-    queryState.form = initForm(opts)
+    queryState.form = initForm(opts, true);
   },
   { deep: true }
 )
@@ -573,6 +505,7 @@ defineExpose({
       // justify-content: flex-end;
     }
   }
+
   .btn_flex_end {
     .el-form-item__content {
       justify-content: flex-end;
