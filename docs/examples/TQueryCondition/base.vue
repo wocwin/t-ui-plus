@@ -1,19 +1,26 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-query-condition
-        :opts="opts"
-        @submit="conditionEnter"
-        @handleEvent="handleEvent"
-        isExpansion
-        :btnResetBind="{ size: 'small',btnTxt:'搜索', icon:'Search'}"
-      />
+      <t-query-condition :opts="state.opts" @submit="conditionEnter" @handleEvent="handleEvent" isExpansion
+        :btnResetBind="{ size: 'small', btnTxt: '搜索', icon: 'Search' }" />
     </t-layout-page-item>
   </t-layout-page>
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
+const listTypeInfo = ref({
+  sexList: [
+    {
+      label: '前纺一车间',
+      value: 'W1',
+    },
+    {
+      label: '前纺二车间',
+      value: 'W2',
+    },
+  ],
+})
 let state: any = reactive({
   queryData: {
     userName: null, // 登录名
@@ -24,22 +31,8 @@ let state: any = reactive({
     date: null,
     date1: null,
   },
-  listTypeInfo: {
-    sexList: [
-      {
-        label: '前纺一车间',
-        value: 'W1',
-      },
-      {
-        label: '前纺二车间',
-        value: 'W2',
-      },
-    ],
-  },
-})
 
-const opts = computed(() => {
-  return {
+  opts: {
     userName: {
       label: '登录名称',
       comp: 'el-input',
@@ -53,10 +46,12 @@ const opts = computed(() => {
       comp: 'el-select',
       changeEvent: 'change',
       type: 'select-arr',
+      defaultVal: '',
+      span: 2,
       list: 'sexList',
       arrLabel: 'label',
       arrKey: 'value',
-      listTypeInfo: state.listTypeInfo,
+      listTypeInfo: listTypeInfo.value,
     },
     start_time: {
       label: '开始时间',
@@ -109,6 +104,79 @@ const opts = computed(() => {
     },
   }
 })
+// const opts = computed(() => {
+//   return {
+//     userName: {
+//       label: '登录名称',
+//       comp: 'el-input',
+//     },
+//     phonenumber: {
+//       label: '手机号码',
+//       comp: 'el-input',
+//     },
+//     workshopNum: {
+//       label: '车间',
+//       comp: 'el-select',
+//       changeEvent: 'change',
+//       type: 'select-arr',
+//       defaultVal: '',
+//       span: 2,
+//       list: 'sexList',
+//       arrLabel: 'label',
+//       arrKey: 'value',
+//       listTypeInfo: state.listTypeInfo,
+//     },
+//     start_time: {
+//       label: '开始时间',
+//       comp: 'el-date-picker',
+//       bind: {
+//         valueFormat: 'YYYY-MM-DD',
+//       },
+//     },
+//     end_time: {
+//       label: '结束时间',
+//       comp: 'el-date-picker',
+//       bind: (formData) => {
+//         return {
+//           valueFormat: 'YYYY-MM-DD',
+//           disabled:
+//             formData.start_time == null || formData.start_time == ''
+//               ? true
+//               : false,
+//           'disabled-date': (time) => {
+//             return (
+//               time.getTime() <
+//               new Date(formData.start_time).getTime() - 86400000
+//             )
+//           },
+//         }
+//       },
+//     },
+//     date1: {
+//       label: '日期',
+//       comp: 'el-date-picker',
+//       bind: {
+//         valueFormat: 'YYYY-MM-DD',
+//         'disabled-date': (time) => {
+//           return time.getTime() < new Date()
+//         },
+//       },
+//     },
+//     date: {
+//       label: '装炉时间',
+//       comp: 'el-date-picker',
+//       span: 2,
+//       event: 'date',
+//       bind: {
+//         rangeSeparator: '-',
+//         startPlaceholder: '开始日期',
+//         endPlaceholder: '结束日期',
+//         valueFormat: 'YYYY-MM-DD',
+//         type: 'daterange',
+//       },
+//     },
+//   }
+// })
 // 最终参数获取
 const getQueryData = computed(() => {
   const {
@@ -137,9 +205,39 @@ const handleEvent = (type, val) => {
   // console.log(111, type, val)
   switch (type) {
     case 'date':
+      const arr = [
+        {
+          label: '前纺一车间666',
+          value: 'W5',
+        },
+        {
+          label: '前纺二车间999',
+          value: 'W6',
+        },
+      ]
+      listTypeInfo.value.sexList = [...listTypeInfo.value.sexList, ...arr]
       console.log('获取event==date的数据', val)
       break
   }
+}
+onMounted(() => {
+  chageDefaultVal()
+})
+const chageDefaultVal = () => {
+  state.opts.workshopNum.defaultVal = 'W2'
+  console.log('opts.value.workshopNum', state.opts.workshopNum)
+  const arr = [
+    {
+      label: '前纺一车间22',
+      value: 'W3',
+    },
+    {
+      label: '前纺二车间33',
+      value: 'W4',
+    },
+  ]
+  listTypeInfo.value.sexList = [...listTypeInfo.value.sexList, ...arr]
+  // listTypeInfo.value.sexList = arr
 }
 // 点击查询按钮
 const conditionEnter = (data: any) => {
