@@ -1,15 +1,20 @@
 <template>
   <div class="t-table" ref="TTableBox">
-    <div class="header_wrap">
-      <div class="header_title" v-if="title||isShow('title')">
-        {{ title }}
-        <slot name="title" />
+    <div class="header_wrap" :style="{paddingBottom: (tableTitle || title || isShow('title')|| isShow('toolbar')|| isSlotToolbar|| columnSetting) ? '10px' : 0 }">
+      <div class="header_title" v-if="tableTitle || title|| $slots.title || isSlotTitle">
+        <template v-if="$slots.title || isSlotTitle">
+          <slot name="title" />
+        </template>
+        <template v-else>
+          <span v-if="tableTitle">{{tableTitle}}</span>
+          <span v-else>{{ title }}</span>
+        </template>
       </div>
       <div class="toolbar_top">
         <!-- 表格外操作 -->
         <slot name="toolbar"></slot>
         <!--列设置按钮-->
-        <div class="header_right_wrap" :style="{ marginLeft: isShow('toolbar') ? '12px' : 0 }">
+        <div class="header_right_wrap" :style="{ marginLeft: isShow('toolbar')|| isSlotToolbar ? '12px' : 0 }">
           <slot name="btn" />
           <column-set
             v-if="columnSetting"
@@ -369,6 +374,7 @@ const props: any = defineProps({
   title: {
     type: String,
   },
+  tableTitle:String,
   // table对齐方式
   align: {
     type: String as PropType<'left' | 'center' | 'right'>,
@@ -436,6 +442,10 @@ const props: any = defineProps({
     type: Boolean,
     default: false,
   },
+  // TAdaptivePage组件是否使用了Toolbar插槽
+  isSlotToolbar: Boolean,
+  // TAdaptivePage组件是否使用了title插槽
+  isSlotTitle: Boolean,
 })
 // 初始化数据
 let state = reactive({
@@ -1106,7 +1116,6 @@ defineExpose({
     .toolbar_top {
       flex: 1;
       display: flex;
-      padding-bottom: 10px;
       align-items: center;
       justify-content: flex-end;
 
@@ -1130,7 +1139,6 @@ defineExpose({
       display: flex;
       align-items: center;
       flex: 1;
-      padding-bottom: 10px;
       font-size: 16px;
       font-weight: bold;
       line-height: 35px;
