@@ -3,6 +3,7 @@
     class="menu_mange"
     title="显示左侧tree结构"
     isCopy
+    :queryPageStyle="{marginBottom: '0px'}"
     :table="state.table"
     :columns="state.table.columns"
     :opts="opts"

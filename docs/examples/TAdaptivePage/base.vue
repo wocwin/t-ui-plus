@@ -4,6 +4,7 @@
     title="用户管理列表"
     row-key="path"
     isCopy
+    columnSetting
     :queryPageStyle="{marginBottom: '0px'}"
     :table="state.table"
     :columns="state.table.columns"
@@ -12,6 +13,7 @@
     @page-change="handlesCurrentChange"
     @submit="conditionEnter"
   >
+    <template #title>优先展示插槽，不写插槽展示tableTitle</template>
     <template #nickName="{ scope }">
       <div>{{ scope.row.nickName }}</div>
     </template>

@@ -18,7 +18,7 @@
         </t-query-condition>
       </t-layout-page-item>
       <t-layout-page-item class="table_main" :style="tablePageStyle">
-        <t-table v-bind="$attrs" ref="TTablePage">
+        <t-table v-bind="{columnSetting,...$attrs}" :isSlotToolbar="isShow('toolbar')" :isSlotTitle="isShow('title')" ref="TTablePage">
           <template v-for="(index, name) in slots" #[name]="data">
             <slot :name="name" v-bind="data" />
           </template>
@@ -44,6 +44,7 @@ defineProps({
     type: Object,
     default: ()=>{},
   },
+  columnSetting: Boolean,
    queryPageStyle: {
     type: Object,
     default: ()=>{},

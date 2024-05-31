@@ -4,6 +4,7 @@
     title="操作TTable取消复选功能"
     ref="TAdaptivePageDemo"
     isCopy
+    :queryPageStyle="{marginBottom: '0px'}"
     :table="state.table"
     :columns="state.table.columns"
     :opts="opts"
