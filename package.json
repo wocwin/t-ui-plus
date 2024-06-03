@@ -1,12 +1,13 @@
 {
   "name": "@wocwin/t-ui-plus",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "description": "Vue3 中基于Element-plus二次封装基础组件文档",
   "author": "wocwin",
   "license": "MIT",
   "private": false,
   "main": "lib/t-ui-plus.umd.cjs",
   "module": "lib/t-ui-plus.umd.cjs",
+  "browser": "lib/t-ui-plus.iife.js",
   "types": "lib/index.d.ts",
   "type": "module",
   "files": [
