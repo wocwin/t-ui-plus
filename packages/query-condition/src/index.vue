@@ -1,12 +1,27 @@
 <template>
-  <el-form id="t_query_condition" v-bind="$attrs" :label-width="labelWidth" :form="queryState.form" size="default"
-    class="t-query-condition" :style="{
+  <el-form
+    id="t_query_condition"
+    v-bind="$attrs"
+    :label-width="labelWidth"
+    :form="queryState.form"
+    size="default"
+    class="t-query-condition"
+    :style="{
       'grid-template-areas': gridAreas,
       'grid-template-columns': `repeat(${colLength}, minmax(0px, ${100 / colLength
         }%))`,
-    }" @submit.prevent>
-    <el-form-item v-for="(opt, i) in cOpts" :key="i" :label="opt.label" :label-width="opt.labelWidth" v-bind="$attrs"
-      :style="{ gridArea: i }" :class="[opt.className, { render_label: opt.labelRender }]">
+    }"
+    @submit.prevent
+  >
+    <el-form-item
+      v-for="(opt, i) in cOpts"
+      :key="i"
+      :label="opt.label"
+      :label-width="opt.labelWidth"
+      v-bind="$attrs"
+      :style="{ gridArea: i }"
+      :class="[opt.className, { render_label: opt.labelRender }]"
+    >
       <!-- 自定义label -->
       <template #label v-if="opt.labelRender">
         <render-comp :form="queryState.form" :render="opt.labelRender" />
@@ -16,54 +31,99 @@
         <slot :name="opt.slotName" :param="queryState.form" :scope="queryState.form"></slot>
       </template>
       <template v-if="opt.isSelfCom">
-        <component :is="opt.comp" :ref="opt.comp === 't-select-table' ? (el: any) => handleRef(el, i) : ''"
-          v-model="queryState.form[opt.dataIndex]" :placeholder="opt.placeholder || getPlaceholder(opt)" v-bind="typeof opt.bind == 'function'
+        <component
+          :is="opt.comp"
+          :ref="opt.comp === 't-select-table' ? (el: any) => handleRef(el, i) : ''"
+          v-model="queryState.form[opt.dataIndex]"
+          :placeholder="opt.placeholder || getPlaceholder(opt)"
+          v-bind="typeof opt.bind == 'function'
             ? opt.bind(queryState.form)
             : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
-            " :style="{ width: opt.width || '100%' }" @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
-          v-on="cEvent(opt)" />
+            "
+          :style="{ width: opt.width || '100%' }"
+          @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
+          v-on="cEvent(opt)"
+        />
       </template>
-      <component v-if="!opt.slotName && !opt.isSelfCom && opt.comp.includes('date')" :is="opt.comp" v-bind="typeof opt.bind == 'function'
+      <component
+        v-if="!opt.slotName && !opt.isSelfCom && opt.comp.includes('date')"
+        :is="opt.comp"
+        v-bind="typeof opt.bind == 'function'
         ? opt.bind(queryState.form)
         : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
-        " :placeholder="opt.placeholder || getPlaceholder(opt)"
-        @change="handleEvent(opt.event, queryState.form[opt.dataIndex])" v-model="queryState.form[opt.dataIndex]"
-        v-on="cEvent(opt)" />
-      <component v-if="
+        "
+        :placeholder="opt.placeholder || getPlaceholder(opt)"
+        @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
+        v-model="queryState.form[opt.dataIndex]"
+        v-on="cEvent(opt)"
+      />
+      <component
+        v-if="
         !opt.slotName && !opt.isSelfCom && opt.comp.includes('tree-select')
-      " :is="opt.comp" v-bind="typeof opt.bind == 'function'
+      "
+        :is="opt.comp"
+        v-bind="typeof opt.bind == 'function'
         ? opt.bind(queryState.form)
         : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
-        " :placeholder="opt.placeholder || getPlaceholder(opt)"
-        @change="handleEvent(opt.event, queryState.form[opt.dataIndex])" v-model="queryState.form[opt.dataIndex]"
-        v-on="cEvent(opt)" />
-      <component v-if="
+        "
+        :placeholder="opt.placeholder || getPlaceholder(opt)"
+        @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
+        v-model="queryState.form[opt.dataIndex]"
+        v-on="cEvent(opt)"
+      />
+      <component
+        v-if="
         !opt.isSelfCom &&
         !opt.slotName &&
         !opt.comp.includes('date') &&
         !opt.comp.includes('tree-select')
-      " :is="opt.comp" v-bind="typeof opt.bind == 'function'
+      "
+        :is="opt.comp"
+        v-bind="typeof opt.bind == 'function'
         ? opt.bind(queryState.form)
         : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
-        " :placeholder="opt.placeholder || getPlaceholder(opt)"
-        @change="handleEvent(opt.event, queryState.form[opt.dataIndex])" v-on="cEvent(opt)"
-        v-model="queryState.form[opt.dataIndex]">
-        <component :is="compChildName(opt)" v-for="(value, key, index) in selectListType(opt)" :key="index"
-          :disabled="value.disabled" :label="compChildLabel(opt, value)" :value="compChildValue(opt, value, key)">{{
-            compChildShowLabel(opt, value) }}</component>
+        "
+        :placeholder="opt.placeholder || getPlaceholder(opt)"
+        @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
+        v-on="cEvent(opt)"
+        v-model="queryState.form[opt.dataIndex]"
+      >
+        <component
+          :is="compChildName(opt)"
+          v-for="(value, key, index) in selectListType(opt)"
+          :key="index"
+          :disabled="value.disabled"
+          :label="compChildLabel(opt, value)"
+          :value="compChildValue(opt, value, key)"
+        >
+          {{
+          compChildShowLabel(opt, value) }}
+        </component>
       </component>
     </el-form-item>
-    <el-form-item v-if="Object.keys(cOpts).length > 0" label-width="0" style="grid-area: submit_btn"
-      :class="['btn', { flex_end: cellLength % colLength === 0 }, { btn_flex_end: (Object.keys(cOpts).length === 4 || cellLength > 3) }]">
+    <el-form-item
+      v-if="Object.keys(cOpts).length > 0"
+      label-width="0"
+      style="grid-area: submit_btn"
+      :class="['btn', { flex_end: cellLength % colLength === 0 }, { btn_flex_end: (Object.keys(cOpts).length === 4 || cellLength > 3) }]"
+    >
       <template v-if="footer !== null">
         <slot name="footer" />
         <template v-if="!slots.footer">
-          <el-button class="btn_check" @click="checkHandle" v-bind="queryAttrs" :loading="loading">{{ queryAttrs.btnTxt
-            }}</el-button>
-          <el-button v-if="reset" class="btn_reset" v-bind="resetAttrs" @click="resetHandle">{{ resetAttrs.btnTxt
-            }}</el-button>
+          <el-button class="btn_check" @click="checkHandle" v-bind="queryAttrs" :loading="loading">
+            {{ queryAttrs.btnTxt
+            }}
+          </el-button>
+          <el-button v-if="reset" class="btn_reset" v-bind="resetAttrs" @click="resetHandle">
+            {{ resetAttrs.btnTxt
+            }}
+          </el-button>
           <slot name="querybar"></slot>
-          <el-button v-if="originCellLength > maxVisibleSpans && isShowOpen" @click="open = !open" link>
+          <el-button
+            v-if="originCellLength > maxVisibleSpans && isShowOpen"
+            @click="open = !open"
+            link
+          >
             {{ open ? packUpTxt : unfoldTxt }}
             <el-icon v-if="open">
               <ArrowUp />
@@ -140,8 +200,18 @@ const props = defineProps({
   footer: Object,
   configChangedReset: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
+  // 是否开启一行显示几个查询条件
+  isShowWidthSize: {
+    type: Boolean,
+    default: false,
+  },
+  // 一行显示几个查询条件
+  widthSize: {
+    type: Number,
+    default: 4,
+  },
 })
 const slots = useSlots()
 const maxVisibleSpans = toRef(props, 'maxVisibleSpans')
@@ -427,7 +497,11 @@ const getPlaceholder = (row: any) => {
   return placeholder
 }
 onMounted(() => {
-  colLength.value = getColLength()
+  if (props.isShowWidthSize) {
+    colLength.value = props.widthSize
+  } else {
+    colLength.value = getColLength()
+  }
   if (props.boolEnter) {
     document.onkeyup = (e) => {
       // console.log(7777, e)
@@ -458,6 +532,12 @@ onMounted(() => {
     open.value = true
   }
 })
+watch(
+  () => props.widthSize,
+  (val) => {
+    colLength.value = val
+  }
+)
 watch(
   () => props.opts,
   (opts) => {

@@ -57,6 +57,12 @@ TQueryCondition/querybar
 TQueryCondition/footer
 :::
 
+### 每行展示多少项
+
+::: demo 开启`isShowWidthSize`；设置`widthSize`值最小值3，默认4
+TQueryCondition/widthSize
+:::
+
 ### TQueryCondition 参数配置
 
 ---
@@ -78,21 +84,25 @@ TQueryCondition/footer
 
 ### 2、配置参数（Attributes）
 
-| 参数            | 说明                                      | 类型        | 默认值                                         |
-| :-------------- | :---------------------------------------- | :---------- | :--------------------------------------------- |
-| opts            | 接收筛选器组件配置                        | object      | 无                                             |
-| loading         | 查询按钮 loading 状态，请求数据时需要体现 | Boolean     | false                                          |
-| reset           | 是否显示“重置”按钮                        | Boolean     | true                                           |
-| maxVisibleSpans | 设置展开的最大 span 数量                  | Number      | 4                                              |
-| boolEnter       | 是否敲回车查询                            | Boolean     | true                                           |
-| isShowOpen      | 是否显示收起和展开                        | Boolean     | true                                           |
-| packUpTxt       | 收起文案                                  | String      | '收起'                                         |
-| unfoldTxt       | 展开文案                                  | String      | '展开'                                         |
-| isExpansion     | 是否默认展开                              | Boolean     | false                                          |
-| labelWidth      | labelWidth 宽度                           | String      | '120px'                                        |
-| btnCheckBind    | 查询按钮配置（继承`el-button`所有属性）   | object      | `{type: primary, size: default,btnTxt:'查询'}` |
-| btnResetBind    | 重置按钮配置（继承`el-button`所有属性）   | object      | `{ size: default,btnTxt:'重置'}`               |
-| footer          | 自定义按钮(设置:footer="null"不显示按钮)  | object/slot | -                                              |
+| 参数               | 说明                                      | 类型        | 默认值                                         |
+| :----------------- | :---------------------------------------- | :---------- | :--------------------------------------------- |
+| opts               | 接收筛选器组件配置                        | object      | 无                                             |
+| loading            | 查询按钮 loading 状态，请求数据时需要体现 | Boolean     | false                                          |
+| reset              | 是否显示“重置”按钮                        | Boolean     | true                                           |
+| maxVisibleSpans    | 设置展开的最大 span 数量                  | Number      | 4                                              |
+| boolEnter          | 是否敲回车查询                            | Boolean     | true                                           |
+| isShowOpen         | 是否显示收起和展开                        | Boolean     | true                                           |
+| packUpTxt          | 收起文案                                  | String      | '收起'                                         |
+| unfoldTxt          | 展开文案                                  | String      | '展开'                                         |
+| isExpansion        | 是否默认展开                              | Boolean     | false                                          |
+| labelWidth         | labelWidth 宽度                           | String      | '120px'                                        |
+| btnCheckBind       | 查询按钮配置（继承`el-button`所有属性）   | object      | `{type: primary, size: default,btnTxt:'查询'}` |
+| btnResetBind       | 重置按钮配置（继承`el-button`所有属性）   | object      | `{ size: default,btnTxt:'重置'}`               |
+| footer             | 自定义按钮(设置:footer="null"不显示按钮)  | object/slot | -                                              |
+| configChangedReset | 更新opts是否重置（默认重置）              | Boolean     | false                                          |
+| isShowWidthSize    | 是否开启动态设置每行显示数                | Boolean     | false                                          |
+| widthSize          | 每行显示多少项，最小值2最大值8            | Number      | 4                                              |
+
 
 
 ### 3、opts Attributes

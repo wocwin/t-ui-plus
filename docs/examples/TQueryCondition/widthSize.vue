@@ -1,12 +1,19 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
+      <el-radio-group v-model="widthSize" size="small" style="margin-bottom: 15px">
+        <el-radio-button :value="3">一行展示3项</el-radio-button>
+        <el-radio-button :value="4">一行展示4项</el-radio-button>
+        <el-radio-button :value="5">一行展示5项</el-radio-button>
+        <el-radio-button :value="6">一行展示6项</el-radio-button>
+      </el-radio-group>
       <t-query-condition
         :opts="opts"
         @submit="conditionEnter"
         @handleEvent="handleEvent"
         isExpansion
-        :btnResetBind="{ size: 'small', btnTxt: '搜索', icon: 'Search' }"
+        isShowWidthSize
+        :widthSize="widthSize"
       />
     </t-layout-page-item>
   </t-layout-page>
@@ -14,6 +21,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue'
+const widthSize = ref(3)
 let state: any = reactive({
   queryData: {
     userName: null, // 登录名
@@ -58,7 +66,6 @@ const opts = computed(() => {
       changeEvent: 'change',
       type: 'select-arr',
       defaultVal: '',
-      span: 2,
       list: 'sexList',
       arrLabel: 'label',
       arrKey: 'value',
