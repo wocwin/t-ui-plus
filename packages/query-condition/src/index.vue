@@ -61,7 +61,7 @@
           <el-button v-if="reset" class="btn_reset" v-bind="resetAttrs" @click="resetHandle">{{ resetAttrs.btnTxt
             }}</el-button>
           <slot name="querybar"></slot>
-          <el-button v-if="originCellLength > maxVisibleSpans && isShowOpen" @click="open = !open" link>
+          <el-button v-if="originCellLength > maxVisibleSpans && isShowOpen" @click="showOpenClick" link>
             {{ open ? packUpTxt : unfoldTxt }}
             <el-icon v-if="open">
               <ArrowUp />
@@ -291,7 +291,7 @@ const getColLength = () => {
   }
   return colLength
 }
-const emits = defineEmits(['handleEvent', 'submit', 'reset'])
+const emits = defineEmits(['handleEvent', 'submit', 'reset', 'showOpenClick'])
 // 下拉选择表格组件 ref
 const tselecttableref: any = ref({})
 // 下拉选择表格组件 动态ref
@@ -337,6 +337,11 @@ const handleEvent = (type, val) => {
 // 查询
 const checkHandle = (flagText: any = false) => {
   emits('submit', queryState.form, flagText)
+}
+// 展开收起
+const showOpenClick = () => {
+  open.value = !open.value;
+  emits('showOpenClick', open.value)
 }
 // 子组件名称
 const compChildName: any = computed(() => {
