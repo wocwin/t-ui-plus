@@ -16,9 +16,9 @@ TQueryCondition/base
 TQueryCondition/isExpansion
 :::
 
-### 设置折叠时默认显示的最大 span 值——默认为 4
+### 设置折叠时默认显示几行
 
-::: demo 通过设置`maxVisibleSpans`来设置折叠时默认显示的最大span 值，默认为 4 ,超过后就折叠显示。 此 Demo 展示maxVisibleSpans设置为 6 的效果
+::: demo 通过设置`maxVisibleRows`来设置折叠时默认显示几行，默认为 1
 TQueryCondition/maxVisibleSpans
 :::
 
@@ -59,7 +59,7 @@ TQueryCondition/footer
 
 ### 每行展示多少项
 
-::: demo 开启`isShowWidthSize`；设置`widthSize`值最小值3，默认4
+::: demo 开启`isShowWidthSize`；设置`widthSize`值最小值2，默认4;不开启`isShowWidthSize`，则根据`width > 768 && width < 1280`展示3项，`width <= 768`展示2项(width=window.innerWidth)
 TQueryCondition/widthSize
 :::
 
@@ -89,7 +89,7 @@ TQueryCondition/widthSize
 | opts               | 接收筛选器组件配置                        | object      | 无                                             |
 | loading            | 查询按钮 loading 状态，请求数据时需要体现 | Boolean     | false                                          |
 | reset              | 是否显示“重置”按钮                        | Boolean     | true                                           |
-| maxVisibleSpans    | 设置展开的最大 span 数量                  | Number      | 4                                              |
+| maxVisibleRows     | 收起时设置默认展示行数                    | Number      | 1                                              |
 | boolEnter          | 是否敲回车查询                            | Boolean     | true                                           |
 | isShowOpen         | 是否显示收起和展开                        | Boolean     | true                                           |
 | packUpTxt          | 收起文案                                  | String      | '收起'                                         |
@@ -101,7 +101,7 @@ TQueryCondition/widthSize
 | footer             | 自定义按钮(设置:footer="null"不显示按钮)  | object/slot | -                                              |
 | configChangedReset | 更新opts是否重置（默认重置）              | Boolean     | false                                          |
 | isShowWidthSize    | 是否开启动态设置每行显示数                | Boolean     | false                                          |
-| widthSize          | 每行显示多少项，最小值2最大值8            | Number      | 4                                              |
+| widthSize          | 每行显示多少项，最小值2                   | Number      | 4                                              |
 
 
 

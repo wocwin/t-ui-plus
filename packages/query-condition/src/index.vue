@@ -8,8 +8,9 @@
     class="t-query-condition"
     :style="{
       'grid-template-areas': gridAreas,
-      'grid-template-columns': `repeat(${colLength}, minmax(0px, ${100 / colLength
-        }%))`,
+      'grid-template-columns': `repeat(${colLength}, minmax(0px, ${
+        100 / colLength
+      }%))`,
     }"
     @submit.prevent
   >
@@ -36,10 +37,11 @@
           :ref="opt.comp === 't-select-table' ? (el: any) => handleRef(el, i) : ''"
           v-model="queryState.form[opt.dataIndex]"
           :placeholder="opt.placeholder || getPlaceholder(opt)"
-          v-bind="typeof opt.bind == 'function'
-            ? opt.bind(queryState.form)
-            : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
-            "
+          v-bind="
+            typeof opt.bind == 'function'
+              ? opt.bind(queryState.form)
+              : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
+          "
           :style="{ width: opt.width || '100%' }"
           @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
           v-on="cEvent(opt)"
@@ -48,9 +50,10 @@
       <component
         v-if="!opt.slotName && !opt.isSelfCom && opt.comp.includes('date')"
         :is="opt.comp"
-        v-bind="typeof opt.bind == 'function'
-        ? opt.bind(queryState.form)
-        : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
+        v-bind="
+          typeof opt.bind == 'function'
+            ? opt.bind(queryState.form)
+            : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
         "
         :placeholder="opt.placeholder || getPlaceholder(opt)"
         @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
@@ -59,12 +62,13 @@
       />
       <component
         v-if="
-        !opt.slotName && !opt.isSelfCom && opt.comp.includes('tree-select')
-      "
+          !opt.slotName && !opt.isSelfCom && opt.comp.includes('tree-select')
+        "
         :is="opt.comp"
-        v-bind="typeof opt.bind == 'function'
-        ? opt.bind(queryState.form)
-        : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
+        v-bind="
+          typeof opt.bind == 'function'
+            ? opt.bind(queryState.form)
+            : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
         "
         :placeholder="opt.placeholder || getPlaceholder(opt)"
         @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
@@ -73,15 +77,16 @@
       />
       <component
         v-if="
-        !opt.isSelfCom &&
-        !opt.slotName &&
-        !opt.comp.includes('date') &&
-        !opt.comp.includes('tree-select')
-      "
+          !opt.isSelfCom &&
+          !opt.slotName &&
+          !opt.comp.includes('date') &&
+          !opt.comp.includes('tree-select')
+        "
         :is="opt.comp"
-        v-bind="typeof opt.bind == 'function'
-        ? opt.bind(queryState.form)
-        : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
+        v-bind="
+          typeof opt.bind == 'function'
+            ? opt.bind(queryState.form)
+            : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
         "
         :placeholder="opt.placeholder || getPlaceholder(opt)"
         @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
@@ -95,32 +100,37 @@
           :disabled="value.disabled"
           :label="compChildLabel(opt, value)"
           :value="compChildValue(opt, value, key)"
-        >
-          {{
-          compChildShowLabel(opt, value) }}
-        </component>
+        >{{ compChildShowLabel(opt, value) }}</component>
       </component>
     </el-form-item>
     <el-form-item
       v-if="Object.keys(cOpts).length > 0"
       label-width="0"
       style="grid-area: submit_btn"
-      :class="['btn', { flex_end: cellLength % colLength === 0 }, { btn_flex_end: (Object.keys(cOpts).length === 4 || cellLength > 3) }]"
+      :class="[
+        'btn',
+        { flex_end: cellLength % colLength === 0 },
+        { btn_flex_end: Object.keys(cOpts).length === 4 || cellLength > 3 },
+      ]"
     >
       <template v-if="footer !== null">
         <slot name="footer" />
         <template v-if="!slots.footer">
-          <el-button class="btn_check" @click="checkHandle" v-bind="queryAttrs" :loading="loading">
-            {{ queryAttrs.btnTxt
-            }}
-          </el-button>
-          <el-button v-if="reset" class="btn_reset" v-bind="resetAttrs" @click="resetHandle">
-            {{ resetAttrs.btnTxt
-            }}
-          </el-button>
+          <el-button
+            class="btn_check"
+            @click="checkHandle"
+            v-bind="queryAttrs"
+            :loading="loading"
+          >{{ queryAttrs.btnTxt }}</el-button>
+          <el-button
+            v-if="reset"
+            class="btn_reset"
+            v-bind="resetAttrs"
+            @click="resetHandle"
+          >{{ resetAttrs.btnTxt }}</el-button>
           <slot name="querybar"></slot>
           <el-button
-            v-if="originCellLength > maxVisibleSpans && isShowOpen"
+            v-if="originCellLength > ( maxVisibleRows * colLength ) && isShowOpen"
             @click="open = !open"
             link
           >
@@ -140,7 +150,7 @@
 
 <script setup lang="ts" name="TQueryCondition">
 import RenderComp from './renderComp.vue'
-import { computed, ref, watch, useSlots, onMounted, reactive, toRef } from 'vue'
+import { computed, ref, watch, useSlots, onMounted, reactive } from 'vue'
 const props = defineProps({
   opts: {
     type: Object,
@@ -183,10 +193,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  // 设置展开的最大 span 数量
-  maxVisibleSpans: {
+  // 收起时设置默认展示行数
+  maxVisibleRows: {
     type: Number,
-    default: 4,
+    default: 1,
   },
   packUpTxt: {
     type: String,
@@ -214,7 +224,6 @@ const props = defineProps({
   },
 })
 const slots = useSlots()
-const maxVisibleSpans = toRef(props, 'maxVisibleSpans')
 // 判断是否使用了某个插槽
 const isShow = (name) => {
   return Object.keys(slots).includes(name)
@@ -267,7 +276,11 @@ const cOpts = computed(() => {
     // 收起、展开操作
     if (props.isShowOpen) {
       renderSpan += opt.span ?? 1
-      if (!open.value && renderSpan - 1 >= maxVisibleSpans.value) return acc
+      if (
+        !open.value &&
+        renderSpan - 1 >= props.maxVisibleRows * colLength.value
+      )
+        return acc
     }
     opt.dataIndex = field
     acc[field] = opt
@@ -306,7 +319,8 @@ const gridAreas = computed(() => {
     }
   }
   if (areas[rowIndex].length === colLength.value) {
-    areas.push(['submit_btn', 'submit_btn', 'submit_btn', 'submit_btn'])
+    // areas.push(['submit_btn', 'submit_btn', 'submit_btn', 'submit_btn'])
+    areas.push(Array(colLength.value).fill('submit_btn'))
   } else {
     while (areas[rowIndex].length < colLength.value) {
       areas[rowIndex].push('submit_btn')

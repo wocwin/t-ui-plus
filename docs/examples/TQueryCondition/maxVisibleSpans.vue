@@ -3,10 +3,9 @@
     <t-layout-page-item>
       <t-query-condition
         :opts="opts"
-        :maxVisibleSpans="6"
+        :maxVisibleRows="2"
         @submit="conditionEnter"
         @handleEvent="handleEvent"
-        :btnResetBind="{ size: 'small',btnTxt:'搜索', icon:'Search'}"
       />
     </t-layout-page-item>
   </t-layout-page>
@@ -103,7 +102,8 @@ const opts = computed(() => {
 })
 // 最终参数获取
 const getQueryData = computed(() => {
-  const { userName, phonenumber, workshopNum, date, date1,date2,date3 } = state.queryData
+  const { userName, phonenumber, workshopNum, date, date1, date2, date3 } =
+    state.queryData
   console.log(444, userName, phonenumber, date1)
   return {
     userName,
