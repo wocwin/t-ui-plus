@@ -1,12 +1,28 @@
 <template>
   <div class="t-table" ref="TTableBox">
-    <div class="header_wrap" :style="{paddingBottom: (tableTitle || title || isShow('title')|| isShow('toolbar')|| isSlotToolbar|| columnSetting) ? '10px' : 0 }">
-      <div class="header_title" v-if="tableTitle || title|| $slots.title || isSlotTitle">
+    <div
+      class="header_wrap"
+      :style="{
+        paddingBottom:
+          tableTitle ||
+          title ||
+          isShow('title') ||
+          isShow('toolbar') ||
+          isSlotToolbar ||
+          columnSetting
+            ? '10px'
+            : 0,
+      }"
+    >
+      <div
+        class="header_title"
+        v-if="tableTitle || title || $slots.title || isSlotTitle"
+      >
         <template v-if="$slots.title || isSlotTitle">
           <slot name="title" />
         </template>
         <template v-else>
-          <span v-if="tableTitle">{{tableTitle}}</span>
+          <span v-if="tableTitle">{{ tableTitle }}</span>
           <span v-else>{{ title }}</span>
         </template>
       </div>
@@ -14,7 +30,12 @@
         <!-- 表格外操作 -->
         <slot name="toolbar"></slot>
         <!--列设置按钮-->
-        <div class="header_right_wrap" :style="{ marginLeft: isShow('toolbar')|| isSlotToolbar ? '12px' : 0 }">
+        <div
+          class="header_right_wrap"
+          :style="{
+            marginLeft: isShow('toolbar') || isSlotToolbar ? '12px' : 0,
+          }"
+        >
           <slot name="btn" />
           <column-set
             v-if="columnSetting"
@@ -46,7 +67,7 @@
       :cell-class-name="cellClassNameFuc"
     >
       <!-- 复选框/单选框/序列号 -->
-      <template v-if="!Array.isArray(table.firstColumn)&&table.firstColumn">
+      <template v-if="!Array.isArray(table.firstColumn) && table.firstColumn">
         <!-- 复选框 -->
         <el-table-column
           v-if="table.firstColumn.type === 'selection'"
@@ -77,7 +98,10 @@
             ...table.firstColumn.bind,
           }"
         >
-          <template #default="scope" v-if="table.firstColumn.type !== 'selection'">
+          <template
+            #default="scope"
+            v-if="table.firstColumn.type !== 'selection'"
+          >
             <el-radio
               v-if="table.firstColumn.type === 'radio'"
               v-model="radioVal"
@@ -87,7 +111,7 @@
             <template v-if="table.firstColumn.type === 'index'">
               <span v-if="isPaginationCumulative && isShowPagination">
                 {{
-                (table.currentPage - 1) * table.pageSize + scope.$index + 1
+                  (table.currentPage - 1) * table.pageSize + scope.$index + 1
                 }}
               </span>
               <span v-else>{{ scope.$index + 1 }}</span>
@@ -102,35 +126,35 @@
         <template v-for="(item, index) in table.firstColumn">
           <!-- 复选框 -->
           <el-table-column
-            :key="index+1"
+            :key="index + 1"
             v-if="item.type === 'selection'"
             v-bind="{
-            type: 'selection',
-            width: item.width || 55,
-            label: item.label,
-            fixed: item.fixed,
-            align: item.align || 'center',
-            'reserve-selection': item.isPaging || false,
-            selectable: item.selectable,
-            ...item.bind,
-          }"
+              type: 'selection',
+              width: item.width || 55,
+              label: item.label,
+              fixed: item.fixed,
+              align: item.align || 'center',
+              'reserve-selection': item.isPaging || false,
+              selectable: item.selectable,
+              ...item.bind,
+            }"
           />
           <el-table-column
             v-else
             :key="index + 'k'"
             v-bind="{
-            type: item.type,
-            width: item.width || 55,
-            label:
-              item.label ||
-              (item.type === 'radio' && '单选') ||
-              (item.type === 'index' && '序号') ||
-              (item.type === 'expand' && '') ||
-              '',
-            fixed: item.fixed,
-            align: item.align || 'center',
-            ...item.bind,
-          }"
+              type: item.type,
+              width: item.width || 55,
+              label:
+                item.label ||
+                (item.type === 'radio' && '单选') ||
+                (item.type === 'index' && '序号') ||
+                (item.type === 'expand' && '') ||
+                '',
+              fixed: item.fixed,
+              align: item.align || 'center',
+              ...item.bind,
+            }"
           >
             <template #default="scope" v-if="item.type !== 'selection'">
               <el-radio
@@ -142,7 +166,7 @@
               <template v-if="item.type === 'index'">
                 <span v-if="isPaginationCumulative && isShowPagination">
                   {{
-                  (table.currentPage - 1) * table.pageSize + scope.$index + 1
+                    (table.currentPage - 1) * table.pageSize + scope.$index + 1
                   }}
                 </span>
                 <span v-else>{{ scope.$index + 1 }}</span>
@@ -170,14 +194,24 @@
             :align="item.align || align"
             :fixed="item.fixed"
             :show-overflow-tooltip="
-              item.noShowTip === false ? item.noShowTip : true
+              item.noShowTip === false
+                ? item.noShowTip
+                : item.canEdit
+                ? false
+                : true
             "
             v-bind="{ ...item.bind, ...$attrs }"
           >
             <template #header v-if="item.headerRequired || item.renderHeader">
-              <render-header v-if="item.renderHeader" :column="item" :render="item.renderHeader" />
+              <render-header
+                v-if="item.renderHeader"
+                :column="item"
+                :render="item.renderHeader"
+              />
               <div style="display: inline" v-if="item.headerRequired">
-                <span style="color: #f56c6c; font-size: 16px; margin-right: 3px">*</span>
+                <span style="color: #f56c6c; font-size: 16px; margin-right: 3px"
+                  >*</span
+                >
                 <span>{{ item.label }}</span>
               </div>
             </template>
@@ -201,6 +235,9 @@
                   :model="state.tableData[scope.$index]"
                   :rules="isEditRules ? table.rules : {}"
                   class="t_edit_cell_form"
+                  :class="{
+                    t_edit_cell_form_rules: isEditRules,
+                  }"
                   :ref="(el:any) => handleRef(el, scope,item)"
                   @submit.prevent
                 >
@@ -214,7 +251,10 @@
                     v-bind="$attrs"
                     ref="editCell"
                   >
-                    <template v-for="(index, name) in slots" v-slot:[name]="data">
+                    <template
+                      v-for="(index, name) in slots"
+                      v-slot:[name]="data"
+                    >
                       <slot :name="name" v-bind="data"></slot>
                     </template>
                   </single-edit-cell>
@@ -223,12 +263,12 @@
               <!-- 字典过滤 -->
               <template v-if="item.filters && item.filters.list">
                 {{
-                constantEscape(
-                scope.row[item.prop],
-                table.listTypeInfo[item.filters.list],
-                item.filters.key || 'value',
-                item.filters.label || 'label'
-                )
+                  constantEscape(
+                    scope.row[item.prop],
+                    table.listTypeInfo[item.filters.list],
+                    item.filters.key || 'value',
+                    item.filters.label || 'label'
+                  )
                 }}
               </template>
               <div
@@ -245,7 +285,13 @@
           </el-table-column>
         </template>
         <!-- 表头合并单元格 -->
-        <t-table-column v-else :key="index + 'm'" :item="item" :align="align" v-bind="$attrs">
+        <t-table-column
+          v-else
+          :key="index + 'm'"
+          :item="item"
+          :align="align"
+          v-bind="$attrs"
+        >
           <template v-for="(index, name) in slots" v-slot:[name]="data">
             <slot :name="name" v-bind="data"></slot>
           </template>
@@ -259,14 +305,15 @@
         :label="(table.operatorConfig && table.operatorConfig.label) || '操作'"
         :min-width="table.operatorConfig && table.operatorConfig.minWidth"
         :width="table.operatorConfig && table.operatorConfig.width"
-        :align="
-          (table.operatorConfig && table.operatorConfig.align) || align
-        "
+        :align="(table.operatorConfig && table.operatorConfig.align) || align"
         v-bind="table.operatorConfig && table.operatorConfig.bind"
         class-name="operator"
       >
         <template #default="scope">
-          <div class="operator_btn" :style="table.operatorConfig && table.operatorConfig.style">
+          <div
+            class="operator_btn"
+            :style="table.operatorConfig && table.operatorConfig.style"
+          >
             <template v-for="(item, index) in table.operator" :key="index">
               <el-button
                 @click="
@@ -374,7 +421,7 @@ const props: any = defineProps({
   title: {
     type: String,
   },
-  tableTitle:String,
+  tableTitle: String,
   // table对齐方式
   align: {
     type: String as PropType<'left' | 'center' | 'right'>,
@@ -525,6 +572,7 @@ const initSort = () => {
     },
   })
 }
+
 // 过滤字典
 /**
  * 下拉数据回显中文过滤器
@@ -1070,6 +1118,33 @@ defineExpose({
       }
       .single_edit_cell {
         overflow: visible;
+        margin-bottom: 0;
+      }
+    }
+  }
+  // 单元格编辑且无规则校验
+  .el-table {
+    .cell {
+      div {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-all;
+      }
+      .single_edit_cell {
+        overflow: visible;
+        margin-bottom: 0;
+      }
+    }
+  }
+  // 单元格编辑有规则校验
+  .el-table {
+    .cell {
+      .t_edit_cell_form_rules {
+        .single_edit_cell {
+          margin-bottom: 15px;
+        }
       }
     }
   }
@@ -1227,20 +1302,10 @@ defineExpose({
       }
     }
   }
-  .operator {
-    // 操作样式
-    .operator_btn {
-      .el-button {
-        margin: 0;
-        margin-right: 10px;
-      }
-    }
-  }
-
   // 页面缓存时，表格内操作栏每行高度撑满
-  :deep(.el-table__fixed-right) {
-    height: 100% !important;
-  }
+  // :deep(.el-table__fixed-right) {
+  //   height: 100% !important;
+  // }
 
   // 选中行样式
   .highlightCurrentRow {
@@ -1263,7 +1328,7 @@ defineExpose({
     margin: 0 -8px -8px;
     padding: 12px 16px;
     background-color: var(--el-bg-color);
-    border-top: 1px solid #ebeef5;
+    border-top: 1px solid var(--el-table-border);
     text-align: right;
 
     .el-btn {

@@ -1,36 +1,90 @@
 <template>
-  <component :is="isShowRules ? 'el-form-item' : 'div'" :prop="prop" :rules="configEdit.rules"
-    :class="[configEdit.className, 'single_edit_cell']" v-bind="$attrs">
+  <component
+    :is="isShowRules ? 'el-form-item' : 'div'"
+    :prop="prop"
+    :rules="configEdit.rules"
+    :class="[
+      configEdit.className,
+      { single_edit_cell_rules: configEdit.rules },
+      'single_edit_cell',
+    ]"
+    v-bind="$attrs"
+  >
     <!-- 编辑组件自定义插槽 -->
     <template v-if="configEdit.editSlotName">
       <div :class="[prop, 'slot_edit_name']" @keyup="keyUpHandle">
         <slot :name="configEdit.editSlotName" :scope="scope" />
       </div>
     </template>
-    <component v-if="!configEdit.editSlotName" :is="configEdit.editComponent || 'el-input'" v-model="childValue"
-      :type="configEdit.type" :placeholder="configEdit.placeholder || getPlaceholder(configEdit)" ref="parentCom"
-      :class="prop" @change="
+    <template v-if="configEdit.isSelfCom">
+      <component
+        v-if="configEdit.editComponent === 't-select-table'"
+        :is="configEdit.editComponent"
+        :placeholder="configEdit.placeholder || getPlaceholder(configEdit)"
+        v-bind="
+          typeof configEdit.bind == 'function'
+            ? configEdit.bind(scope)
+            : { clearable: true, filterable: true, ...configEdit.bind }
+        "
+        :style="{ width: configEdit.width || '100%' }"
+        v-on="cEvent(configEdit, 't-select-table')"
+      />
+      <component
+        v-else
+        :is="configEdit.editComponent"
+        v-model="childValue"
+        :placeholder="configEdit.placeholder || getPlaceholder(configEdit)"
+        v-bind="
+          typeof configEdit.bind == 'function'
+            ? configEdit.bind(scope)
+            : { clearable: true, filterable: true, ...configEdit.bind }
+        "
+        :style="{ width: configEdit.width || '100%' }"
+        v-on="cEvent(configEdit)"
+      />
+    </template>
+    <component
+      v-if="!configEdit.editSlotName && !configEdit.isSelfCom"
+      :is="configEdit.editComponent || 'el-input'"
+      v-model="childValue"
+      :type="configEdit.type"
+      :placeholder="configEdit.placeholder || getPlaceholder(configEdit)"
+      ref="parentCom"
+      :class="prop"
+      @change="
         handleEvent(configEdit.event, childValue, configEdit.editComponent)
-        " @keyup="keyUpHandle" :style="{ width: configEdit.width || '100%' }" v-on="cEvent(configEdit)" v-bind="typeof configEdit.bind == 'function'
+      "
+      @keyup="keyUpHandle"
+      :style="{ width: configEdit.width || '100%' }"
+      v-on="cEvent(configEdit)"
+      v-bind="
+        typeof configEdit.bind == 'function'
           ? configEdit.bind(scope)
           : { clearable: true, filterable: true, ...configEdit.bind }
-        ">
+      "
+    >
       <!-- 前置文本 -->
       <template #prepend v-if="configEdit.prepend">{{
         configEdit.prepend
-        }}</template>
+      }}</template>
       <!-- 后置文本 -->
       <template #append v-if="configEdit.append">{{
         configEdit.append
-        }}</template>
+      }}</template>
       <!-- 子组件自定义插槽 -->
       <!-- <template v-if="configEdit.childSlotName">
         <slot />
       </template>-->
       <template v-if="!configEdit.editComponent.includes('date')">
-        <component :is="compChildName(configEdit)" v-for="(value, key, index) in selectListType(configEdit)"
-          :key="index" :disabled="value.disabled" :label="compChildLabel(configEdit, value)"
-          :value="compChildValue(configEdit, value, key)">{{ compChildShowLabel(configEdit, value) }}</component>
+        <component
+          :is="compChildName(configEdit)"
+          v-for="(value, key, index) in selectListType(configEdit)"
+          :key="index"
+          :disabled="value.disabled"
+          :label="compChildLabel(configEdit, value)"
+          :value="compChildValue(configEdit, value, key)"
+          >{{ compChildShowLabel(configEdit, value) }}</component
+        >
       </template>
     </component>
   </component>
@@ -71,7 +125,7 @@ const props = defineProps({
     default: true,
   },
   modelValue: {
-    type: [String, Number, Array, Boolean],
+    type: [String, Number, Array, Boolean, Date, Object],
   },
 })
 // 抛出事件
@@ -95,16 +149,20 @@ const keyUpHandle = ($event) => {
   emits('keyupHandle', $event, props.scope.$index, props.prop)
 }
 // 引用第三方事件
-const cEvent = computed(() => {
-  return (configEdit: any) => {
-    let event = { ...configEdit.eventHandle }
+const cEvent: any = computed(() => {
+  return ({ eventHandle }, type = '') => {
+    let event = { ...eventHandle }
     let changeEvent = {}
     Object.keys(event).forEach((v) => {
-      changeEvent[v] = (e) => {
-        if (e) {
-          event[v] && event[v](e, props.prop, props.scope)
+      changeEvent[v] = (e, ids) => {
+        if (type === 't-select-table') {
+          event[v] && event[v](e, ids, props.prop, props.scope)
         } else {
-          event[v] && event[v](props.prop, props.scope)
+          if ((typeof e === 'number' && e === 0) || e) {
+            event[v] && event[v](e, props.prop, props.scope)
+          } else {
+            event[v] && event[v](props.prop, props.scope)
+          }
         }
       }
     })
@@ -182,10 +240,13 @@ const compChildShowLabel = computed(() => {
 // placeholder的显示
 const getPlaceholder = (row: any) => {
   let placeholder
-  if (row.comp && typeof row.comp == 'string') {
-    if (row.comp.includes('input')) {
+  if (row.editComponent && typeof row.editComponent == 'string') {
+    if (row.editComponent.includes('input')) {
       placeholder = '请输入' + row.label
-    } else if (row.comp.includes('select') || row.comp.includes('date')) {
+    } else if (
+      row.editComponent.includes('select') ||
+      row.editComponent.includes('date')
+    ) {
       placeholder = '请选择' + row.label
     } else {
       placeholder = row.label

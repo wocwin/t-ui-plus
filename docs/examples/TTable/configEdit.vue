@@ -1,18 +1,40 @@
 <template>
-  <t-layout-page>
+  <t-layout-page class="single_edit_demo">
     <t-layout-page-item>
       <t-table
         title="单元格编辑功能"
+        ref="singleEdit"
         :table="state.table"
         :columns="state.table.columns"
         :isShowPagination="false"
         :listTypeInfo="state.table.listTypeInfo"
         isShowFooterBtn
-        @save="save"
+        @save="singleSave"
         @handleEvent="handleEvent"
       >
-        <template #packageNumEnd="{ scope }">
-          <el-input clearable v-model="scope.row[scope.column.property]" />
+        <template #toolbar>
+          <div class="add_data">
+            <el-input-number
+              v-model="num"
+              clearable
+              placeholder="请输入追加条数"
+            ></el-input-number>
+            <el-button type="primary" @click="add"
+              >追加{{ num ? num : '' }}条数据</el-button
+            >
+          </div>
+          <el-button
+            type="primary"
+            v-if="state.table.data.length > 0"
+            @click="reset"
+            >重置表单</el-button
+          >
+          <el-button
+            type="primary"
+            v-if="state.table.data.length > 0"
+            @click="save"
+            >另一种获取table数据</el-button
+          >
         </template>
       </t-table>
     </t-layout-page-item>
@@ -20,10 +42,31 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, toRefs } from 'vue'
+import { ref, reactive, toRefs, onMounted } from 'vue'
+// 添加数据条数
+const num = ref(5)
+const singleEdit: any = ref(null)
+// 添加数据
+const add = () => {
+  if (num.value > 0) {
+    for (let i = 0; i < num.value; i++) {
+      state.table.data.push({})
+    }
+  }
+}
+// 重置表单
+const reset = () => {
+  singleEdit.value.resetFields()
+}
+// 调用方法获取返回数据
+const save = () => {
+  singleEdit.value.saveMethod((data: any) => {
+    console.log('调用方法获取返回数据---saveMethod', data)
+  })
+}
 // 保存
-const save = (tableData) => {
-  console.log('最终Table数据', tableData)
+const singleSave = (tableData) => {
+  console.log('点击保存按钮获取table数据', tableData)
 }
 // 编辑单元格监听事件
 const handleEvent = (type, val, index) => {
@@ -31,9 +74,35 @@ const handleEvent = (type, val, index) => {
     `自己标识编辑单元格event值：${type}---修改后的值：${val}----当前所在行：${index}`
   )
 }
-
+onMounted(() => {
+  getList()
+})
+// 获取装炉位置
+const getList = () => {
+  const list = [
+    {
+      dictLabel: '炉头',
+      dictValue: '1',
+    },
+    {
+      dictLabel: '炉中',
+      dictValue: '2',
+    },
+    {
+      dictLabel: '炉尾',
+      dictValue: '3',
+    },
+  ]
+  state.table.columns.forEach((item) => {
+    if (item.canEdit && item.prop === 'area' && item.configEdit) {
+      item.configEdit.bind.optionSource = list
+      console.log('item.configEdit.bind.optionSource', item)
+    }
+  })
+}
 let state: any = reactive({
   table: {
+    firstColumn: { type: 'selection' },
     // 接口返回数据
     data: [],
     // 表头数据
@@ -41,22 +110,23 @@ let state: any = reactive({
       {
         prop: 'area',
         label: '装炉位置',
-        minWidth: '120',
+        width: '170',
         canEdit: true,
         configEdit: {
           label: '装炉位置',
-          type: 'select-arr',
-          editComponent: 'el-select',
-          list: 'furnaceAreaList',
-          arrLabel: 'dictLabel',
-          arrKey: 'dictValue',
-          event: '装炉位置area',
+          isSelfCom: true,
+          editComponent: 't-select',
+          bind: {
+            valueCustom: 'dictValue',
+            labelCustom: 'dictLabel',
+            optionSource: [],
+          },
         },
       },
       {
         prop: 'layer',
         label: '装炉层',
-        minWidth: '120',
+        width: '170',
         canEdit: true,
         configEdit: {
           label: '装炉层',
@@ -71,8 +141,9 @@ let state: any = reactive({
       {
         prop: 'isTail',
         label: '是否尾包',
-        minWidth: '60',
+        width: '100',
         canEdit: true,
+        // align: 'center',
         configEdit: {
           label: '是否尾包',
           type: 'checkbox',
@@ -92,18 +163,43 @@ let state: any = reactive({
       },
       {
         prop: 'packageNumEnd',
-        label: '使用插槽',
+        label: '结束编号',
         minWidth: '100',
         canEdit: true,
         configEdit: {
-          label: '使用插槽',
+          label: '结束编号',
           type: 'input',
-          editSlotName: 'packageNumEnd',
-          // editComponent: 'el-input',
+          editComponent: 'el-input',
         },
       },
-      { prop: 'startDate', label: '生产日期', minWidth: '100' },
-      { prop: 'endDate', label: '出炉日期', minWidth: '100' },
+      {
+        prop: 'startDate',
+        label: 't-date-picker',
+        width: '160',
+        canEdit: true,
+        configEdit: {
+          label: '生产日期',
+          type: 'date',
+          editComponent: 't-date-picker',
+          bind: {
+            isPickerOptions: true,
+          },
+        },
+      },
+      {
+        prop: 'endDate',
+        label: 'el-date-picker',
+        width: '160',
+        canEdit: true,
+        configEdit: {
+          label: '出炉日期',
+          type: 'date',
+          editComponent: 'el-date-picker',
+          bind: {
+            'value-format': 'YYYY-MM-DD',
+          },
+        },
+      },
       {
         prop: 'singleWeight',
         label: '单包重量（吨）',
@@ -118,20 +214,6 @@ let state: any = reactive({
       },
     ],
     listTypeInfo: {
-      furnaceAreaList: [
-        {
-          dictLabel: '炉头',
-          dictValue: '1',
-        },
-        {
-          dictLabel: '炉中',
-          dictValue: '2',
-        },
-        {
-          dictLabel: '炉尾',
-          dictValue: '3',
-        },
-      ],
       furnaceLayerList: [
         {
           dictLabel: '上层',
@@ -149,74 +231,14 @@ let state: any = reactive({
     },
   },
 })
-
-let resData = [
-  {
-    area: '1',
-    singleWeight: 1.0,
-    endDate: '2022-06-06',
-    updateBy: 'jiangyx',
-    createByName: '姜宇轩',
-    remark: null,
-    isDeleted: false,
-    packageNumStart: 1,
-    packageNumEnd: 3,
-    createTime: '2022-06-06 09:44:17',
-    isTail: false,
-    startDate: '2022-06-06',
-    workOrderBatchRecordId: 96,
-    layer: '1',
-    id: 104,
-    updateByName: '姜宇轩',
-    updateTime: '2022-06-06 11:05:49',
-    code: 'FJSMH1000106',
-    isPrint: true,
-    ids: [2228, 2229, 2230],
-  },
-  {
-    area: '2',
-    singleWeight: 1.0,
-    endDate: '2022-06-06',
-    updateBy: 'libowen',
-    createByName: '李博文',
-    remark: null,
-    isDeleted: false,
-    packageNumStart: 1,
-    packageNumEnd: 5,
-    createTime: '2022-06-08 08:37:34',
-    isTail: false,
-    startDate: '2022-06-06',
-    workOrderBatchRecordId: 96,
-    layer: '2',
-    id: 105,
-    updateByName: '李博文',
-    updateTime: '2022-06-08 08:37:34',
-    code: 'FJSMH1000106',
-    isPrint: true,
-    ids: [2231, 2232, 2233, 2234, 2235],
-  },
-  {
-    area: '3',
-    singleWeight: 1.0,
-    endDate: '2022-06-06',
-    updateBy: 'libowen',
-    createByName: '李博文',
-    remark: null,
-    isDeleted: false,
-    packageNumStart: 1,
-    packageNumEnd: 5,
-    createTime: '2022-06-08 08:53:43',
-    isTail: false,
-    startDate: '2022-06-06',
-    workOrderBatchRecordId: 96,
-    layer: '3',
-    id: 106,
-    updateByName: '李博文',
-    updateTime: '2022-06-08 08:53:43',
-    code: 'FJSMH1000106',
-    isPrint: true,
-    ids: [2236, 2237, 2238, 2239, 2240],
-  },
-]
-state.table.data = resData
 </script>
+<style lang="scss" scoped>
+.single_edit_demo {
+  .add_data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+  }
+}
+</style>
