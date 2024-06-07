@@ -4,11 +4,14 @@
     title="用户管理列表"
     row-key="path"
     isCopy
+    isExpansion
     columnSetting
-    :queryPageStyle="{marginBottom: '0px'}"
+    :queryPageStyle="{ marginBottom: '0px' }"
     :table="state.table"
     :columns="state.table.columns"
     :opts="opts"
+    isShowWidthSize
+    :widthSize="3"
     @size-change="handlesSizeChange"
     @page-change="handlesCurrentChange"
     @submit="conditionEnter"
@@ -21,7 +24,7 @@
 </template>
 
 <script setup lang="tsx" name="accountManage">
-import { computed, onMounted, reactive, toRefs } from 'vue'
+import { computed, onMounted, reactive, ref, toRefs, watch } from 'vue'
 import dataList from './dataList.json'
 const handleDelete = (row: any) => {
   console.log('点击删除', row)
@@ -34,6 +37,7 @@ const state: any = reactive({
     phonenumber: null,
     date1: null,
     date: null,
+    role: null,
   },
   multipleList: [
     {
@@ -94,61 +98,101 @@ const state: any = reactive({
     },
   },
 })
-
-const opts = computed(() => {
-  return {
-    userName: {
-      label: '登录名称',
-      comp: 'el-input',
-    },
-    nickName: {
-      label: '姓名',
-      comp: 'el-input',
-    },
-    phonenumber: {
-      label: '手机号码',
-      comp: 'el-input',
-    },
-    date1: {
-      label: '日期组件使用',
-      comp: 't-date-picker',
-      bind: {
-        isPickerOptions: true,
-      },
-    },
-    workshopNum: {
-      label: 't-select使用',
-      placeholder: '请多选',
-      span: 2,
-      comp: 't-select',
-      isSelfCom: true,
-      bind: {
-        valueCustom: 'id',
-        labelCustom: 'name',
-        multiple: true,
-        optionSource: state.multipleList,
-      },
-    },
-    date: {
-      label: '创建时间',
-      comp: 't-date-picker',
-      span: 2,
-      bind: {
-        type: 'daterange',
-      },
-    },
+watch(
+  () => state.queryData.workshopNum,
+  (val) => {
+    console.log('watch---val', val)
+    handleBranchCode(val)
+  },
+  {
+    deep: true,
   }
+)
+
+const opts = ref({
+  userName: {
+    label: '登录名称',
+    comp: 'el-input',
+  },
+  nickName: {
+    label: '姓名',
+    comp: 'el-input',
+  },
+  workshopNum: {
+    labelRender: () => {
+      return <div style="color:red">新增项条件</div>
+    },
+    placeholder: '选择第一条数据才新增',
+    comp: 't-select',
+    isSelfCom: true,
+    bind: {
+      valueCustom: 'id',
+      labelCustom: 'name',
+      optionSource: state.multipleList,
+    },
+    eventHandle: {
+      change: (val) => handleBranchCode(val),
+    },
+  },
+  phonenumber: {
+    label: '手机号码',
+    comp: 'el-input',
+  },
+  role: {
+    label: '角色',
+    comp: 'el-input',
+  },
+  date1: {
+    label: '日期组件使用',
+    comp: 't-date-picker',
+    bind: {
+      isPickerOptions: true,
+    },
+  },
+  date: {
+    label: '创建时间',
+    comp: 't-date-picker',
+    span: 2,
+    bind: {
+      type: 'daterange',
+    },
+  },
 })
+// 动态添加
+const add = {
+  email: {
+    label: '邮箱',
+    comp: 'el-input',
+  },
+  remark: {
+    label: '备注',
+    comp: 'el-input',
+  },
+}
+// t-select使用动态新增数据
+const handleBranchCode = (val) => {
+  console.log('handleBranchCode', val)
+  if (val === 'W1') {
+    opts.value = {
+      ...opts.value,
+      ...add,
+    }
+  } else {
+    Object.keys(add).forEach((key) => {
+      delete opts.value[key]
+    })
+  }
+}
 // 最终参数获取
 const getQueryData = computed(() => {
-  const { userName, nickName, date, date1, workshopNum, phonenumber } = toRefs(
-    state.queryData
-  )
+  const { userName, nickName, date, date1, workshopNum, phonenumber, role } =
+    toRefs(state.queryData)
   return {
     userName: userName.value,
     nickName: nickName.value,
     workshopNum: workshopNum.value,
     phonenumber: phonenumber.value,
+    role: role.value,
     date1: date1.value,
     beginDate: date.value && date.value[0] ? date.value[0] : null,
     endDate: date.value && date.value[1] ? date.value[1] : null,
