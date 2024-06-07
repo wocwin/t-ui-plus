@@ -63,6 +63,12 @@ TQueryCondition/footer
 TQueryCondition/widthSize
 :::
 
+### 动态增减查询条件项
+
+::: demo
+TQueryCondition/dynamic
+:::
+
 ### TQueryCondition 参数配置
 
 ---
