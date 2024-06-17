@@ -46,9 +46,28 @@ npm i @wocwin/t-ui-plus
 
 ```js
 // 在main.js中按下引入
+import { createApp } from "vue";
+import App from "./App.vue";
+import ElementPlus from "element-plus";
+import "element-plus/dist/index.css";
+import "element-plus/theme-chalk/dark/css-vars.css";
+import locale from "element-plus/es/locale/lang/zh-cn";
+// element-plus图标
+import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import TuiPlus from '@wocwin/t-ui-plus'
 import '@wocwin/t-ui-plus/lib/style.css'
-Vue.use(TuiPlus)
+const app = createApp(App)
+// 注册所有图标
+  for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component);
+  }
+  // 注册ElementPlus
+  app.use(ElementPlus, {
+    locale // 语言设置
+    // size: Cookies.get('size') || 'medium' // 尺寸设置
+  });
+app.use(TuiPlus)
+app.mount('#app')
 ```
 
 ## 按需引入
