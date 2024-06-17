@@ -1,8 +1,13 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-query-condition labelWidth="140px" :opts="opts" isExpansion @submit="conditionEnter"
-        @handleEvent="handleEvent" />
+      <t-query-condition
+        labelWidth="140px"
+        :opts="opts"
+        isExpansion
+        @submit="conditionEnter"
+        @handleEvent="handleEvent"
+      />
     </t-layout-page-item>
   </t-layout-page>
 </template>
@@ -140,7 +145,7 @@ const opts = computed(() => {
       isSelfCom: true,
       bind: {
         useVirtual: true,
-        optionSource: stepList
+        optionSource: stepList,
       },
     },
     date: {
@@ -184,17 +189,24 @@ const radioChange2 = (val) => {
 }
 // 最终参数获取
 const getQueryData = computed(() => {
-  const { userName, userName2, workshopNum, date, workshopNum2, workshopNum3, deptCode } =
-    toRefs(state.queryData)
-  return {
+  const {
     userName,
     userName2,
     workshopNum,
+    date,
     workshopNum2,
     workshopNum3,
     deptCode,
-    beginDate: date && date[0] ? date[0] : null,
-    endDate: date && date[1] ? date[1] : null,
+  } = toRefs(state.queryData)
+  return {
+    userName: userName.value,
+    userName2: userName2.value,
+    workshopNum: workshopNum.value,
+    workshopNum2: workshopNum2.value,
+    workshopNum3: workshopNum3.value,
+    deptCode: deptCode.value,
+    beginDate: date.value && date.value[0] ? date.value[0] : null,
+    endDate: date.value && date.value[1] ? date.value[1] : null,
   }
 })
 // 查询条件change事件

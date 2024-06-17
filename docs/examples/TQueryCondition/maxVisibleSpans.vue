@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from 'vue'
+import { computed, reactive, toRefs } from 'vue'
 let state = reactive({
   queryData: {
     userName: null, // 登录名
@@ -20,6 +20,8 @@ let state = reactive({
     workshopNum: null,
     date: null,
     date1: null,
+    date2: null,
+    date3: null,
   },
   listTypeInfo: {
     sexList: [
@@ -103,17 +105,16 @@ const opts = computed(() => {
 // 最终参数获取
 const getQueryData = computed(() => {
   const { userName, phonenumber, workshopNum, date, date1, date2, date3 } =
-    state.queryData
-  console.log(444, userName, phonenumber, date1)
+    toRefs(state.queryData)
   return {
-    userName,
-    workshopNum,
-    phonenumber,
-    date1,
-    date2,
-    date3,
-    beginDate: date && date[0] ? date[0] : null,
-    endDate: date && date[1] ? date[1] : null,
+    userName: userName.value,
+    workshopNum: workshopNum.value,
+    phonenumber: phonenumber.value,
+    date1: date1.value,
+    beginDate: date.value && date.value[0] ? date.value[0] : null,
+    endDate: date.value && date.value[1] ? date.value[1] : null,
+    date2: date2.value,
+    date3: date3.value,
   }
 })
 // 查询条件change事件

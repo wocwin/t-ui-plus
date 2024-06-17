@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="tsx">
-import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, reactive, ref, toRefs, watch } from 'vue'
 const listTypeInfo: any = ref({
   sexList: [],
 })
@@ -142,27 +142,20 @@ const handleBranchCode = (val) => {
 }
 // 最终参数获取
 const getQueryData = computed(() => {
-  const {
-    userName,
-    workshopNum,
-    workshopNum2,
-    phonenumber,
-    email,
-    remark,
-    date,
-    date1,
-  } = state.queryData
+  const { userName, workshopNum, workshopNum2, date, date1 } = toRefs(
+    state.queryData
+  )
   // console.log(444, userName, date1)
   return {
-    userName,
-    workshopNum,
-    workshopNum2,
-    phonenumber,
-    email,
-    remark,
-    date1,
-    beginDate: date && date[0] ? date[0] : null,
-    endDate: date && date[1] ? date[1] : null,
+    userName: userName.value,
+    workshopNum: workshopNum.value,
+    workshopNum2: workshopNum2.value,
+    phonenumber: state.queryData.phonenumber,
+    email: state.queryData.email,
+    remark: state.queryData.remark,
+    date1: date1.value,
+    beginDate: date.value && date.value[0] ? date.value[0] : null,
+    endDate: date.value && date.value[1] ? date.value[1] : null,
   }
 })
 onMounted(() => {

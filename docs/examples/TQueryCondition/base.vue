@@ -7,20 +7,33 @@
         @handleEvent="handleEvent"
         isExpansion
         :btnResetBind="{ size: 'small', btnTxt: '搜索', icon: 'Search' }"
-      />
+      >
+        <template #disabledDate="{ param }">
+          <el-date-picker
+            v-model="param.disabledDate"
+            type="daterange"
+            range-separator="-"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            format="YYYY-MM-DD"
+            value-format="YYYY-MM-DD"
+            :disabled-date="disabledDate"
+            @calendar-change="calendarChange"
+          />
+        </template>
+      </t-query-condition>
     </t-layout-page-item>
   </t-layout-page>
 </template>
 
-<script setup lang="ts">
-import { computed, onMounted, reactive, ref } from 'vue'
+<script setup lang="tsx">
+import { computed, onMounted, reactive, ref, toRefs } from 'vue'
 let state: any = reactive({
   queryData: {
     userName: null, // 登录名
     phonenumber: null, // 手机号码
     workshopNum: null,
-    start_time: null,
-    end_time: null,
+    disabledDate: null,
     date: null,
     date1: null,
   },
@@ -37,10 +50,21 @@ let state: any = reactive({
     ],
   },
 })
-const disabledDate = (formData) => {
-  return (time) => {
-    return time.getTime() < new Date(formData.start_time).getTime() - 86400000
+// 禁用日期（只能选择7天内）
+const firstChooseDate: any = ref('')
+const disabledDate = (time: Date) => {
+  if (firstChooseDate.value) {
+    const timeRange = 1 * 24 * 60 * 60 * 1000 // 1天时间戳
+    const minTime = firstChooseDate.value - timeRange * 7
+    const maxTime = firstChooseDate.value + timeRange * 6
+    return time.getTime() <= minTime || time.getTime() > maxTime
+  } else {
+    return false
   }
+}
+const calendarChange = (val: any) => {
+  firstChooseDate.value = val[0].getTime() //点击第一次选中日期
+  if (val[1]) firstChooseDate.value = '' // 选中后必须清空
 }
 const opts = computed(() => {
   return {
@@ -64,26 +88,12 @@ const opts = computed(() => {
       arrKey: 'value',
       listTypeInfo: state.listTypeInfo,
     },
-    start_time: {
-      label: '开始时间',
-      comp: 'el-date-picker',
-      bind: {
-        valueFormat: 'YYYY-MM-DD',
+    disabledDate: {
+      labelRender: () => {
+        return <label style="color:red">禁用时间</label>
       },
-    },
-    end_time: {
-      label: '结束时间',
-      comp: 'el-date-picker',
-      bind: (formData) => {
-        return {
-          valueFormat: 'YYYY-MM-DD',
-          disabled:
-            formData.start_time == null || formData.start_time == ''
-              ? true
-              : false,
-          'disabled-date': disabledDate(formData),
-        }
-      },
+      span: 2,
+      slotName: 'disabledDate',
     },
     date1: {
       label: '日期',
@@ -112,25 +122,23 @@ const opts = computed(() => {
 })
 // 最终参数获取
 const getQueryData = computed(() => {
-  const {
-    userName,
-    phonenumber,
-    workshopNum,
-    date,
-    date1,
-    start_time,
-    end_time,
-  } = state.queryData
-  console.log(444, userName, phonenumber, date1)
+  const { userName, phonenumber, workshopNum, date, date1, disabledDate } =
+    toRefs(state.queryData)
   return {
-    userName,
-    workshopNum,
-    phonenumber,
-    start_time,
-    end_time,
-    date1,
-    beginDate: date && date[0] ? date[0] : null,
-    endDate: date && date[1] ? date[1] : null,
+    userName: userName.value,
+    workshopNum: workshopNum.value,
+    phonenumber: phonenumber.value,
+    start_time:
+      disabledDate.value && disabledDate.value[0]
+        ? disabledDate.value[0]
+        : null,
+    end_time:
+      disabledDate.value && disabledDate.value[1]
+        ? disabledDate.value[1]
+        : null,
+    date1: date1.value,
+    beginDate: date.value && date.value[0] ? date.value[0] : null,
+    endDate: date.value && date.value[1] ? date.value[1] : null,
   }
 })
 // 查询条件change事件

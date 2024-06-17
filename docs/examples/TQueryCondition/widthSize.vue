@@ -1,11 +1,7 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <el-radio-group
-        v-model="widthSize"
-        size="small"
-        style="margin-bottom: 15px"
-      >
+      <el-radio-group v-model="widthSize" size="small" style="margin-bottom: 15px">
         <el-radio-button :value="2">一行展示2项</el-radio-button>
         <el-radio-button :value="3">一行展示3项</el-radio-button>
         <el-radio-button :value="4">一行展示4项</el-radio-button>
@@ -25,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref, toRefs } from 'vue'
 const widthSize = ref(3)
 let state: any = reactive({
   queryData: {
@@ -50,11 +46,6 @@ let state: any = reactive({
     ],
   },
 })
-const disabledDate = (formData) => {
-  return (time) => {
-    return time.getTime() < new Date(formData.start_time).getTime() - 86400000
-  }
-}
 const opts = computed(() => {
   return {
     userName: {
@@ -88,13 +79,8 @@ const opts = computed(() => {
       comp: 'el-date-picker',
       bind: (formData) => {
         return {
-          valueFormat: 'YYYY-MM-DD',
-          disabled:
-            formData.start_time == null || formData.start_time == ''
-              ? true
-              : false,
-          'disabled-date': disabledDate(formData),
-        }
+          valueFormat: 'YYYY-MM-DD'
+          }
       },
     },
     date1: {
@@ -132,17 +118,16 @@ const getQueryData = computed(() => {
     date1,
     start_time,
     end_time,
-  } = state.queryData
-  console.log(444, userName, phonenumber, date1)
+  } = toRefs(state.queryData)
   return {
-    userName,
-    workshopNum,
-    phonenumber,
-    start_time,
-    end_time,
-    date1,
-    beginDate: date && date[0] ? date[0] : null,
-    endDate: date && date[1] ? date[1] : null,
+    userName: userName.value,
+    workshopNum: workshopNum.value,
+    phonenumber: phonenumber.value,
+    start_time: start_time.value,
+    end_time: end_time.value,
+    date1: date1.value,
+    beginDate: date.value && date.value[0] ? date.value[0] : null,
+    endDate: date.value && date.value[1] ? date.value[1] : null,
   }
 })
 // 查询条件change事件

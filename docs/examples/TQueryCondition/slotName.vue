@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from 'vue'
+import { computed, reactive, toRefs } from 'vue'
 let state = reactive({
   queryData: {
     userName: null, // 登录名
@@ -54,7 +54,7 @@ let state = reactive({
     hobbyList: [
       { label: '点击类', value: 1 },
       { label: '回复类', value: 2 },
-    ]
+    ],
   },
 })
 const opts = computed(() => {
@@ -88,7 +88,7 @@ const opts = computed(() => {
       label: '插槽使用(param)',
       slotName: 'date1',
     },
-     date2: {
+    date2: {
       label: '插槽使用(scope)',
       slotName: 'date2',
     },
@@ -109,17 +109,24 @@ const opts = computed(() => {
 })
 // 最终参数获取
 const getQueryData = computed(() => {
-  const { userName, phonenumber, workshopNum, date, date1,date2 ,likeTransportNo} = state.queryData
-  console.log(444, userName, phonenumber, date1)
-  return {
+  const {
     userName,
-    workshopNum,
     phonenumber,
+    workshopNum,
+    date,
     date1,
     date2,
     likeTransportNo,
-    beginDate: date && date[0] ? date[0] : null,
-    endDate: date && date[1] ? date[1] : null,
+  } = toRefs(state.queryData)
+  return {
+    userName: userName.value,
+    workshopNum: workshopNum.value,
+    phonenumber: phonenumber.value,
+    date1: date1.value,
+    beginDate: date.value && date.value[0] ? date.value[0] : null,
+    endDate: date.value && date.value[1] ? date.value[1] : null,
+    date2: date2.value,
+    likeTransportNo: likeTransportNo.value,
   }
 })
 // 查询条件change事件

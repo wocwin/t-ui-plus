@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from 'vue'
+import { computed, reactive, toRefs } from 'vue'
 
 const opts = computed(() => {
   return {
@@ -86,13 +86,14 @@ let state: any = reactive({
 })
 // 最终参数获取
 const getQueryData = computed(() => {
-  const { likeCargoNo, likeBookNo, likeTransportNo, likeCargoName } =
+  const { likeCargoNo, likeBookNo, likeTransportNo, likeCargoName } = toRefs(
     state.queryData
+  )
   return {
-    likeCargoNo,
-    likeBookNo,
-    likeTransportNo,
-    likeCargoName,
+    likeCargoNo: likeCargoNo.value,
+    likeBookNo: likeBookNo.value,
+    likeTransportNo: likeTransportNo.value,
+    likeCargoName: likeCargoName.value,
   }
 })
 // 点击查询按钮
