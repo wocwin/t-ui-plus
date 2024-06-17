@@ -8,12 +8,13 @@
         :keywords="{ label: 'name', value: 'id' }"
         :isShowFirstColumn="false"
         @radioChange="radioChange"
+        isKeyup
       ></t-select-table>
     </t-layout-page-item>
   </t-layout-page>
 </template>
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref } from 'vue'
 const table = ref({
   data: [
     { id: 1, code: 1, name: '物料名称1', spec: '物料规格1', unitName: '吨' },

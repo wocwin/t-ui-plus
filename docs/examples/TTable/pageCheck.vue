@@ -5,6 +5,8 @@
         title="翻页选中功能"
         :table="table"
         :columns="table.columns"
+        name="isPageingTTableDemo"
+        columnSetting
         @selection-change="selectionChange"
         :row-key="getRowKey"
         @page-change="pageChange"

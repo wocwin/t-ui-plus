@@ -2,11 +2,11 @@
   <el-input
     v-if="isShowInput"
     v-model="selectInputVal"
-    v-bind="{clearable: true,...inputAttr}"
-    @focus="()=>emits('input-focus')"
-    @blur="()=>emits('input-blur')"
-    @click="()=>emits('input-click')"
-    @clear="()=>emits('input-clear')"
+    v-bind="{ clearable: true, ...inputAttr }"
+    @focus="() => emits('input-focus')"
+    @blur="() => emits('input-blur')"
+    @click="() => emits('input-click')"
+    @clear="() => emits('input-clear')"
     :style="{ width: inputWidth ? `${inputWidth}px` : '100%' }"
   >
     <template v-for="(index, name) in slots" v-slot:[name]="data">
@@ -49,7 +49,8 @@
               <el-button
                 v-bind="{ type: 'danger', ...btnBind }"
                 @click="blur"
-              >{{ btnBind.btnTxt || '关闭下拉框' }}</el-button>
+                >{{ btnBind.btnTxt || '关闭下拉框' }}</el-button
+              >
               <slot name="querybar"></slot>
             </template>
           </t-query-condition>
@@ -65,6 +66,7 @@
           }"
           highlight-current-row
           border
+          :row-class-name="getRowClassName"
           :row-key="getRowKey"
           @row-click="rowClick"
           @cell-dblclick="cellDblclick"
@@ -162,6 +164,7 @@ import {
   nextTick,
   reactive,
   onMounted,
+  onUpdated,
 } from 'vue'
 import { ElMessage } from 'element-plus'
 import ClickOutside from '../../utils/directives/click-outside/index'
@@ -400,6 +403,13 @@ onMounted(() => {
     selectRef.value.expanded = true
   }
 })
+// 解决查询条件下拉选择table闪烁问题
+onUpdated(() => {
+  if (props.isShowQuery) {
+    // console.log('onUpdated--22')
+    selectTable.value.doLayout()
+  }
+})
 // 表格显示隐藏回调
 const visibleChange = (visible) => {
   // console.log('表格显示隐藏回调', visible)
@@ -589,6 +599,16 @@ const handlesSelectionChange = (val) => {
     state.defaultSelectValue = []
   }
   emits('selectionChange', val, state.ids)
+}
+// 设置table行class
+const getRowClassName = ({ row }) => {
+  if (
+    !props.multiple &&
+    JSON.stringify(row) === JSON.stringify(state.defaultValue)
+  ) {
+    return 'selected_row_style'
+  }
+  return ''
 }
 // 搜索后表格勾选不取消
 const getRowKey = (row) => {
@@ -809,6 +829,11 @@ defineExpose({
         }
       }
     }
+  }
+  // 键盘事件开启选中行样式
+  .selected_row_style {
+    color: var(--el-color-primary);
+    cursor: pointer;
   }
   // 选中行样式
   .highlightCurrentRow {
