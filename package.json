@@ -17,10 +17,9 @@
     "lib",
     "global.d.ts"
   ],
-  "unpkg": "lib/t-ui-plus.iife.js",
-  "jsdelivr": "lib/t-ui-plus.iife.js",
   "scripts": {
-    "lib": "rimraf lib && run-p type-check build:es build:browser",
+    "lib-all": "rimraf lib && run-p type-check build:es build:browser",
+    "lib": "rimraf lib && vite build",
     "type-check": "vue-tsc --noEmit",
     "build:es": "vite build",
     "build:browser": "vite -f iife build",
