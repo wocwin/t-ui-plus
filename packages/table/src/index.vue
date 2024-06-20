@@ -246,10 +246,10 @@
                     v-model="scope.row[item.prop]"
                     :prop="item.prop"
                     :scope="scope"
+                    :ref="(el:any) => handleEditTableRef(el, scope,item)"
                     @handleEvent="handleEvent($event, scope.$index)"
                     @keyup-handle="handleKeyup"
                     v-bind="$attrs"
-                    ref="editCell"
                   >
                     <template
                       v-for="(index, name) in slots"
@@ -290,6 +290,7 @@
           :key="index + 'm'"
           :item="item"
           :align="align"
+          @handleEvent="mergeHandleEvent($event)"
           v-bind="$attrs"
         >
           <template v-for="(index, name) in slots" v-slot:[name]="data">
@@ -510,11 +511,21 @@ const TTable: any = ref<HTMLElement | null>(null)
 const TTableBox: any = ref<HTMLElement | null>(null)
 // 获取form ref
 const formRef: any = ref({})
-// 动态ref
+// 动态form ref
 const handleRef = (el, scope, item) => {
   if (el) {
     formRef.value[
       `formRef-${scope.$index}-${item.prop || scope.column.property}`
+    ] = el
+  }
+}
+// 获取所有单元格编辑组件 ref
+const editTableRef: any = ref({})
+// 动态单元格编辑组件 ref
+const handleEditTableRef = (el, scope, item) => {
+  if (el) {
+    editTableRef.value[
+      `singleEditRef-${scope.$index}-${item.prop || scope.column.property}`
     ] = el
   }
 }
@@ -902,6 +913,11 @@ const checkIsShow = (scope, item) => {
     isPermission
   )
 }
+// 合并表头--单元格编辑--change事件
+const mergeHandleEvent = ({ type, val, index }) => {
+  // console.log('合并表头--单元格编辑--change事件', type, val, index)
+  emits('handleEvent', type, val, index)
+}
 // 单个编辑事件
 const handleEvent = ({ type, val }, index) => {
   emits('handleEvent', type, val, index)
@@ -1047,18 +1063,28 @@ const clearValidate = () => {
   const refList = Object.keys(formRef.value).filter((item) =>
     item.includes('formRef')
   )
-  refList.map((val) => {
-    formRef.value[val].clearValidate()
-  })
+  refList.length > 0 &&
+    refList.map((val) => {
+      formRef.value[val].clearValidate()
+    })
 }
 // 表单进行重置并移除校验结果
 const resetFields = () => {
   const refList = Object.keys(formRef.value).filter((item) =>
     item.includes('formRef')
   )
-  refList.map((val) => {
-    formRef.value[val].resetFields()
-  })
+  refList.length > 0 &&
+    refList.map((val) => {
+      formRef.value[val].resetFields()
+    })
+  // 重置下拉表格
+  const refEditList = Object.keys(editTableRef.value).filter((item) =>
+    item.includes('singleEditRef')
+  )
+  refEditList.length > 0 &&
+    refEditList.map((val) => {
+      editTableRef.value[val].resetTselectTableFields()
+    })
 }
 // 暴露方法出去
 defineExpose({

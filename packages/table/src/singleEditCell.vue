@@ -19,6 +19,7 @@
     <template v-if="configEdit.isSelfCom">
       <component
         v-if="configEdit.editComponent === 't-select-table'"
+        :ref="(el:any) => handleRef(el, index)"
         :is="configEdit.editComponent"
         :placeholder="configEdit.placeholder || getPlaceholder(configEdit)"
         v-bind="
@@ -64,13 +65,13 @@
       "
     >
       <!-- 前置文本 -->
-      <template #prepend v-if="configEdit.prepend">{{
-        configEdit.prepend
-      }}</template>
+      <template #prepend v-if="configEdit.prepend">
+        {{ configEdit.prepend }}
+      </template>
       <!-- 后置文本 -->
-      <template #append v-if="configEdit.append">{{
-        configEdit.append
-      }}</template>
+      <template #append v-if="configEdit.append">
+        {{ configEdit.append }}
+      </template>
       <!-- 子组件自定义插槽 -->
       <!-- <template v-if="configEdit.childSlotName">
         <slot />
@@ -91,7 +92,7 @@
 </template>
 
 <script setup lang="ts" name="SingleEditCell">
-import { computed, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 const props = defineProps({
   /** 编辑配置项说明
    * label: '爱好', // placeholder显示
@@ -156,12 +157,19 @@ const cEvent: any = computed(() => {
     Object.keys(event).forEach((v) => {
       changeEvent[v] = (e, ids) => {
         if (type === 't-select-table') {
-          event[v] && event[v](e, ids, props.prop, props.scope)
+          const argument = {
+            row: e,
+            ids: ids,
+            prop: props.prop,
+            scope: props.scope,
+          }
+          event[v] && event[v](argument)
         } else {
           if ((typeof e === 'number' && e === 0) || e) {
-            event[v] && event[v](e, props.prop, props.scope)
+            event[v] &&
+              event[v]({ val: e, prop: props.prop, scope: props.scope })
           } else {
-            event[v] && event[v](props.prop, props.scope)
+            event[v] && event[v]({ prop: props.prop, scope: props.scope })
           }
         }
       }
@@ -237,6 +245,26 @@ const compChildShowLabel = computed(() => {
     }
   }
 })
+// 下拉选择表格组件 ref
+const tselecttableref: any = ref({})
+// 下拉选择表格组件 动态ref
+const handleRef = (el, key) => {
+  if (el) {
+    tselecttableref.value[`tselecttableref-${key}`] = el
+  }
+}
+// 重置下拉表格
+const resetTselectTableFields = () => {
+  // 获取所有下拉选择表格组件
+  const refList = Object.keys(tselecttableref.value).filter((item) =>
+    item.includes('tselecttableref')
+  )
+  if (refList.length > 0 && tselecttableref.value) {
+    refList.map((val) => {
+      tselecttableref.value[val].clear()
+    })
+  }
+}
 // placeholder的显示
 const getPlaceholder = (row: any) => {
   let placeholder
@@ -259,6 +287,7 @@ const handleEvent = (type, val, editCom) => {
   // console.log('组件', type, val, editCom)
   emits('handleEvent', { type, val })
 }
+defineExpose({ resetTselectTableFields })
 </script>
 <style lang="scss">
 .single_edit_cell {

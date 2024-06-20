@@ -69,10 +69,53 @@ TTable/radioIndex
 TTable/isCopy
 :::
 
+### 集成分页器
+
+:::demo
+TTable/isShowPagination
+:::
+
+
+### 分页器-设置layout自定义插槽使用
+
+:::demo
+TTable/paginationSlot
+:::
+
 ### 字典过滤渲染
 
 :::demo `columns`中某项添加`filters: { list: 'statusList', key: 'id', label: 'label' }`；`table`中添加`listTypeInfo: { statusList:[数据源] }`字典类型的数据源
 TTable/filters
+:::
+
+### 某列 render 渲染
+
+:::demo
+TTable/render
+:::
+
+### 某列 作用域插槽渲染
+
+:::demo
+TTable/slotName
+:::
+
+### 自定义表头渲染
+
+:::demo
+TTable/renderHeader
+:::
+
+### 列--动态显示隐藏且拖动排序
+
+:::demo 属性`columnSetBind`配置更改button样式：继承`el-button`所有属性;`column`配置`isShowHidden`属性更改是否默认隐藏显示（true:默认设置列不显示；反之或者不设置`isShowHidden`属性显示）;`注意：如果isShowHidden设置为true后，即便选中显示，但每次刷新都不会显示`
+TTable/columnSetting
+:::
+
+### 行--拖拽排序
+
+:::demo 属性`isRowSort`是否开启行拖拽排序;事件`@rowSort`，返回最终排序的table数据;`注意`: `row-key` 需要设置，否则拖动排序可能显示不正常
+TTable/rowSort
 :::
 
 ### 表头合并单元格（多级表头）
@@ -92,6 +135,7 @@ TTable/slotNameMerge
 :::demo
 TTable/multileHeadEdit
 :::
+
 
 ### 表格操作按钮
 
@@ -117,25 +161,6 @@ TTable/operatorRender
 TTable/operatorSlotName
 :::
 
-### 集成分页器
-
-:::demo
-TTable/isShowPagination
-:::
-
-
-### 分页器-设置layout自定义插槽使用
-
-:::demo
-TTable/paginationSlot
-:::
-
-### 某列 render 渲染
-
-:::demo
-TTable/render
-:::
-
 ### Tree-Table
 
 :::demo 按照`el-table`方式配置；新增`isTree`属性——其作用是布局TTable-Tree样式
@@ -146,30 +171,6 @@ TTable/treeTable
 
 :::demo 按照`el-table`方式配置
 TTable/treeMenuTable
-:::
-
-### 某列 作用域插槽渲染
-
-:::demo
-TTable/slotName
-:::
-
-### 自定义表头渲染
-
-:::demo
-TTable/renderHeader
-:::
-
-### 列--动态显示隐藏且拖动排序
-
-:::demo 属性`columnSetBind`配置更改button样式：继承`el-button`所有属性;`column`配置`isShowHidden`属性更改是否默认隐藏显示（true:默认设置列不显示；反之或者不设置`isShowHidden`属性显示）;`注意：如果isShowHidden设置为true后，即便选中显示，但每次刷新都不会显示`
-TTable/columnSetting
-:::
-
-### 行--拖拽排序
-
-:::demo 属性`isRowSort`是否开启行拖拽排序;事件`@rowSort`，返回最终排序的table数据;`注意`: `row-key` 需要设置，否则拖动排序可能显示不正常
-TTable/rowSort
 :::
 
 ### 单元格编辑功能
@@ -200,6 +201,12 @@ TTable/eventHandle
 
 :::demo `columns`: `columns`某一项的 rules;`table`: rules; `saveMethod方法`:singleEdit.value.saveMethod((data) => {console.log('callback返回数据', data)})
 TTable/rules
+:::
+
+### 单元格编辑--TSelectTable校验 rules
+
+:::demo
+TTable/rulesSelectTable
 :::
 
 ### 展开行 

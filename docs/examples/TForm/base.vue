@@ -4,7 +4,7 @@
       <t-form
         ref="TFormDemo"
         v-model="formOpts.ref"
-        :formOpts="formOpts"
+        :form-opts="formOpts"
         @handleEvent="handleEvent"
       >
         <template #wechat>
