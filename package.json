@@ -1,6 +1,6 @@
 {
-  "name": "@xbeautiful/x-ui-plus",
-  "version": "1.4.5",
+  "name": "beautifulx-ui-plus",
+  "version": "1.4.6",
   "description": "Vue3 中基于Element-plus二次封装基础组件文档",
   "author": "xbeautiful",
   "license": "MIT",
@@ -81,8 +81,22 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/wocwin/t-ui-plus.git"
   },
-  "homepage": "",
-  "keywords": []
+  "homepage": "https://wocwin.github.io/t-ui-plus/",
+  "keywords": [
+    "element-ui",
+    "element-plus",
+    "vite",
+    "vite3",
+    "vitepress",
+    "vue",
+    "vue3",
+    "t-ui",
+    "t-ui-plus",
+    "vitepress-theme-demoblock",
+    "二次封装组件",
+    "封装组件",
+    "components"
+  ]
 }
