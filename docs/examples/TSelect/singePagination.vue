@@ -9,6 +9,8 @@
         valueCustom="id"
         @current-change="currentChange"
         @change="selectChange"
+        @input="selectinput"
+        @select-input="selectinput1"
         isShowPagination
         :paginationOption="paginationOption"
       />
@@ -27,6 +29,12 @@ const paginationOption = ref({
   pagerCount: 7, // 按钮数，超过时会折叠
   total: 0, // 总条数
 })
+const selectinput = (val: any) => {
+  console.log('分页器-input', val)
+}
+const selectinput1 = (val: any) => {
+  console.log('select-input', val)
+}
 onMounted(() => {
   getList(1)
 })

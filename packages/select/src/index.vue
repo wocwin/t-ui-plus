@@ -6,6 +6,7 @@
     :options="!useVirtual ? null : optionSource"
     :style="{ width: width || '100%' }"
     @change="handlesChange"
+    @input="(e)=> emits('select-input', e.target.value)"
     v-bind="{
       clearable: true,
       filterable: true,
@@ -43,6 +44,7 @@
           "
           :pager-count="paginationOption.pagerCount"
           :total="paginationOption.total"
+          @input.stop="(e)=>emits('input', e.target.value)"
           v-bind="{
             small: true,
             background: true,
@@ -114,7 +116,12 @@ const props: any = defineProps({
 })
 const slots = useSlots()
 // 抛出事件
-const emits = defineEmits(['update:modelValue', 'change'])
+const emits = defineEmits([
+  'update:modelValue',
+  'change',
+  'input',
+  'select-input',
+])
 // vue3 v-model简写
 let childSelectedValue: any = computed({
   get() {

@@ -110,6 +110,8 @@ TSelect/useVirtualCollapseTags
 | bind        | el-pagination属性                                             | Object | -                                  |
 
 ### 3、继承 el-select&el-pagination&el-select-v2 events
-| 事件名 | 说明                 | 回调参数     |
-| :----- | :------------------- | :----------- |
-| change | 选中值发生变化时触发 | 返回选中的值 |
+| 事件名       | 说明                 | 回调参数     |
+| :----------- | :------------------- | :----------- |
+| change       | 选中值发生变化时触发 | 返回选中的值 |
+| input        | 分页器输入框触发     | 返回输入的值 |
+| select-input | 选择输入框触发       | 返回输入的值 |
