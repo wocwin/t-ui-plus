@@ -31,7 +31,12 @@
         <template #default="scope">
           <!-- render渲染 -->
           <template v-if="val.render">
-            <render-col :column="val" :row="scope.row" :render="val.render" :index="scope.$index" />
+            <render-col
+              :column="val"
+              :row="scope.row"
+              :render="val.render"
+              :index="scope.$index"
+            />
           </template>
           <!-- 自定义插槽 -->
           <template v-if="val.slotNameMerge">
@@ -42,13 +47,10 @@
             <single-edit-cell
               :isShowRules="false"
               :configEdit="val.configEdit"
-              v-model="scope.row[scope.column.property]"
+              v-model="scope.row[val.prop]"
               :prop="val.prop"
-              :record="scope"
-              @handleEvent="
-                (event, model) =>
-                  $emit('handleEvent', event, model, scope.$index)
-              "
+              :scope="scope"
+              @handleEvent="handleEvent($event, scope.$index)"
               v-bind="$attrs"
             >
               <template v-for="(index, name) in slots" v-slot:[name]="data">
@@ -56,7 +58,9 @@
               </template>
             </single-edit-cell>
           </template>
-          <div v-if="!val.render && !val.slotNameMerge && !val.canEdit">{{ scope.row[val.prop] }}</div>
+          <div v-if="!val.render && !val.slotNameMerge && !val.canEdit">
+            {{ scope.row[val.prop] }}
+          </div>
         </template>
       </el-table-column>
     </template>
@@ -80,6 +84,12 @@ defineProps({
     default: 'center',
   },
 })
+// 抛出事件
+const emits = defineEmits(['handleEvent'])
 // 获取所有插槽
 const slots = useSlots()
+// 单个编辑事件
+const handleEvent = ({ type, val }, index) => {
+  emits('handleEvent', { type, val, index })
+}
 </script>
