@@ -126,14 +126,19 @@
   background: var(--prism-line-highlight-background);
 }
 
+[class*='language-'] .lang {
+  display: none;
+}
+
 [class*='language-']:before {
   position: absolute;
-  top: 0.4em;
-  right: 0.8em;
+  top: 2px;
+  right: 8px;
   z-index: 2;
-  opacity: var(--prism-marker-opacity);
-  font-size: var(--prism-marker-font-size);
-  color: var(--prism-marker-color);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--vp-code-lang-color);
+  transition: color 0.4s, opacity 0.4s;
 }
 
 [class~='language-html']:before,
