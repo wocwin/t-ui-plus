@@ -209,7 +209,7 @@ const compChildLabel = computed(() => {
         return value.value
       case 'el-select-multiple':
       case 'select-arr':
-        return value[configEdit.arrLabel || 'dictLabel']
+        return value[configEdit.arrLabel || 'label']
       case 'select-obj':
         return value
     }
@@ -224,7 +224,7 @@ const compChildValue = computed(() => {
         return value.value
       case 'el-select-multiple':
       case 'select-arr':
-        return value[configEdit.arrKey || 'dictValue']
+        return value[configEdit.arrKey || 'key']
       case 'select-obj':
         return key
     }
@@ -239,7 +239,7 @@ const compChildShowLabel = computed(() => {
         return value.label
       case 'el-select-multiple':
       case 'select-arr':
-        return value[configEdit.arrLabel || 'dictLabel']
+        return value[configEdit.arrLabel || 'label']
       case 'select-obj':
         return value
     }

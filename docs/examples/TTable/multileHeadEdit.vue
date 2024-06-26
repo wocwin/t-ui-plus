@@ -97,16 +97,16 @@ onMounted(() => {
 const getList = () => {
   const list = [
     {
-      dictLabel: '炉头',
-      dictValue: '1',
+      label: '炉头',
+      key: '1',
     },
     {
-      dictLabel: '炉中',
-      dictValue: '2',
+      label: '炉中',
+      key: '2',
     },
     {
-      dictLabel: '炉尾',
-      dictValue: '3',
+      label: '炉尾',
+      key: '3',
     },
   ]
   areaList.value = list
@@ -132,8 +132,8 @@ let state: any = reactive({
               editComponent: 't-select',
               isSelfCom: true,
               bind: {
-                valueCustom: 'dictValue',
-                labelCustom: 'dictLabel',
+                valueCustom: 'key',
+                labelCustom: 'label',
                 optionSource: areaList,
               },
             },
@@ -149,8 +149,8 @@ let state: any = reactive({
               type: 'select-arr',
               editComponent: 'el-select',
               list: 'furnaceLayerList',
-              arrLabel: 'dictLabel',
-              arrKey: 'dictValue',
+              arrLabel: 'label',
+              arrKey: 'key',
             },
           },
         ],
@@ -304,16 +304,16 @@ let state: any = reactive({
     listTypeInfo: {
       furnaceLayerList: [
         {
-          dictLabel: '上层',
-          dictValue: '1',
+          label: '上层',
+          key: '1',
         },
         {
-          dictLabel: '中层',
-          dictValue: '2',
+          label: '中层',
+          key: '2',
         },
         {
-          dictLabel: '下层',
-          dictValue: '3',
+          label: '下层',
+          key: '3',
         },
       ],
     },

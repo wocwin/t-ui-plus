@@ -14,27 +14,11 @@
       >
         <template #toolbar>
           <div class="add_data">
-            <el-input-number
-              v-model="num"
-              clearable
-              placeholder="请输入追加条数"
-            ></el-input-number>
-            <el-button type="primary" @click="add"
-              >追加{{ num ? num : '' }}条数据</el-button
-            >
+            <el-input-number v-model="num" clearable placeholder="请输入追加条数"></el-input-number>
+            <el-button type="primary" @click="add">追加{{ num ? num : "" }}条数据</el-button>
           </div>
-          <el-button
-            type="primary"
-            v-if="state.table.data.length > 0"
-            @click="reset"
-            >重置表单</el-button
-          >
-          <el-button
-            type="primary"
-            v-if="state.table.data.length > 0"
-            @click="save"
-            >另一种获取table数据</el-button
-          >
+          <el-button type="primary" v-if="state.table.data.length > 0" @click="reset">重置表单</el-button>
+          <el-button type="primary" v-if="state.table.data.length > 0" @click="save">另一种获取table数据</el-button>
         </template>
       </t-table>
     </t-layout-page-item>
@@ -42,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, toRefs, onMounted } from 'vue'
+import { ref, reactive, toRefs, onMounted } from "vue"
 // 添加数据条数
 const num = ref(5)
 const singleEdit: any = ref(null)
@@ -61,18 +45,16 @@ const reset = () => {
 // 调用方法获取返回数据
 const save = () => {
   singleEdit.value.saveMethod((data: any) => {
-    console.log('调用方法获取返回数据---saveMethod', data)
+    console.log("调用方法获取返回数据---saveMethod", data)
   })
 }
 // 保存
-const singleSave = (tableData) => {
-  console.log('点击保存按钮获取table数据', tableData)
+const singleSave = tableData => {
+  console.log("点击保存按钮获取table数据", tableData)
 }
 // 编辑单元格监听事件
 const handleEvent = (type, val, index) => {
-  console.log(
-    `自己标识编辑单元格event值：${type}---修改后的值：${val}----当前所在行：${index}`
-  )
+  console.log(`自己标识编辑单元格event值：${type}---修改后的值：${val}----当前所在行：${index}`)
 }
 onMounted(() => {
   getList()
@@ -81,155 +63,155 @@ onMounted(() => {
 const getList = () => {
   const list = [
     {
-      dictLabel: '炉头',
-      dictValue: '1',
+      label: "炉头",
+      key: "1"
     },
     {
-      dictLabel: '炉中',
-      dictValue: '2',
+      label: "炉中",
+      key: "2"
     },
     {
-      dictLabel: '炉尾',
-      dictValue: '3',
-    },
+      label: "炉尾",
+      key: "3"
+    }
   ]
-  state.table.columns.forEach((item) => {
-    if (item.canEdit && item.prop === 'area' && item.configEdit) {
+  state.table.columns.forEach(item => {
+    if (item.canEdit && item.prop === "area" && item.configEdit) {
       item.configEdit.bind.optionSource = list
-      console.log('item.configEdit.bind.optionSource', item)
+      console.log("item.configEdit.bind.optionSource", item)
     }
   })
 }
 let state: any = reactive({
   table: {
-    firstColumn: { type: 'selection' },
+    firstColumn: { type: "selection" },
     // 接口返回数据
     data: [],
     // 表头数据
     columns: [
       {
-        prop: 'area',
-        label: '装炉位置',
-        width: '170',
+        prop: "area",
+        label: "装炉位置",
+        width: "170",
         canEdit: true,
         configEdit: {
-          label: '装炉位置',
+          label: "装炉位置",
           isSelfCom: true,
-          editComponent: 't-select',
+          editComponent: "t-select",
           bind: {
-            valueCustom: 'dictValue',
-            labelCustom: 'dictLabel',
-            optionSource: [],
-          },
-        },
+            valueCustom: "key",
+            labelCustom: "label",
+            optionSource: []
+          }
+        }
       },
       {
-        prop: 'layer',
-        label: '装炉层',
-        width: '170',
+        prop: "layer",
+        label: "装炉层",
+        width: "170",
         canEdit: true,
         configEdit: {
-          label: '装炉层',
-          type: 'select-arr',
-          editComponent: 'el-select',
-          list: 'furnaceLayerList',
-          arrLabel: 'dictLabel',
-          arrKey: 'dictValue',
+          label: "装炉层",
+          type: "select-arr",
+          editComponent: "el-select",
+          list: "furnaceLayerList",
+          arrLabel: "label",
+          arrKey: "key"
           // event: '装炉层layer',
-        },
+        }
       },
       {
-        prop: 'isTail',
-        label: '是否尾包',
-        width: '100',
+        prop: "isTail",
+        label: "是否尾包",
+        width: "100",
         canEdit: true,
         // align: 'center',
         configEdit: {
-          label: '是否尾包',
-          type: 'checkbox',
-          editComponent: 'el-checkbox',
-        },
+          label: "是否尾包",
+          type: "checkbox",
+          editComponent: "el-checkbox"
+        }
       },
       {
-        prop: 'packageNumStart',
-        label: '开始编号',
-        minWidth: '100',
+        prop: "packageNumStart",
+        label: "开始编号",
+        minWidth: "100",
         canEdit: true,
         configEdit: {
-          label: '开始编号',
-          type: 'input',
-          editComponent: 'el-input',
-        },
+          label: "开始编号",
+          type: "input",
+          editComponent: "el-input"
+        }
       },
       {
-        prop: 'packageNumEnd',
-        label: '结束编号',
-        minWidth: '100',
+        prop: "packageNumEnd",
+        label: "结束编号",
+        minWidth: "100",
         canEdit: true,
         configEdit: {
-          label: '结束编号',
-          type: 'input',
-          editComponent: 'el-input',
-        },
+          label: "结束编号",
+          type: "input",
+          editComponent: "el-input"
+        }
       },
       {
-        prop: 'startDate',
-        label: 't-date-picker',
-        width: '160',
+        prop: "startDate",
+        label: "t-date-picker",
+        width: "160",
         canEdit: true,
         configEdit: {
-          label: '生产日期',
-          type: 'date',
-          editComponent: 't-date-picker',
+          label: "生产日期",
+          type: "date",
+          editComponent: "t-date-picker",
           bind: {
-            isPickerOptions: true,
-          },
-        },
+            isPickerOptions: true
+          }
+        }
       },
       {
-        prop: 'endDate',
-        label: 'el-date-picker',
-        width: '160',
+        prop: "endDate",
+        label: "el-date-picker",
+        width: "160",
         canEdit: true,
         configEdit: {
-          label: '出炉日期',
-          type: 'date',
-          editComponent: 'el-date-picker',
+          label: "出炉日期",
+          type: "date",
+          editComponent: "el-date-picker",
           bind: {
-            'value-format': 'YYYY-MM-DD',
-          },
-        },
+            "value-format": "YYYY-MM-DD"
+          }
+        }
       },
       {
-        prop: 'singleWeight',
-        label: '单包重量（吨）',
-        minWidth: '160',
+        prop: "singleWeight",
+        label: "单包重量（吨）",
+        minWidth: "160",
         canEdit: true,
         configEdit: {
-          label: '单包重量（吨）',
-          type: 'input',
-          editComponent: 'el-input-number',
-          event: 'singleWeight',
-        },
-      },
+          label: "单包重量（吨）",
+          type: "input",
+          editComponent: "el-input-number",
+          event: "singleWeight"
+        }
+      }
     ],
     listTypeInfo: {
       furnaceLayerList: [
         {
-          dictLabel: '上层',
-          dictValue: '1',
+          label: "上层",
+          key: "1"
         },
         {
-          dictLabel: '中层',
-          dictValue: '2',
+          label: "中层",
+          key: "2"
         },
         {
-          dictLabel: '下层',
-          dictValue: '3',
-        },
-      ],
-    },
-  },
+          label: "下层",
+          key: "3"
+        }
+      ]
+    }
+  }
 })
 </script>
 <style lang="scss" scoped>

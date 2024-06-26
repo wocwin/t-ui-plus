@@ -290,7 +290,6 @@
           :key="index + 'm'"
           :item="item"
           :align="align"
-          @handleEvent="mergeHandleEvent($event)"
           v-bind="$attrs"
         >
           <template v-for="(index, name) in slots" v-slot:[name]="data">
@@ -912,11 +911,6 @@ const checkIsShow = (scope, item) => {
     totalTxt1 &&
     isPermission
   )
-}
-// 合并表头--单元格编辑--change事件
-const mergeHandleEvent = ({ type, val, index }) => {
-  // console.log('合并表头--单元格编辑--change事件', type, val, index)
-  emits('handleEvent', type, val, index)
 }
 // 单个编辑事件
 const handleEvent = ({ type, val }, index) => {
