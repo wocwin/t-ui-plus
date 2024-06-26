@@ -114,8 +114,8 @@
       ]"
     >
       <template v-if="footer !== null">
-        <slot name="footer" />
-        <template v-if="!slots.footer">
+        <slot name="footerBtn" />
+        <template v-if="!slots.footerBtn">
           <el-button
             class="btn_check"
             @click="checkHandle"
@@ -459,7 +459,7 @@ const compChildLabel = computed(() => {
         return value.value
       case 'el-select-multiple':
       case 'select-arr':
-        return value[opt.arrLabel || 'dictLabel']
+        return value[opt.arrLabel || 'label']
       case 'select-obj':
         return value
     }
@@ -474,7 +474,7 @@ const compChildValue = computed(() => {
         return value.value
       case 'el-select-multiple':
       case 'select-arr':
-        return value[opt.arrKey || 'dictValue']
+        return value[opt.arrKey || 'key']
       case 'select-obj':
         return key
     }
@@ -489,7 +489,7 @@ const compChildShowLabel = computed(() => {
         return value.label
       case 'el-select-multiple':
       case 'select-arr':
-        return value[opt.arrLabel || 'dictLabel']
+        return value[opt.arrLabel || 'label']
       case 'select-obj':
         return value
     }

@@ -26,12 +26,12 @@ let state = reactive({
   listTypeInfo: {
     sexList: [
       {
-        dictLabel: '前纺一车间',
-        dictValue: 'W1',
+        label: '前纺一车间',
+        key: 'W1',
       },
       {
-        dictLabel: '前纺二车间',
-        dictValue: 'W2',
+        label: '前纺二车间',
+        key: 'W2',
       },
     ],
   },

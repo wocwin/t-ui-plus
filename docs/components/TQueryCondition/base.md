@@ -53,7 +53,7 @@ TQueryCondition/querybar
 
 ### 自定义按钮
 
-::: demo 设置`footer`插槽，可以自定义按钮
+::: demo 设置`footerBtn`插槽，可以自定义按钮,设置`:footer=null`,不展示按钮
 TQueryCondition/footer
 :::
 
@@ -90,24 +90,24 @@ TQueryCondition/dynamic
 
 ### 2、配置参数（Attributes）
 
-| 参数               | 说明                                      | 类型        | 默认值                                         |
-| :----------------- | :---------------------------------------- | :---------- | :--------------------------------------------- |
-| opts               | 接收筛选器组件配置                        | object      | 无                                             |
-| loading            | 查询按钮 loading 状态，请求数据时需要体现 | Boolean     | false                                          |
-| reset              | 是否显示“重置”按钮                        | Boolean     | true                                           |
-| maxVisibleRows     | 收起时设置默认展示行数                    | Number      | 1                                              |
-| boolEnter          | 是否敲回车查询                            | Boolean     | true                                           |
-| isShowOpen         | 是否显示收起和展开                        | Boolean     | true                                           |
-| packUpTxt          | 收起文案                                  | String      | '收起'                                         |
-| unfoldTxt          | 展开文案                                  | String      | '展开'                                         |
-| isExpansion        | 是否默认展开                              | Boolean     | false                                          |
-| labelWidth         | labelWidth 宽度                           | String      | '120px'                                        |
-| btnCheckBind       | 查询按钮配置（继承`el-button`所有属性）   | object      | `{type: primary, size: default,btnTxt:'查询'}` |
-| btnResetBind       | 重置按钮配置（继承`el-button`所有属性）   | object      | `{ size: default,btnTxt:'重置'}`               |
-| footer             | 自定义按钮(设置:footer="null"不显示按钮)  | object/slot | -                                              |
-| configChangedReset | 更新opts是否重置（默认重置）              | Boolean     | false                                          |
-| isShowWidthSize    | 是否开启动态设置每行显示数                | Boolean     | false                                          |
-| widthSize          | 每行显示多少项，最小值2                   | Number      | 4                                              |
+| 参数               | 说明                                      | 类型    | 默认值                                         |
+| :----------------- | :---------------------------------------- | :------ | :--------------------------------------------- |
+| opts               | 接收筛选器组件配置                        | object  | 无                                             |
+| loading            | 查询按钮 loading 状态，请求数据时需要体现 | Boolean | false                                          |
+| reset              | 是否显示“重置”按钮                        | Boolean | true                                           |
+| maxVisibleRows     | 收起时设置默认展示行数                    | Number  | 1                                              |
+| boolEnter          | 是否敲回车查询                            | Boolean | true                                           |
+| isShowOpen         | 是否显示“收起和展开”                      | Boolean | true                                           |
+| packUpTxt          | 收起文案                                  | String  | '收起'                                         |
+| unfoldTxt          | 展开文案                                  | String  | '展开'                                         |
+| isExpansion        | 是否默认展开                              | Boolean | false                                          |
+| labelWidth         | labelWidth 宽度                           | String  | '120px'                                        |
+| btnCheckBind       | 查询按钮配置（继承`el-button`所有属性）   | object  | `{type: primary, size: default,btnTxt:'查询'}` |
+| btnResetBind       | 重置按钮配置（继承`el-button`所有属性）   | object  | `{ size: default,btnTxt:'重置'}`               |
+| footer             | 自定义按钮(设置:footer="null"不显示按钮)  | object  | -                                              |
+| configChangedReset | 更新opts是否重置（默认重置）              | Boolean | false                                          |
+| isShowWidthSize    | 是否开启动态设置每行显示数                | Boolean | false                                          |
+| widthSize          | 每行显示多少项，最小值2                   | Number  | 4                                              |
 
 
 
@@ -123,8 +123,8 @@ TQueryCondition/dynamic
 | slotName    | 自定义输入框插槽(作用域插槽解构接收{param/scope}返回当前所有表单初始值)          | string           | -                        |
 | comp        | 组件名称，可直接指定全局注册的组件，也可引入'elmentUI'如：Button 或者'el-button' | string,component | -                        |
 | span        | 控件占用的列宽，默认占用 1 列，最多 4 列 (独占一行)                              | number           | 1                        |
-| arrLabel    | type=select-arr 时，每个下拉显示的中文                                           | String           | dictLabel                |
-| arrKey      | type=select-arr 时，每个下拉显示的中文传后台的数字                               | String           | dictValue                |
+| arrLabel    | type=select-arr 时，每个下拉显示的中文                                           | String           | label                    |
+| arrKey      | type=select-arr 时，每个下拉显示的中文传后台的数字                               | String           | key                      |
 | defaultVal  | 默认值                                                                           | -                | -                        |
 | bind        | 渲染时组件会调用 v-bind 指定设置该配置更新元素的属性(继承第三方组件属性)         | object，function | 无                       |
 | eventHandle | 配置组件事件，与写组件时change 等同理                                            | object           | 本身值，当前formData数据 |
@@ -139,10 +139,10 @@ TQueryCondition/dynamic
 
 #### 5、Slots
 
-| 插槽名   | 说明                             |
-| :------- | :------------------------------- |
-| querybar | 按钮操作插槽（位置基于重置后面） |
-| footer   | 按钮操作插槽                     |
+| 插槽名    | 说明                             |
+| :-------- | :------------------------------- |
+| querybar  | 按钮操作插槽（位置基于重置后面） |
+| footerBtn | 按钮操作插槽                     |
 
 #### 6、Exposes（Method）
 

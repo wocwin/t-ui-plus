@@ -32,12 +32,12 @@ let state = reactive({
   listTypeInfo: {
     sexList: [
       {
-        dictLabel: '前纺一车间',
-        dictValue: 'W1',
+        label: '前纺一车间',
+        key: 'W1',
       },
       {
-        dictLabel: '前纺二车间',
-        dictValue: 'W2',
+        label: '前纺二车间',
+        key: 'W2',
       },
     ],
   },
@@ -63,8 +63,8 @@ let state = reactive({
       placeholder: '选择第一条数据才新增',
       isSelfCom: true,
       bind: {
-        valueCustom: 'dictValue',
-        labelCustom: 'dictLabel',
+        valueCustom: 'key',
+        labelCustom: 'label',
         optionSource: [],
       },
       eventHandle: {
@@ -164,16 +164,16 @@ onMounted(() => {
 const getList = () => {
   listTypeInfo.value.sexList = [
     {
-      dictLabel: '前纺一车间',
-      dictValue: 'W1',
+      label: '前纺一车间',
+      key: 'W1',
     },
     {
-      dictLabel: '前纺二车间',
-      dictValue: 'W2',
+      label: '前纺二车间',
+      key: 'W2',
     },
     {
-      dictLabel: '前纺三车间',
-      dictValue: 'W3',
+      label: '前纺三车间',
+      key: 'W3',
     },
   ]
   state.opt.workshopNum2.bind.optionSource = listTypeInfo.value.sexList
