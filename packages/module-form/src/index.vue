@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="t_module_form"
-    :style="{ marginBottom: footer !== null ? '60px' : '' }"
-  >
+  <div class="t_module_form" :style="{ marginBottom: footer !== null ? '60px' : '' }">
     <div class="scroll_wrap">
       <!-- 头部 -->
       <el-page-header
@@ -11,7 +8,7 @@
         @back="back"
         :class="{
           noContent: !subTitle,
-          isShowBack: isShowBack,
+          isShowBack: isShowBack
         }"
       >
         <template #title v-if="titleSlot">
@@ -37,22 +34,9 @@
         </template>
       </module-detail>
       <!-- tabs -->
-      <div
-        class="tabs"
-        v-if="tabs"
-        :style="{ 'margin-top': isTabMargin ? `${tabMarginNum}px` : 0 }"
-      >
-        <el-tabs
-          v-if="tabs && tabs.length > 1"
-          v-model="activeName"
-          @tab-change="tabsChange"
-        >
-          <el-tab-pane
-            v-for="tab in tabs"
-            :key="tab.key"
-            :name="tab.key"
-            :label="tab.title"
-          >
+      <div class="tabs" v-if="tabs" :style="{ 'margin-top': isTabMargin ? `${tabMarginNum}px` : 0 }">
+        <el-tabs v-if="tabs && tabs.length > 1" v-model="activeName" @tab-change="tabsChange">
+          <el-tab-pane v-for="tab in tabs" :key="tab.key" :name="tab.key" :label="tab.title">
             <slot :name="tab.key"></slot>
           </el-tab-pane>
         </el-tabs>
@@ -64,88 +48,95 @@
     <footer class="handle_wrap" v-if="footer !== null">
       <slot name="footer" />
       <div v-if="!slots.footer">
-        <el-button @click="back">取消</el-button>
-        <el-button
-          type="primary"
-          v-if="handleType === 'edit'"
-          @click="saveHandle"
-          :loading="loading"
-          >{{ btnTxt }}</el-button
-        >
+        <el-button @click="back" v-bind="cancelAttrs">{{ cancelAttrs.btnTxt }}</el-button>
+        <el-button v-bind="saveAttrs" v-if="handleType === 'edit'" @click="saveHandle" :loading="loading">{{
+          saveAttrs.btnTxt
+        }}</el-button>
       </div>
     </footer>
   </div>
 </template>
 
 <script setup lang="ts" name="TModuleForm">
-import { ref, useAttrs, useSlots, nextTick, onMounted } from 'vue'
-import type { PropType } from 'vue'
-// import { useRouter } from 'vue-router'
-import ModuleDetail from './moduleDetail.vue'
-import ModuleForm from './moduleForm.vue'
+import { ref, useAttrs, useSlots, nextTick, computed } from "vue"
+import type { PropType } from "vue"
+import ModuleDetail from "./moduleDetail.vue"
+import ModuleForm from "./moduleForm.vue"
 const props: any = defineProps({
   handleType: {
-    type: String as PropType<'edit' | 'desc'>,
-    validator: (value: string) => ['edit', 'desc'].includes(value),
-    default: 'edit', // edit表form表单操作，desc表详情页面
+    type: String as PropType<"edit" | "desc">,
+    validator: (value: string) => ["edit", "desc"].includes(value),
+    default: "edit" // edit表form表单操作，desc表详情页面
   },
   // 是否显示header
   isShowHeader: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 是否使用插槽显示title
   titleSlot: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 是否显示返回箭头
   isShowBack: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 返回上一层触发方法
   isGoBackEvent: {
     type: Boolean,
-    default: false,
+    default: false
   },
-  // 操作按钮文字
-  btnTxt: {
-    type: String,
-    default: '保存',
+  // 保存按钮配置
+  btnSaveBind: {
+    type: Object,
+    default: () => ({})
+  },
+  // 取消按钮配置
+  btnCancelBind: {
+    type: Object,
+    default: () => ({})
   },
   // tabs是否跟模块分离
   isTabMargin: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // tabs跟模块分离距离（默认10px）
   tabMarginNum: {
     type: Number,
-    default: 10,
+    default: 10
   },
   // 是否显示底部操作按钮 :footer="null"
   footer: Object,
   title: String,
   subTitle: String,
   tabs: Array as unknown as any[],
-  submit: Function,
+  submit: Function
 })
 const attrs: any = useAttrs()
 const slots = useSlots()
 const activeName = ref(props.tabs && props.tabs[0].key)
 const loading = ref(false)
+// 保存按钮配置
+const saveAttrs = computed(() => {
+  return {
+    type: "primary",
+    btnTxt: "保存",
+    ...props.btnSaveBind
+  }
+})
+// 取消按钮配置
+const cancelAttrs = computed(() => {
+  return { btnTxt: "取消", ...props.btnCancelBind }
+})
 // 获取ref
 const tForm: any = ref<HTMLElement | null>(null)
-// const router = useRouter()
 
-onMounted(() => {
-  // console.log('router', router)
-  // console.log('onMounted', attrs)
-  // console.log('onMounted222', attrs.formOpts)
-})
+
 // 抛出事件
-const emits = defineEmits(['validateError', 'back', 'tabsChange'])
+const emits = defineEmits(["validateError", "back", "tabsChange"])
 // 点击保存
 const saveHandle = async () => {
   let form = {}
@@ -154,15 +145,13 @@ const saveHandle = async () => {
   let successLength = 0
   loading.value = true
   // 过滤非插槽表单
-  Object.keys(attrs.formOpts).forEach((key) => {
+  Object.keys(attrs.formOpts).forEach(key => {
     if (attrs.formOpts[key].opts) {
       formOpts[key] = attrs.formOpts[key]
     }
   })
-  Object.keys(formOpts).forEach(async (formIndex) => {
-    const { valid, formData } = await tForm.value
-      .getChildRef(formIndex)
-      .selfValidate()
+  Object.keys(formOpts).forEach(async formIndex => {
+    const { valid, formData } = await tForm.value.getChildRef(formIndex).selfValidate()
     if (valid) {
       successLength = successLength + 1
       form[formIndex] = attrs.formOpts[formIndex].opts.formData
@@ -178,9 +167,9 @@ const saveHandle = async () => {
       }
     } else {
       // 校验失败抛出事件
-      Object.keys(formOpts).forEach((key) => {
+      Object.keys(formOpts).forEach(key => {
         if (Object.keys(form).length > 0) {
-          Object.keys(form).map((val) => {
+          Object.keys(form).map(val => {
             if (key !== val) {
               formError[key] = formOpts[key]
             }
@@ -189,7 +178,7 @@ const saveHandle = async () => {
           formError[key] = formOpts[key]
         }
       })
-      emits('validateError', formError)
+      emits("validateError", formError)
     }
     loading.value = false
   }, 300)
@@ -199,36 +188,35 @@ const back = () => {
   if (props.isShowBack) {
     return
   }
-  emits('back')
+  emits("back")
   if (!props.isGoBackEvent) {
-    // router.go(-1)
     history.go(-1)
   }
 }
-const show = (formType) => {
+const show = formType => {
   nextTick(() => {
     updateFormFields()
     props.formType = formType
   })
 }
 // 获取默认选中tab
-const setSelectedTab = (key) => {
+const setSelectedTab = key => {
   activeName.value = key
 }
 // 切换tab
-const tabsChange = (tab) => {
-  emits('tabsChange', tab)
+const tabsChange = tab => {
+  emits("tabsChange", tab)
 }
 // 清空表单
 const resetFormFields = () => {
   let formOpts = {}
   // 过滤非插槽表单
-  Object.keys(attrs.formOpts).forEach((key) => {
+  Object.keys(attrs.formOpts).forEach(key => {
     if (attrs.formOpts[key].opts) {
       formOpts[key] = attrs.formOpts[key]
     }
   })
-  Object.keys(formOpts).forEach((formIndex) => {
+  Object.keys(formOpts).forEach(formIndex => {
     tForm.value.getChildRef(formIndex).resetFields()
   })
 }
@@ -236,28 +224,28 @@ const resetFormFields = () => {
 const clearValidate = () => {
   let formOpts = {}
   // 过滤非插槽表单
-  Object.keys(attrs.formOpts).forEach((key) => {
+  Object.keys(attrs.formOpts).forEach(key => {
     if (attrs.formOpts[key].opts) {
       formOpts[key] = attrs.formOpts[key]
     }
   })
-  Object.keys(formOpts).forEach((formIndex) => {
+  Object.keys(formOpts).forEach(formIndex => {
     tForm.value.getChildRef(formIndex).clearValidate()
   })
 }
 const updateFormFields = () => {
   let formOpts = {}
   // 过滤非插槽表单
-  Object.keys(attrs.formOpts).forEach((key) => {
+  Object.keys(attrs.formOpts).forEach(key => {
     if (attrs.formOpts[key].opts) {
       formOpts[key] = attrs.formOpts[key]
     }
   })
-  Object.keys(formOpts).forEach((formIndex) => {
+  Object.keys(formOpts).forEach(formIndex => {
     tForm.value.getChildRef(formIndex).updateFields(false)
   })
 }
-const isShow = (name) => {
+const isShow = name => {
   return Object.keys(slots).includes(name)
 }
 // 暴露方法出去
@@ -266,7 +254,7 @@ defineExpose({
   resetFormFields,
   updateFormFields,
   setSelectedTab,
-  saveHandle,
+  saveHandle
 })
 </script>
 <style lang="scss">
@@ -293,8 +281,8 @@ defineExpose({
       font-variant: tabular-nums;
       line-height: 1.5;
       list-style: none;
-      -webkit-font-feature-settings: 'tnum';
-      font-feature-settings: 'tnum';
+      -webkit-font-feature-settings: "tnum";
+      font-feature-settings: "tnum";
       position: relative;
       padding: 16px 24px;
       background-color: var(--el-bg-color);

@@ -133,28 +133,29 @@ TModuleForm/detailTitleBtn
 
 ### 2、配置参数（Attributes）继承 t-form/t-detail Attributes
 
-| 参数             | 说明                                                                             | 类型        | 默认值       |
-| :--------------- | :------------------------------------------------------------------------------- | :---------- | :----------- |
-| title            | 头部返回按钮标题                                                                 | string      | 无           |
-| titleSlot        | 是否使用插槽显示 title                                                           | Boolean     | false        |
-| subTitle         | 头部副标题                                                                       | string      | 无           |
-| extra            | 操作区，位于 title 行的行尾(右侧)                                                | slot        | 无           |
-| footer           | 底部操作区（默认展示“取消/保存”按钮；使用插槽则隐藏）footer="null"时隐藏底部操作 | String slot | 无           |
-| isShowHeader     | 不显示header                                                                     | Boolean     | false        |
-| isTabMargin      | tabs是否跟模块分离                                                               | Boolean     | false        |
-| tabMarginNum     | tabs跟模块分离距离                                                               | Number      | 10           |
-| tabs             | 页面展示是否需要页签（并且 tabs 的 key 是插槽）——只显示在最后一个模块下          | Array       | 无           |
-| btnTxt           | 表单模块-'保存按钮文字'                                                          | string      | '保存'       |
-| titleBold        | 模块Title文字是否加粗                                                            | Boolean     | false        |
-| isShowBack       | header不显示返回icon                                                             | Boolean     | false        |
-| isGoBackEvent    | 点击头部返回（默认返回上一页，设置此值可以自定义 back 事件）                     | Boolean     | false        |
-| handleType       | 显示方式（'edit':form 表单操作，'desc':表详情页面）                              | string      | edit         |
-| ----edit         | handleType=edit 表 form 表单操作的属性                                           | -           | -            |
-| ------formOpts   | 表单配置描述，支持多分组表单                                                     | Object      | 无           |
-| ------submit     | 点击保存时返回所有表单数据（数据格式 promise 且可显示 loading 状态）             | function    | 所有表单数据 |
-| -----desc        | handleType=desc 表详情页面的属性                                                 | -           | -            |
-| ------descColumn | 详情页面展示每行显示几列（handleType= desc 生效）                                | Number      | 4            |
-| ------descData   | 详情页面配置描述，支持多分组表 （handleType= desc 生效）                         | Object      | 无           |
+| 参数             | 说明                                                                                | 类型        | 默认值                           |
+| :--------------- | :---------------------------------------------------------------------------------- | :---------- | :------------------------------- |
+| title            | 头部返回按钮标题                                                                    | string      | 无                               |
+| titleSlot        | 是否使用插槽显示 title                                                              | Boolean     | false                            |
+| subTitle         | 头部副标题                                                                          | string      | 无                               |
+| extra            | 操作区，位于 title 行的行尾(右侧)                                                   | slot        | 无                               |
+| footer           | 底部操作区（默认展示“取消/保存”按钮；优先渲染插槽）设置`:footer="null"`隐藏底部操作 | String/slot | 无                               |
+| isShowHeader     | 不显示header                                                                        | Boolean     | false                            |
+| isTabMargin      | tabs是否跟模块分离                                                                  | Boolean     | false                            |
+| tabMarginNum     | tabs跟模块分离距离                                                                  | Number      | 10                               |
+| tabs             | 页面展示是否需要页签（并且 tabs 的 key 是插槽）——只显示在最后一个模块下             | Array       | 无                               |
+| btnCancelBind    | 取消按钮配置（继承`el-button`所有属性）                                             | object      | `{btnTxt:'取消'}`                |
+| btnSaveBind      | 保存按钮配置（继承`el-button`所有属性）                                             | object      | `{type: primary, btnTxt:'保存'}` |
+| titleBold        | 模块Title文字是否加粗                                                               | Boolean     | false                            |
+| isShowBack       | header不显示返回icon                                                                | Boolean     | false                            |
+| isGoBackEvent    | 点击头部返回（默认返回上一页，设置此值可以自定义 back 事件）                        | Boolean     | false                            |
+| handleType       | 显示方式（'edit':form 表单操作，'desc':表详情页面）                                 | string      | edit                             |
+| ----edit         | handleType=edit 表 form 表单操作的属性                                              | -           | -                                |
+| ------formOpts   | 表单配置描述，支持多分组表单                                                        | Object      | 无                               |
+| ------submit     | 点击保存时返回所有表单数据（数据格式 promise 且可显示 loading 状态）                | function    | 所有表单数据                     |
+| -----desc        | handleType=desc 表详情页面的属性                                                    | -           | -                                |
+| ------descColumn | 详情页面展示每行显示几列（handleType= desc 生效）                                   | Number      | 4                                |
+| ------descData   | 详情页面配置描述，支持多分组表 （handleType= desc 生效）                            | Object      | 无                               |
 
 ### 2-1、formOpts 配置参数
 
