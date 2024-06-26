@@ -8,6 +8,7 @@ import locale from 'element-plus/es/locale/lang/zh-cn'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import * as echarts from 'echarts' // 引入echarts
 import TVHtml from '../components/TVHtml.vue'
+import TIcon from '../components/TIcon.vue'
 import { VPDemo } from '../vitepress'
 // 基于element-plus二次封装基础组件
 import TuiPlus from '../../../packages'
@@ -31,6 +32,7 @@ export default {
 
     ctx.app.component('Demo', VPDemo)
     ctx.app.component('TVHtml', TVHtml)
+    ctx.app.component('TIcon', TIcon)
 
     // try {
     //   // 引入高德资源

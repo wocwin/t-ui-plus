@@ -1,48 +1,47 @@
 <template>
-  <t-layout-page class="dept_mange">
-    <t-layout-page-item>
-      <t-table
-        title="菜单管理"
-        row-key="path"
-        isTree
-        :table="state.table"
-        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-        :columns="state.table.columns"
-        :isShowPagination="false"
-        align="left"
-        :key="isKey"
-        ref="TreeTableRef"
-        :default-expand-all="isExpandAll"
-        @selection-change="selectionChange"
-      >
-        <template #title>
-          <el-alert :closable="false" type="success">
-            <template #title>
-              <div style="display: flex; align-items: center">
-                <div>{{ state.ids.length ? `已选择${state.ids.length}条数据` : "未选中任何记录" }}</div>
-                <el-button style="margin-left: 10px" type="primary" link :disabled="state.ids.length < 1" @click="cancelSelect"
-                  >取消</el-button
-                >
-              </div>
-            </template>
-          </el-alert>
-        </template>
-        <template #toolbar>
-          <el-button size="default" type="danger" @click="toggleSelection([state.table.data[1], state.table.data[2]])"
-            >{{ !isSelectRow ? "点击选中" : "点击取消" }}第二第三项</el-button
+  <t-adaptive-page
+    class="tree_table_demo"
+    title="treeTable列表"
+    row-key="path"
+    isTree
+    :table="state.table"
+    :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+    :columns="state.table.columns"
+    :isShowPagination="false"
+    :opts="opts"
+    align="left"
+    :key="isKey"
+    ref="TreeTableRef"
+    :default-expand-all="isExpandAll"
+    @submit="conditionEnter"
+    @selection-change="selectionChange"
+  >
+    <!-- <template #title> -->
+    <el-alert :closable="false" type="success">
+      <template #title>
+        <div style="display: flex; align-items: center">
+          <div>{{ state.ids.length ? `已选择${state.ids.length}条数据` : "未选中任何记录" }}</div>
+          <el-button style="margin-left: 10px" type="primary" link :disabled="state.ids.length < 1" @click="cancelSelect"
+            >取消</el-button
           >
-          <el-button size="default" type="primary" @click="expandAll">全部{{ !isExpandAll ? "展开" : "收起" }}</el-button>
-          <el-button size="default" type="primary" @click="expandRow(6, true)">展开第七行</el-button>
-          <el-button size="default" type="primary" @click="expandRow(6, false)">收起第七行</el-button>
-        </template>
-      </t-table>
-    </t-layout-page-item>
-  </t-layout-page>
+        </div>
+      </template>
+    </el-alert>
+    <!-- </template> -->
+    <template #toolbar>
+      <el-button size="default" type="danger" @click="toggleSelection([state.table.data[1], state.table.data[2]])"
+        >{{ !isSelectRow ? "点击选中" : "点击取消" }}第二第三项</el-button
+      >
+      <el-button size="default" type="primary" @click="expandAll">全部{{ !isExpandAll ? "展开" : "收起" }}</el-button>
+      <el-button size="default" type="primary" @click="expandRow(6, true)">展开第七行</el-button>
+      <el-button size="default" type="primary" @click="expandRow(6, false)">收起第七行</el-button>
+    </template>
+  </t-adaptive-page>
 </template>
 
-<script setup lang="tsx">
-import { onMounted, reactive, ref } from "vue"
-import menuData from "./menu1.json"
+<script setup lang="tsx" name="treeTableDemo">
+import { computed, onMounted, reactive, ref, toRefs } from "vue"
+import menuData from "./menu.json"
 const TreeTableRef: any = ref<HTMLElement | null>(null)
 // 选择复选框
 const selectionChange = (val: any) => {
@@ -136,6 +135,33 @@ const state: any = reactive({
     }
   }
 })
+
+const opts = computed(() => {
+  return {
+    title: {
+      label: "菜单名称",
+      comp: "el-input"
+    },
+    path: {
+      label: "菜单路径",
+      comp: "el-input"
+    }
+  }
+})
+// 最终参数获取
+const getQueryData = computed(() => {
+  const { title, path } = toRefs(state.queryData)
+  return {
+    title: title.value,
+    path: path.value
+  }
+})
+// 点击查询按钮
+const conditionEnter = (data: any) => {
+  console.log(1122, data)
+  state.queryData = data
+  console.log("最终参数", getQueryData.value)
+}
 onMounted(() => {
   getMenuData()
 })

@@ -19,6 +19,12 @@ TAdaptivePage/selection
 TAdaptivePage/lefttree
 :::
 
+### treeTable综合使用
+
+:::demo
+TAdaptivePage/treeTable
+:::
+
 ### TAdaptivePage 参数配置
 
 ---

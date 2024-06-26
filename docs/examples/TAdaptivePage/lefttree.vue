@@ -1,12 +1,13 @@
 <template>
   <t-adaptive-page
     class="menu_mange"
-    title="显示左侧tree结构"
+    tableTitle="显示左侧tree结构"
     isCopy
-    :queryPageStyle="{marginBottom: '0px'}"
     :table="state.table"
     :columns="state.table.columns"
     :opts="opts"
+    isShowWidthSize
+    :widthSize="2"
     @size-change="handlesSizeChange"
     @page-change="handlesCurrentChange"
     @submit="conditionEnter"
@@ -16,7 +17,7 @@
         ref="treeRef"
         class="filter-tree"
         :data="data"
-        :props="{children: 'children',label: 'label'}"
+        :props="{ children: 'children', label: 'label' }"
         default-expand-all
         :filter-node-method="filterNode"
       />
@@ -28,13 +29,13 @@
 </template>
 
 <script setup lang="tsx" name="accountManage">
-import { computed, onMounted, reactive, toRefs } from 'vue'
-import dataList from './dataList.json'
+import { computed, onMounted, reactive, toRefs } from "vue"
+import dataList from "./dataList.json"
 interface Tree {
-  [key: string]: any;
+  [key: string]: any
 }
 const handleDelete = (row: any) => {
-  console.log('点击删除', row)
+  console.log("点击删除", row)
 }
 const filterNode = (value: string, data: Tree) => {
   if (!value) return true
@@ -43,52 +44,52 @@ const filterNode = (value: string, data: Tree) => {
 const data: Tree[] = [
   {
     id: 1,
-    label: 'Level one 1',
+    label: "Level one 1",
     children: [
       {
         id: 4,
-        label: 'Level two 1-1',
+        label: "Level two 1-1",
         children: [
           {
             id: 9,
-            label: 'Level three 1-1-1',
+            label: "Level three 1-1-1"
           },
           {
             id: 10,
-            label: 'Level three 1-1-2',
-          },
-        ],
-      },
-    ],
+            label: "Level three 1-1-2"
+          }
+        ]
+      }
+    ]
   },
   {
     id: 2,
-    label: 'Level one 2',
+    label: "Level one 2",
     children: [
       {
         id: 5,
-        label: 'Level two 2-1',
+        label: "Level two 2-1"
       },
       {
         id: 6,
-        label: 'Level two 2-2',
-      },
-    ],
+        label: "Level two 2-2"
+      }
+    ]
   },
   {
     id: 3,
-    label: 'Level one 3',
+    label: "Level one 3",
     children: [
       {
         id: 7,
-        label: 'Level two 3-1',
+        label: "Level two 3-1"
       },
       {
         id: 8,
-        label: 'Level two 3-2',
-      },
-    ],
-  },
+        label: "Level two 3-2"
+      }
+    ]
+  }
 ]
 const state: any = reactive({
   queryData: {
@@ -97,25 +98,25 @@ const state: any = reactive({
     workshopNum: null,
     phonenumber: null,
     date1: null,
-    date: null,
+    date: null
   },
   multipleList: [
     {
-      name: '前纺一车间',
-      id: 'W1',
+      name: "前纺一车间",
+      id: "W1"
     },
     {
-      name: '前纺二车间',
-      id: 'W2',
+      name: "前纺二车间",
+      id: "W2"
     },
     {
-      name: '前纺三车间',
-      id: 'W3',
+      name: "前纺三车间",
+      id: "W3"
     },
     {
-      name: '前纺四车间',
-      id: 'W4',
-    },
+      name: "前纺四车间",
+      id: "W4"
+    }
   ],
   table: {
     currentPage: 1,
@@ -125,89 +126,87 @@ const state: any = reactive({
     data: [],
     // 表头数据
     columns: [
-      { prop: 'userName', label: '登录名', minWidth: 120 },
+      { prop: "userName", label: "登录名", minWidth: 120 },
       {
-        prop: 'nickName',
-        label: '姓名',
-        slotName: 'nickName',
+        prop: "nickName",
+        label: "姓名",
+        slotName: "nickName"
       },
-      { prop: 'deptName', label: '部门', minWidth: 120 },
-      { prop: 'roleName', label: '角色', minWidth: 120 },
-      { prop: 'descript', label: '描述', minWidth: 260 },
-      { prop: 'createTime', label: '创建时间', minWidth: 220 },
+      { prop: "deptName", label: "部门", minWidth: 120 },
+      { prop: "roleName", label: "角色", minWidth: 120 },
+      { prop: "descript", label: "描述", minWidth: 260 },
+      { prop: "createTime", label: "创建时间", minWidth: 220 }
     ],
     operator: [
       {
-        text: '编辑',
+        text: "编辑"
         // fun: edit
       },
       {
-        text: '重置密码',
+        text: "重置密码"
         // fun: resetHandle
       },
       {
-        text: '删除',
-        fun: handleDelete,
-      },
+        text: "删除",
+        fun: handleDelete
+      }
     ],
     // 操作列样式
     operatorConfig: {
-      fixed: 'right', // 固定列表右边（left则固定在左边）
+      fixed: "right", // 固定列表右边（left则固定在左边）
       width: 200,
-      label: '操作',
-    },
-  },
+      label: "操作"
+    }
+  }
 })
 
 const opts = computed(() => {
   return {
     userName: {
-      label: '登录名称',
-      comp: 'el-input',
+      label: "登录名称",
+      comp: "el-input"
     },
     nickName: {
-      label: '姓名',
-      comp: 'el-input',
+      label: "姓名",
+      comp: "el-input"
     },
     phonenumber: {
-      label: '手机号码',
-      comp: 'el-input',
+      label: "手机号码",
+      comp: "el-input"
     },
     date1: {
-      label: '日期组件使用',
-      comp: 't-date-picker',
+      label: "日期组件使用",
+      comp: "t-date-picker",
       bind: {
-        isPickerOptions: true,
-      },
+        isPickerOptions: true
+      }
     },
     workshopNum: {
-      label: 't-select使用',
-      placeholder: '请多选',
+      label: "t-select使用",
+      placeholder: "请多选",
       span: 2,
-      comp: 't-select',
+      comp: "t-select",
       isSelfCom: true,
       bind: {
-        valueCustom: 'id',
-        labelCustom: 'name',
+        valueCustom: "id",
+        labelCustom: "name",
         multiple: true,
-        optionSource: state.multipleList,
-      },
+        optionSource: state.multipleList
+      }
     },
     date: {
-      label: '创建时间',
-      comp: 't-date-picker',
+      label: "创建时间",
+      comp: "t-date-picker",
       span: 2,
       bind: {
-        type: 'daterange',
-      },
-    },
+        type: "daterange"
+      }
+    }
   }
 })
 // 最终参数获取
 const getQueryData = computed(() => {
-  const { userName, nickName, date, date1, workshopNum, phonenumber } = toRefs(
-    state.queryData
-  )
+  const { userName, nickName, date, date1, workshopNum, phonenumber } = toRefs(state.queryData)
   return {
     userName: userName.value,
     nickName: nickName.value,
@@ -217,14 +216,14 @@ const getQueryData = computed(() => {
     beginDate: date.value && date.value[0] ? date.value[0] : null,
     endDate: date.value && date.value[1] ? date.value[1] : null,
     pageNum: state.table.currentPage,
-    pageSize: state.table.pageSize,
+    pageSize: state.table.pageSize
   }
 })
 // 点击查询按钮
 const conditionEnter = (data: any) => {
   console.log(1122, data)
   state.queryData = data
-  console.log('最终参数', getQueryData.value)
+  console.log("最终参数", getQueryData.value)
   getData()
 }
 onMounted(() => {

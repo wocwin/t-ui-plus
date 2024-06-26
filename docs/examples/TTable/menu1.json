@@ -1,0 +1,2029 @@
+{
+  "code": 200,
+  "msg": "成功",
+  "success": true,
+  "data": [
+    {
+      "path": "/index",
+      "name": "home",
+      "component": "/home/index",
+      "meta": {
+        "icon": "HomeFilled",
+        "title": "首页",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": true,
+        "isKeepAlive": true
+      }
+    },
+    {
+      "path": "/map",
+      "name": "Map",
+      "redirect": "/map/circle",
+      "meta": {
+        "icon": "MapLocation",
+        "title": "高德地图",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      },
+      "children": [
+        {
+          "path": "/map/base",
+          "name": "base",
+          "component": "/map/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "基本使用",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/map/circle",
+          "name": "circle",
+          "component": "/map/circle/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "店面选址测算",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/map/circlemarker",
+          "name": "circlemarker",
+          "component": "/map/circlemarker/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "圆点标记",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/map/geocoding",
+          "name": "geocoding",
+          "component": "/map/geocoding/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "行政区选择",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/map/mapControl",
+          "name": "mapControl",
+          "component": "/map/mapControl/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "地图控件",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        }
+      ]
+    },
+    {
+      "path": "/productionScreen",
+      "name": "productionScreen",
+      "component": "/productionScreen/index",
+      "meta": {
+        "icon": "DataLine",
+        "title": "生产大屏",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      }
+    },
+    {
+      "path": "/echarts",
+      "name": "echarts",
+      "component": "/echarts/index",
+      "meta": {
+        "icon": "TrendCharts",
+        "title": "echarts图表",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      }
+    },
+    {
+      "path": "/editor",
+      "name": "editor",
+      "component": "/editor/index",
+      "meta": {
+        "icon": "MessageBox",
+        "title": "富文本编辑器",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      }
+    },
+    {
+      "path": "/auth",
+      "name": "auth",
+      "redirect": "/auth/menu",
+      "meta": {
+        "icon": "Lock",
+        "title": "权限管理",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      },
+      "children": [
+        {
+          "path": "/auth/menu",
+          "name": "authMenu",
+          "component": "/auth/menu/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "菜单权限",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/auth/button",
+          "name": "button",
+          "component": "/auth/button/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "按钮权限",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        }
+      ]
+    },
+    {
+      "path": "/t-ui-plus",
+      "name": "TuiPlus",
+      "redirect": "/t-ui-plus/base",
+      "meta": {
+        "icon": "Tickets",
+        "title": "TuiPlus综合使用",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      },
+      "children": [
+        {
+          "path": "/t-ui-plus/base",
+          "name": "superDemo",
+          "component": "/super/base/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "常规页面",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/t-ui-plus/form",
+          "name": "formDemo",
+          "component": "/super/form/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "弹窗表单",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/t-ui-plus/module-form",
+          "name": "moduleFormDemo",
+          "component": "/super/moduleForm/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "模块编辑",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          },
+          "children": [
+            {
+              "path": "/t-ui-plus/module-form/edit",
+              "name": "moduleFormDemoEdit",
+              "component": "/super/moduleForm/edit",
+              "meta": {
+                "icon": "Menu",
+                "title": "新增模块编辑",
+                "isLink": "",
+                "isHide": true,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true,
+                "activeMenu": "/super/moduleForm"
+              }
+            },
+            {
+              "path": "/t-ui-plus/module-form/detail",
+              "name": "moduleFormDemoDetail",
+              "component": "/super/moduleForm/detail",
+              "meta": {
+                "icon": "Menu",
+                "title": "模块详情",
+                "isLink": "",
+                "isHide": true,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true,
+                "activeMenu": "/super/moduleForm"
+              }
+            }
+          ]
+        },
+        {
+          "path": "/t-ui-plus/table",
+          "name": "TuiPlusTableDemo",
+          "redirect": "/t-ui-plus/table/multilevelHeader",
+          "meta": {
+            "icon": "Menu",
+            "title": "复杂Table页面",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          },
+          "children": [
+            {
+              "path": "/t-ui-plus/table/multilevelHeader",
+              "name": "multilevelHeader",
+              "component": "/super/table/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "多级表头",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true,
+                "activeMenu": "/super/table"
+              }
+            },
+            {
+              "path": "/t-ui-plus/table/singleEdit",
+              "name": "singleEditDemo",
+              "component": "/super/table/singleEdit",
+              "meta": {
+                "icon": "Menu",
+                "title": "单元格编辑",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true,
+                "activeMenu": "/super/table"
+              }
+            },
+            {
+              "path": "/t-ui-plus/table/multileHeadEdit",
+              "name": "multileHeadEditDemo",
+              "component": "/super/table/multileHeadEdit",
+              "meta": {
+                "icon": "Menu",
+                "title": "多级表头单元格编辑",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true,
+                "activeMenu": "/super/table"
+              }
+            },
+            {
+              "path": "/t-ui-plus/table/singleEditRules",
+              "name": "singleEditRulesDemo",
+              "component": "/super/table/singleEditRules",
+              "meta": {
+                "icon": "Menu",
+                "title": "单元格编辑规则校验",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true,
+                "activeMenu": "/super/table"
+              }
+            },
+            {
+              "path": "/t-ui-plus/table/treeTable",
+              "name": "treeTableDemo",
+              "component": "/super/table/treeTable",
+              "meta": {
+                "icon": "Menu",
+                "title": "Tree-Table",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true,
+                "activeMenu": "/super/table"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/assembly",
+      "name": "assembly",
+      "meta": {
+        "icon": "Briefcase",
+        "title": "常用组件",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      },
+      "children": [
+        {
+          "path": "/assembly/t-form",
+          "name": "TForm",
+          "redirect": "/assembly/t-form/base",
+          "meta": {
+            "icon": "Tickets",
+            "title": "TForm表单组件",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          },
+          "children": [
+            {
+              "path": "/assembly/t-form/base",
+              "name": "baseDemo",
+              "component": "/TForm/base/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "基本表单",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-form/comUse",
+              "name": "comUse",
+              "component": "/TForm/comUse/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "配合组件使用",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-form/echo",
+              "name": "echo",
+              "component": "/TForm/echo/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "回显",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-form/eventHandle",
+              "name": "eventHandle",
+              "component": "/TForm/eventHandle/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "集成事件使用",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-form/isHideItem",
+              "name": "isHideItem",
+              "component": "/TForm/isHideItem/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "动态显示隐藏项",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-form/isTrim",
+              "name": "isTrim",
+              "component": "/TForm/isTrim/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "去除空格",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-form/labelPosition",
+              "name": "labelPosition",
+              "component": "/TForm/labelPosition/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "对齐方式",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-form/labelRender",
+              "name": "labelRenderForm",
+              "component": "/TForm/labelRender/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "自定义label",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-form/rules",
+              "name": "rules",
+              "component": "/TForm/rules/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "规则校验",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-form/slotName",
+              "name": "slotNameForm",
+              "component": "/TForm/slotName/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "表单插槽渲染",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-form/textShow",
+              "name": "textShow",
+              "component": "/TForm/textShow/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "文本显示",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-form/widthSize",
+              "name": "widthSize",
+              "component": "/TForm/widthSize/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "每行展示项",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            }
+          ]
+        },
+        {
+          "path": "/assembly/t-select-table",
+          "name": "TSelectTable",
+          "redirect": "/assembly/t-select-table/radio",
+          "meta": {
+            "icon": "MessageBox",
+            "title": "下拉表格组件",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          },
+          "children": [
+            {
+              "path": "/assembly/t-select-table/radio",
+              "name": "radioSelectTable",
+              "component": "/TSelectTable/radio",
+              "meta": {
+                "icon": "Menu",
+                "title": "单选",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-select-table/radioKeyup",
+              "name": "radioKeyupSelectTable",
+              "component": "/TSelectTable/radioKeyup",
+              "meta": {
+                "icon": "Menu",
+                "title": "单选-键盘事件",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-select-table/dynamic",
+              "name": "dynamic",
+              "component": "/TSelectTable/dynamic",
+              "meta": {
+                "icon": "Menu",
+                "title": "单选--动态数据",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-select-table/dynamicMultiple",
+              "name": "dynamicMultiple",
+              "component": "/TSelectTable/dynamicMultiple",
+              "meta": {
+                "icon": "Menu",
+                "title": "多选--动态",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-select-table/isShowFirstColumn",
+              "name": "isShowFirstColumn",
+              "component": "/TSelectTable/isShowFirstColumn",
+              "meta": {
+                "icon": "Menu",
+                "title": "不显示首列单选",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-select-table/radioDefaultSelectVal",
+              "name": "radioDefaultSelectVal",
+              "component": "/TSelectTable/radioDefaultSelectVal",
+              "meta": {
+                "icon": "Menu",
+                "title": "单选（默认选中）",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-select-table/multipleDefaultSelectVal",
+              "name": "multipleDefaultSelectVal",
+              "component": "/TSelectTable/multipleDefaultSelectVal",
+              "meta": {
+                "icon": "Menu",
+                "title": "多选（默认选中）",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-select-table/multiple",
+              "name": "selectTableMultiple",
+              "component": "/TSelectTable/multiple",
+              "meta": {
+                "icon": "Menu",
+                "title": "多选",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-select-table/isShowPagination",
+              "name": "isShowPagination",
+              "component": "/TSelectTable/isShowPagination",
+              "meta": {
+                "icon": "Menu",
+                "title": "分页功能",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-select-table/isShowQuery",
+              "name": "isShowQuery",
+              "component": "/TSelectTable/isShowQuery",
+              "meta": {
+                "icon": "Menu",
+                "title": "显示查询条件",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-select-table/isShowQueryMultiple",
+              "name": "isShowQueryMultiple",
+              "component": "/TSelectTable/isShowQueryMultiple",
+              "meta": {
+                "icon": "Menu",
+                "title": "是否显示下拉框",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-select-table/isShowQueryBtnBind",
+              "name": "isShowQueryBtnBind",
+              "component": "/TSelectTable/isShowQueryBtnBind",
+              "meta": {
+                "icon": "Menu",
+                "title": "按钮自定义",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-select-table/isShowQuerySpan",
+              "name": "isShowQuerySpan",
+              "component": "/TSelectTable/isShowQuerySpan",
+              "meta": {
+                "icon": "Menu",
+                "title": "样式布局配置",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            }
+          ]
+        },
+        {
+          "path": "/assembly/t-table",
+          "name": "TTable",
+          "redirect": "/assembly/t-table/base",
+          "meta": {
+            "icon": "Menu",
+            "title": "TTable组件",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          },
+          "children": [
+            {
+              "path": "/assembly/t-table/base",
+              "name": "baseTTable",
+              "component": "/TTable/base/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "基本表格",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-table/border",
+              "name": "border",
+              "component": "/TTable/border/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "边框表格",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-table/columnSetting",
+              "name": "columnSetting",
+              "component": "/TTable/columnSetting/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "显示隐藏列",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-table/copy",
+              "name": "copy",
+              "component": "/TTable/copy/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "单元格复制",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-table/filters",
+              "name": "filters",
+              "component": "/TTable/filters/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "某列过滤",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-table/headMerge",
+              "name": "headMerge",
+              "component": "/TTable/headMerge/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "多级表头",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-table/operator",
+              "name": "operator",
+              "component": "/TTable/operator/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "表格操作",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-table/pagination",
+              "name": "pagination",
+              "component": "/TTable/pagination/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "表格分页",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-table/radio",
+              "name": "radio",
+              "component": "/TTable/radio/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "单选",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-table/renderCol",
+              "name": "renderCol",
+              "component": "/TTable/renderCol/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "render渲染",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-table/renderHeader",
+              "name": "renderHeader",
+              "component": "/TTable/renderHeader/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "自定义表头",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-table/selection",
+              "name": "selection",
+              "component": "/TTable/selection/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "多选",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-table/singleEdit",
+              "name": "singleEdit",
+              "component": "/TTable/singleEdit/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "单元格单独编辑",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-table/singleEditCell",
+              "name": "singleEditCell",
+              "component": "/TTable/singleEditCell/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "单元格编辑",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-table/slotName",
+              "name": "slotName",
+              "component": "/TTable/slotName/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "插槽渲染",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            }
+          ]
+        },
+        {
+          "path": "/assembly/t-query-condition",
+          "name": "TQueryCondition",
+          "redirect": "/assembly/t-query-condition/base",
+          "meta": {
+            "icon": "MessageBox",
+            "title": "条件查询组件",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          },
+          "children": [
+            {
+              "path": "/assembly/t-query-condition/base",
+              "name": "baseQueryDemo",
+              "component": "/TQueryCondition/base/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "基本使用",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-query-condition/comUse",
+              "name": "queryComUse",
+              "component": "/TQueryCondition/comUse/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "配合组件使用",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-query-condition/isExpansion",
+              "name": "isExpansion",
+              "component": "/TQueryCondition/isExpansion/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "默认展开",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-query-condition/labelRender",
+              "name": "labelRender",
+              "component": "/TQueryCondition/labelRender/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "自定义label",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-query-condition/slotName",
+              "name": "slotNameQuery",
+              "component": "/TQueryCondition/slotName/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "插槽渲染",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            }
+          ]
+        },
+        {
+          "path": "/assembly/t-module-form",
+          "name": "TModuleForm",
+          "redirect": "/assembly/t-module-form-index",
+          "meta": {
+            "icon": "Tickets",
+            "title": "模块表单组件",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          },
+          "children": [
+            {
+              "path": "/assembly/t-module-form/t-module-form-index",
+              "name": "TModuleFormFormindex",
+              "component": "/TModuleForm/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "表单-基本",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-module-form/t-module-form-slotName",
+              "name": "TModuleFormFormslotName",
+              "component": "/TModuleForm/slotName",
+              "meta": {
+                "icon": "Menu",
+                "title": "表单-模块插槽",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-module-form/t-module-form-disabled",
+              "name": "TModuleFormFormdisabled",
+              "component": "/TModuleForm/disabled",
+              "meta": {
+                "icon": "Menu",
+                "title": "表单-模块是否展开",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-module-form/t-module-form-labelPosition",
+              "name": "TModuleFormFormlabelPosition",
+              "component": "/TModuleForm/labelPosition",
+              "meta": {
+                "icon": "Menu",
+                "title": "表单-对齐方式",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-module-form/t-module-form-rules",
+              "name": "TModuleFormFormrules",
+              "component": "/TModuleForm/rules",
+              "meta": {
+                "icon": "Menu",
+                "title": "表单-表单验证",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-module-form/t-module-form-validateError",
+              "name": "TModuleFormFormvalidateError",
+              "component": "/TModuleForm/validateError",
+              "meta": {
+                "icon": "Menu",
+                "title": "表单-校验错误提示",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-module-form/t-module-form-footer",
+              "name": "TModuleFormFormfooter",
+              "component": "/TModuleForm/footer",
+              "meta": {
+                "icon": "Menu",
+                "title": "表单-自定义底部按钮",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-module-form/t-module-form-tabs",
+              "name": "TModuleFormFormtabs",
+              "component": "/TModuleForm/tabs",
+              "meta": {
+                "icon": "Menu",
+                "title": "表单-显示tabs",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-module-form/t-module-form-isGoBackEvent  ",
+              "name": "TModuleFormFormisGoBackEvent",
+              "component": "/TModuleForm/isGoBackEvent",
+              "meta": {
+                "icon": "Menu",
+                "title": "表单-自定义返回事件",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-module-form/t-module-form-isShowBack",
+              "name": "TModuleFormFormisShowBack",
+              "component": "/TModuleForm/isShowBack",
+              "meta": {
+                "icon": "Menu",
+                "title": "表单-没有返回icon",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-module-form/t-module-form-extra",
+              "name": "TModuleFormFormextra",
+              "component": "/TModuleForm/extra",
+              "meta": {
+                "icon": "Menu",
+                "title": "表单-Title右侧插槽",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-module-form/t-module-form-titleBtn",
+              "name": "TModuleFormFormtitleBtn",
+              "component": "/TModuleForm/titleBtn",
+              "meta": {
+                "icon": "Menu",
+                "title": "表单-模块Title右侧插槽",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-module-form/t-module-form-detail",
+              "name": "TModuleFormDetailsdetail",
+              "component": "/TModuleForm/detail",
+              "meta": {
+                "icon": "Menu",
+                "title": "详情-基本使用",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-module-form/t-module-form-detailspan",
+              "name": "TModuleFormDetailsdetailspan",
+              "component": "/TModuleForm/detailspan",
+              "meta": {
+                "icon": "Menu",
+                "title": "详情-span设置",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-module-form/t-module-form-tooltip",
+              "name": "TModuleFormDetailstooltip",
+              "component": "/TModuleForm/tooltip",
+              "meta": {
+                "icon": "Menu",
+                "title": "详情-提示项",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-module-form/t-module-form-detailslot",
+              "name": "TModuleFormDetailsdetailslot",
+              "component": "/TModuleForm/detailslot",
+              "meta": {
+                "icon": "Menu",
+                "title": "详情-模块插槽",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-module-form/t-module-form-detailslotName",
+              "name": "TModuleFormDetailsdetailslotName",
+              "component": "/TModuleForm/detailslotName",
+              "meta": {
+                "icon": "Menu",
+                "title": "详情-value插槽",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-module-form/t-module-form-detaildisabled",
+              "name": "TModuleFormDetailsdetaildisabled",
+              "component": "/TModuleForm/detaildisabled",
+              "meta": {
+                "icon": "Menu",
+                "title": "详情-模块禁止收缩",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-module-form/t-module-form-detailTitleBtn",
+              "name": "TModuleFormDetailsdetailTitleBtn",
+              "component": "/TModuleForm/detailTitleBtn",
+              "meta": {
+                "icon": "Menu",
+                "title": "详情-模块Title右侧插槽",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            }
+          ]
+        },
+        {
+          "path": "/assembly/t-select",
+          "name": "TSelect",
+          "redirect": "/assembly/t-select/single",
+          "meta": {
+            "icon": "MessageBox",
+            "title": "下拉选择组件",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          },
+          "children": [
+            {
+              "path": "/assembly/t-select/single",
+              "name": "single",
+              "component": "/tuiplus/TSelect/single",
+              "meta": {
+                "icon": "Menu",
+                "title": "单选",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-select/singePagination",
+              "name": "singePagination",
+              "component": "/tuiplus/TSelect/singePagination",
+              "meta": {
+                "icon": "Menu",
+                "title": "单选分页",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-select/useVirtual",
+              "name": "useVirtual",
+              "component": "/tuiplus/TSelect/useVirtual",
+              "meta": {
+                "icon": "Menu",
+                "title": "单选虚拟列表",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-select/multiple",
+              "name": "multiple",
+              "component": "/tuiplus/TSelect/multiple",
+              "meta": {
+                "icon": "Menu",
+                "title": "多选",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-select/multipleCollapseTags",
+              "name": "multipleCollapseTags",
+              "component": "/tuiplus/TSelect/multipleCollapseTags",
+              "meta": {
+                "icon": "Menu",
+                "title": "多选Tag",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-select/pagination",
+              "name": "pagination",
+              "component": "/tuiplus/TSelect/pagination",
+              "meta": {
+                "icon": "Menu",
+                "title": "多选分页",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-select/useVirtualMultiple",
+              "name": "useVirtualMultiple",
+              "component": "/tuiplus/TSelect/useVirtualMultiple",
+              "meta": {
+                "icon": "Menu",
+                "title": "多选虚拟列表",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            }
+          ]
+        },
+        {
+          "path": "/assembly/t-detail",
+          "name": "TDetail",
+          "redirect": "/assembly/t-detail/base",
+          "meta": {
+            "icon": "MessageBox",
+            "title": "详情组件",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          },
+          "children": [
+            {
+              "path": "/assembly/t-detail/base",
+              "name": "baseTDetail",
+              "component": "/tuiplus/TDetail/base/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "基本使用",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-detail/border",
+              "name": "borderTDetail",
+              "component": "/tuiplus/TDetail/border/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "边框",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-detail/descColumn",
+              "name": "descColumn",
+              "component": "/tuiplus/TDetail/descColumn/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "一行展示项",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-detail/dictionaryEcho",
+              "name": "dictionaryEcho",
+              "component": "/tuiplus/TDetail/dictionaryEcho/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "字典显示",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-detail/slotName",
+              "name": "slotNameTDetail",
+              "component": "/tuiplus/TDetail/slotName/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "插槽显示",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-detail/tooltip",
+              "name": "tooltip",
+              "component": "/tuiplus/TDetail/tooltip/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "tip提示",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-detail/vertical",
+              "name": "vertical",
+              "component": "/tuiplus/TDetail/vertical/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "垂直显示",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            }
+          ]
+        },
+        {
+          "path": "/assembly/t-step-wizard",
+          "name": "TStepWizard",
+          "redirect": "/assembly/t-step-wizard/index",
+          "meta": {
+            "icon": "MessageBox",
+            "title": "步骤组件",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          },
+          "children": [
+            {
+              "path": "/assembly/t-step-wizard/index",
+              "name": "baseTDetail",
+              "component": "/tuiplus/TStepWizard/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "基本使用",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-step-wizard/demo",
+              "name": "borderTDetail",
+              "component": "/tuiplus/TStepWizard/demo",
+              "meta": {
+                "icon": "Menu",
+                "title": "element页面",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            }
+          ]
+        },
+        {
+          "path": "/assembly/draggable",
+          "name": "draggable",
+          "component": "/tuiplus/draggable/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "拖拽组件",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/assembly/t-antd-select-table",
+          "name": "TAntdSelectTable",
+          "redirect": "/assembly/t-antd-select-table/radio",
+          "meta": {
+            "icon": "MessageBox",
+            "title": "Antd下拉选择表格",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          },
+          "children": [
+            {
+              "path": "/assembly/t-antd-select-table/radio",
+              "name": "radioTAntdSelectTable",
+              "component": "/tuiplus/TAntdSelectTable/radio",
+              "meta": {
+                "icon": "Menu",
+                "title": "单选",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-antd-select-table/isKeyup",
+              "name": "isKeyupTAntdSelectTable",
+              "component": "/tuiplus/TAntdSelectTable/isKeyup",
+              "meta": {
+                "icon": "Menu",
+                "title": "单选-键盘事件",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-antd-select-table/radiopagination",
+              "name": "radiopaginationTAntdSelectTable",
+              "component": "/tuiplus/TAntdSelectTable/radiopagination",
+              "meta": {
+                "icon": "Menu",
+                "title": "单选--分页",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-antd-select-table/radiodefaultSelectVal",
+              "name": "radiodefaultSelectValTAntdSelectTable",
+              "component": "/tuiplus/TAntdSelectTable/radiodefaultSelectVal",
+              "meta": {
+                "icon": "Menu",
+                "title": "单选-默认选中",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-antd-select-table/multiple",
+              "name": "multipleTAntdSelectTable",
+              "component": "/tuiplus/TAntdSelectTable/multiple",
+              "meta": {
+                "icon": "Menu",
+                "title": "多选",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-antd-select-table/multiplepagination",
+              "name": "multiplepaginationTAntdSelectTable",
+              "component": "/tuiplus/TAntdSelectTable/multiplepagination",
+              "meta": {
+                "icon": "Menu",
+                "title": "多选-分页",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/assembly/t-antd-select-table/multipledefaultSelectVal",
+              "name": "multipledefaultSelectValTAntdSelectTable",
+              "component": "/tuiplus/TAntdSelectTable/multipledefaultSelectVal",
+              "meta": {
+                "icon": "Menu",
+                "title": "多选--默认选中",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/menu",
+      "name": "menu",
+      "redirect": "/menu/menu1",
+      "meta": {
+        "icon": "List",
+        "title": "菜单嵌套",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      },
+      "children": [
+        {
+          "path": "/menu/menu1",
+          "name": "menu1",
+          "component": "/menu/menu1/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "菜单1",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/menu/menu2",
+          "name": "menu2",
+          "redirect": "/menu/menu2/menu21",
+          "meta": {
+            "icon": "Menu",
+            "title": "菜单2",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          },
+          "children": [
+            {
+              "path": "/menu/menu2/menu21",
+              "name": "menu21",
+              "component": "/menu/menu2/menu21/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "菜单2-1",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            },
+            {
+              "path": "/menu/menu2/menu22",
+              "name": "menu22",
+              "redirect": "/menu/menu2/menu22/menu221",
+              "meta": {
+                "icon": "Menu",
+                "title": "菜单2-2",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              },
+              "children": [
+                {
+                  "path": "/menu/menu2/menu22/menu221",
+                  "name": "menu221",
+                  "component": "/menu/menu2/menu22/menu221/index",
+                  "meta": {
+                    "icon": "Menu",
+                    "title": "菜单2-2-1",
+                    "isLink": "",
+                    "isHide": false,
+                    "isFull": false,
+                    "isAffix": false,
+                    "isKeepAlive": true
+                  }
+                },
+                {
+                  "path": "/menu/menu2/menu22/menu222",
+                  "name": "menu222",
+                  "component": "/menu/menu2/menu22/menu222/index",
+                  "meta": {
+                    "icon": "Menu",
+                    "title": "菜单2-2-2",
+                    "isLink": "",
+                    "isHide": false,
+                    "isFull": false,
+                    "isAffix": false,
+                    "isKeepAlive": true
+                  }
+                }
+              ]
+            },
+            {
+              "path": "/menu/menu2/menu23",
+              "name": "menu23",
+              "component": "/menu/menu2/menu23/index",
+              "meta": {
+                "icon": "Menu",
+                "title": "菜单2-3",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true
+              }
+            }
+          ]
+        },
+        {
+          "path": "/menu/menu3",
+          "name": "menu3",
+          "component": "/menu/menu3/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "菜单3",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        }
+      ]
+    },
+    {
+      "path": "/system",
+      "name": "system",
+      "redirect": "/system/accountManage",
+      "meta": {
+        "icon": "Tools",
+        "title": "系统管理",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      },
+      "children": [
+        {
+          "path": "/system/accountManage",
+          "name": "accountManage",
+          "component": "/system/accountManage/index",
+          "meta": {
+            "icon": "User",
+            "title": "账号管理",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          },
+          "children": [
+            {
+              "path": "/system/accountManage/detail",
+              "name": "accountManageDetail",
+              "component": "/system/accountManage/detail",
+              "meta": {
+                "icon": "Menu",
+                "title": "子级账号管理详情",
+                "isLink": "",
+                "isHide": true,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true,
+                "activeMenu": "/system/accountManage"
+              }
+            }
+          ]
+        },
+        {
+          "path": "/system/accountManage/detail1",
+          "name": "accountManageDetail1",
+          "component": "/system/accountManage/detail1",
+          "meta": {
+            "icon": "Menu",
+            "title": "同级账号管理详情",
+            "isLink": "",
+            "isHide": true,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true,
+            "activeMenu": "/system/accountManage"
+          }
+        },
+        {
+          "path": "/system/roleManage",
+          "name": "roleManage",
+          "component": "/system/roleManage/index",
+          "meta": {
+            "icon": "UserFilled",
+            "title": "角色管理",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/system/menuMange",
+          "name": "menuMange",
+          "component": "/system/menuMange/index",
+          "meta": {
+            "icon": "Grid",
+            "title": "菜单管理",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/system/departmentManage",
+          "name": "departmentManage",
+          "component": "/system/departmentManage/index",
+          "meta": {
+            "icon": "Operation",
+            "title": "部门管理",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/system/dictManage",
+          "name": "dictManage",
+          "component": "/system/dictManage/index",
+          "meta": {
+            "icon": "SetUp",
+            "title": "字典管理",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/system/systemLog",
+          "name": "systemLog",
+          "component": "/system/systemLog/index",
+          "meta": {
+            "icon": "Memo",
+            "title": "系统日志",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        }
+      ]
+    }
+  ]
+}
