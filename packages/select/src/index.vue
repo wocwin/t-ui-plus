@@ -2,14 +2,15 @@
   <component
     :is="!useVirtual ? 'el-select' : 'el-select-v2'"
     popper-class="t_select"
+    ref="tselectRef"
     v-model="childSelectedValue"
     :options="!useVirtual ? null : optionSource"
     :style="{ width: width || '100%' }"
     @change="handlesChange"
-    @input="(e)=> emits('select-input', e.target.value)"
+    @input="handlesSelectInput"
     v-bind="{
       clearable: true,
-      filterable: true,
+      filterable: filterable,
       multiple: multiple,
       ...$attrs,
     }"
@@ -35,7 +36,7 @@
           <slot :name="name" v-bind="data" />
         </template>
       </el-option>
-      <div class="t_select__pagination" v-if="isShowPagination">
+      <div class="t_select__pagination" v-if="isShowPagination && filteredOptionsCount>0">
         <el-pagination
           v-model:current-page="paginationOption.currentPage"
           v-model:page-size="paginationOption.pageSize"
@@ -58,7 +59,7 @@
 </template>
 
 <script setup lang="ts" name="TSelect">
-import { computed, useSlots } from 'vue'
+import { computed, ref, useSlots } from 'vue'
 const props: any = defineProps({
   modelValue: {
     type: [String, Number, Array],
@@ -91,6 +92,11 @@ const props: any = defineProps({
     type: Array as unknown as any[],
     default: () => [],
   },
+  // 是否过滤默认开启
+  filterable: {
+    type: Boolean,
+    default: true,
+  },
   // 是否显示分页
   isShowPagination: {
     type: Boolean,
@@ -114,6 +120,8 @@ const props: any = defineProps({
     default: false,
   },
 })
+const tselectRef = ref()
+const filteredOptionsCount = ref(1)
 const slots = useSlots()
 // 抛出事件
 const emits = defineEmits([
@@ -122,6 +130,13 @@ const emits = defineEmits([
   'input',
   'select-input',
 ])
+const handlesSelectInput = (e: any) => {
+  if (props.filterable) {
+    // console.log("handlesSelectInput---tselectRef", tselectRef.value.filteredOptionsCount)
+    filteredOptionsCount.value = tselectRef.value.filteredOptionsCount
+  }
+  emits("select-input", e.target.value)
+}
 // vue3 v-model简写
 let childSelectedValue: any = computed({
   get() {
