@@ -134,14 +134,13 @@ const cancelAttrs = computed(() => {
 // 获取ref
 const tForm: any = ref<HTMLElement | null>(null)
 
-
 // 抛出事件
 const emits = defineEmits(["validateError", "back", "tabsChange"])
 // 点击保存
 const saveHandle = async () => {
-  let form = {}
-  let formError = {}
-  let formOpts = {}
+  let form = {} as any
+  let formError = {} as any
+  let formOpts = {} as any
   let successLength = 0
   loading.value = true
   // 过滤非插槽表单
@@ -193,23 +192,23 @@ const back = () => {
     history.go(-1)
   }
 }
-const show = formType => {
+const show = (formType: any) => {
   nextTick(() => {
     updateFormFields()
     props.formType = formType
   })
 }
 // 获取默认选中tab
-const setSelectedTab = key => {
+const setSelectedTab = (key: any) => {
   activeName.value = key
 }
 // 切换tab
-const tabsChange = tab => {
+const tabsChange = (tab: any) => {
   emits("tabsChange", tab)
 }
 // 清空表单
 const resetFormFields = () => {
-  let formOpts = {}
+  let formOpts = {} as any
   // 过滤非插槽表单
   Object.keys(attrs.formOpts).forEach(key => {
     if (attrs.formOpts[key].opts) {
@@ -222,7 +221,7 @@ const resetFormFields = () => {
 }
 // 清空校验规则
 const clearValidate = () => {
-  let formOpts = {}
+  let formOpts = {} as any
   // 过滤非插槽表单
   Object.keys(attrs.formOpts).forEach(key => {
     if (attrs.formOpts[key].opts) {
@@ -234,7 +233,7 @@ const clearValidate = () => {
   })
 }
 const updateFormFields = () => {
-  let formOpts = {}
+  let formOpts = {} as any
   // 过滤非插槽表单
   Object.keys(attrs.formOpts).forEach(key => {
     if (attrs.formOpts[key].opts) {
@@ -245,7 +244,7 @@ const updateFormFields = () => {
     tForm.value.getChildRef(formIndex).updateFields(false)
   })
 }
-const isShow = name => {
+const isShow = (name: string) => {
   return Object.keys(slots).includes(name)
 }
 // 暴露方法出去

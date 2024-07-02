@@ -31,26 +31,14 @@
     @keyup="selectKeyup"
   >
     <template #empty>
-      <div
-        class="t-table-select__table"
-        :style="{ width: tableWidth ? `${tableWidth}px` : '100%' }"
-      >
+      <div class="t-table-select__table" :style="{ width: tableWidth ? `${tableWidth}px` : '100%' }">
         <div class="table_query_condition" v-if="isShowQuery">
-          <t-query-condition
-            ref="tQueryConditionRef"
-            :boolEnter="false"
-            @handleEvent="handleEvent"
-            v-bind="$attrs"
-          >
+          <t-query-condition ref="tQueryConditionRef" :boolEnter="false" @handleEvent="handleEvent" v-bind="$attrs">
             <template v-for="(index, name) in slots" v-slot:[name]="data">
               <slot :name="name" v-bind="data"></slot>
             </template>
             <template #querybar v-if="isShowBlurBtn">
-              <el-button
-                v-bind="{ type: 'danger', ...btnBind }"
-                @click="blur"
-                >{{ btnBind.btnTxt || '关闭下拉框' }}</el-button
-              >
+              <el-button v-bind="{ type: 'danger', ...btnBind }" @click="blur">{{ btnBind.btnTxt || "关闭下拉框" }}</el-button>
               <slot name="querybar"></slot>
             </template>
           </t-query-condition>
@@ -62,7 +50,7 @@
           :class="{
             radioStyle: !multiple,
             highlightCurrentRow: isRadio,
-            keyUpStyle: isKeyup,
+            keyUpStyle: isKeyup
           }"
           highlight-current-row
           border
@@ -81,21 +69,12 @@
             :reserve-selection="reserveSelection"
             fixed
           ></el-table-column>
-          <el-table-column
-            type="radio"
-            width="55"
-            :label="radioTxt"
-            fixed
-            align="center"
-            v-if="!multiple && isShowFirstColumn"
-          >
+          <el-table-column type="radio" width="55" :label="radioTxt" fixed align="center" v-if="!multiple && isShowFirstColumn">
             <template #default="scope">
               <el-radio
                 v-model="radioVal"
                 :label="scope.$index + 1"
-                @click.stop="
-                  radioChangeHandle($event, scope.row, scope.$index + 1)
-                "
+                @click.stop="radioChangeHandle($event, scope.row, scope.$index + 1)"
               ></el-radio>
             </template>
           </el-table-column>
@@ -115,12 +94,7 @@
             <template #default="scope">
               <!-- render方式 -->
               <template v-if="item.render">
-                <render-col
-                  :column="item"
-                  :row="scope.row"
-                  :render="item.render"
-                  :index="scope.$index"
-                />
+                <render-col :column="item" :row="scope.row" :render="item.render" :index="scope.$index" />
               </template>
               <!-- 作用域插槽 -->
               <template v-if="item.slotName">
@@ -153,186 +127,176 @@
 </template>
 
 <script setup lang="ts" name="TSelectTable">
-import TQueryCondition from '../../query-condition/src/index.vue'
-import RenderCol from './renderCol.vue'
-import {
-  computed,
-  useAttrs,
-  useSlots,
-  ref,
-  watch,
-  nextTick,
-  reactive,
-  onMounted,
-  onUpdated,
-} from 'vue'
-import { ElMessage } from 'element-plus'
-import ClickOutside from '../../utils/directives/click-outside/index'
+import TQueryCondition from "../../query-condition/src/index.vue"
+import RenderCol from "./renderCol.vue"
+import { computed, useAttrs, useSlots, ref, watch, nextTick, reactive, onMounted, onUpdated } from "vue"
+import { ElMessage } from "element-plus"
+import ClickOutside from "../../utils/directives/click-outside/index"
 const props = defineProps({
   // input输入框的值（modelValue）
   inputValue: {
     type: [Array, String, Number, Boolean, Object],
-    default: undefined,
+    default: undefined
   },
   modelValue: {
     type: [Array, String, Number, Boolean, Object],
-    default: undefined,
+    default: undefined
   },
   // 是否显示input框回显
   isShowInput: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // input框的宽度
   inputWidth: {
     type: [String, Number],
-    default: 550,
+    default: 550
   },
   // input属性
   inputAttr: {
     type: Object,
     default: () => {
       return {}
-    },
+    }
   },
   // 选择值
   value: {
-    type: [String, Number, Array],
+    type: [String, Number, Array]
   },
   // table所需数据
   table: {
     type: Object,
     default: () => {
       return {}
-    },
+    }
   },
   // 表头数据
   columns: {
     type: Array as unknown as any[],
-    default: () => [],
+    default: () => []
   },
   // 单选文案
   radioTxt: {
     type: String,
-    default: '单选',
+    default: "单选"
   },
   // 是否显示搜索条件
   isShowQuery: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 是否清空搜索条件
   isClearQuery: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 是否显示隐藏下拉框按钮
   isShowBlurBtn: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 显示隐藏下拉框按钮属性
   btnBind: {
     type: Object,
     default: () => {
       return {
-        btnTxt: '关闭下拉框',
+        btnTxt: "关闭下拉框"
       }
-    },
+    }
   },
   // 单选框--是否开启点击整行选中
   rowClickRadio: {
     type: Boolean,
-    default: true,
+    default: true
   },
   // 是否显示首列
   isShowFirstColumn: {
     type: Boolean,
-    default: true,
+    default: true
   },
   // 是否过滤
   filterable: {
     type: Boolean,
-    default: true,
+    default: true
   },
   // 是否支持翻页选中
   reserveSelection: {
     type: Boolean,
-    default: true,
+    default: true
   },
   // 是否显示分页
   isShowPagination: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 是否自定义过滤
   filterMethod: {
-    type: Function,
+    type: Function
   },
   // 下拉数据指向的label/value
   keywords: {
     type: Object,
     default: () => {
       return {
-        label: 'label',
-        value: 'value',
+        label: "label",
+        value: "value"
       }
-    },
+    }
   },
   // 单选是否开启键盘事件
   isKeyup: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 多选
   multiple: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // select 宽度
   selectWidth: {
     type: [String, Number],
-    default: 550,
+    default: 550
   },
   // table宽度
   tableWidth: {
     type: [String, Number],
-    default: 550,
+    default: 550
   },
   // 是否始终显示下拉框
   selfExpanded: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 显示下拉框
   isExpanded: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 设置默认选中项--keywords.value值
   defaultSelectVal: {
     type: Array,
-    default: () => [],
-  },
+    default: () => []
+  }
 })
 const selectAttr = computed(() => {
   return {
     clearable: true,
-    ...useAttrs(),
+    ...useAttrs()
   }
 })
 // 自定义指令
 const vClickOutside = ClickOutside
 // 抛出事件
 const emits = defineEmits([
-  'page-change',
-  'selectionChange',
-  'radioChange',
-  'update:inputValue',
-  'input-focus',
-  'input-blur',
-  'input-clear',
-  'input-click',
+  "page-change",
+  "selectionChange",
+  "radioChange",
+  "update:inputValue",
+  "input-focus",
+  "input-blur",
+  "input-clear",
+  "input-click"
 ])
 const slots = useSlots()
 const isDefaultSelectVal = ref(true) // 是否已经重新选择了
@@ -340,7 +304,7 @@ const forbidden = ref(true) // 判断单选选中及取消选中
 const isRadio = ref(false)
 const isQueryVisible = ref(false) // 查询条件是否显示隐藏下拉框
 const isVisible = ref(false) // 是否显示隐藏下拉框
-const radioVal = ref('')
+const radioVal = ref("")
 const selectDefaultLabel: any = ref(props.modelValue) // 单选赋值
 // input回显值
 let selectInputVal: any = computed({
@@ -349,15 +313,15 @@ let selectInputVal: any = computed({
   },
   set(val) {
     // console.log(777, val)
-    emits('update:inputValue', val)
-  },
+    emits("update:inputValue", val)
+  }
 })
 const state: any = reactive({
   defaultSelectValue: props.defaultSelectVal, // 默认选中
   tableData: props.table.data, // table数据
   defaultValue: props.value,
   ids: [], // 多选id集合
-  tabularMap: {}, // 存储下拉tale的所有name
+  tabularMap: {} // 存储下拉tale的所有name
 })
 // 获取ref
 const selectRef: any = ref<HTMLElement | null>(null)
@@ -366,14 +330,13 @@ const tQueryConditionRef: any = ref<HTMLElement | null>(null)
 const nowIndex = ref(-1)
 watch(
   () => props.table.data,
-  (val) => {
+  val => {
     state.tableData = val
     nextTick(() => {
       state.tableData &&
         state.tableData.length > 0 &&
-        state.tableData.forEach((item) => {
-          state.tabularMap[item[props.keywords.value]] =
-            item[props.keywords.label]
+        state.tableData.forEach((item: { [x: string]: any }) => {
+          state.tabularMap[item[props.keywords.value]] = item[props.keywords.label]
         })
     })
   },
@@ -381,8 +344,8 @@ watch(
 )
 watch(
   () => props.defaultSelectVal,
-  (val) => {
-    console.log('props.defaultSelectVal---watch', val, isDefaultSelectVal.value)
+  val => {
+    console.log("props.defaultSelectVal---watch", val, isDefaultSelectVal.value)
     state.defaultSelectValue = val
     if (val.length > 0 && isDefaultSelectVal.value) {
       defaultSelect(val)
@@ -392,11 +355,7 @@ watch(
 )
 onMounted(() => {
   // 设置默认选中项（单选）
-  if (
-    state.defaultSelectValue &&
-    state.defaultSelectValue.length > 0 &&
-    isDefaultSelectVal.value
-  ) {
+  if (state.defaultSelectValue && state.defaultSelectValue.length > 0 && isDefaultSelectVal.value) {
     defaultSelect(state.defaultSelectValue)
   }
   if (props.selfExpanded) {
@@ -411,7 +370,7 @@ onUpdated(() => {
   }
 })
 // 表格显示隐藏回调
-const visibleChange = (visible) => {
+const visibleChange = (visible: boolean) => {
   // console.log('表格显示隐藏回调', visible)
   isVisible.value = visible
   if (isQueryVisible.value) {
@@ -419,26 +378,16 @@ const visibleChange = (visible) => {
   }
   // console.log('表格显示隐藏回调--222', visible)
   if (visible) {
-    if (
-      state.defaultSelectValue &&
-      state.defaultSelectValue.length > 0 &&
-      isDefaultSelectVal.value
-    ) {
+    if (state.defaultSelectValue && state.defaultSelectValue.length > 0 && isDefaultSelectVal.value) {
       defaultSelect(state.defaultSelectValue)
     }
     initTableData()
   } else {
-    if (
-      tQueryConditionRef.value &&
-      props.isShowQuery &&
-      props.isClearQuery &&
-      !selectRef.value.expanded &&
-      !props.selfExpanded
-    ) {
+    if (tQueryConditionRef.value && props.isShowQuery && props.isClearQuery && !selectRef.value.expanded && !props.selfExpanded) {
       tQueryConditionRef.value?.resetData()
     }
     findLabel()
-    filterMethodHandle('')
+    filterMethodHandle("")
   }
   if (props.selfExpanded) {
     selectRef.value.expanded = true
@@ -450,7 +399,7 @@ const handleEvent = () => {
   selectRef.value.expanded = true
 }
 // 条件查询组件的visible-change事件
-const queryVisibleChange = (val) => {
+const queryVisibleChange = (val: boolean) => {
   isQueryVisible.value = val
 }
 // el-select点击了空白区域
@@ -463,13 +412,9 @@ const closeBox = () => {
   if (tQueryConditionRef.value && props.isShowQuery) {
     selectRef.value.expanded = true
     Object.values(tQueryConditionRef.value?.props?.opts).map((val: any) => {
-      if (
-        val.comp.includes('select') ||
-        val.comp.includes('picker') ||
-        val.comp.includes('date')
-      ) {
+      if (val.comp.includes("select") || val.comp.includes("picker") || val.comp.includes("date")) {
         val.eventHandle = {
-          'visible-change': ($event) => queryVisibleChange($event),
+          "visible-change": ($event: boolean) => queryVisibleChange($event)
         }
         // queryVisibleChange(true)
         // isQueryVisible.value = true
@@ -484,16 +429,14 @@ const closeBox = () => {
   }
 }
 // 单选键盘事件
-const selectKeyup = (e) => {
+const selectKeyup = (e: { keyCode: any }) => {
   if (!props.multiple) {
     if (!props.isKeyup) return
     if (state.tableData.length === 0) return
     switch (e.keyCode) {
       case 40: // 下键
         if (state.tableData[nowIndex.value * 1 + 1] !== undefined) {
-          selectTable.value.setCurrentRow(
-            state.tableData[nowIndex.value * 1 + 1]
-          )
+          selectTable.value.setCurrentRow(state.tableData[nowIndex.value * 1 + 1])
           nowIndex.value = nowIndex.value * 1 + 1
         } else {
           nowIndex.value = 0
@@ -501,13 +444,8 @@ const selectKeyup = (e) => {
         }
         break
       case 38: // 上键
-        if (
-          state.tableData[nowIndex.value * 1 - 1] !== undefined &&
-          nowIndex.value > 0
-        ) {
-          selectTable.value.setCurrentRow(
-            state.tableData[nowIndex.value * 1 - 1]
-          )
+        if (state.tableData[nowIndex.value * 1 - 1] !== undefined && nowIndex.value > 0) {
+          selectTable.value.setCurrentRow(state.tableData[nowIndex.value * 1 - 1])
           nowIndex.value = nowIndex.value * 1 - 1
         } else {
           nowIndex.value = 0
@@ -524,18 +462,17 @@ const selectKeyup = (e) => {
 const findLabel = () => {
   nextTick(() => {
     if (props.multiple) {
-      selectRef.value.selected?.forEach((item) => {
+      selectRef.value.selected?.forEach((item: { currentLabel: any; value: any }) => {
         item.currentLabel = item.value
       })
     } else {
-      selectDefaultLabel.value =
-        (state.defaultValue && state.defaultValue[props.keywords.label]) || ''
+      selectDefaultLabel.value = (state.defaultValue && state.defaultValue[props.keywords.label]) || ""
     }
   })
 }
 
 // 当前页码
-const handlesCurrentChange = (val) => {
+const handlesCurrentChange = (val: any) => {
   if (props.multiple) {
     if (!props.reserveSelection) {
       clear()
@@ -543,13 +480,13 @@ const handlesCurrentChange = (val) => {
   } else {
     clear()
   }
-  emits('page-change', val)
+  emits("page-change", val)
 }
 // 默认选中（且只能默认选中第一页的数据）
-const defaultSelect = (defaultSelectVal) => {
+const defaultSelect = (defaultSelectVal: any[]) => {
   if (props.multiple) {
     let multipleList: any = []
-    defaultSelectVal.map((val) => {
+    defaultSelectVal.map(val => {
       state.tableData.forEach((row: any) => {
         if (val === row[props.keywords.value]) {
           multipleList.push(row)
@@ -557,24 +494,23 @@ const defaultSelect = (defaultSelectVal) => {
       })
     })
     setTimeout(() => {
-      state.defaultValue = multipleList.map(
-        (item) => item[props.keywords.label]
-      )
-      multipleList.forEach((row) => {
+      state.defaultValue = multipleList.map((item: { [x: string]: any }) => item[props.keywords.label])
+      multipleList.forEach((row: { [x: string]: any }) => {
         const arr = state.tableData.filter(
-          (item) => item[props.keywords.value] === row[props.keywords.value]
+          (item: { [x: string]: any }) => item[props.keywords.value] === row[props.keywords.value]
         )
         if (arr.length > 0) {
           selectTable.value.toggleRowSelection(arr[0], true)
         }
       })
-      selectRef.value?.selected?.forEach((item) => {
+      selectRef.value?.selected?.forEach((item: { currentLabel: any; value: any }) => {
         item.currentLabel = item.value
       })
     }, 0)
   } else {
-    let row, index
-    state.tableData.map((val, i) => {
+    let row = {} as any
+    let index: any
+    state.tableData.map((val: { [x: string]: any }, i: any) => {
       if (val[props.keywords.value] === defaultSelectVal[0]) {
         row = val
         index = i
@@ -585,55 +521,49 @@ const defaultSelect = (defaultSelectVal) => {
     setTimeout(() => {
       selectDefaultLabel.value = row && row[props.keywords.label]
     }, 0)
-    emits('radioChange', row, row && row[props.keywords.value])
+    emits("radioChange", row, row && row[props.keywords.value])
   }
 }
 // 复选框(多选)
-const handlesSelectionChange = (val) => {
+const handlesSelectionChange = (val: any[]) => {
   // console.log('复选框', val)
   isDefaultSelectVal.value = false
-  state.defaultValue = val.map((item) => item[props.keywords.label])
-  state.ids = val.map((item) => item[props.keywords.value])
+  state.defaultValue = val.map(item => item[props.keywords.label])
+  state.ids = val.map(item => item[props.keywords.value])
   if (val.length === 0) {
     isDefaultSelectVal.value = true
     state.defaultSelectValue = []
   }
-  emits('selectionChange', val, state.ids)
+  emits("selectionChange", val, state.ids)
 }
 // 设置table行class
-const getRowClassName = ({ row }) => {
-  if (
-    !props.multiple &&
-    JSON.stringify(row) === JSON.stringify(state.defaultValue)
-  ) {
-    return 'selected_row_style'
+const getRowClassName = ({ row }: any) => {
+  if (!props.multiple && JSON.stringify(row) === JSON.stringify(state.defaultValue)) {
+    return "selected_row_style"
   }
-  return ''
+  return ""
 }
 // 搜索后表格勾选不取消
-const getRowKey = (row) => {
+const getRowKey = (row: { [x: string]: any }) => {
   return row[props.keywords.value]
 }
 // 搜索过滤
-const filterMethodHandle = (val) => {
+const filterMethodHandle = (val: string) => {
   if (!props.filterable) return
   const tableData = JSON.parse(JSON.stringify(props.table?.data))
   if (tableData && tableData.length > 0) {
     if (!props.multiple) {
       if (val) {
-        radioVal.value = ''
+        radioVal.value = ""
       } else {
-        tableData.map((item, index) => {
-          if (
-            item[props.keywords.value] === selectDefaultLabel.value &&
-            selectDefaultLabel.value[props.keywords.value]
-          ) {
+        tableData.map((item: { [x: string]: any }, index: number | any) => {
+          if (item[props.keywords.value] === selectDefaultLabel.value && selectDefaultLabel.value[props.keywords.value]) {
             radioVal.value = index + 1
           }
         })
       }
     }
-    state.tableData = tableData.filter((item) => {
+    state.tableData = tableData.filter((item: { [x: string]: string | string[] }) => {
       if (item[props.keywords.label].includes(val)) {
         return item
       }
@@ -646,9 +576,9 @@ const initTableData = () => {
   // 表格默认赋值
   nextTick(() => {
     if (props.multiple) {
-      state.defaultValue?.forEach((row) => {
+      state.defaultValue?.forEach((row: { [x: string]: any }) => {
         const arr = state.tableData.filter(
-          (item) => item[props.keywords.value] === row[props.keywords.value]
+          (item: { [x: string]: any }) => item[props.keywords.value] === row[props.keywords.value]
         )
         if (arr.length > 0) {
           selectTable.value.toggleRowSelection(arr[0], true)
@@ -656,39 +586,38 @@ const initTableData = () => {
       })
     } else {
       const arr = state.tableData.filter(
-        (item) =>
-          item[props.keywords.value] === selectDefaultLabel.value &&
-          selectDefaultLabel.value[props.keywords.value]
+        (item: { [x: string]: any }) =>
+          item[props.keywords.value] === selectDefaultLabel.value && selectDefaultLabel.value[props.keywords.value]
       )
       selectTable.value.setCurrentRow(arr[0])
     }
   })
 }
 // 复制内容
-const copyDomText = (val) => {
+const copyDomText = (val: any) => {
   // 获取需要复制的元素以及元素内的文本内容
   const text = val
   // 添加一个input元素放置需要的文本内容
-  const input = document.createElement('input')
+  const input = document.createElement("input")
   input.value = text
   document.body.appendChild(input)
   // 选中并复制文本到剪切板
   input.select()
-  document.execCommand('copy')
+  document.execCommand("copy")
   // 移除input元素
   document.body.removeChild(input)
 }
 // 双击复制单元格内容
-const cellDblclick = (row, column) => {
+const cellDblclick = (row: { [x: string]: any }, column: { property: string | number }) => {
   try {
     copyDomText(row[column.property])
-    ElMessage.success('复制成功')
+    ElMessage.success("复制成功")
   } catch (e) {
-    ElMessage.error('复制失败')
+    ElMessage.error("复制失败")
   }
 }
 // 点击单选框单元格触发事件
-const radioChangeHandle = (event, row, index) => {
+const radioChangeHandle = (event: { preventDefault: () => void }, row: any, index: any) => {
   event.preventDefault()
   isDefaultSelectVal.value = false
   radioClick(row, index)
@@ -701,46 +630,45 @@ const isForbidden = () => {
   }, 0)
 }
 // 单选抛出事件radioChange
-const radioClick = (row, index) => {
+const radioClick = (row: { [x: string]: any }, index: string) => {
   forbidden.value = !!forbidden.value
   if (radioVal.value) {
     if (radioVal.value === index) {
-      radioVal.value = ''
+      radioVal.value = ""
       isForbidden()
       state.defaultValue = {}
       state.defaultSelectValue = []
       isDefaultSelectVal.value = true
-      emits('radioChange', {}, null) // 取消勾选就把回传数据清除
+      emits("radioChange", {}, null) // 取消勾选就把回传数据清除
       // blur()
     } else {
       isForbidden()
       radioVal.value = index
       state.defaultValue = row
-      emits('radioChange', row, row[props.keywords.value])
+      emits("radioChange", row, row[props.keywords.value])
       // blur()
     }
   } else {
     isForbidden()
     radioVal.value = index
     state.defaultValue = row
-    emits('radioChange', row, row[props.keywords.value])
+    emits("radioChange", row, row[props.keywords.value])
   }
   // 是否显示下拉框
   if (props.isExpanded) {
-    selectDefaultLabel.value =
-      (state.defaultValue && state.defaultValue[props.keywords.label]) || ''
+    selectDefaultLabel.value = (state.defaultValue && state.defaultValue[props.keywords.label]) || ""
     selectRef.value.expanded = true
   } else {
     blur()
   }
 }
 // 单击行
-const rowClick = async (row) => {
+const rowClick = async (row: { [x: string]: any }) => {
   if (!props.rowClickRadio) return
   if (!props.multiple) {
-    let rowIndex
+    let rowIndex: any
     // eslint-disable-next-line no-unused-expressions
-    props.table?.data.forEach((item, index) => {
+    props.table?.data.forEach((item: { [x: string]: any }, index: any) => {
       if (item[props.keywords.value] === row[props.keywords.value]) {
         // console.log('index', index)
         rowIndex = index
@@ -757,9 +685,9 @@ const rowClick = async (row) => {
   }
 }
 // tags删除后回调
-const removeTag = (tag) => {
-  const row = state.tableData.find((item) => item[props.keywords.label] === tag)
-  console.log('tags删除后回调', row)
+const removeTag = (tag: any) => {
+  const row = state.tableData.find((item: { [x: string]: any }) => item[props.keywords.label] === tag)
+  console.log("tags删除后回调", row)
   selectTable.value.toggleRowSelection(row, false)
   isDefaultSelectVal.value = true
 }
@@ -774,13 +702,13 @@ const clear = () => {
     // 取消高亮
     selectTable.value.setCurrentRow(-1)
     nowIndex.value = -1
-    radioVal.value = ''
+    radioVal.value = ""
     isDefaultSelectVal.value = true
     state.defaultSelectValue = []
     forbidden.value = false
     selectDefaultLabel.value = null
     state.defaultValue = null
-    emits('radioChange', {}, null)
+    emits("radioChange", {}, null)
   }
 }
 // 触发select隐藏
@@ -799,7 +727,7 @@ defineExpose({
   props,
   tQueryConditionRef,
   selectRef,
-  selectTable,
+  selectTable
 })
 </script>
 

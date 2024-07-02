@@ -31,12 +31,7 @@
         <template #default="scope">
           <!-- render渲染 -->
           <template v-if="val.render">
-            <render-col
-              :column="val"
-              :row="scope.row"
-              :render="val.render"
-              :index="scope.$index"
-            />
+            <render-col :column="val" :row="scope.row" :render="val.render" :index="scope.$index" />
           </template>
           <!-- 自定义插槽 -->
           <template v-if="val.slotNameMerge">
@@ -50,7 +45,7 @@
               v-model="scope.row[val.prop]"
               :prop="val.prop"
               :scope="scope"
-              @handleEvent="handleEvent($event, scope.$index)"
+              @handleEvent="({ type, val }:any) => emits('handleEvent', type, val, scope.$index)"
               v-bind="$attrs"
             >
               <template v-for="(index, name) in slots" v-slot:[name]="data">
@@ -68,28 +63,24 @@
 </template>
 
 <script setup lang="tsx" name="TTableColumn">
-import SingleEditCell from './singleEditCell.vue'
-import RenderCol from './renderCol.vue'
-import { useSlots } from 'vue'
+import SingleEditCell from "./singleEditCell.vue"
+import RenderCol from "./renderCol.vue"
+import { useSlots } from "vue"
 defineProps({
   item: {
     type: Object,
     default: () => {
       return {}
     },
-    required: true,
+    required: true
   },
   align: {
     type: String,
-    default: 'center',
-  },
+    default: "center"
+  }
 })
 // 抛出事件
-const emits = defineEmits(['handleEvent'])
+const emits = defineEmits(["handleEvent"])
 // 获取所有插槽
 const slots = useSlots()
-// 单个编辑事件
-const handleEvent = ({ type, val }, index) => {
-  emits('handleEvent', { type, val, index })
-}
 </script>

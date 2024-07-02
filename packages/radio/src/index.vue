@@ -19,46 +19,46 @@
 </template>
 
 <script setup lang="ts" name="TRadio">
-import { computed, ref } from 'vue'
-import type { PropType } from 'vue'
-import type { OptionsProps } from './radio'
+import { computed, ref } from "vue"
+import type { PropType } from "vue"
+import type { OptionsProps } from "./radio"
 const radioProps = defineProps({
   type: {
-    type: String as PropType<'radio' | 'button'>,
-    validator: (value: string) => ['radio', 'button'].includes(value),
-    default: 'radio',
+    type: String as PropType<"radio" | "button">,
+    validator: (value: string) => ["radio", "button"].includes(value),
+    default: "radio"
   },
   options: {
     type: Array as unknown as any[],
-    default: () => [],
+    default: () => []
   },
   size: {
-    type: String as PropType<'large' | 'default' | 'small'>,
-    validator: (value: string) => ['large', 'default', 'small'].includes(value),
-    default: 'default',
+    type: String as PropType<"large" | "default" | "small">,
+    validator: (value: string) => ["large", "default", "small"].includes(value),
+    default: "default"
   },
   border: {
     type: Boolean,
-    default: false,
+    default: false
   },
   props: {
     type: Object,
-    default: () => ({}),
-  },
+    default: () => ({})
+  }
 })
 const radioType = computed(() => {
   const obj = {
-    radio: 'el-radio',
-    button: 'el-radio-button',
+    radio: "el-radio",
+    button: "el-radio-button"
   }
-  return obj[radioProps.type] ?? 'el-radio'
+  return obj[radioProps.type] ?? "el-radio"
 })
 const optionsProps = ref<OptionsProps>({
   ...{
-    value: 'value',
-    label: 'label',
-    disabled: 'disabled',
+    value: "value",
+    label: "label",
+    disabled: "disabled"
   },
-  ...radioProps.props,
+  ...radioProps.props
 })
 </script>

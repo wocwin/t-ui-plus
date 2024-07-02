@@ -11,19 +11,15 @@
         <slot :name="item.slotName"></slot>
       </template>
       <span class="tip_class" v-else>
-        <el-tooltip
-          v-bind="$attrs"
-          v-if="item.tooltip"
-          :placement="item.placement || 'bottom'"
-        >
+        <el-tooltip v-bind="$attrs" v-if="item.tooltip" :placement="item.placement || 'bottom'">
           <span>
             <span v-if="item.filters && item.filters.list">
               {{
                 constantEscape(
                   dataList[item.fieldName],
                   listTypeInfo[item.filters.list],
-                  item.filters.key || 'value',
-                  item.filters.label || 'label'
+                  item.filters.key || "value",
+                  item.filters.label || "label"
                 )
               }}
             </span>
@@ -37,9 +33,7 @@
             </el-icon>
           </span>
           <template #content v-if="item.tooltip">
-            <span v-if="typeof item.tooltip === 'string'">{{
-              item.tooltip
-            }}</span>
+            <span v-if="typeof item.tooltip === 'string'">{{ item.tooltip }}</span>
             <template v-else-if="typeof item.tooltip === 'function'">
               <render-tooltip :render="item.tooltip" :item="item" />
             </template>
@@ -51,8 +45,8 @@
               constantEscape(
                 dataList[item.fieldName],
                 listTypeInfo[item.filters.list],
-                item.filters.key || 'value',
-                item.filters.label || 'label'
+                item.filters.key || "value",
+                item.filters.label || "label"
               )
             }}
           </span>
@@ -64,26 +58,26 @@
 </template>
 
 <script setup lang="ts" name="TDetail">
-import RenderTooltip from './renderTooltip.vue'
-const props = defineProps({
+import RenderTooltip from "./renderTooltip.vue"
+defineProps({
   descColumn: {
     type: Number,
-    default: 4,
+    default: 4
   },
   // 后台数据源
   dataList: {
     type: Object,
-    default: () => ({}),
+    default: () => ({})
   },
   // 需要解析的下拉数据
   listTypeInfo: {
     type: Object,
-    default: () => ({}),
+    default: () => ({})
   },
   descData: {
     type: Array as unknown as any[],
-    default: () => [],
-  },
+    default: () => []
+  }
 })
 /**
  * 下拉数据回显中文过滤器
@@ -92,13 +86,8 @@ const props = defineProps({
  * @param [String,Number] key  数据源的key字段（默认：value）
  * @param {String} label  数据源的label字段（默认：label）
  */
-const constantEscape = (
-  value: any,
-  list: any[],
-  key: string | number,
-  label: string | number
-) => {
-  const res = list.find((item) => {
+const constantEscape = (value: any, list: any[], key: string | number, label: string | number) => {
+  const res = list.find(item => {
     return item[key] === value
   })
   return res && res[label]

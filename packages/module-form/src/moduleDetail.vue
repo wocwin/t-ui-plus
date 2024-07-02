@@ -6,7 +6,7 @@
         :class="{
           noTitle: !val.title,
           disabledStyle: val.disabled,
-          title_bold: titleBold,
+          title_bold: titleBold
         }"
         :key="index"
         :name="val.name"
@@ -32,17 +32,17 @@
 </template>
 
 <script setup lang="ts" name="moduleDetail">
-import { computed, useAttrs, useSlots } from 'vue'
+import { computed, useAttrs, useSlots } from "vue"
 const props: any = defineProps({
   descData: {
     type: Object,
-    default: () => ({}),
+    default: () => ({})
   },
   // 是否Title文字加粗
   titleBold: {
     type: Boolean,
-    default: false,
-  },
+    default: false
+  }
 })
 const slots = useSlots()
 const attrs: any = useAttrs()
@@ -53,7 +53,7 @@ const defaultActiveKey = computed({
   },
   set(val) {
     return val
-  },
+  }
 })
 </script>
 <style lang="scss">

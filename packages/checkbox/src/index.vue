@@ -19,46 +19,46 @@
 </template>
 
 <script setup lang="ts" name="TCheckbox">
-import { computed, ref } from 'vue'
-import type { PropType } from 'vue'
-import type { OptionsProps, CheckboxItem } from './checkbox'
+import { computed, ref } from "vue"
+import type { PropType } from "vue"
+import type { OptionsProps, CheckboxItem } from "./checkbox"
 const checkProps = defineProps({
   type: {
-    type: String as PropType<'check' | 'button'>,
-    validator: (value: string) => ['check', 'button'].includes(value),
-    default: 'check',
+    type: String as PropType<"check" | "button">,
+    validator: (value: string) => ["check", "button"].includes(value),
+    default: "check"
   },
   options: {
     type: Array as unknown as any[],
-    default: () => [],
+    default: () => []
   },
   size: {
-    type: String as PropType<'large' | 'default' | 'small'>,
-    validator: (value: string) => ['large', 'default', 'small'].includes(value),
-    default: 'default',
+    type: String as PropType<"large" | "default" | "small">,
+    validator: (value: string) => ["large", "default", "small"].includes(value),
+    default: "default"
   },
   border: {
     type: Boolean,
-    default: false,
+    default: false
   },
   props: {
     type: Object,
-    default: () => ({}),
-  },
+    default: () => ({})
+  }
 })
 const checkType = computed(() => {
   const obj = {
-    check: 'el-checkbox',
-    button: 'el-checkbox-button',
+    check: "el-checkbox",
+    button: "el-checkbox-button"
   }
-  return obj[checkProps.type] ?? 'el-checkbox'
+  return obj[checkProps.type] ?? "el-checkbox"
 })
 const optionsProps = ref<OptionsProps>({
   ...{
-    value: 'value',
-    label: 'label',
-    disabled: 'disabled',
+    value: "value",
+    label: "label",
+    disabled: "disabled"
   },
-  ...checkProps.props,
+  ...checkProps.props
 })
 </script>

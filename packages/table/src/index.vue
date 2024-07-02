@@ -3,21 +3,10 @@
     <div
       class="header_wrap"
       :style="{
-        paddingBottom:
-          tableTitle ||
-          title ||
-          isShow('title') ||
-          isShow('toolbar') ||
-          isSlotToolbar ||
-          columnSetting
-            ? '10px'
-            : 0,
+        paddingBottom: tableTitle || title || isShow('title') || isShow('toolbar') || isSlotToolbar || columnSetting ? '10px' : 0
       }"
     >
-      <div
-        class="header_title"
-        v-if="tableTitle || title || $slots.title || isSlotTitle"
-      >
+      <div class="header_title" v-if="tableTitle || title || $slots.title || isSlotTitle">
         <template v-if="$slots.title || isSlotTitle">
           <slot name="title" />
         </template>
@@ -33,16 +22,11 @@
         <div
           class="header_right_wrap"
           :style="{
-            marginLeft: isShow('toolbar') || isSlotToolbar ? '12px' : 0,
+            marginLeft: isShow('toolbar') || isSlotToolbar ? '12px' : 0
           }"
         >
           <slot name="btn" />
-          <column-set
-            v-if="columnSetting"
-            v-bind="$attrs"
-            :columns="renderColumns"
-            @columnSetting="(v) => (state.columnSet = v)"
-          />
+          <column-set v-if="columnSetting" v-bind="$attrs" :columns="renderColumns" @columnSetting="v => (state.columnSet = v)" />
         </div>
       </div>
     </div>
@@ -57,7 +41,7 @@
         row_sort: isRowSort,
         tree_style: isTree,
         highlightCurrentRow: highlightCurrentRow,
-        radioStyle: radioStyleClass,
+        radioStyle: radioStyleClass
       }"
       v-bind="$attrs"
       :highlight-current-row="highlightCurrentRow"
@@ -79,7 +63,7 @@
             align: table.firstColumn.align || align,
             'reserve-selection': table.firstColumn.isPaging || false,
             selectable: table.firstColumn.selectable,
-            ...table.firstColumn.bind,
+            ...table.firstColumn.bind
           }"
         />
         <el-table-column
@@ -95,13 +79,10 @@
               '',
             fixed: table.firstColumn.fixed,
             align: table.firstColumn.align || align,
-            ...table.firstColumn.bind,
+            ...table.firstColumn.bind
           }"
         >
-          <template
-            #default="scope"
-            v-if="table.firstColumn.type !== 'selection'"
-          >
+          <template #default="scope" v-if="table.firstColumn.type !== 'selection'">
             <el-radio
               v-if="table.firstColumn.type === 'radio'"
               v-model="radioVal"
@@ -110,9 +91,7 @@
             ></el-radio>
             <template v-if="table.firstColumn.type === 'index'">
               <span v-if="isPaginationCumulative && isShowPagination">
-                {{
-                  (table.currentPage - 1) * table.pageSize + scope.$index + 1
-                }}
+                {{ (table.currentPage - 1) * table.pageSize + scope.$index + 1 }}
               </span>
               <span v-else>{{ scope.$index + 1 }}</span>
             </template>
@@ -136,7 +115,7 @@
               align: item.align || 'center',
               'reserve-selection': item.isPaging || false,
               selectable: item.selectable,
-              ...item.bind,
+              ...item.bind
             }"
           />
           <el-table-column
@@ -153,7 +132,7 @@
                 '',
               fixed: item.fixed,
               align: item.align || 'center',
-              ...item.bind,
+              ...item.bind
             }"
           >
             <template #default="scope" v-if="item.type !== 'selection'">
@@ -165,9 +144,7 @@
               ></el-radio>
               <template v-if="item.type === 'index'">
                 <span v-if="isPaginationCumulative && isShowPagination">
-                  {{
-                    (table.currentPage - 1) * table.pageSize + scope.$index + 1
-                  }}
+                  {{ (table.currentPage - 1) * table.pageSize + scope.$index + 1 }}
                 </span>
                 <span v-else>{{ scope.$index + 1 }}</span>
               </template>
@@ -193,37 +170,20 @@
             :sortable="item.sort || sortable"
             :align="item.align || align"
             :fixed="item.fixed"
-            :show-overflow-tooltip="
-              item.noShowTip === false
-                ? item.noShowTip
-                : item.canEdit
-                ? false
-                : true
-            "
+            :show-overflow-tooltip="item.noShowTip === false ? item.noShowTip : item.canEdit ? false : true"
             v-bind="{ ...item.bind, ...$attrs }"
           >
             <template #header v-if="item.headerRequired || item.renderHeader">
-              <render-header
-                v-if="item.renderHeader"
-                :column="item"
-                :render="item.renderHeader"
-              />
+              <render-header v-if="item.renderHeader" :column="item" :render="item.renderHeader" />
               <div style="display: inline" v-if="item.headerRequired">
-                <span style="color: #f56c6c; font-size: 16px; margin-right: 3px"
-                  >*</span
-                >
+                <span style="color: #f56c6c; font-size: 16px; margin-right: 3px">*</span>
                 <span>{{ item.label }}</span>
               </div>
             </template>
             <template #default="scope">
               <!-- render渲染 -->
               <template v-if="item.render">
-                <render-col
-                  :column="item"
-                  :row="scope.row"
-                  :render="item.render"
-                  :index="scope.$index"
-                />
+                <render-col :column="item" :row="scope.row" :render="item.render" :index="scope.$index" />
               </template>
               <!-- 自定义插槽 -->
               <template v-if="item.slotName">
@@ -236,7 +196,7 @@
                   :rules="isEditRules ? table.rules : {}"
                   class="t_edit_cell_form"
                   :class="{
-                    t_edit_cell_form_rules: isEditRules,
+                    t_edit_cell_form_rules: isEditRules
                   }"
                   :ref="(el:any) => handleRef(el, scope,item)"
                   @submit.prevent
@@ -246,15 +206,13 @@
                     v-model="scope.row[item.prop]"
                     :prop="item.prop"
                     :scope="scope"
+                    :indexColumns="index"
                     :ref="(el:any) => handleEditTableRef(el, scope,item)"
                     @handleEvent="handleEvent($event, scope.$index)"
                     @keyup-handle="handleKeyup"
                     v-bind="$attrs"
                   >
-                    <template
-                      v-for="(index, name) in slots"
-                      v-slot:[name]="data"
-                    >
+                    <template v-for="(index, name) in slots" v-slot:[name]="data">
                       <slot :name="name" v-bind="data"></slot>
                     </template>
                   </single-edit-cell>
@@ -266,32 +224,19 @@
                   constantEscape(
                     scope.row[item.prop],
                     table.listTypeInfo[item.filters.list],
-                    item.filters.key || 'value',
-                    item.filters.label || 'label'
+                    item.filters.key || "value",
+                    item.filters.label || "label"
                   )
                 }}
               </template>
-              <div
-                v-if="
-                  !item.render &&
-                  !item.slotName &&
-                  !item.canEdit &&
-                  !item.filters
-                "
-              >
+              <div v-if="!item.render && !item.slotName && !item.canEdit && !item.filters">
                 <span>{{ scope.row[item.prop] }}</span>
               </div>
             </template>
           </el-table-column>
         </template>
         <!-- 表头合并单元格 -->
-        <t-table-column
-          v-else
-          :key="index + 'm'"
-          :item="item"
-          :align="align"
-          v-bind="$attrs"
-        >
+        <t-table-column v-else :key="index + 'm'" :item="item" :align="align" v-bind="$attrs">
           <template v-for="(index, name) in slots" v-slot:[name]="data">
             <slot :name="name" v-bind="data"></slot>
           </template>
@@ -310,33 +255,23 @@
         class-name="operator"
       >
         <template #default="scope">
-          <div
-            class="operator_btn"
-            :style="table.operatorConfig && table.operatorConfig.style"
-          >
+          <div class="operator_btn" :style="table.operatorConfig && table.operatorConfig.style">
             <template v-for="(item, index) in table.operator" :key="index">
               <el-button
-                @click="
-                  item.fun && item.fun(scope.row, scope.$index, state.tableData)
-                "
+                @click="item.fun && item.fun(scope.row, scope.$index, state.tableData)"
                 v-bind="{
                   type: 'primary',
                   link: true,
                   text: true,
                   size: 'small',
                   ...item.bind,
-                  ...$attrs,
+                  ...$attrs
                 }"
                 v-if="checkIsShow(scope, item)"
               >
                 <!-- render渲染 -->
                 <template v-if="item.render">
-                  <render-col
-                    :column="item"
-                    :row="scope.row"
-                    :render="item.render"
-                    :index="scope.$index"
-                  />
+                  <render-col :column="item" :row="scope.row" :render="item.render" :index="scope.$index" />
                 </template>
                 <span v-if="!item.render">{{ item.text }}</span>
               </el-button>
@@ -363,10 +298,7 @@
       <slot name="pagination"></slot>
     </el-pagination>
     <!-- 表格底部按钮 -->
-    <footer
-      class="handle_wrap"
-      v-if="isShowFooterBtn && state.tableData && state.tableData.length > 0"
-    >
+    <footer class="handle_wrap" v-if="isShowFooterBtn && state.tableData && state.tableData.length > 0">
       <slot name="footer" />
       <div v-if="!slots.footer">
         <el-button type="primary" @click="save">保存</el-button>
@@ -376,23 +308,16 @@
 </template>
 
 <script setup lang="ts" name="TTable">
-import {
-  computed,
-  ref,
-  watch,
-  useSlots,
-  reactive,
-  onMounted,
-  onUpdated,
-} from 'vue'
-import type { PropType } from 'vue'
-import { ElMessage } from 'element-plus'
-import Sortable from 'sortablejs'
-import SingleEditCell from './singleEditCell.vue'
-import ColumnSet from './ColumnSet.vue'
-import RenderCol from './renderCol.vue'
-import RenderHeader from './renderHeader.vue'
-import TTableColumn from './TTableColumn.vue'
+import { computed, ref, watch, useSlots, reactive, onMounted, onUpdated } from "vue"
+import type { PropType } from "vue"
+import { ElMessage } from "element-plus"
+import Sortable from "sortablejs"
+import TTableColumn from "./TTableColumn.vue"
+import SingleEditCell from "./singleEditCell.vue"
+import ColumnSet from "./ColumnSet.vue"
+import RenderCol from "./renderCol.vue"
+import RenderHeader from "./renderHeader.vue"
+
 const props: any = defineProps({
   // table所需数据
   table: {
@@ -400,14 +325,14 @@ const props: any = defineProps({
     default: () => {
       return {}
     },
-    required: true,
+    required: true
   },
   // 表头数据
   columns: {
     type: Array,
     default: () => {
       return []
-    },
+    }
     // required: true
   },
   // 按钮权限数据集
@@ -415,90 +340,90 @@ const props: any = defineProps({
     type: Array,
     default: () => {
       return []
-    },
+    }
   },
   // 表格标题
   title: {
-    type: String,
+    type: String
   },
   tableTitle: String,
   // table对齐方式
   align: {
-    type: String as PropType<'left' | 'center' | 'right'>,
+    type: String as PropType<"left" | "center" | "right">,
     // validator: (value: string) => ['left' | 'center' | 'right' | ''].includes(value),
-    default: 'center',
+    default: "center"
   },
   // 是否开启Tree-table
   isTree: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 是否开启行拖拽
   isRowSort: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 是否复制单元格
   isCopy: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 是否开启点击整行选中单选框
   rowClickRadio: {
     type: Boolean,
-    default: true,
+    default: true
   },
   // 设置默认选中项（单选）defaultRadioCol值必须大于0！
   defaultRadioCol: Number,
   // 序列号显示是否分页累加
   isPaginationCumulative: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 是否显示分页
   isShowPagination: {
     type: Boolean,
-    default: true,
+    default: true
   },
   // 是否开启编辑保存按钮
   isShowFooterBtn: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 是否显示设置（隐藏/显示列）
   columnSetting: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 是否高亮选中行
   highlightCurrentRow: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 是否开启合计行隐藏复选框/单选框/序列
   isTableColumnHidden: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 如果设置为 'custom'，则代表用户希望远程排序，需要监听 Table 的 sort-change 事件
   sortable: {
-    type: [Boolean, String],
+    type: [Boolean, String]
   },
   // 单元格编辑是否开启键盘事件
   isKeyup: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // TAdaptivePage组件是否使用了Toolbar插槽
   isSlotToolbar: Boolean,
   // TAdaptivePage组件是否使用了title插槽
-  isSlotTitle: Boolean,
+  isSlotTitle: Boolean
 })
 // 初始化数据
 let state = reactive({
   tableData: props.table.data,
   columnSet: [],
-  copyTableData: [], // 键盘事件
+  copyTableData: [] // 键盘事件
 })
 // 单选框
 const radioVal = ref(null)
@@ -511,37 +436,26 @@ const TTableBox: any = ref<HTMLElement | null>(null)
 // 获取form ref
 const formRef: any = ref({})
 // 动态form ref
-const handleRef = (el, scope, item) => {
+const handleRef = (el: any, scope: { $index: any; column: { property: any } }, item: { prop: any }) => {
   if (el) {
-    formRef.value[
-      `formRef-${scope.$index}-${item.prop || scope.column.property}`
-    ] = el
+    formRef.value[`formRef-${scope.$index}-${item.prop || scope.column.property}`] = el
   }
 }
 // 获取所有单元格编辑组件 ref
 const editTableRef: any = ref({})
 // 动态单元格编辑组件 ref
-const handleEditTableRef = (el, scope, item) => {
+const handleEditTableRef = (el: any, scope: { $index: any; column: { property: any } }, item: { prop: any }) => {
   if (el) {
-    editTableRef.value[
-      `singleEditRef-${scope.$index}-${item.prop || scope.column.property}`
-    ] = el
+    editTableRef.value[`singleEditRef-${scope.$index}-${item.prop || scope.column.property}`] = el
   }
 }
 // 抛出事件
-const emits = defineEmits([
-  'save',
-  'page-change',
-  'handleEvent',
-  'radioChange',
-  'rowSort',
-  'validateError',
-])
+const emits = defineEmits(["save", "page-change", "handleEvent", "radioChange", "rowSort", "validateError"])
 // 获取所有插槽
 const slots = useSlots()
 watch(
   () => props.table.data,
-  (val) => {
+  val => {
     // console.log(111, val)
     state.tableData = val
   },
@@ -559,14 +473,14 @@ onUpdated(() => {
   TTable.value.doLayout()
 })
 // 默认选中（单选项）---index必须是大于等于1（且只能默认选中第一页的数据）
-const defaultRadioSelect = (index) => {
+const defaultRadioSelect = (index: number | any) => {
   radioVal.value = index
-  emits('radioChange', state.tableData[index - 1], radioVal.value)
+  emits("radioChange", state.tableData[index - 1], radioVal.value)
 }
 // 行拖拽
 const initSort = () => {
   if (!props.isRowSort) return
-  const el = TTableBox.value.querySelector('.el-table__body-wrapper tbody')
+  const el = TTableBox.value.querySelector(".el-table__body-wrapper tbody")
   // console.log('3333', el)
   Sortable.create(el, {
     animation: 150, // 动画
@@ -575,11 +489,11 @@ const initSort = () => {
     // dragClass: 'dragClass', // 设置拖拽样式类名
     // ghostClass: 'ghostClass', // 设置拖拽停靠样式类名
     // chosenClass: 'chosenClass', // 设置选中样式类名
-    onEnd: (evt) => {
+    onEnd: (evt: { oldIndex: any; newIndex: any }) => {
       const curRow = state.tableData.splice(evt.oldIndex, 1)[0]
       state.tableData.splice(evt.newIndex, 0, curRow)
-      emits('rowSort', state.tableData)
-    },
+      emits("rowSort", state.tableData)
+    }
   })
 }
 
@@ -591,8 +505,8 @@ const initSort = () => {
  * @param [String,Number] key  数据源的key字段（默认：value）
  * @param {String} label  数据源的label字段（默认：label）
  */
-const constantEscape = (value, list, key, label) => {
-  const res = list.find((item) => {
+const constantEscape = (value: any, list: any[], key: string | number, label: string | number) => {
+  const res = list.find(item => {
     return item[key] === value
   })
   return res && res[label]
@@ -600,16 +514,15 @@ const constantEscape = (value, list, key, label) => {
 // // 第一列单选显示类
 const radioStyleClass = computed(() => {
   if (Array.isArray(props.table.firstColumn)) {
-    return props.table.firstColumn.some((item) => item.type === 'radio')
+    return props.table.firstColumn.some((item: { type: string }) => item.type === "radio")
   } else {
-    return props.table.firstColumn && props.table.firstColumn.type === 'radio'
+    return props.table.firstColumn && props.table.firstColumn.type === "radio"
   }
 })
 // 单元格编辑是否存在校验
 const isEditRules = computed(() => {
   return (
-    (props.table.rules && Object.keys(props.table.rules).length > 0) ||
-    props.columns.some((item: any) => item?.configEdit?.rules)
+    (props.table.rules && Object.keys(props.table.rules).length > 0) || props.columns.some((item: any) => item?.configEdit?.rules)
   )
 })
 // 所有列（表头数据）
@@ -633,7 +546,7 @@ const isTableBorder = computed(() => {
   return props.columns.some((item: any) => item.children)
 })
 // 单元格编辑键盘事件
-const handleKeyup = (event, index, key) => {
+const handleKeyup = (event: { keyCode: number }, index: number, key: string) => {
   if (!props.isKeyup) return
   state.copyTableData = JSON.parse(JSON.stringify(state.tableData))
   // 向上键
@@ -644,10 +557,10 @@ const handleKeyup = (event, index, key) => {
     }
     if (doms.length) {
       let dom
-      if (doms[index - 1].getElementsByTagName('input')[0]) {
-        dom = doms[index - 1].getElementsByTagName('input')[0]
+      if (doms[index - 1].getElementsByTagName("input")[0]) {
+        dom = doms[index - 1].getElementsByTagName("input")[0]
       } else {
-        dom = doms[index - 1].getElementsByTagName('textarea')[0]
+        dom = doms[index - 1].getElementsByTagName("textarea")[0]
       }
       dom.focus()
       // dom.select()
@@ -661,10 +574,10 @@ const handleKeyup = (event, index, key) => {
     }
     if (doms.length) {
       let dom
-      if (doms[index + 1].getElementsByTagName('input')[0]) {
-        dom = doms[index + 1].getElementsByTagName('input')[0]
+      if (doms[index + 1].getElementsByTagName("input")[0]) {
+        dom = doms[index + 1].getElementsByTagName("input")[0]
       } else {
-        dom = doms[index + 1].getElementsByTagName('textarea')[0]
+        dom = doms[index + 1].getElementsByTagName("textarea")[0]
       }
       dom.focus()
       // dom.select()
@@ -681,7 +594,7 @@ const handleKeyup = (event, index, key) => {
         ++index
       }
     } else {
-      keyName.map((v, i) => {
+      keyName.map((v: string, i: number) => {
         if (v === key) {
           num = i + 1
         }
@@ -690,10 +603,10 @@ const handleKeyup = (event, index, key) => {
     let doms = document.getElementsByClassName(keyName[num])
     if (doms.length) {
       let dom
-      if (doms[index].getElementsByTagName('input')[0]) {
-        dom = doms[index].getElementsByTagName('input')[0]
+      if (doms[index].getElementsByTagName("input")[0]) {
+        dom = doms[index].getElementsByTagName("input")[0]
       } else {
-        dom = doms[index].getElementsByTagName('textarea')[0]
+        dom = doms[index].getElementsByTagName("textarea")[0]
       }
       dom.focus()
       // dom.select()
@@ -701,18 +614,16 @@ const handleKeyup = (event, index, key) => {
   }
 }
 // 合并行隐藏复选框/单选框
-const cellClassNameFuc = ({ row }) => {
+const cellClassNameFuc = ({ row }: any) => {
   if (!props.isTableColumnHidden) {
     return false
   }
   if (
     state.tableData.length -
-      (state.tableData.length - props.table.pageSize < 0
-        ? 1
-        : state.tableData.length - props.table.pageSize) <=
+      (state.tableData.length - props.table.pageSize < 0 ? 1 : state.tableData.length - props.table.pageSize) <=
     row.rowIndex
   ) {
-    return 'table_column_hidden'
+    return "table_column_hidden"
   }
 }
 // forbidden取值（选择单选或取消单选）
@@ -723,74 +634,74 @@ const isForbidden = () => {
   }, 0)
 }
 // 单选抛出事件radioChange
-const radioClick = (row, index) => {
+const radioClick = (row: any, index: any) => {
   forbidden.value = !!forbidden.value
   if (radioVal.value) {
     if (radioVal.value === index) {
       radioVal.value = null
       isForbidden()
       // 取消勾选就把回传数据清除
-      emits('radioChange', null, radioVal.value)
+      emits("radioChange", null, radioVal.value)
     } else {
       isForbidden()
       radioVal.value = index
-      emits('radioChange', row, radioVal.value)
+      emits("radioChange", row, radioVal.value)
     }
   } else {
     isForbidden()
     radioVal.value = index
-    emits('radioChange', row, radioVal.value)
+    emits("radioChange", row, radioVal.value)
   }
 }
 // 点击单选框单元格触发事件
-const radioHandleChange = (row, index) => {
+const radioHandleChange = (row: any, index: any) => {
   if (props.rowClickRadio) {
     return
   }
   radioClick(row, index)
 }
 // 点击某行事件
-const rowClick = (row) => {
+const rowClick = (row: any) => {
   if (!props.rowClickRadio) {
     return
   }
   radioClick(row, state.tableData.indexOf(row) + 1)
 }
 // 复制内容
-const copyDomText = (val) => {
+const copyDomText = (val: any) => {
   // 获取需要复制的元素以及元素内的文本内容
   const text = val
   // 添加一个input元素放置需要的文本内容
-  const input = document.createElement('input')
+  const input = document.createElement("input")
   input.value = text
   document.body.appendChild(input)
   // 选中并复制文本到剪切板
   input.select()
-  document.execCommand('copy')
+  document.execCommand("copy")
   // 移除input元素
   document.body.removeChild(input)
 }
 // 双击复制单元格内容
-const cellDblclick = (row, column) => {
+const cellDblclick = (row: { [x: string]: any }, column: { property: string | number }) => {
   if (!props.isCopy) {
     return false
   }
   try {
     copyDomText(row[column.property])
-    ElMessage.success('复制成功')
+    ElMessage.success("复制成功")
   } catch (e) {
-    ElMessage.error('复制失败')
+    ElMessage.error("复制失败")
   }
 }
 // 判断是否使用了某个插槽
-const isShow = (name) => {
+const isShow = (name: string) => {
   return Object.keys(slots).includes(name)
 }
 
 // 整行编辑返回数据
 const save = () => {
   if (!isEditRules.value) {
-    emits('save', state.tableData)
+    emits("save", state.tableData)
     return
   }
   // 表单规则校验
@@ -800,23 +711,21 @@ const save = () => {
   let propError: any = []
   let propLabelError: any = []
   // 获取所有的form ref
-  const refList = Object.keys(formRef.value).filter((item) =>
-    item.includes('formRef')
-  )
+  const refList = Object.keys(formRef.value).filter(item => item.includes("formRef"))
   // 获取单独设置规则项
   const arr = renderColumns.value
-    .filter((val) => {
+    .filter((val: { configEdit: { rules: any } }) => {
       if (val.configEdit?.rules) {
         return val
       }
     })
-    .map((item) => item.prop)
+    .map((item: { prop: any }) => item.prop)
   // 获取整体设置规则
   const arr1 = props.table.rules && Object.keys(props.table.rules)
   // 获取最终设置了哪些规则（其值是设置的--prop）
   const newArr = [...arr, ...arr1]
   // 最终需要校验的ref
-  newArr.map((val) => {
+  newArr.map(val => {
     refList.map((item: any) => {
       if (item.includes(val)) {
         rulesList.push(item)
@@ -825,8 +734,8 @@ const save = () => {
   })
   // console.log('最终需要校验的数据', rulesList, formRef.value)
   // 表单都校验
-  rulesList.map((val) => {
-    formRef.value[val].validate((valid) => {
+  rulesList.map((val: string | number) => {
+    formRef.value[val].validate((valid: any) => {
       if (valid) {
         successLength = successLength + 1
       } else {
@@ -839,51 +748,60 @@ const save = () => {
     if (successLength == rulesList.length) {
       if (isEditRules.value) {
         // console.log('所有表单都校验成功--', state.tableData)
-        emits('save', state.tableData)
+        emits("save", state.tableData)
       }
     } else {
       // 校验未通过的prop
-      rulesError.map((item) => {
-        newArr.map((val) => {
+      rulesError.map((item: string | any[]) => {
+        newArr.map(val => {
           if (item.includes(val)) {
             propError.push(val)
           }
         })
       })
       // 去重获取校验未通过的prop--label
-      Array.from(new Set(propError)).map((item) => {
-        renderColumns.value.map((val) => {
+      Array.from(new Set(propError)).map(item => {
+        renderColumns.value.map((val: { prop: unknown; label: any }) => {
           if (item === val.prop) {
             propLabelError.push(val.label)
           }
         })
       })
-      console.log('校验未通过的prop--label', propLabelError)
-      emits('validateError', propLabelError)
+      console.log("校验未通过的prop--label", propLabelError)
+      emits("validateError", propLabelError)
     }
   }, 300)
 }
 // 是否显示表格操作按钮
-const checkIsShow = (scope, item) => {
+const checkIsShow = (
+  scope: { row: { [s: string]: unknown } | ArrayLike<unknown> | any },
+  item: {
+    noshow: any
+    show: { val: string | any[]; key: string | number }
+    hasPermi: any
+    field: string | number
+    isField: string | number
+  }
+) => {
   let isNoshow = false
   if (item.noshow) {
     // 解决双重判断循环递归
     let nushowFun = JSON.parse(JSON.stringify(item.noshow))
     // 双重判断
-    nushowFun.map((rs) => {
+    nushowFun.map((rs: { isShow: string; val: string | any[]; key: string | number }) => {
       rs.isShow =
-        typeof rs.val === 'string'
-          ? rs.val === 'isHasVal'
+        typeof rs.val === "string"
+          ? rs.val === "isHasVal"
             ? scope.row[rs.key]
-              ? 'true'
-              : 'false'
-            : 'true'
+              ? "true"
+              : "false"
+            : "true"
           : rs.val.includes(scope.row[rs.key])
-          ? 'false'
-          : 'true'
+          ? "false"
+          : "true"
     })
-    isNoshow = nushowFun.every((key) => {
-      return key.isShow === 'true'
+    isNoshow = nushowFun.every((key: { isShow: string }) => {
+      return key.isShow === "true"
     })
   } else {
     isNoshow = true
@@ -891,16 +809,14 @@ const checkIsShow = (scope, item) => {
   // 单独判断
   let isShow = !item.show || item.show.val.includes(scope.row[item.show.key])
   // 按钮权限
-  let isPermission = item.hasPermi
-    ? props.btnPermissions?.includes(item.hasPermi)
-    : true
+  let isPermission = item.hasPermi ? props.btnPermissions?.includes(item.hasPermi) : true
   // table页面合计
-  let totalTxt = Object.values(scope.row).every((key) => {
-    return key !== '当页合计'
+  let totalTxt = Object.values(scope.row).every(key => {
+    return key !== "当页合计"
   })
   // table页面合计
-  let totalTxt1 = Object.values(scope.row).every((key) => {
-    return key !== '全部合计'
+  let totalTxt1 = Object.values(scope.row).every(key => {
+    return key !== "全部合计"
   })
   return (
     isShow &&
@@ -913,18 +829,18 @@ const checkIsShow = (scope, item) => {
   )
 }
 // 单个编辑事件
-const handleEvent = ({ type, val }, index) => {
-  emits('handleEvent', type, val, index)
+const handleEvent = ({ type, val }: any, index: any) => {
+  emits("handleEvent", type, val, index)
 }
 // 当前页码
-const handlesCurrentChange = (val) => {
-  emits('page-change', val)
+const handlesCurrentChange = (val: any) => {
+  emits("page-change", val)
 }
 /**
  * 公共方法
  */
 // 单元格编辑调用save方法返回数据
-const saveMethod = (callback) => {
+const saveMethod = (callback: (arg0: any) => any) => {
   if (!isEditRules.value) {
     callback && callback(state.tableData)
     return
@@ -936,23 +852,21 @@ const saveMethod = (callback) => {
   let propError: any = []
   let propLabelError: any = []
   // 获取所有的form ref
-  const refList = Object.keys(formRef.value).filter((item) =>
-    item.includes('formRef')
-  )
+  const refList = Object.keys(formRef.value).filter(item => item.includes("formRef"))
   // 获取单独设置规则项
   const arr = renderColumns.value
-    .filter((val) => {
+    .filter((val: { configEdit: { rules: any } }) => {
       if (val.configEdit?.rules) {
         return val
       }
     })
-    .map((item) => item.prop)
+    .map((item: { prop: any }) => item.prop)
   // 获取整体设置规则
   const arr1 = props.table.rules && Object.keys(props.table.rules)
   // 获取最终设置了哪些规则（其值是设置的--prop）
   const newArr = [...arr, ...arr1]
   // 最终需要校验的ref
-  newArr.map((val) => {
+  newArr.map(val => {
     refList.map((item: any) => {
       if (item.includes(val)) {
         rulesList.push(item)
@@ -961,8 +875,8 @@ const saveMethod = (callback) => {
   })
   // console.log('最终需要校验的数据', rulesList, formRef.value)
   // 表单都校验
-  rulesList.map((val) => {
-    formRef.value[val].validate((valid) => {
+  rulesList.map((val: string | number) => {
+    formRef.value[val].validate((valid: any) => {
       if (valid) {
         successLength = successLength + 1
       } else {
@@ -979,23 +893,23 @@ const saveMethod = (callback) => {
       }
     } else {
       // 校验未通过的prop
-      rulesError.map((item) => {
-        newArr.map((val) => {
+      rulesError.map((item: string | any[]) => {
+        newArr.map(val => {
           if (item.includes(val)) {
             propError.push(val)
           }
         })
       })
       // 去重获取校验未通过的prop--label
-      Array.from(new Set(propError)).map((item) => {
-        renderColumns.value.map((val) => {
+      Array.from(new Set(propError)).map(item => {
+        renderColumns.value.map((val: { prop: unknown; label: any }) => {
           if (item === val.prop) {
             propLabelError.push(val.label)
           }
         })
       })
-      console.log('校验未通过的prop--label', propLabelError)
-      emits('validateError', propLabelError)
+      console.log("校验未通过的prop--label", propLabelError)
+      emits("validateError", propLabelError)
     }
   }, 300)
 }
@@ -1008,7 +922,7 @@ const getSelectionRows = () => {
   return TTable.value.getSelectionRows()
 }
 // 取消某一项选中项
-const toggleRowSelection = (row, selected = false) => {
+const toggleRowSelection = (row: any, selected = false) => {
   return TTable.value.toggleRowSelection(row, selected)
 }
 // 全部选中
@@ -1016,11 +930,11 @@ const toggleAllSelection = () => {
   return TTable.value.toggleAllSelection()
 }
 // 用于可扩展的表格或树表格，如果某行被扩展，则切换。 使用第二个参数，您可以直接设置该行应该被扩展或折叠。
-const toggleRowExpansion = (row, expanded) => {
+const toggleRowExpansion = (row: any, expanded: any) => {
   return TTable.value.toggleRowExpansion(row, expanded)
 }
 // 用于单选表格，设定某一行为选中行， 如果调用时不加参数，则会取消目前高亮行的选中状态。
-const setCurrentRow = (row) => {
+const setCurrentRow = (row: any) => {
   return TTable.value.setCurrentRow(row)
 }
 // 清空排序条件
@@ -1028,11 +942,11 @@ const clearSort = () => {
   return TTable.value.clearSort()
 }
 // 传入由columnKey 组成的数组以清除指定列的过滤条件。 如果没有参数，清除所有过滤器
-const clearFilter = (columnKey) => {
+const clearFilter = (columnKey: any) => {
   return TTable.value.clearFilter(columnKey)
 }
 //  Table 进行重新布局
-const doLayout = (columnKey) => {
+const doLayout = (columnKey: any) => {
   return TTable.value.doLayout(columnKey)
 }
 //  手动排序表格。 参数 prop 属性指定排序列，order 指定排序顺序。
@@ -1044,39 +958,33 @@ const scrollTo = (options: any, yCoord: any) => {
   return TTable.value.scrollTo(options, yCoord)
 }
 //  设置垂直滚动位置
-const setScrollTop = (top) => {
+const setScrollTop = (top: any) => {
   return TTable.value.setScrollTop(top)
 }
 //  设置水平滚动位置
-const setScrollLeft = (left) => {
+const setScrollLeft = (left: any) => {
   return TTable.value.setScrollLeft(left)
 }
 
 // 清空校验规则
 const clearValidate = () => {
-  const refList = Object.keys(formRef.value).filter((item) =>
-    item.includes('formRef')
-  )
+  const refList = Object.keys(formRef.value).filter(item => item.includes("formRef"))
   refList.length > 0 &&
-    refList.map((val) => {
+    refList.map(val => {
       formRef.value[val].clearValidate()
     })
 }
 // 表单进行重置并移除校验结果
 const resetFields = () => {
-  const refList = Object.keys(formRef.value).filter((item) =>
-    item.includes('formRef')
-  )
+  const refList = Object.keys(formRef.value).filter(item => item.includes("formRef"))
   refList.length > 0 &&
-    refList.map((val) => {
+    refList.map(val => {
       formRef.value[val].resetFields()
     })
   // 重置下拉表格
-  const refEditList = Object.keys(editTableRef.value).filter((item) =>
-    item.includes('singleEditRef')
-  )
+  const refEditList = Object.keys(editTableRef.value).filter(item => item.includes("singleEditRef"))
   refEditList.length > 0 &&
-    refEditList.map((val) => {
+    refEditList.map(val => {
       editTableRef.value[val].resetTselectTableFields()
     })
 }
@@ -1100,7 +1008,7 @@ defineExpose({
   radioVal,
   clearValidate,
   resetFields,
-  saveMethod,
+  saveMethod
 })
 </script>
 <style lang="scss" scoped>

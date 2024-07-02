@@ -1,11 +1,6 @@
 <template>
   <div class="t-chart" v-bind="$attrs">
-    <div
-      v-show="!formatEmpty"
-      class="t-chart-container"
-      :id="id"
-      ref="echartRef"
-    />
+    <div v-show="!formatEmpty" class="t-chart-container" :id="id" ref="echartRef" />
     <slot v-if="formatEmpty" name="empty">
       <el-empty v-bind="$attrs" :description="description" />
     </slot>
@@ -22,33 +17,33 @@ import {
   nextTick,
   onBeforeUnmount,
   markRaw,
-  useAttrs,
-} from 'vue'
-import { useResizeObserver } from '@vueuse/core'
-import { debounce, toLine } from '../../utils'
-import { computed } from 'vue'
+  useAttrs
+} from "vue"
+import { useResizeObserver } from "@vueuse/core"
+import { debounce, toLine } from "../../utils"
+import { computed } from "vue"
 const { proxy } = getCurrentInstance() as any
 const props = defineProps({
   options: {
     type: Object,
-    default: () => ({}),
+    default: () => ({})
   },
   id: {
     type: String,
-    default: () => Math.random().toString(36).substring(2, 8),
+    default: () => Math.random().toString(36).substring(2, 8)
   },
   theme: {
     type: String,
-    default: '',
+    default: ""
   },
   isEmpty: {
     type: [Boolean, Function],
-    default: false,
+    default: false
   },
   description: {
     type: String,
-    default: '暂无数据',
-  },
+    default: "暂无数据"
+  }
 })
 
 const echartRef = ref<HTMLDivElement>()
@@ -61,13 +56,13 @@ const renderChart = () => {
   chart.value = markRaw(proxy.$echarts.init(echartRef.value, props.theme))
   setOption(props.options)
   // 返回chart实例
-  emits('chart', chart.value)
+  emits("chart", chart.value)
 
   // 监听图表事件
   events.forEach(([key, value]) => {
-    if (key.startsWith('on') && !key.startsWith('onChart')) {
+    if (key.startsWith("on") && !key.startsWith("onChart")) {
       const on = toLine(key).substring(3)
-      chart.value.on(on, (...args) => emits(on, ...args))
+      chart.value.on(on, (...args: any) => emits(on, ...args))
     }
   })
 
@@ -88,7 +83,7 @@ const resizeChart = debounce(
 
 // 设置图表函数
 const setOption = debounce(
-  async (data) => {
+  async data => {
     if (!chart.value) return
     chart.value.setOption(data, true, true)
     await nextTick()
@@ -99,7 +94,7 @@ const setOption = debounce(
 )
 
 const formatEmpty = computed(() => {
-  if (typeof props.isEmpty === 'function') {
+  if (typeof props.isEmpty === "function") {
     return props.isEmpty(props.options)
   }
   return props.isEmpty
@@ -107,7 +102,7 @@ const formatEmpty = computed(() => {
 
 watch(
   () => props.options,
-  async (nw) => {
+  async nw => {
     await nextTick()
     setOption(nw)
   },

@@ -8,9 +8,7 @@
     class="t-query-condition"
     :style="{
       'grid-template-areas': gridAreas,
-      'grid-template-columns': `repeat(${colLength}, minmax(0px, ${
-        100 / colLength
-      }%))`,
+      'grid-template-columns': `repeat(${colLength}, minmax(0px, ${100 / colLength}%))`
     }"
     @submit.prevent
   >
@@ -61,9 +59,7 @@
         v-on="cEvent(opt)"
       />
       <component
-        v-if="
-          !opt.slotName && !opt.isSelfCom && opt.comp.includes('tree-select')
-        "
+        v-if="!opt.slotName && !opt.isSelfCom && opt.comp.includes('tree-select')"
         :is="opt.comp"
         v-bind="
           typeof opt.bind == 'function'
@@ -76,12 +72,7 @@
         v-on="cEvent(opt)"
       />
       <component
-        v-if="
-          !opt.isSelfCom &&
-          !opt.slotName &&
-          !opt.comp.includes('date') &&
-          !opt.comp.includes('tree-select')
-        "
+        v-if="!opt.isSelfCom && !opt.slotName && !opt.comp.includes('date') && !opt.comp.includes('tree-select')"
         :is="opt.comp"
         v-bind="
           typeof opt.bind == 'function'
@@ -100,7 +91,8 @@
           :disabled="value.disabled"
           :label="compChildLabel(opt, value)"
           :value="compChildValue(opt, value, key)"
-        >{{ compChildShowLabel(opt, value) }}</component>
+          >{{ compChildShowLabel(opt, value) }}</component
+        >
       </component>
     </el-form-item>
     <el-form-item
@@ -110,30 +102,18 @@
       :class="[
         'btn',
         { flex_end: cellLength % colLength === 0 },
-        { btn_flex_end: Object.keys(cOpts).length === 4 || cellLength > 3 },
+        { btn_flex_end: Object.keys(cOpts).length === 4 || cellLength > 3 }
       ]"
     >
       <template v-if="footer !== null">
         <slot name="footerBtn" />
         <template v-if="!slots.footerBtn">
-          <el-button
-            class="btn_check"
-            @click="checkHandle"
-            v-bind="queryAttrs"
-            :loading="loading"
-          >{{ queryAttrs.btnTxt }}</el-button>
-          <el-button
-            v-if="reset"
-            class="btn_reset"
-            v-bind="resetAttrs"
-            @click="resetHandle"
-          >{{ resetAttrs.btnTxt }}</el-button>
+          <el-button class="btn_check" @click="checkHandle" v-bind="queryAttrs" :loading="loading">{{
+            queryAttrs.btnTxt
+          }}</el-button>
+          <el-button v-if="reset" class="btn_reset" v-bind="resetAttrs" @click="resetHandle">{{ resetAttrs.btnTxt }}</el-button>
           <slot name="querybar"></slot>
-          <el-button
-            v-if="originCellLength > ( maxVisibleRows * colLength ) && isShowOpen"
-            @click="open = !open"
-            link
-          >
+          <el-button v-if="originCellLength > maxVisibleRows * colLength && isShowOpen" @click="open = !open" link>
             {{ open ? packUpTxt : unfoldTxt }}
             <el-icon v-if="open">
               <ArrowUp />
@@ -149,83 +129,83 @@
 </template>
 
 <script setup lang="ts" name="TQueryCondition">
-import RenderComp from './renderComp.vue'
-import { computed, ref, watch, useSlots, onMounted, reactive } from 'vue'
+import RenderComp from "./renderComp.vue"
+import { computed, ref, watch, useSlots, onMounted, reactive } from "vue"
 const props = defineProps({
   opts: {
     type: Object,
     required: true,
-    default: () => ({}),
+    default: () => ({})
   },
   labelWidth: {
     type: String,
-    default: '120px',
+    default: "120px"
   },
   // 查询按钮配置
   btnCheckBind: {
     type: Object,
-    default: () => ({}),
+    default: () => ({})
   },
   // 重置按钮配置
   btnResetBind: {
     type: Object,
-    default: () => ({}),
+    default: () => ({})
   },
   loading: {
     type: Boolean,
-    default: false,
+    default: false
   },
   reset: {
     type: Boolean,
-    default: true,
+    default: true
   },
   boolEnter: {
     type: Boolean,
-    default: true,
+    default: true
   },
   // 是否显示收起和展开
   isShowOpen: {
     type: Boolean,
-    default: true,
+    default: true
   },
   // 是否默认展开
   isExpansion: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 收起时设置默认展示行数
   maxVisibleRows: {
     type: Number,
-    default: 1,
+    default: 1
   },
   packUpTxt: {
     type: String,
-    default: '收起',
+    default: "收起"
   },
   unfoldTxt: {
     type: String,
-    default: '展开',
+    default: "展开"
   },
   // 是否显示底部操作按钮 :footer="null"
   footer: Object,
   configChangedReset: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 是否开启一行显示几个查询条件
   isShowWidthSize: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 一行显示几个查询条件
   widthSize: {
     type: Number,
-    default: 4,
-  },
+    default: 4
+  }
 })
 const slots = useSlots()
 // 判断是否使用了某个插槽
-const isShow = (name) => {
+const isShow = (name: string) => {
   return Object.keys(slots).includes(name)
 }
 // 初始化表单数据
@@ -233,7 +213,7 @@ let queryState = reactive({
   form: Object.keys(props.opts).reduce((acc: any, field: any) => {
     acc[field] = props.opts[field].defaultVal || null
     return acc
-  }, {}),
+  }, {})
 })
 let colLength = ref(4)
 let open = ref(false)
@@ -246,19 +226,19 @@ if (props.isExpansion) {
 // 查询按钮配置
 const queryAttrs = computed(() => {
   return {
-    type: 'primary',
-    size: 'default',
-    btnTxt: '查询',
-    ...props.btnCheckBind,
+    type: "primary",
+    size: "default",
+    btnTxt: "查询",
+    ...props.btnCheckBind
   }
 })
 // 重置按钮配置
 const resetAttrs = computed(() => {
-  return { size: 'default', btnTxt: '重置', ...props.btnResetBind }
+  return { size: "default", btnTxt: "重置", ...props.btnResetBind }
 })
 const originCellLength = computed(() => {
   let length = 0
-  Object.keys(props.opts).forEach((key) => {
+  Object.keys(props.opts).forEach(key => {
     let span = props.opts[key].span || 1
     if ((length % colLength.value) + span > colLength.value) {
       length += colLength.value - (length % colLength.value)
@@ -271,16 +251,12 @@ const cOpts = computed(() => {
   let renderSpan = 0
   return Object.keys(props.opts).reduce((acc: any, field: any) => {
     let opt = {
-      ...props.opts[field],
+      ...props.opts[field]
     }
     // 收起、展开操作
     if (props.isShowOpen) {
       renderSpan += opt.span ?? 1
-      if (
-        !open.value &&
-        renderSpan - 1 >= props.maxVisibleRows * colLength.value
-      )
-        return acc
+      if (!open.value && renderSpan - 1 >= props.maxVisibleRows * colLength.value) return acc
     }
     opt.dataIndex = field
     acc[field] = opt
@@ -290,7 +266,7 @@ const cOpts = computed(() => {
 const cellLength: any = computed(() => {
   // 占用单元格长度
   let length = 0
-  Object.keys(props.opts).forEach((key) => {
+  Object.keys(props.opts).forEach(key => {
     let span = props.opts[key].span > 4 ? 4 : props.opts[key].span || 1
     length += span
   })
@@ -308,7 +284,7 @@ const gridAreas = computed(() => {
     const span = Math.min(opt.span ?? 1, 4) // 最大4
     if (rowSpan + span > colLength.value) {
       if (rowSpan < colLength.value) {
-        areas[rowIndex].push('.')
+        areas[rowIndex].push(".")
       }
       rowSpan = 0
       areas[++rowIndex] = []
@@ -320,30 +296,26 @@ const gridAreas = computed(() => {
   }
   if (areas[rowIndex].length === colLength.value) {
     // areas.push(['submit_btn', 'submit_btn', 'submit_btn', 'submit_btn'])
-    areas.push(Array(colLength.value).fill('submit_btn'))
+    areas.push(Array(colLength.value).fill("submit_btn"))
   } else {
     while (areas[rowIndex].length < colLength.value) {
-      areas[rowIndex].push('submit_btn')
+      areas[rowIndex].push("submit_btn")
     }
   }
-  return areas.reduce((acc, cur) => {
-    acc += `'${cur.join(' ')}'\n`
+  return areas.reduce((acc: string, cur: any[]) => {
+    acc += `'${cur.join(" ")}'\n`
     return acc
-  }, '')
+  }, "")
 })
 // 引用第三方事件
 const cEvent = computed(() => {
-  return (opt: any) => {
+  return (opt: { eventHandle: any; comp: string | string[] }) => {
     // console.log('opt--', opt)
     let event = { ...opt.eventHandle }
-    let changeEvent = {}
-    Object.keys(event).forEach((v) => {
-      changeEvent[v] = (e) => {
-        if (
-          opt.comp.includes('select') ||
-          opt.comp.includes('picker') ||
-          opt.comp.includes('date')
-        ) {
+    let changeEvent = {} as any
+    Object.keys(event).forEach(v => {
+      changeEvent[v] = (e: any) => {
+        if (opt.comp.includes("select") || opt.comp.includes("picker") || opt.comp.includes("date")) {
           event[v] && event[v](e, queryState.form)
         } else {
           if (e) {
@@ -359,7 +331,7 @@ const cEvent = computed(() => {
 })
 // 初始化表单数据
 const initForm = (opts: any, keepVal = false) => {
-  return Object.keys(opts).reduce((acc, field) => {
+  return Object.keys(opts).reduce((acc: any, field) => {
     if (keepVal && queryState.form) {
       acc[field] = queryState.form[field] ?? opts[field].defaultVal ?? null
     } else {
@@ -379,11 +351,11 @@ const getColLength = () => {
   }
   return colLength
 }
-const emits = defineEmits(['handleEvent', 'submit', 'reset'])
+const emits = defineEmits(["handleEvent", "submit", "reset"])
 // 下拉选择表格组件 ref
 const tselecttableref: any = ref({})
 // 下拉选择表格组件 动态ref
-const handleRef = (el, key) => {
+const handleRef = (el: any, key: any) => {
   if (el) {
     tselecttableref.value[`tselecttableref-${key}`] = el
   }
@@ -392,51 +364,47 @@ const handleRef = (el, key) => {
 const resetHandle = () => {
   queryState.form = initForm(props.opts)
   // 获取所有下拉选择表格组件
-  const refList = Object.keys(tselecttableref.value).filter((item) =>
-    item.includes('tselecttableref')
-  )
+  const refList = Object.keys(tselecttableref.value).filter(item => item.includes("tselecttableref"))
   if (refList.length > 0 && tselecttableref.value) {
-    refList.map((val) => {
+    refList.map(val => {
       // console.log('9999', val)
       tselecttableref.value[val].clear()
     })
   }
-  emits('reset', queryState.form)
-  checkHandle('reset')
+  emits("reset", queryState.form)
+  checkHandle("reset")
 }
 // 重置数据
 const resetData = () => {
   queryState.form = initForm(props.opts)
   // 获取所有下拉选择表格组件
-  const refList = Object.keys(tselecttableref.value).filter((item) =>
-    item.includes('tselecttableref')
-  )
+  const refList = Object.keys(tselecttableref.value).filter(item => item.includes("tselecttableref"))
   if (refList.length > 0 && tselecttableref.value) {
-    refList.map((val) => {
+    refList.map(val => {
       // console.log('9999', val)
       tselecttableref.value[val].clear()
     })
   }
 }
 // 查询条件change事件
-const handleEvent = (type, val) => {
-  emits('handleEvent', type, val, queryState.form)
+const handleEvent = (type: any, val: any) => {
+  emits("handleEvent", type, val, queryState.form)
 }
 // 查询
 const checkHandle = (flagText: any = false) => {
-  emits('submit', queryState.form, flagText)
+  emits("submit", queryState.form, flagText)
 }
 // 子组件名称
 const compChildName: any = computed(() => {
   return (opt: any) => {
     switch (opt.type) {
-      case 'checkbox':
-        return 'el-checkbox'
-      case 'radio':
-        return 'el-radio'
-      case 'select-arr':
-      case 'select-obj':
-        return 'el-option'
+      case "checkbox":
+        return "el-checkbox"
+      case "radio":
+        return "el-radio"
+      case "select-arr":
+      case "select-obj":
+        return "el-option"
     }
   }
 })
@@ -452,45 +420,45 @@ const selectListType = computed(() => {
 })
 // 子子组件label
 const compChildLabel = computed(() => {
-  return (opt: any, value) => {
+  return (opt: { type: any; arrLabel: any }, value: { [x: string]: any; value: any }) => {
     switch (opt.type) {
-      case 'radio':
-      case 'checkbox':
+      case "radio":
+      case "checkbox":
         return value.value
-      case 'el-select-multiple':
-      case 'select-arr':
-        return value[opt.arrLabel || 'label']
-      case 'select-obj':
+      case "el-select-multiple":
+      case "select-arr":
+        return value[opt.arrLabel || "label"]
+      case "select-obj":
         return value
     }
   }
 })
 // 子子组件value
 const compChildValue = computed(() => {
-  return (opt: any, value, key) => {
+  return (opt: { type: any; arrKey: any }, value: { [x: string]: any; value: any }, key: any) => {
     switch (opt.type) {
-      case 'radio':
-      case 'checkbox':
+      case "radio":
+      case "checkbox":
         return value.value
-      case 'el-select-multiple':
-      case 'select-arr':
-        return value[opt.arrKey || 'key']
-      case 'select-obj':
+      case "el-select-multiple":
+      case "select-arr":
+        return value[opt.arrKey || "key"]
+      case "select-obj":
         return key
     }
   }
 })
 // 子子组件文字展示
 const compChildShowLabel = computed(() => {
-  return (opt: any, value) => {
+  return (opt: { type: any; arrLabel: any }, value: { [x: string]: any; label: any }) => {
     switch (opt.type) {
-      case 'radio':
-      case 'checkbox':
+      case "radio":
+      case "checkbox":
         return value.label
-      case 'el-select-multiple':
-      case 'select-arr':
-        return value[opt.arrLabel || 'label']
-      case 'select-obj':
+      case "el-select-multiple":
+      case "select-arr":
+        return value[opt.arrLabel || "label"]
+      case "select-obj":
         return value
     }
   }
@@ -499,11 +467,11 @@ const compChildShowLabel = computed(() => {
 const getPlaceholder = (row: any) => {
   // console.log(77, row.date)
   let placeholder
-  if (row.comp && typeof row.comp == 'string') {
-    if (row.comp.includes('input')) {
-      placeholder = '请输入' + row.label
-    } else if (row.comp.includes('select') || row.comp.includes('date')) {
-      placeholder = '请选择' + row.label
+  if (row.comp && typeof row.comp == "string") {
+    if (row.comp.includes("input")) {
+      placeholder = "请输入" + row.label
+    } else if (row.comp.includes("select") || row.comp.includes("date")) {
+      placeholder = "请选择" + row.label
     } else {
       placeholder = row.label
     }
@@ -517,16 +485,15 @@ onMounted(() => {
     colLength.value = getColLength()
   }
   if (props.boolEnter) {
-    document.onkeyup = (e) => {
+    document.onkeyup = e => {
       // console.log(7777, e)
       let key = e.keyCode
-      let pagination = document.querySelectorAll('.el-pagination')
+      let pagination = document.querySelectorAll(".el-pagination")
       let isPaginationInputFocus = false
       if (pagination) {
-        pagination.forEach((ele) => {
-          let paginationInputList = ele.getElementsByTagName('input')
-          let paginationInput =
-            paginationInputList[paginationInputList.length - 1]
+        pagination.forEach(ele => {
+          let paginationInputList = ele.getElementsByTagName("input")
+          let paginationInput = paginationInputList[paginationInputList.length - 1]
           // 判断是否有分页器筛选输入框获取焦点
           if (paginationInput === document.activeElement) {
             isPaginationInputFocus = true
@@ -542,19 +509,19 @@ onMounted(() => {
     }
   }
   // 使用自定义按钮插槽默认展开所有查询条件
-  if (isShow('footer')) {
+  if (isShow("footer")) {
     open.value = true
   }
 })
 watch(
   () => props.widthSize,
-  (val) => {
+  val => {
     colLength.value = val
   }
 )
 watch(
   () => props.opts,
-  (opts) => {
+  opts => {
     queryState.form = initForm(opts, !props.configChangedReset)
   },
   { deep: true }
@@ -567,7 +534,7 @@ defineExpose({
   colLength,
   resetData,
   resetHandle,
-  checkHandle,
+  checkHandle
 })
 </script>
 

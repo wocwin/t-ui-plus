@@ -14,26 +14,26 @@
   </div>
 </template>
 <script setup lang="ts" name="TLayoutPage">
-import { onActivated, onMounted, ref, watch } from 'vue'
+import { onActivated, onMounted, ref, watch } from "vue"
 const props = defineProps({
   keepScrollDisabled: {
     type: Boolean,
-    default: false,
+    default: false
   },
   isNoMargin: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // 是否显示返回顶部按钮
   showGoTopButton: {
     type: Boolean,
-    default: true,
+    default: true
   },
   // 滚动条位置
   scrollToTop: {
     type: Number,
-    default: 100,
-  },
+    default: 100
+  }
 })
 const isShowGoTopButton = ref(false)
 
@@ -41,7 +41,7 @@ const TLayoutPageRef = ref(null)
 const scrollTop = ref(0)
 watch(
   () => scrollTop.value,
-  (newVal) => {
+  newVal => {
     if (newVal > props.scrollToTop) {
       isShowGoTopButton.value = true
     } else {
@@ -54,17 +54,15 @@ const backToTop = () => {
   ;(TLayoutPageRef.value as any).scrollTop = 0
 }
 onMounted(() => {
-  const pageItems = (TLayoutPageRef.value as any).querySelectorAll(
-    '.t_layout_page_item'
-  )
+  const pageItems = (TLayoutPageRef.value as any).querySelectorAll(".t_layout_page_item")
   if (pageItems.length === 2) {
-    pageItems[0].style.marginBottom = '8px'
+    pageItems[0].style.marginBottom = "8px"
   }
   if (pageItems.length > 2) {
     pageItems.forEach((item: any) => {
-      item.style.marginBottom = '8px'
+      item.style.marginBottom = "8px"
     })
-    pageItems[pageItems.length - 1].style.marginBottom = '0'
+    pageItems[pageItems.length - 1].style.marginBottom = "0"
   }
 })
 

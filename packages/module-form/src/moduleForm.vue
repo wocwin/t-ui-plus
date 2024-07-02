@@ -8,8 +8,8 @@
           {
             noTitle: !formOpt.title,
             disabledStyle: formOpt.disabled,
-            title_bold: titleBold,
-          },
+            title_bold: titleBold
+          }
         ]"
         :key="formIndex"
         :name="formOpt.name"
@@ -26,7 +26,7 @@
         </template>
         <t-form
           :ref="
-            (el) => {
+            (el:any) => {
               dashboardRef[formIndex] = el
             }
           "
@@ -45,24 +45,24 @@
 </template>
 
 <script setup lang="ts" name="ModuleForm">
-import { computed, ref, useAttrs, useSlots } from 'vue'
+import { computed, ref, useAttrs, useSlots } from "vue"
 const props: any = defineProps({
   // 表单配置项
   formOpts: {
     type: Object,
-    default: () => ({}),
+    default: () => ({})
   },
   // 是否Title文字加粗
   titleBold: {
     type: Boolean,
-    default: false,
-  },
+    default: false
+  }
 })
-const dashboardRef = ref({})
+const dashboardRef = ref({}) as any
 const slots = useSlots()
 const attrs: any = useAttrs()
 // 抛出ref
-const getChildRef = (index) => {
+const getChildRef = (index: string | number) => {
   const childRef = dashboardRef.value[index]
   return childRef
 }
@@ -75,12 +75,12 @@ const defaultActiveKey = computed({
   },
   set(val) {
     return val
-  },
+  }
 })
 // 抛出事件
-const emits = defineEmits(['handleEvent'])
-const handleEvent = (val, type) => {
-  emits('handleEvent', val, type)
+const emits = defineEmits(["handleEvent"])
+const handleEvent = (val: any, type: any) => {
+  emits("handleEvent", val, type)
 }
 </script>
 <style lang="scss">

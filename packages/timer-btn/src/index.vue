@@ -13,24 +13,24 @@
 </template>
 
 <script setup lang="ts" name="TTimerBtn">
-import { computed, ref } from 'vue'
+import { computed, ref } from "vue"
 const props = defineProps({
   second: {
     type: Number,
-    default: 60,
+    default: 60
   },
   className: {
-    type: String,
-  },
+    type: String
+  }
 })
 const time = ref(0)
 const disabled = ref(false)
 const text = computed(() => {
-  return time.value > 0 ? `${time.value}s 后重获取` : '获取验证码'
+  return time.value > 0 ? `${time.value}s 后重获取` : "获取验证码"
 })
-const emits = defineEmits(['click'])
+const emits = defineEmits(["click"])
 const run = () => {
-  emits('click')
+  emits("click")
   start()
 }
 // 重置倒计时0

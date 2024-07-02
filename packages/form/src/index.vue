@@ -19,7 +19,7 @@
           item.className,
           { render_label: item.labelRender },
           { slot_label: item.slotName },
-          { render_laber_position_left: formOpts.labelPosition === 'left' },
+          { render_laber_position_left: formOpts.labelPosition === 'left' }
         ]"
         :rules="item.rules"
         :style="getChildWidth(item)"
@@ -27,11 +27,7 @@
       >
         <!-- 自定义label -->
         <template #label v-if="item.labelSlotName || item.labelRender">
-          <render-comp
-            v-if="item.labelRender"
-            :render="item.labelRender"
-            :item="item"
-          />
+          <render-comp v-if="item.labelRender" :render="item.labelRender" :item="item" />
           <template v-if="item.labelSlotName">
             <slot :name="item.labelSlotName" :scope="item"></slot>
           </template>
@@ -53,9 +49,7 @@
             :ref="(el:any) => handleRef(el, index)"
             :placeholder="item.placeholder || getPlaceholder(item)"
             v-bind="
-              typeof item.bind == 'function'
-                ? item.bind(formOpts.formData)
-                : { clearable: true, filterable: true, ...item.bind }
+              typeof item.bind == 'function' ? item.bind(formOpts.formData) : { clearable: true, filterable: true, ...item.bind }
             "
             :style="{ width: item.width || '100%' }"
             v-on="cEvent(item, 't-select-table')"
@@ -65,54 +59,38 @@
             :is="item.comp"
             v-model="formOpts.formData[item.value]"
             :placeholder="item.placeholder || getPlaceholder(item)"
-            :ref="(el) => getRefs(el, item, index)"
+            :ref="(el: any) => getRefs(el, item, index)"
             v-bind="
-              typeof item.bind == 'function'
-                ? item.bind(formOpts.formData)
-                : { clearable: true, filterable: true, ...item.bind }
+              typeof item.bind == 'function' ? item.bind(formOpts.formData) : { clearable: true, filterable: true, ...item.bind }
             "
             :style="{ width: item.width || '100%' }"
             v-on="cEvent(item)"
           />
         </template>
         <component
-          v-if="
-            !item.slotName &&
-            !item.textShow &&
-            !item.isSelfCom &&
-            item.comp.includes('date')
-          "
+          v-if="!item.slotName && !item.textShow && !item.isSelfCom && item.comp.includes('date')"
           :is="item.comp"
           v-model="formOpts.formData[item.value]"
           :type="item.type"
           :placeholder="item.placeholder || getPlaceholder(item)"
           @change="handleEvent(item.event, formOpts.formData[item.value], item)"
-          :ref="(el) => getRefs(el, item, index)"
+          :ref="(el: any) => getRefs(el, item, index)"
           v-bind="
-            typeof item.bind == 'function'
-              ? item.bind(formOpts.formData)
-              : { clearable: true, filterable: true, ...item.bind }
+            typeof item.bind == 'function' ? item.bind(formOpts.formData) : { clearable: true, filterable: true, ...item.bind }
           "
           :style="{ width: item.width || '100%' }"
           v-on="cEvent(item)"
         />
         <component
-          v-if="
-            !item.slotName &&
-            !item.textShow &&
-            !item.isSelfCom &&
-            item.comp.includes('tree-select')
-          "
+          v-if="!item.slotName && !item.textShow && !item.isSelfCom && item.comp.includes('tree-select')"
           :is="item.comp"
           v-model="formOpts.formData[item.value]"
           :type="item.type"
           :placeholder="item.placeholder || getPlaceholder(item)"
           @change="handleEvent(item.event, formOpts.formData[item.value], item)"
-          :ref="(el) => getRefs(el, item, index)"
+          :ref="(el: any) => getRefs(el, item, index)"
           v-bind="
-            typeof item.bind == 'function'
-              ? item.bind(formOpts.formData)
-              : { clearable: true, filterable: true, ...item.bind }
+            typeof item.bind == 'function' ? item.bind(formOpts.formData) : { clearable: true, filterable: true, ...item.bind }
           "
           :style="{ width: item.width || '100%' }"
           v-on="cEvent(item)"
@@ -130,11 +108,9 @@
           :type="item.type"
           :placeholder="item.placeholder || getPlaceholder(item)"
           @change="handleEvent(item.event, formOpts.formData[item.value], item)"
-          :ref="(el) => getRefs(el, item, index)"
+          :ref="(el: any) => getRefs(el, item, index)"
           v-bind="
-            typeof item.bind == 'function'
-              ? item.bind(formOpts.formData)
-              : { clearable: true, filterable: true, ...item.bind }
+            typeof item.bind == 'function' ? item.bind(formOpts.formData) : { clearable: true, filterable: true, ...item.bind }
           "
           :style="{ width: item.width || '100%' }"
           v-on="cEvent(item)"
@@ -166,13 +142,7 @@
       <template v-if="formOpts.btnSlotName">
         <slot :name="formOpts.btnSlotName"></slot>
       </template>
-      <template
-        v-if="
-          !formOpts.btnSlotName &&
-          formOpts.operatorList &&
-          formOpts.operatorList.length > 0
-        "
-      >
+      <template v-if="!formOpts.btnSlotName && formOpts.operatorList && formOpts.operatorList.length > 0">
         <el-button
           v-for="(val, index) in formOpts.operatorList"
           :key="index"
@@ -180,7 +150,7 @@
           v-bind="{
             type: 'primary',
             size: 'small',
-            ...val.bind,
+            ...val.bind
           }"
           >{{ val.label }}</el-button
         >
@@ -189,14 +159,14 @@
   </el-form>
 </template>
 <script setup lang="ts" name="TForm">
-import RenderComp from './renderComp.vue'
-import { ElMessage } from 'element-plus'
-import { computed, ref, watch, onMounted, getCurrentInstance } from 'vue'
-import type { PropType } from 'vue'
+import RenderComp from "./renderComp.vue"
+import { ElMessage } from "element-plus"
+import { computed, ref, watch, onMounted, getCurrentInstance } from "vue"
+import type { PropType } from "vue"
 const props = defineProps({
   // 自定义类名
   className: {
-    type: String,
+    type: String
   },
   /** 表单配置项说明
    * formData object 表单提交数据
@@ -208,30 +178,30 @@ const props = defineProps({
    */
   formOpts: {
     type: Object,
-    default: () => ({}),
+    default: () => ({})
   },
   // 一行显示几个输入项;最大值4
   widthSize: {
     type: Number as PropType<1 | 2 | 3 | 4 | 5 | 6>,
     validator: (value: number) => [1, 2, 3, 4, 5, 6].includes(value),
-    default: 2,
+    default: 2
   },
   // 全局是否开启清除前后空格
   isTrim: {
     type: Boolean,
-    default: true,
-  },
+    default: true
+  }
 })
 const cEvent: any = computed(() => {
-  return ({ eventHandle }, type = '') => {
-    let event = { ...eventHandle }
-    let changeEvent = {}
-    Object.keys(event).forEach((v) => {
-      changeEvent[v] = (e, ids) => {
-        if (type === 't-select-table') {
+  return (item: { eventHandle: any }, type = "") => {
+    let event = { ...item.eventHandle }
+    let changeEvent = {} as any
+    Object.keys(event).forEach(v => {
+      changeEvent[v] = (e: any, ids: any) => {
+        if (type === "t-select-table") {
           event[v] && event[v](e, ids)
         } else {
-          if ((typeof e === 'number' && e === 0) || e) {
+          if ((typeof e === "number" && e === 0) || e) {
             event[v] && event[v](e, props.formOpts)
           } else {
             event[v] && event[v](props.formOpts)
@@ -243,9 +213,9 @@ const cEvent: any = computed(() => {
   }
 })
 const selectListType = computed(() => {
-  return ({ list }) => {
+  return (item: { list: string | number }) => {
     if (props.formOpts.listTypeInfo) {
-      return props.formOpts.listTypeInfo[list]
+      return props.formOpts.listTypeInfo[item.list]
     } else {
       return []
     }
@@ -253,59 +223,59 @@ const selectListType = computed(() => {
 })
 // 子组件名称
 const compChildName: any = computed(() => {
-  return (opt: any) => {
+  return (opt: { type: any }) => {
     switch (opt.type) {
-      case 'checkbox':
-        return 'el-checkbox'
-      case 'radio':
-        return 'el-radio'
-      case 'select-arr':
-      case 'select-obj':
-        return 'el-option'
+      case "checkbox":
+        return "el-checkbox"
+      case "radio":
+        return "el-radio"
+      case "select-arr":
+      case "select-obj":
+        return "el-option"
     }
   }
 })
 // 子子组件label
 const compChildLabel = computed(() => {
-  return (opt: any, value) => {
+  return (opt: { type: any; arrLabel: any }, value: { [x: string]: any; value: any }) => {
     switch (opt.type) {
-      case 'radio':
-      case 'checkbox':
+      case "radio":
+      case "checkbox":
         return value.value
-      case 'el-select-multiple':
-      case 'select-arr':
-        return value[opt.arrLabel || 'label']
-      case 'select-obj':
+      case "el-select-multiple":
+      case "select-arr":
+        return value[opt.arrLabel || "label"]
+      case "select-obj":
         return value
     }
   }
 })
 // 子子组件value
 const compChildValue = computed(() => {
-  return (opt: any, value, key) => {
+  return (opt: { type: any; arrKey: any }, value: { [x: string]: any; value: any }, key: any) => {
     switch (opt.type) {
-      case 'radio':
-      case 'checkbox':
+      case "radio":
+      case "checkbox":
         return value.value
-      case 'el-select-multiple':
-      case 'select-arr':
-        return value[opt.arrKey || 'key']
-      case 'select-obj':
+      case "el-select-multiple":
+      case "select-arr":
+        return value[opt.arrKey || "key"]
+      case "select-obj":
         return key
     }
   }
 })
 // 子子组件文字展示
 const compChildShowLabel = computed(() => {
-  return (opt: any, value) => {
+  return (opt: { type: any; arrLabel: any }, value: { [x: string]: any; label: any }) => {
     switch (opt.type) {
-      case 'radio':
-      case 'checkbox':
+      case "radio":
+      case "checkbox":
         return value.label
-      case 'el-select-multiple':
-      case 'select-arr':
-        return value[opt.arrLabel || 'label']
-      case 'select-obj':
+      case "el-select-multiple":
+      case "select-arr":
+        return value[opt.arrLabel || "label"]
+      case "select-obj":
         return value
     }
   }
@@ -316,21 +286,21 @@ const tform: any = ref<HTMLElement | null>(null)
 // 获取实例方法
 const instance: any = getCurrentInstance()
 // 抛出事件
-const emits = defineEmits(['update:modelValue', 'handleEvent', 'getRefs'])
+const emits = defineEmits(["update:modelValue", "handleEvent", "getRefs"])
 watch(
   () => props.formOpts.formData,
-  (val) => {
+  () => {
     // state.form = initForm(opts, true)
     // 将form实例返回到父级
-    emits('update:modelValue', tform.value)
+    emits("update:modelValue", tform.value)
   },
   { deep: true }
 )
 watch(
   () => props.widthSize,
-  (val) => {
+  val => {
     if (val > 6) {
-      ElMessage.warning('widthSize值不能大于6！')
+      ElMessage.warning("widthSize值不能大于6！")
       colSize.value = 6
     } else {
       colSize.value = val
@@ -346,12 +316,12 @@ onMounted(() => {
     instance.exposed[key] = value
   }
   // 默认赋值触发handleEvent事件
-  let event = null
-  let item = null
+  let event: null = null
+  let item: null = null
   props.formOpts.formData &&
-    Object.keys(props?.formOpts?.formData).forEach((key) => {
+    Object.keys(props?.formOpts?.formData).forEach(key => {
       if (props.formOpts.formData[key]) {
-        props.formOpts.fieldList.map((val) => {
+        props.formOpts.fieldList.map((val: { value: string; event: null } | any) => {
           if (val.value == key) {
             event = val.event
             item = val
@@ -361,14 +331,12 @@ onMounted(() => {
       }
     })
   // 将form实例返回到父级
-  emits('update:modelValue', tform.value)
+  emits("update:modelValue", tform.value)
 })
 // label与输入框的布局方式
-const getChildWidth = (item) => {
-  if (props.formOpts.labelPosition === 'top') {
-    return `flex: 0 1 calc((${
-      100 / (item.widthSize || colSize.value)
-    }% - 10px));margin-right:10px;`
+const getChildWidth = (item: { widthSize: any }) => {
+  if (props.formOpts.labelPosition === "top") {
+    return `flex: 0 1 calc((${100 / (item.widthSize || colSize.value)}% - 10px));margin-right:10px;`
   } else {
     return `flex: 0 1 ${100 / (item.widthSize || colSize.value)}%;`
   }
@@ -377,11 +345,11 @@ const getChildWidth = (item) => {
 const getPlaceholder = (row: any) => {
   // console.log(77, row.date)
   let placeholder
-  if (row.comp && typeof row.comp == 'string') {
-    if (row.comp.includes('input')) {
-      placeholder = '请输入' + row.label
-    } else if (row.comp.includes('select') || row.comp.includes('date')) {
-      placeholder = '请选择' + row.label
+  if (row.comp && typeof row.comp == "string") {
+    if (row.comp.includes("input")) {
+      placeholder = "请输入" + row.label
+    } else if (row.comp.includes("select") || row.comp.includes("date")) {
+      placeholder = "请选择" + row.label
     } else {
       placeholder = row.label
     }
@@ -389,21 +357,25 @@ const getPlaceholder = (row: any) => {
   return placeholder
 }
 // 查询条件change事件
-const handleEvent = (type, val, item, flag = true) => {
+const handleEvent = (
+  type: null,
+  val: any,
+  item: { isTrim: any; comp: string | string[]; type: string; value: string | number } | any,
+  flag = true
+) => {
   // 去除前后空格
   if (
     flag &&
     props.isTrim &&
     !item.isTrim &&
-    item.comp.includes('el-input') &&
-    item.type !== 'password' &&
-    item.type !== 'inputNumber'
+    item.comp.includes("el-input") &&
+    item.type !== "password" &&
+    item.type !== "inputNumber"
   ) {
-    props.formOpts.formData[item.value] =
-      props.formOpts.formData[item.value].trim()
+    props.formOpts.formData[item.value] = props.formOpts.formData[item.value].trim()
   }
 
-  emits('handleEvent', type, val)
+  emits("handleEvent", type, val)
 }
 // 自定义校验
 const selfValidate = () => {
@@ -412,36 +384,34 @@ const selfValidate = () => {
       if (valid) {
         resolve({
           valid,
-          formData: props.formOpts.formData,
+          formData: props.formOpts.formData
         })
       } else {
         reject({
           valid,
-          formData: null,
+          formData: null
         })
       }
     })
   })
 }
 // 获取所有ref
-const getRefs = (el, item, index) => {
-  emits('getRefs', el, item, index)
+const getRefs = (el: any, item: any, index: any) => {
+  emits("getRefs", el, item, index)
 }
 // 下拉选择表格组件 ref
 const tselecttableref: any = ref({})
 // 下拉选择表格组件 动态ref
-const handleRef = (el, key) => {
+const handleRef = (el: any, key: any) => {
   if (el) {
     tselecttableref.value[`tselecttableref-${key}`] = el
   }
 }
 const selfResetFields = () => {
   // 获取所有下拉选择表格组件
-  const refList = Object.keys(tselecttableref.value).filter((item) =>
-    item.includes('tselecttableref')
-  )
+  const refList = Object.keys(tselecttableref.value).filter(item => item.includes("tselecttableref"))
   if (refList.length > 0 && tselecttableref.value) {
-    refList.map((val) => {
+    refList.map(val => {
       // console.log('9999', val)
       tselecttableref.value[val].clear()
     })

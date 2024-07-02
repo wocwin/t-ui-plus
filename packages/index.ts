@@ -1,31 +1,26 @@
-import {
-  debounce,
-  throttle,
-  formatNumber
-} from './utils'
-import type { Component, App } from 'vue'
+import { debounce, throttle, formatNumber } from "./utils"
+import type { Component, App } from "vue"
 // import ElementPlus from 'element-plus'
 // import 'element-plus/dist/index.css'
 // import locale from 'element-plus/lib/locale/lang/zh-cn' // 因element-plus默认是英文，我们指定一下默认中文
-import TLayoutPage from './layout-page'
-import TLayoutPageItem from './layout-page-item'
-import TQueryCondition from './query-condition'
-import TTable from './table'
-import TForm from './form'
-import TSelect from './select'
-import TSelectTable from './select-table'
-import TDetail from './detail'
-import TButton from './button'
-import TStepWizard from './step-wizard'
-import TTimerBtn from './timer-btn'
-import TModuleForm from './module-form'
-import TAdaptivePage from './adaptive-page'
-import TDatePicker from './date-picker'
-import TRadio from './radio'
-import TCheckbox from './checkbox'
-import TChart from './chart'
-// import TMap from './map'
-import TTabs from './tabs'
+import TLayoutPage from "./layout-page"
+import TLayoutPageItem from "./layout-page-item"
+import TQueryCondition from "./query-condition"
+import TTable from "./table"
+import TForm from "./form"
+import TSelect from "./select"
+import TSelectTable from "./select-table"
+import TDetail from "./detail"
+import TButton from "./button"
+import TStepWizard from "./step-wizard"
+import TTimerBtn from "./timer-btn"
+import TModuleForm from "./module-form"
+import TAdaptivePage from "./adaptive-page"
+import TDatePicker from "./date-picker"
+import TRadio from "./radio"
+import TCheckbox from "./checkbox"
+import TChart from "./chart"
+import TTabs from "./tabs"
 
 // 存储组件列表
 const components: {
@@ -48,7 +43,6 @@ const components: {
   TRadio,
   TCheckbox,
   TChart,
-  // TMap,
   TTabs
 }
 // 插件声明：声明所有插件
@@ -92,19 +86,14 @@ export {
   TRadio,
   TCheckbox,
   TChart,
-  // TMap,
   TTabs
 }
 /**
  * @description 公共方法
  */
-export {
-  throttle,
-  debounce,
-  formatNumber
-}
+export { throttle, debounce, formatNumber }
 
 export default {
   // 导出的对象必须具有 install，才能被 Vue.use() 方法安装
-  install,
+  install
 }
