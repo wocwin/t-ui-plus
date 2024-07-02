@@ -8,7 +8,8 @@
     "strict": true,
     "jsx": "preserve",
     "types": [
-      "vite/client"
+      "vite/client",
+      "element-plus/global",
     ],
     // 如果编译器无法根据变量的使用来判断类型时，将用 any 类型代替
     // "suppressImplicitAnyIndexErrors": true,
@@ -29,7 +30,9 @@
       "@": [
         "packages"
       ],
-      "@vue/shared": ["./node_modules/@vue/shared"],
+      "@vue/shared": [
+        "./node_modules/@vue/shared"
+      ],
       "@/*": [
         "packages/*"
       ]
