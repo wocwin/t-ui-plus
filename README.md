@@ -80,6 +80,28 @@ import '@wocwin/t-ui-plus/lib/style.css'
   import {TDetail, TForm} from "@wocwin/t-ui-plus"
 </script>
 ```
+## 全部组件如下
+```json
+TLayoutPage, // 布局页面
+TLayoutPageItem, // 布局页面子项
+TAdaptivePage, // 一屏组件（继承TTable 及 TQueryCondition 组件的所有属性、事件、插槽、方法）
+TQueryCondition, // 查询条件
+TTable, // 表格
+TForm, // 表单
+TSelectTable, // 下拉选择表格
+TSelect, // 下拉选择
+TDetail, // 详情
+TButton, // 防抖按钮
+TStepWizard, // 步骤条
+TTimerBtn, // 定时按钮
+TModuleForm, // 模块表单/详情
+TDatePicker, // 日期选择器
+TRadio, // 单选
+TCheckbox, // 多选
+TChart, // 图表
+TTabs // 标签页
+```
+
 ## Use CDN in Project(暂不支持)
 
 ```html
