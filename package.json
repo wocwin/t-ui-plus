@@ -23,6 +23,8 @@
     "build:es": "vite build",
     "build:browser": "vite -f iife build",
     "deploy": "deploy.sh",
+    "lib:prettier": "prettier --write \"packages/**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\"",
+    "docs:prettier": "prettier --write \"docs/**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\"",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs"
   },
