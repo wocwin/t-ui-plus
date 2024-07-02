@@ -7,64 +7,74 @@
 ::: demo
 TModuleForm/index
 :::
+
 ### 表单-模块插槽使用
 
 ::: demo
 TModuleForm/slotName
 :::
+
 ### 表单-模块是否展开
 
 ::: demo
 TModuleForm/disabled
 :::
+
 ### 表单-对齐方式
 
 ::: demo
 TModuleForm/labelPosition
 :::
+
 ### 表单-表单验证
 
 ::: demo
 TModuleForm/rules
 :::
+
 ### 表单-校验错误提示
 
 ::: demo
 TModuleForm/validateError
 :::
+
 ### 表单-自定义底部按钮
 
 ::: demo
 TModuleForm/footer
 :::
-### 表单-显示tabs
 
-::: demo 注意只显示在最后一个模块;设置属性`isTabMargin`tabs是否与模块隔离
+### 表单-显示 tabs
+
+::: demo 注意只显示在最后一个模块;设置属性`isTabMargin`tabs 是否与模块隔离
 TModuleForm/tabs
 :::
+
 ### 表单-自定义返回事件
 
 ::: demo
 TModuleForm/isGoBackEvent
 :::
-### 表单-没有返回icon
+
+### 表单-没有返回 icon
 
 ::: demo
 TModuleForm/isShowBack
 :::
-### 表单-Title右侧插槽使用
+
+### 表单-Title 右侧插槽使用
 
 ::: demo
 TModuleForm/extra
 :::
 
-### 表单-模块Title右侧插槽使用
+### 表单-模块 Title 右侧插槽使用
 
 ::: demo
 TModuleForm/titleBtn
 :::
 
-### 表单-不显示header
+### 表单-不显示 header
 
 ::: demo 添加属性`isShowHeader`，将不显示头部
 TModuleForm/isShowHeader
@@ -75,32 +85,38 @@ TModuleForm/isShowHeader
 ::: demo
 TModuleForm/detail
 :::
-### 详情-span设置
+
+### 详情-span 设置
 
 ::: demo
 TModuleForm/detailspan
 :::
+
 ### 详情-提示项
 
 ::: demo
 TModuleForm/tooltip
 :::
+
 ### 详情-模块插槽使用
 
 ::: demo
 TModuleForm/detailslot
 :::
-### 详情-value插槽使用
+
+### 详情-value 插槽使用
 
 ::: demo
 TModuleForm/detailslotName
 :::
+
 ### 详情-模块禁止收缩
 
 ::: demo
 TModuleForm/detaildisabled
 :::
-### 详情-模块Title右侧插槽使用
+
+### 详情-模块 Title 右侧插槽使用
 
 ::: demo
 TModuleForm/detailTitleBtn
@@ -116,19 +132,9 @@ TModuleForm/detailTitleBtn
 
 ```html
 <!-- 第一种 表单形式 -->
-<t-module-form
-  title="模块表单组件运用"
-  ref="sourceForm"
-  :formOpts="formOpts"
-  :submit="submit"
-/>
+<t-module-form title="模块表单组件运用" ref="sourceForm" :formOpts="formOpts" :submit="submit" />
 <!-- 第二种详情展示 根据handleType-->
-<t-module-form
-  title="模块详情组件运用"
-  ref="sourceDetail"
-  handleType="desc"
-  :descData="descData"
-/>
+<t-module-form title="模块详情组件运用" ref="sourceDetail" handleType="desc" :descData="descData" />
 ```
 
 ### 2、配置参数（Attributes）继承 t-form/t-detail Attributes
@@ -140,14 +146,14 @@ TModuleForm/detailTitleBtn
 | subTitle         | 头部副标题                                                                          | string      | 无                               |
 | extra            | 操作区，位于 title 行的行尾(右侧)                                                   | slot        | 无                               |
 | footer           | 底部操作区（默认展示“取消/保存”按钮；优先渲染插槽）设置`:footer="null"`隐藏底部操作 | String/slot | 无                               |
-| isShowHeader     | 不显示header                                                                        | Boolean     | false                            |
-| isTabMargin      | tabs是否跟模块分离                                                                  | Boolean     | false                            |
-| tabMarginNum     | tabs跟模块分离距离                                                                  | Number      | 10                               |
+| isShowHeader     | 不显示 header                                                                       | Boolean     | false                            |
+| isTabMargin      | tabs 是否跟模块分离                                                                 | Boolean     | false                            |
+| tabMarginNum     | tabs 跟模块分离距离                                                                 | Number      | 10                               |
 | tabs             | 页面展示是否需要页签（并且 tabs 的 key 是插槽）——只显示在最后一个模块下             | Array       | 无                               |
 | btnCancelBind    | 取消按钮配置（继承`el-button`所有属性）                                             | object      | `{btnTxt:'取消'}`                |
 | btnSaveBind      | 保存按钮配置（继承`el-button`所有属性）                                             | object      | `{type: primary, btnTxt:'保存'}` |
-| titleBold        | 模块Title文字是否加粗                                                               | Boolean     | false                            |
-| isShowBack       | header不显示返回icon                                                                | Boolean     | false                            |
+| titleBold        | 模块 Title 文字是否加粗                                                             | Boolean     | false                            |
+| isShowBack       | header 不显示返回 icon                                                              | Boolean     | false                            |
 | isGoBackEvent    | 点击头部返回（默认返回上一页，设置此值可以自定义 back 事件）                        | Boolean     | false                            |
 | handleType       | 显示方式（'edit':form 表单操作，'desc':表详情页面）                                 | string      | edit                             |
 | ----edit         | handleType=edit 表 form 表单操作的属性                                              | -           | -                                |

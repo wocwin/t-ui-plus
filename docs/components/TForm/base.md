@@ -89,12 +89,7 @@ TForm/isHideItem
 > TForm 表单组件 **代码示例：**
 
 ```html
-<t-form
-  v-model="formOpts.ref"
-  :formOpts="formOpts"
-  :widthSize="2"
-  @handleEvent="handleEvent"
-/>
+<t-form v-model="formOpts.ref" :formOpts="formOpts" :widthSize="2" @handleEvent="handleEvent" />
 //注意formOpts.ref(t-form组件实例相当于vue2 ref)需要要v-model接收
 ```
 
@@ -113,8 +108,8 @@ TForm/isHideItem
 | ------slotName      | 自定义表单某一项输入框                                                                                  | slot             | -        |
 | ------childSlotName | 自定义表单某一下拉选择项子组件插槽（el-option）                                                         | slot             | -        |
 | ------comp          | form 表单每一项组件是输入框还是下拉选择等（可使用第三方 UI 如 el-select/el-input 也可以使用自定义组件） | String           | -        |
-| ------bind          | 继承第三方 UI 的 Attributes,function传出formData                                                        | Object/funnction | -        |
-| ------isSelfCom     | 是否使用自己封装的组件（即不需要嵌套el-option等）                                                       | Boolean          | false    |
+| ------bind          | 继承第三方 UI 的 Attributes,function 传出 formData                                                      | Object/funnction | -        |
+| ------isSelfCom     | 是否使用自己封装的组件（即不需要嵌套 el-option 等）                                                     | Boolean          | false    |
 | ------isTrim        | 是否不清除前后空格(comp 为 el-input 且 type 不等于'password')                                           | Boolean          | false    |
 | ------type          | form 表单每一项类型                                                                                     | String           | -        |
 | ------widthSize     | form 表单某一项所占比例(如果占一整行则设置 1)                                                           | Number           | -        |
@@ -123,32 +118,32 @@ TForm/isHideItem
 | ------arrKey        | type=select-arr 时，每个下拉显示的中文传后台的数字                                                      | String           | key      |
 | ------label         | form 表单每一项 title                                                                                   | String           | -        |
 | ------labelRender   | 自定义某一项 title                                                                                      | function         | -        |
-| ------labelSlotName | 自定义某一项 title（插槽名：就是labelSlotName值                                                         | slot             | -        |
+| ------labelSlotName | 自定义某一项 title（插槽名：就是 labelSlotName 值                                                       | slot             | -        |
 | ------value         | form 表单每一项传给后台的参数                                                                           | String           | -        |
 | ------rules         | 每一项输入框的表单校验规则                                                                              | Object/Array     | -        |
 | ------list          | 下拉选择数据源（仅仅对 type:'select'有效）                                                              | String           | -        |
 | ------event         | 表单每一项事件标志（即是：handleEvent 事件第一个参数值）                                                | String           | -        |
 | ------eventHandle   | 继承 comp 组件的事件                                                                                    | Object           | -        |
-| ------ref           | 当前使用组件的ref标识（可以通过getRefs事件返回）                                                        | String           | -        |
+| ------ref           | 当前使用组件的 ref 标识（可以通过 getRefs 事件返回）                                                    | String           | -        |
 | ---formData         | 表单提交数据(对应 fieldList 每一项的 value 值)                                                          | Object           | -        |
 | ---labelWidth       | label 宽度                                                                                              | String           | 120px    |
 | ---rules            | 规则（可依据 elementUI el-form 配置————对应 formData 的值）                                             | Object/Array     | -        |
 | ---operatorList     | 操作按钮 list                                                                                           | Array            | -        |
-| -------bind         | 继承el-button所有Attributes(默认值{ type:'primary',size:'small',})                                      | Object           | -        |
+| -------bind         | 继承 el-button 所有 Attributes(默认值{ type:'primary',size:'small',})                                   | Object           | -        |
 | -------fun          | 事件名                                                                                                  | function         | -        |
 
 ### 3. events
 
-| 事件名      | 说明                   | 返回值                                                   |
-| :---------- | :--------------------- | :------------------------------------------------------- |
-| handleEvent | 单个查询条件触发事件   | fieldList 中 type/查询条件输入的值/fieldList 中 event 值 |
-| getRefs     | 获取TForm使用组件的ref | fieldList 中 最好需要传ref标识来区分是哪个组件的ref      |
+| 事件名      | 说明                      | 返回值                                                   |
+| :---------- | :------------------------ | :------------------------------------------------------- |
+| handleEvent | 单个查询条件触发事件      | fieldList 中 type/查询条件输入的值/fieldList 中 event 值 |
+| getRefs     | 获取 TForm 使用组件的 ref | fieldList 中 最好需要传 ref 标识来区分是哪个组件的 ref   |
 
 ### 4. Methods 继承 element-plus 的 methods
 
-| 事件名          | 说明                                           | 返回值                        |
-| :-------------- | :--------------------------------------------- | :---------------------------- |
-| selfValidate    | 自定义校验                                     | valid:Boolean;formData:object |
-| selfResetFields | 自定义重置方法（主要清空使用TSelectTable组件） | -                             |
+| 事件名          | 说明                                             | 返回值                        |
+| :-------------- | :----------------------------------------------- | :---------------------------- |
+| selfValidate    | 自定义校验                                       | valid:Boolean;formData:object |
+| selfResetFields | 自定义重置方法（主要清空使用 TSelectTable 组件） | -                             |
 
 ### 5. 关于 element-plus el-form/el-form-item 提供的一些方法/属性可直接使用，无需其他配置

@@ -1,4 +1,4 @@
-# Chart 图表
+# TChart 图表
 
 基于 Echarts 二次封装的, 集成初始化 echarts、事件、销毁，详情配置，请参考 echarts 官方
 
@@ -13,7 +13,7 @@ npm install echarts
 并在 main 文件中注册使用
 
 ```js
-import * as echarts from 'echarts' // 引入echarts
+import * as echarts from "echarts" // 引入echarts
 app.config.globalProperties.$echarts = echarts // 全局使用
 ```
 

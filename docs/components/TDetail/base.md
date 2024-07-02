@@ -54,8 +54,7 @@ TDetail/tooltip
 <!-- 常规模式 -->
 <t-detail :descData="descData" />
 <!-- 字典回显模式 -->
-<t-detail :descData="descData" :dataList="dataList"
-:listTypeInfo=="listTypeInfo" />
+<t-detail :descData="descData" :dataList="dataList" :listTypeInfo=="listTypeInfo" />
 ```
 
 ### 2、配置参数（Attributes）继承 el-descriptions el-descriptions-item Attributes
@@ -67,7 +66,7 @@ TDetail/tooltip
 | ----value     | 详情字段返回值                                     | String          | -            |
 | ----fieldName | value 返回值的字段                                 | String          | -            |
 | ----slotName  | 插槽（自定义 value）                               | slot            | -            |
-| ----bind      | 继承el-descriptions-item属性                       | Object          | -            |
+| ----bind      | 继承 el-descriptions-item 属性                     | Object          | -            |
 | ----span      | 占用的列宽，默认占用 1 列，最多 4 列               | Number          | 1            |
 | ----tooltip   | value 值的提示语                                   | String/function | -            |
 | ----iconSize  | tooltip 提示语的 icon 大小                         | String/Number   | 继承字体大小 |

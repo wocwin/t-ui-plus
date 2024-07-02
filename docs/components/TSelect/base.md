@@ -6,9 +6,9 @@
 TSelect/single
 :::
 
-### 自定义显示下拉项label
+### 自定义显示下拉项 label
 
-:::demo 设置customLabel字符串表达式：`${item.label}（${item.id}）`;注意：表达式必须以`item`开头，且后面的属性必须存在`optionSource`中
+:::demo 设置 customLabel 字符串表达式：`${_item.label}（${_item.id}）`;注意：表达式必须以`_item`开头，且后面的属性必须存在`optionSource`中
 TSelect/customLabel
 :::
 
@@ -91,14 +91,14 @@ TSelect/useVirtualCollapseTags
 | v-model          | 绑定值                                           | boolean / string / number/Array | 无      |
 | multiple         | 是否多选                                         | Boolean                         | false   |
 | optionSource     | 下拉数据源                                       | Array                           | 无      |
-| customLabel      | 是否自定义设置下拉label                          | String                          | -       |
+| customLabel      | 是否自定义设置下拉 label                         | String                          | -       |
 | valueCustom      | 传入的 option 数组中，要作为最终选择项的键值 key | String                          | 'key'   |
 | labelCustom      | 传入的 option 数组中，要作为显示项的键值名称     | String                          | 'label' |
-| useVirtual       | 是否开启虚拟列表(继承el-select-v2属性)           | Boolean                         | false   |
+| useVirtual       | 是否开启虚拟列表(继承 el-select-v2 属性)         | Boolean                         | false   |
 | isShowPagination | 是否开启分页                                     | Boolean                         | false   |
 | paginationOption | 分页配置                                         | Object                          | -       |
 
-### 2-1、paginationOption配置参数（Attributes）继承 el-pagination Attributes
+### 2-1、paginationOption 配置参数（Attributes）继承 el-pagination Attributes
 
 | 参数        | 说明                                                          | 类型   | 默认值                             |
 | :---------- | :------------------------------------------------------------ | :----- | :--------------------------------- |
@@ -107,9 +107,10 @@ TSelect/useVirtualCollapseTags
 | pagerCount  | 设置最大页码按钮数。 页码按钮的数量，当总页数超过该值时会折叠 | number | 5                                  |
 | total       | 总条目数                                                      | number | 0                                  |
 | layout      | 组件布局，子组件名用逗号分隔                                  | string | 'total, prev, pager, next, jumper' |
-| bind        | el-pagination属性                                             | Object | -                                  |
+| bind        | el-pagination 属性                                            | Object | -                                  |
 
 ### 3、继承 el-select&el-pagination&el-select-v2 events
+
 | 事件名       | 说明                 | 回调参数     |
 | :----------- | :------------------- | :----------- |
 | change       | 选中值发生变化时触发 | 返回选中的值 |

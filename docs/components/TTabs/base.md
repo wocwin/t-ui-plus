@@ -1,4 +1,4 @@
-# tabs组件
+# TTabs 组件
 
 ### 基础用法
 
@@ -12,7 +12,6 @@ TTabs/base
 TTabs/card
 :::
 
-
 ### 带有边框
 
 :::demo
@@ -25,7 +24,4 @@ TTabs/border
 TTabs/position
 :::
 
-
 ### 配置参数继承 el-tabs Attributes/events/插槽
-
-

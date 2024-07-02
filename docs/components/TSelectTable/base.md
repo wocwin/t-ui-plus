@@ -1,4 +1,5 @@
-# 下拉选择表格组件
+# TSelectTable 下拉选择表格组件
+
 ::: warning 注意
 
 使用此组件必须:`Element-plus`版本`v2.6`以上；`@wocwin/t-ui-plus`最新版本(`v1.3.1`以上)。
@@ -79,7 +80,7 @@ TSelectTable/isShowPagination
 
 ### 显示查询条件
 
-:::demo `isShowQuery` 是否开启查询条件配置，其配置继承查询条件组件（TQueryCondition组件）的所有属性/插槽/事件；注意：`不可设置TQueryCondition组件的maxVisibleSpans属性` ;
+:::demo `isShowQuery` 是否开启查询条件配置，其配置继承查询条件组件（TQueryCondition 组件）的所有属性/插槽/事件；注意：`不可设置TQueryCondition组件的maxVisibleSpans属性` ;
 TSelectTable/isShowQuery
 :::
 
@@ -97,7 +98,7 @@ TSelectTable/isShowQueryBtnBind
 
 ### 查询条件--样式布局配置
 
-:::demo `tableWidth` table宽度默认550px，`labelWidth`查询条件label的宽度，默认120px,**重点：设置`opts`下的`span`**
+:::demo `tableWidth` table 宽度默认 550px，`labelWidth`查询条件 label 的宽度，默认 120px,**重点：设置`opts`下的`span`**
 TSelectTable/isShowQuerySpan
 :::
 
@@ -107,12 +108,13 @@ TSelectTable/isShowQuerySpan
 TSelectTable/slotUse
 :::
 
-### input框显示
+### input 框显示
 
-:::demo 设置`isShowInput`显示input框，可以动态更改`isShowInput`值来切换显示下拉框；input框的双向绑定是：`v-model:input-value`
+:::demo 设置`isShowInput`显示 input 框，可以动态更改`isShowInput`值来切换显示下拉框；input 框的双向绑定是：`v-model:input-value`
 
 TSelectTable/isShowInput
 :::
+
 ### TSelectTable 参数配置
 
 ---
@@ -161,12 +163,12 @@ TSelectTable/isShowInput
 | filterable          | 是否开启过滤(根据 keywords 的 label 值进行过滤)                                         | Boolean                   | true       |
 | reserveSelection    | 是否支持翻页选中                                                                        | Boolean                   | true       |
 | isShowPagination    | 开启分页                                                                                | Boolean                   | false      |
-| tableWidth          | table 宽度(单位：px) 若设置0，宽度100%                                                  | Number/String             | 550        |
-| selectWidth         | select 宽度(单位：px) 若设置0，宽度100%                                                 | Number/String             | 550        |
-| inputWidth          | input输入框的宽度(单位：px) 若设置0，宽度100%                                           | Number/String             | 550        |
-| inputAttr           | 继承所有el-input的属性                                                                  | Object                    | -          |
+| tableWidth          | table 宽度(单位：px) 若设置 0，宽度 100%                                                | Number/String             | 550        |
+| selectWidth         | select 宽度(单位：px) 若设置 0，宽度 100%                                               | Number/String             | 550        |
+| inputWidth          | input 输入框的宽度(单位：px) 若设置 0，宽度 100%                                        | Number/String             | 550        |
+| inputAttr           | 继承所有 el-input 的属性                                                                | Object                    | -          |
 | isKeyup             | 单选是否开启键盘事件                                                                    | Boolean                   | false      |
-| isShowQuery         | 是否允许配置查询条件(继承TQueryCondition的所有属性、事件、插槽)                         | Boolean                   | false      |
+| isShowQuery         | 是否允许配置查询条件(继承 TQueryCondition 的所有属性、事件、插槽)                       | Boolean                   | false      |
 | isShowBlurBtn       | 条件查询组件是否显示隐藏下拉框按钮                                                      | Boolean                   | false      |
 | btnBind             | 显示下拉框按钮配置，继承`el-button`所有属性;`默认值{type:'danger',btnTxt:'关闭下拉框'}` | Object                    | -          |
 | isClearQuery        | 关闭下拉框是否清空搜索条件                                                              | Boolean                   | false      |
@@ -177,15 +179,15 @@ TSelectTable/isShowInput
 
 ### 3、事件（events）继承 el-table 及 el-select 属性
 
-| 事件名          | 说明                                                 | 回调参数                                       |
-| :-------------- | :--------------------------------------------------- | :--------------------------------------------- |
-| page-change     | 页码改变事件(避免与el-table的current-change事件冲突) | 返回选中的页码                                 |
-| selectionChange | 多选事件                                             | 返回选中的项数据及选中项的 keywords.value 集合 |
-| radioChange     | 单选                                                 | 返回当前项所有数据                             |
-| input-focus     | 输入框聚焦                                           | -                                              |
-| input-blur      | 输入框失焦                                           | -                                              |
-| input-click     | 输入框点击                                           | -                                              |
-| input-clear     | 输入框清空                                           | -                                              |
+| 事件名          | 说明                                                     | 回调参数                                       |
+| :-------------- | :------------------------------------------------------- | :--------------------------------------------- |
+| page-change     | 页码改变事件(避免与 el-table 的 current-change 事件冲突) | 返回选中的页码                                 |
+| selectionChange | 多选事件                                                 | 返回选中的项数据及选中项的 keywords.value 集合 |
+| radioChange     | 单选                                                     | 返回当前项所有数据                             |
+| input-focus     | 输入框聚焦                                               | -                                              |
+| input-blur      | 输入框失焦                                               | -                                              |
+| input-click     | 输入框点击                                               | -                                              |
+| input-clear     | 输入框清空                                               | -                                              |
 
 ### 4、Expose 方法（Methods）
 
@@ -196,4 +198,4 @@ TSelectTable/isShowInput
 | blur               | 使 input 失去焦点，并隐藏下拉框 |          |
 | tQueryConditionRef | 条件查询组件实例                |          |
 | selectRef          | 下拉选择实例                    |          |
-| selectTable        | el-table实例                    |          |
+| selectTable        | el-table 实例                   |          |
