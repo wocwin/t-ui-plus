@@ -13,7 +13,7 @@
           </template>
         </t-query-condition>
       </t-layout-page-item>
-      <t-layout-page-item class="table_main" :style="tablePageStyle">
+      <t-layout-page-item class="table_main" :class="{ 't_table_self-filling': isTTableSelfFilling }" :style="tablePageStyle">
         <t-table
           v-bind="{ columnSetting, ...$attrs }"
           :isSlotToolbar="isShow('toolbar')"
@@ -53,18 +53,20 @@ defineProps({
   tablePageStyle: {
     type: Object,
     default: () => {}
-  }
+  },
+  // 是否table自动撑满
+  isTTableSelfFilling: Boolean
 })
 const slots = useSlots()
 // 判断是否使用漏了某个插槽
-const isShow = name => {
+const isShow = (name: string) => {
   return Object.keys(slots).includes(name)
 }
 // 获取实例方法
-const instance: any = getCurrentInstance()
+const instance = getCurrentInstance() as any
 // 获取ref
-const TQueryConditionPage: any = ref<HTMLElement | null>(null)
-const TTablePage: any = ref<HTMLElement | null>(null)
+const TQueryConditionPage = ref<HTMLElement | null>(null) as any
+const TTablePage = ref<HTMLElement | null>(null) as any
 onMounted(() => {
   const exposedObj = {
     ...TQueryConditionPage.value.$.exposed,
@@ -117,6 +119,13 @@ defineExpose({ ...instance.exposed, TQueryConditionPage, TTablePage })
         flex-direction: column;
         width: 100%;
         height: 100%;
+      }
+    }
+    .t_table_self-filling {
+      .t-table {
+        :deep(.el-table) {
+          height: 100vh;
+        }
       }
     }
   }

@@ -6,6 +6,7 @@
     isCopy
     ref="tAdaptivePageRef"
     isExpansion
+    isTTableSelfFilling
     columnSetting
     :table="state.table"
     :columns="state.table.columns"
@@ -18,8 +19,12 @@
   >
     <template #title>优先展示插槽，不写插槽展示tableTitle</template>
     <template #footerBtn>
-      <el-button type="primary" @click="tAdaptivePageRef.TQueryConditionPage.checkHandle()">自定义查询</el-button>
-      <el-button type="danger" @click="tAdaptivePageRef.TQueryConditionPage.resetHandle()">自定义重置</el-button>
+      <el-button type="primary" @click="tAdaptivePageRef.TQueryConditionPage.checkHandle()"
+        >自定义查询</el-button
+      >
+      <el-button type="danger" @click="tAdaptivePageRef.TQueryConditionPage.resetHandle()"
+        >自定义重置</el-button
+      >
     </template>
     <template #nickName="{ scope }">
       <div>{{ scope.row.nickName }}</div>
@@ -191,7 +196,9 @@ const handleBranchCode = val => {
 }
 // 最终参数获取
 const getQueryData = computed(() => {
-  const { userName, nickName, date, date1, workshopNum, phonenumber, role } = toRefs(state.queryData)
+  const { userName, nickName, date, date1, workshopNum, phonenumber, role } = toRefs(
+    state.queryData
+  )
   return {
     userName: userName.value,
     nickName: nickName.value,
