@@ -16,13 +16,11 @@
   </t-layout-page>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue"
 const active = ref(0)
-const successTitle = ref(
-  '企业信息填写完成，等待提交认证资料，经*****平台审核通过后即可办理业务'
-)
+const successTitle = ref("企业信息填写完成，等待提交认证资料，经*****平台审核通过后即可办理业务")
 // 下一步
-const next = (val) => {
+const next = val => {
   switch (val.params) {
     case 1:
       active.value += 1
@@ -39,7 +37,7 @@ const next = (val) => {
   }
 }
 // 上一步
-const back = (val) => {
+const back = val => {
   switch (val.params) {
     case 2:
       active.value -= 1
@@ -59,53 +57,53 @@ const complete = () => {
 const stepData = ref([
   {
     id: 1,
-    title: '创建账户',
-    slotName: 'first',
+    title: "创建账户",
+    slotName: "first",
     btnArr: [
       {
-        btnTitle: '下一步',
+        btnTitle: "下一步",
         params: 1,
-        fn: next,
-      },
-    ],
+        fn: next
+      }
+    ]
   },
   {
     id: 2,
-    title: '填写基础信息',
-    slotName: 'second',
+    title: "填写基础信息",
+    slotName: "second",
     btnArr: [
       {
-        btnTitle: '上一步',
+        btnTitle: "上一步",
         params: 2,
-        fn: back,
+        fn: back
       },
       {
-        btnTitle: '下一步',
+        btnTitle: "下一步",
         params: 2,
-        fn: next,
-      },
-    ],
+        fn: next
+      }
+    ]
   },
   {
     id: 3,
-    title: '填写用户信息',
-    slotName: 'third',
+    title: "填写用户信息",
+    slotName: "third",
     btnArr: [
       {
-        btnTitle: '上一步',
+        btnTitle: "上一步",
         params: 3,
-        fn: back,
+        fn: back
       },
       {
-        btnTitle: '下一步',
+        btnTitle: "下一步",
         params: 3,
-        fn: next,
-      },
-    ],
+        fn: next
+      }
+    ]
   },
   {
     id: 4,
-    title: '注册成功',
+    title: "注册成功"
     // lastBtnArr: [
     //   {
     //     btnTitle: '上一步',
@@ -118,7 +116,7 @@ const stepData = ref([
     //     fn: next
     //   }
     // ]
-  },
+  }
 ])
 // _注意:（以上表示）_
 // 当前有 4 个步骤，其标题分别为：

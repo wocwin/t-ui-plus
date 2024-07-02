@@ -19,27 +19,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue"
 const date = ref()
 //获取今天日期
 const myDate = new Date()
 myDate.setDate(myDate.getDate() - 7)
 let holidays = []
-let dateTemp = ''
+let dateTemp = ""
 var flag = 1
 for (var i = 0; i < 7; i++) {
   dateTemp = `${myDate.getFullYear()}-${
-    myDate.getMonth() + 1 > 9
-      ? myDate.getMonth() + 1
-      : '0' + (myDate.getMonth() + 1)
-  }-${myDate.getDate() > 9 ? myDate.getDate() : '0' + myDate.getDate()}`
+    myDate.getMonth() + 1 > 9 ? myDate.getMonth() + 1 : "0" + (myDate.getMonth() + 1)
+  }-${myDate.getDate() > 9 ? myDate.getDate() : "0" + myDate.getDate()}`
   holidays.push(dateTemp)
   myDate.setDate(myDate.getDate() + flag)
 }
 const isHoliday = ({ dayjs }) => {
-  return holidays.includes(dayjs.format('YYYY-MM-DD'))
+  return holidays.includes(dayjs.format("YYYY-MM-DD"))
 }
-const change = (event) => {
+const change = event => {
   console.log(`change事件返回值是：`, event)
   console.log(`v-model绑定的值是：`, date.value)
 }

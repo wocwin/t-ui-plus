@@ -147,7 +147,9 @@ const opts = computed(() => {
 })
 // 最终参数获取
 const getQueryData = computed(() => {
-  const { userName, phonenumber, workshopNum, date, date1, date2, disabledDate } = toRefs(state.queryData)
+  const { userName, phonenumber, workshopNum, date, date1, date2, disabledDate } = toRefs(
+    state.queryData
+  )
   return {
     userName: userName.value,
     workshopNum: workshopNum.value,

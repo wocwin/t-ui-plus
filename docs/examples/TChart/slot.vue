@@ -16,74 +16,74 @@
   </t-layout-page>
 </template>
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import data from './data.json'
+import { ref, onMounted } from "vue"
+import data from "./data.json"
 
 const accessType: any = ref(0)
 // 用户--切换访问时段
 const accessTypeChage = (val: any) => {
-  console.log('切换访问时段', val)
+  console.log("切换访问时段", val)
   getData(accessType.value)
 }
 
 const options = ref({
   xAxis: {
-    type: 'category',
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    type: "category",
+    data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
   },
   yAxis: {
-    type: 'value',
+    type: "value"
   },
   series: [
     {
       data: [],
-      type: 'line',
-    },
-  ],
+      type: "line"
+    }
+  ]
 })
-const getData = async (index) => {
+const getData = async index => {
   const res = await data
   if (res.success) {
     const series = res.data[index].dataList.map((item: { data: any }) => {
       return {
-        type: 'line',
+        type: "line",
         smooth: true,
-        name: res.data[index].type || '',
+        name: res.data[index].type || "",
         data: item.data,
         label: {
           normal: {
             show: true,
-            position: 'top',
-          },
-        },
+            position: "top"
+          }
+        }
       }
     })
     const legendData = res.data[index].nameData
     const option = {
       title: {
-        text: res.data[index].title,
+        text: res.data[index].title
       },
       tooltip: {
-        trigger: 'axis',
+        trigger: "axis"
       },
       legend: {
-        data: legendData,
+        data: legendData
       },
       grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true,
+        left: "3%",
+        right: "4%",
+        bottom: "3%",
+        containLabel: true
       },
       xAxis: {
-        type: 'category',
+        type: "category",
         boundaryGap: false,
-        data: res.data[index].keyData,
+        data: res.data[index].keyData
       },
       yAxis: {
-        type: 'value',
+        type: "value"
       },
-      series,
+      series
     }
     options.value = option
   }

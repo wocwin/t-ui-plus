@@ -1,11 +1,7 @@
 <template>
   <ClientOnly>
     <div class="example-component">
-      <component
-        :is="dynamicComponent"
-        v-if="dynamicComponent"
-        v-bind="$attrs"
-      />
+      <component :is="dynamicComponent" v-if="dynamicComponent" v-bind="$attrs" />
       <div v-else class="example-component--spin">
         <div></div>
         <div></div>
@@ -15,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, shallowRef } from 'vue'
+import { onBeforeMount, shallowRef } from "vue"
 
 const props: any = defineProps<{
   path?: string
@@ -27,13 +23,13 @@ let dynamicComponent = shallowRef(null)
 onBeforeMount(() => {
   // 匹配到的文件默认是懒加载的，通过动态导入实现，并会在构建时分离为独立的 chunk。如果你倾向于直接引入所有的模块（例如依赖于这些模块中的副作用首先被应用），你可以传入 { eager: true } 作为第二个参数：
   const modules = import.meta.glob(`../../../../examples/*/*.vue`, {
-    eager: true,
+    eager: true
   })
   // 动态加载示列组件
   for (const modulesKey in modules) {
     const module = modules[modulesKey]
     // 找到example的组件，并加载
-    if (modulesKey.split('.vue')[0].endsWith(props.path)) {
+    if (modulesKey.split(".vue")[0].endsWith(props.path)) {
       dynamicComponent.value = module.default
     }
   }

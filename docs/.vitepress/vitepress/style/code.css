@@ -126,7 +126,7 @@
   background: var(--prism-line-highlight-background);
 }
 
-[class*='language-']:before {
+[class*="language-"]:before {
   position: absolute;
   top: 0.4em;
   right: 0.8em;
@@ -136,103 +136,103 @@
   color: var(--prism-marker-color);
 }
 
-[class~='language-html']:before,
-[class~='language-markup']:before {
-  content: 'html';
+[class~="language-html"]:before,
+[class~="language-markup"]:before {
+  content: "html";
 }
 
-[class~='language-md']:before,
-[class~='language-markdown']:before {
-  content: 'md';
+[class~="language-md"]:before,
+[class~="language-markdown"]:before {
+  content: "md";
 }
 
-[class~='language-css']:before {
-  content: 'css';
+[class~="language-css"]:before {
+  content: "css";
 }
 
-[class~='language-sass']:before {
-  content: 'sass';
+[class~="language-sass"]:before {
+  content: "sass";
 }
 
-[class~='language-scss']:before {
-  content: 'scss';
+[class~="language-scss"]:before {
+  content: "scss";
 }
 
-[class~='language-less']:before {
-  content: 'less';
+[class~="language-less"]:before {
+  content: "less";
 }
 
-[class~='language-stylus']:before {
-  content: 'styl';
+[class~="language-stylus"]:before {
+  content: "styl";
 }
 
-[class~='language-js']:before,
-[class~='language-typescript']:before {
-  content: 'js';
+[class~="language-js"]:before,
+[class~="language-typescript"]:before {
+  content: "js";
 }
 
-[class~='language-ts']:before,
-[class~='language-typescript']:before {
-  content: 'ts';
+[class~="language-ts"]:before,
+[class~="language-typescript"]:before {
+  content: "ts";
 }
 
-[class~='language-json']:before {
-  content: 'json';
+[class~="language-json"]:before {
+  content: "json";
 }
 
-[class~='language-rb']:before,
-[class~='language-ruby']:before {
-  content: 'rb';
+[class~="language-rb"]:before,
+[class~="language-ruby"]:before {
+  content: "rb";
 }
 
-[class~='language-py']:before,
-[class~='language-python']:before {
-  content: 'py';
+[class~="language-py"]:before,
+[class~="language-python"]:before {
+  content: "py";
 }
 
-[class~='language-sh']:before,
-[class~='language-bash']:before {
-  content: 'sh';
+[class~="language-sh"]:before,
+[class~="language-bash"]:before {
+  content: "sh";
 }
 
-[class~='language-php']:before {
-  content: 'php';
+[class~="language-php"]:before {
+  content: "php";
 }
 
-[class~='language-go']:before {
-  content: 'go';
+[class~="language-go"]:before {
+  content: "go";
 }
 
-[class~='language-rust']:before {
-  content: 'rust';
+[class~="language-rust"]:before {
+  content: "rust";
 }
 
-[class~='language-java']:before {
-  content: 'java';
+[class~="language-java"]:before {
+  content: "java";
 }
 
-[class~='language-c']:before {
-  content: 'c';
+[class~="language-c"]:before {
+  content: "c";
 }
 
-[class~='language-yaml']:before {
-  content: 'yaml';
+[class~="language-yaml"]:before {
+  content: "yaml";
 }
 
-[class~='language-vue']:before {
-  content: 'vue';
+[class~="language-vue"]:before {
+  content: "vue";
 }
 
-[class~='language-dockerfile']:before {
-  content: 'dockerfile';
+[class~="language-dockerfile"]:before {
+  content: "dockerfile";
 }
 
-[class*='language-']:before {
+[class*="language-"]:before {
   font-family: var(--code-font-family);
 }
 
-span[class~='language-css']:before {
-  content: '';
+span[class~="language-css"]:before {
+  content: "";
 }
 
 :root {
@@ -315,32 +315,32 @@ code .token.inserted {
   color: var(--c-brand);
 }
 
-div[class*='language-'] {
+div[class*="language-"] {
   position: relative;
   margin: 0;
   background-color: var(--code-bg-color);
   overflow-x: auto;
 }
 
-li > div[class*='language-'] {
+li > div[class*="language-"] {
   border-radius: 6px 0 0 6px;
   margin: 0;
 }
 
 @media (min-width: 420px) {
-  div[class*='language-'] {
+  div[class*="language-"] {
     margin: 0;
     border-radius: 6px;
   }
 
-  li > div[class*='language-'] {
+  li > div[class*="language-"] {
     margin: 0;
     border-radius: 6px;
   }
 }
 
-[class*='language-'] pre,
-[class*='language-'] code {
+[class*="language-"] pre,
+[class*="language-"] code {
   text-align: left;
   white-space: pre;
   word-spacing: normal;
@@ -350,7 +350,7 @@ li > div[class*='language-'] {
   hyphens: none;
 }
 
-[class*='language-'] pre {
+[class*="language-"] pre {
   position: relative;
   z-index: 1;
   margin: 0;
@@ -359,7 +359,7 @@ li > div[class*='language-'] {
   overflow-x: auto;
 }
 
-[class*='language-'] code {
+[class*="language-"] code {
   padding: 0;
   line-height: var(--code-line-height);
   font-size: var(--code-font-size);
@@ -384,7 +384,7 @@ li > div[class*='language-'] {
   background-color: #000000a8;
 }
 
-div[class*='language-'].line-numbers-mode {
+div[class*="language-"].line-numbers-mode {
   padding-left: 3.5rem;
 }
 
@@ -636,18 +636,14 @@ div[class*='language-'].line-numbers-mode {
 @media screen and (min-width: 1440px) {
   .sidebar {
     padding: 48px 32px 96px calc((100vw - var(--vp-screen-max-width)) / 2);
-    width: calc(
-      (100vw - var(--vp-screen-max-width)) / 2 + var(--vp-sidebar-width-small)
-    );
+    width: calc((100vw - var(--vp-screen-max-width)) / 2 + var(--vp-sidebar-width-small));
   }
 }
 
 @media screen and (min-width: 1680px) {
   .sidebar {
     padding: 48px 48px 96px calc((100vw - var(--vp-screen-max-width)) / 2);
-    width: calc(
-      (100vw - var(--vp-screen-max-width)) / 2 + var(--vp-sidebar-width-small)
-    );
+    width: calc((100vw - var(--vp-screen-max-width)) / 2 + var(--vp-sidebar-width-small));
   }
 }
 
@@ -675,8 +671,7 @@ div[class*='language-'].line-numbers-mode {
   top: 30px;
   left: 0;
   z-index: 0;
-  transition: top 0.25s cubic-bezier(0, 1, 0.5, 1), opacity 0.25s,
-    background-color 0.5s;
+  transition: top 0.25s cubic-bezier(0, 1, 0.5, 1), opacity 0.25s, background-color 0.5s;
 }
 
 .toc-wrapper .toc-content__heading {
@@ -832,9 +827,7 @@ div[class*='language-'].line-numbers-mode {
 
 @media screen and (min-width: 960px) and (min-width: 1440px) {
   .page-content.has-sidebar {
-    padding-left: calc(
-      (100% - var(--vp-screen-max-width)) / 2 + var(--vp-sidebar-width-small)
-    );
+    padding-left: calc((100% - var(--vp-screen-max-width)) / 2 + var(--vp-sidebar-width-small));
   }
 }
 
@@ -905,7 +898,7 @@ div[class*='language-'].line-numbers-mode {
 }
 
 .fixed,
-[fixed=''] {
+[fixed=""] {
   position: fixed;
 }
 

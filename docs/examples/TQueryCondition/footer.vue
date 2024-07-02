@@ -1,7 +1,12 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-query-condition ref="queryConditionRef" :opts="opts" @submit="conditionEnter" @handleEvent="handleEvent">
+      <t-query-condition
+        ref="queryConditionRef"
+        :opts="opts"
+        @submit="conditionEnter"
+        @handleEvent="handleEvent"
+      >
         <template #footerBtn>
           <el-button type="danger" @click="queryConditionRef.resetHandle()">重置</el-button>
           <el-button type="primary" @click="queryConditionRef.checkHandle()">查询</el-button>

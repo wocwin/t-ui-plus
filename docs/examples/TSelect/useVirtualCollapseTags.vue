@@ -9,7 +9,7 @@
         useVirtual
         collapse-tags
         multiple
-        @change="selectChange($event,'1')"
+        @change="selectChange($event, '1')"
       />
     </t-layout-page-item>
     <t-layout-page-item>
@@ -22,7 +22,7 @@
         collapse-tags
         collapse-tags-tooltip
         multiple
-        @change="selectChange($event,'2')"
+        @change="selectChange($event, '2')"
       />
     </t-layout-page-item>
     <t-layout-page-item>
@@ -36,25 +36,22 @@
         collapse-tags-tooltip
         :max-collapse-tags="3"
         multiple
-        @change="selectChange($event,'3')"
+        @change="selectChange($event, '3')"
       />
     </t-layout-page-item>
   </t-layout-page>
 </template>
 <script setup lang="ts" name="useVirtual">
-import { ref } from 'vue'
+import { ref } from "vue"
 const selectVlaue1 = ref<any>()
 const selectVlaue2 = ref<any>()
 const selectVlaue3 = ref<any>()
-const initials = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+const initials = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
 const stepList = Array.from({ length: 1000 }).map((_, idx) => ({
   value: `Option ${idx + 1}`,
-  label: `${initials[idx % 10]}${idx}`,
+  label: `${initials[idx % 10]}${idx}`
 }))
 const selectChange = (val: any, type) => {
-  console.log(
-    `selectChange--selectVlaue${type}`,
-    val
-  )
+  console.log(`selectChange--selectVlaue${type}`, val)
 }
 </script>

@@ -1,4 +1,4 @@
-@use './mixins' as *;
+@use "./mixins" as *;
 
 // css variables
 :root {
@@ -27,8 +27,8 @@
   --border-color-light: var(--el-border-color-lighter);
 
   --font-family: var(--el-font-family);
-  --font-family-mono: 'JetBrains Mono', source-code-pro, Menlo, Monaco, Consolas,
-    'Courier New', monospace;
+  --font-family-mono: "JetBrains Mono", source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 
   // info
   --success-color: var(--el-color-success);
@@ -42,11 +42,11 @@
   /* Screen Size */
   --vp-screen-max-width: 1362px;
 
-  @include respond-to('xxl') {
+  @include respond-to("xxl") {
     --vp-sidebar-width-small: 234px;
   }
 
-  @include respond-to('max') {
+  @include respond-to("max") {
     --vp-screen-max-width: 1482px;
     --vp-sidebar-width-small: 290px;
   }

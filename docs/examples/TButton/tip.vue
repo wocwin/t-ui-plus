@@ -16,7 +16,7 @@
         icon="Delete"
         :tipProps="{
           effect: 'light',
-          placement: 'bottom',
+          placement: 'bottom'
         }"
       />
     </t-layout-page-item>

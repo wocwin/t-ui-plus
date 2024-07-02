@@ -3,11 +3,10 @@
 </template>
 
 <script setup lang="ts" name="TVHtml">
-import { defineProps } from 'vue'
-const props = defineProps({
+defineProps({
   html: {
     type: String,
-    default: ''
+    default: ""
   }
 })
 </script>

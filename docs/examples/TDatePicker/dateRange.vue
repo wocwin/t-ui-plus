@@ -34,20 +34,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue"
 const date = ref()
 const date1 = ref()
 const date2 = ref()
 
 const typeTxt = {
-  date: '日期',
-  week: '周',
-  month: '月',
-  year: '年',
-  daterange: '日期范围',
-  monthrange: '月份范围',
-  datetime: '日期&时间',
-  datetimerange: '日期和时间点范围',
+  date: "日期",
+  week: "周",
+  month: "月",
+  year: "年",
+  daterange: "日期范围",
+  monthrange: "月份范围",
+  datetime: "日期&时间",
+  datetimerange: "日期和时间点范围"
 }
 
 const change = (event, type, value) => {

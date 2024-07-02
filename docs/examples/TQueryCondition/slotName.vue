@@ -1,12 +1,27 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-query-condition :opts="opts" labelWidth="140px" @submit="conditionEnter" @handleEvent="handleEvent">
+      <t-query-condition
+        :opts="opts"
+        labelWidth="140px"
+        @submit="conditionEnter"
+        @handleEvent="handleEvent"
+      >
         <template #date1="{ param }">
-          <el-date-picker v-model="param.date1" type="date" placeholder="请选择日期" value-format="YYYY-MM-DD" />
+          <el-date-picker
+            v-model="param.date1"
+            type="date"
+            placeholder="请选择日期"
+            value-format="YYYY-MM-DD"
+          />
         </template>
         <template #date2="{ scope }">
-          <el-date-picker v-model="scope.date2" type="date" placeholder="请选择日期" value-format="YYYY-MM-DD" />
+          <el-date-picker
+            v-model="scope.date2"
+            type="date"
+            placeholder="请选择日期"
+            value-format="YYYY-MM-DD"
+          />
         </template>
       </t-query-condition>
     </t-layout-page-item>
@@ -94,7 +109,9 @@ const opts = computed(() => {
 })
 // 最终参数获取
 const getQueryData = computed(() => {
-  const { userName, phonenumber, workshopNum, date, date1, date2, likeTransportNo } = toRefs(state.queryData)
+  const { userName, phonenumber, workshopNum, date, date1, date2, likeTransportNo } = toRefs(
+    state.queryData
+  )
   return {
     userName: userName.value,
     workshopNum: workshopNum.value,

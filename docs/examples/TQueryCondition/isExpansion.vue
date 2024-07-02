@@ -1,7 +1,12 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-query-condition :opts="opts" @submit="conditionEnter" @handleEvent="handleEvent" isExpansion />
+      <t-query-condition
+        :opts="opts"
+        @submit="conditionEnter"
+        @handleEvent="handleEvent"
+        isExpansion
+      />
     </t-layout-page-item>
   </t-layout-page>
 </template>

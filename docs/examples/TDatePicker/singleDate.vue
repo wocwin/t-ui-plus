@@ -9,11 +9,7 @@
       <div class="box_content">
         <div class="box_flex">
           <div>选择日期</div>
-          <t-date-picker
-            v-model="date"
-            :size="size"
-            @change="change($event, 'date', date)"
-          />
+          <t-date-picker v-model="date" :size="size" @change="change($event, 'date', date)" />
         </div>
         <div class="box_flex">
           <div>选择周</div>
@@ -74,8 +70,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-const size = ref('default')
+import { ref } from "vue"
+const size = ref("default")
 const date = ref()
 const date1 = ref()
 const date2 = ref()
@@ -85,14 +81,14 @@ const date5 = ref()
 const date6 = ref()
 
 const typeTxt = {
-  date: '日期',
-  week: '周',
-  month: '月',
-  year: '年',
-  daterange: '日期范围',
-  monthrange: '月份范围',
-  datetime: '日期&时间',
-  datetimerange: '日期和时间点范围',
+  date: "日期",
+  week: "周",
+  month: "月",
+  year: "年",
+  daterange: "日期范围",
+  monthrange: "月份范围",
+  datetime: "日期&时间",
+  datetimerange: "日期和时间点范围"
 }
 
 const change = (event, type, value) => {

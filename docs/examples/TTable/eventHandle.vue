@@ -1,7 +1,12 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-table :table="state.table" :columns="state.table.columns" :listTypeInfo="state.listTypeInfo"> </t-table>
+      <t-table
+        :table="state.table"
+        :columns="state.table.columns"
+        :listTypeInfo="state.listTypeInfo"
+      >
+      </t-table>
     </t-layout-page-item>
   </t-layout-page>
 </template>

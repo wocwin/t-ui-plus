@@ -25,10 +25,7 @@
             v-model="date2"
             type="datetimerange"
             range-separator="To"
-            :default-time="[
-              new Date(2000, 1, 1, 12, 0, 0),
-              new Date(2000, 2, 1, 23, 59, 59),
-            ]"
+            :default-time="[new Date(2000, 1, 1, 12, 0, 0), new Date(2000, 2, 1, 23, 59, 59)]"
             @change="change($event, 'datetimerange', date2)"
           />
         </div>
@@ -38,20 +35,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue"
 const date = ref()
 const date1 = ref()
 const date2 = ref()
 
 const typeTxt = {
-  date: '日期',
-  week: '周',
-  month: '月',
-  year: '年',
-  daterange: '日期范围',
-  monthrange: '月份范围',
-  datetime: '日期&时间',
-  datetimerange: '日期和时间点范围',
+  date: "日期",
+  week: "周",
+  month: "月",
+  year: "年",
+  daterange: "日期范围",
+  monthrange: "月份范围",
+  datetime: "日期&时间",
+  datetimerange: "日期和时间点范围"
 }
 
 const change = (event, type, value) => {

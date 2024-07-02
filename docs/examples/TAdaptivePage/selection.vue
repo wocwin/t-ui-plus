@@ -18,7 +18,13 @@
       <div>{{ scope.row.nickName }}</div>
     </template>
     <template #toolbar>
-      <el-button size="default" type="primary" :disabled="state.ids.length < 1" @click="cancelSelect">取消选中</el-button>
+      <el-button
+        size="default"
+        type="primary"
+        :disabled="state.ids.length < 1"
+        @click="cancelSelect"
+        >取消选中</el-button
+      >
     </template>
   </t-adaptive-page>
 </template>

@@ -1,10 +1,6 @@
-import { isClient } from '@vueuse/core'
+import { isClient } from "@vueuse/core"
 
-import type {
-  ComponentPublicInstance,
-  DirectiveBinding,
-  ObjectDirective,
-} from 'vue'
+import type { ComponentPublicInstance, DirectiveBinding, ObjectDirective } from "vue"
 
 type DocumentHandler = <T extends MouseEvent>(mouseup: T, mousedown: T) => void
 type FlushList = Map<
@@ -20,8 +16,8 @@ const nodeList: FlushList = new Map()
 let startClick: MouseEvent
 
 if (isClient) {
-  document.addEventListener('mousedown', (e: MouseEvent) => (startClick = e))
-  document.addEventListener('mouseup', (e: MouseEvent) => {
+  document.addEventListener("mousedown", (e: MouseEvent) => (startClick = e))
+  document.addEventListener("mouseup", (e: MouseEvent) => {
     for (const handlers of nodeList.values()) {
       for (const { documentHandler } of handlers) {
         documentHandler(e as MouseEvent, startClick)
@@ -30,10 +26,7 @@ if (isClient) {
   })
 }
 
-function createDocumentHandler(
-  el: HTMLElement,
-  binding: DirectiveBinding
-): DocumentHandler {
+function createDocumentHandler(el: HTMLElement, binding: DirectiveBinding): DocumentHandler {
   let excludes: HTMLElement[] = []
   if (Array.isArray(binding.arg)) {
     excludes = binding.arg
@@ -51,17 +44,14 @@ function createDocumentHandler(
     const mouseDownTarget = mousedown?.target as Node
     const isBound = !binding || !binding.instance
     const isTargetExists = !mouseUpTarget || !mouseDownTarget
-    const isContainedByEl =
-      el.contains(mouseUpTarget) || el.contains(mouseDownTarget)
+    const isContainedByEl = el.contains(mouseUpTarget) || el.contains(mouseDownTarget)
     const isSelf = el === mouseUpTarget
 
     const isTargetExcluded =
-      (excludes.length &&
-        excludes.some((item) => item?.contains(mouseUpTarget))) ||
+      (excludes.length && excludes.some(item => item?.contains(mouseUpTarget))) ||
       (excludes.length && excludes.includes(mouseDownTarget as HTMLElement))
     const isContainedByPopper =
-      popperRef &&
-      (popperRef.contains(mouseUpTarget) || popperRef.contains(mouseDownTarget))
+      popperRef && (popperRef.contains(mouseUpTarget) || popperRef.contains(mouseDownTarget))
     if (
       isBound ||
       isTargetExists ||
@@ -85,7 +75,7 @@ const ClickOutside: ObjectDirective = {
 
     nodeList.get(el)!.push({
       documentHandler: createDocumentHandler(el, binding),
-      bindingFn: binding.value,
+      bindingFn: binding.value
     })
   },
   updated(el: HTMLElement, binding: DirectiveBinding) {
@@ -94,12 +84,10 @@ const ClickOutside: ObjectDirective = {
     }
 
     const handlers = nodeList.get(el)!
-    const oldHandlerIndex = handlers.findIndex(
-      (item) => item.bindingFn === binding.oldValue
-    )
+    const oldHandlerIndex = handlers.findIndex(item => item.bindingFn === binding.oldValue)
     const newHandler = {
       documentHandler: createDocumentHandler(el, binding),
-      bindingFn: binding.value,
+      bindingFn: binding.value
     }
 
     if (oldHandlerIndex >= 0) {
@@ -112,7 +100,7 @@ const ClickOutside: ObjectDirective = {
   unmounted(el: HTMLElement) {
     // remove all listeners when a component unmounted
     nodeList.delete(el)
-  },
+  }
 }
 
 export default ClickOutside

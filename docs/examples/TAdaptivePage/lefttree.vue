@@ -8,6 +8,7 @@
     :opts="opts"
     isShowWidthSize
     :widthSize="2"
+    isTTableSelfFilling
     @size-change="handlesSizeChange"
     @page-change="handlesCurrentChange"
     @submit="conditionEnter"
