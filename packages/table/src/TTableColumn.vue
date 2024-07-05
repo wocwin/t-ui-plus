@@ -25,8 +25,7 @@
         :render-header="val.renderHeader"
         :align="val.align || align"
         :fixed="val.fixed"
-        :show-overflow-tooltip="val.noShowTip === false ? val.noShowTip : true"
-        v-bind="{ ...val.bind, ...$attrs }"
+        v-bind="{ 'show-overflow-tooltip': true, ...val.bind, ...$attrs }"
       >
         <template #default="scope">
           <!-- render渲染 -->

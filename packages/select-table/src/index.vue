@@ -31,14 +31,24 @@
     @keyup="selectKeyup"
   >
     <template #empty>
-      <div class="t-table-select__table" :style="{ width: tableWidth ? `${tableWidth}px` : '100%' }">
+      <div
+        class="t-table-select__table"
+        :style="{ width: tableWidth ? `${tableWidth}px` : '100%' }"
+      >
         <div class="table_query_condition" v-if="isShowQuery">
-          <t-query-condition ref="tQueryConditionRef" :boolEnter="false" @handleEvent="handleEvent" v-bind="$attrs">
+          <t-query-condition
+            ref="tQueryConditionRef"
+            :boolEnter="false"
+            @handleEvent="handleEvent"
+            v-bind="$attrs"
+          >
             <template v-for="(index, name) in slots" v-slot:[name]="data">
               <slot :name="name" v-bind="data"></slot>
             </template>
             <template #querybar v-if="isShowBlurBtn">
-              <el-button v-bind="{ type: 'danger', ...btnBind }" @click="blur">{{ btnBind.btnTxt || "关闭下拉框" }}</el-button>
+              <el-button v-bind="{ type: 'danger', ...btnBind }" @click="blur">{{
+                btnBind.btnTxt || "关闭下拉框"
+              }}</el-button>
               <slot name="querybar"></slot>
             </template>
           </t-query-condition>
@@ -69,7 +79,14 @@
             :reserve-selection="reserveSelection"
             fixed
           ></el-table-column>
-          <el-table-column type="radio" width="55" :label="radioTxt" fixed align="center" v-if="!multiple && isShowFirstColumn">
+          <el-table-column
+            type="radio"
+            width="55"
+            :label="radioTxt"
+            fixed
+            align="center"
+            v-if="!multiple && isShowFirstColumn"
+          >
             <template #default="scope">
               <el-radio
                 v-model="radioVal"
@@ -88,13 +105,17 @@
             :width="item.width"
             :align="item.align || 'center'"
             :fixed="item.fixed"
-            :show-overflow-tooltip="item.noShowTip"
-            v-bind="{ ...item.bind, ...$attrs }"
+            v-bind="{ 'show-overflow-tooltip': true, ...item.bind, ...$attrs }"
           >
             <template #default="scope">
               <!-- render方式 -->
               <template v-if="item.render">
-                <render-col :column="item" :row="scope.row" :render="item.render" :index="scope.$index" />
+                <render-col
+                  :column="item"
+                  :row="scope.row"
+                  :render="item.render"
+                  :index="scope.$index"
+                />
               </template>
               <!-- 作用域插槽 -->
               <template v-if="item.slotName">
@@ -129,7 +150,17 @@
 <script setup lang="ts" name="TSelectTable">
 import TQueryCondition from "../../query-condition/src/index.vue"
 import RenderCol from "./renderCol.vue"
-import { computed, useAttrs, useSlots, ref, watch, nextTick, reactive, onMounted, onUpdated } from "vue"
+import {
+  computed,
+  useAttrs,
+  useSlots,
+  ref,
+  watch,
+  nextTick,
+  reactive,
+  onMounted,
+  onUpdated
+} from "vue"
 import { ElMessage } from "element-plus"
 import ClickOutside from "../../utils/directives/click-outside/index"
 const props = defineProps({
@@ -378,12 +409,22 @@ const visibleChange = (visible: boolean) => {
   }
   // console.log('表格显示隐藏回调--222', visible)
   if (visible) {
-    if (state.defaultSelectValue && state.defaultSelectValue.length > 0 && isDefaultSelectVal.value) {
+    if (
+      state.defaultSelectValue &&
+      state.defaultSelectValue.length > 0 &&
+      isDefaultSelectVal.value
+    ) {
       defaultSelect(state.defaultSelectValue)
     }
     initTableData()
   } else {
-    if (tQueryConditionRef.value && props.isShowQuery && props.isClearQuery && !selectRef.value.expanded && !props.selfExpanded) {
+    if (
+      tQueryConditionRef.value &&
+      props.isShowQuery &&
+      props.isClearQuery &&
+      !selectRef.value.expanded &&
+      !props.selfExpanded
+    ) {
       tQueryConditionRef.value?.resetData()
     }
     findLabel()
@@ -466,7 +507,8 @@ const findLabel = () => {
         item.currentLabel = item.value
       })
     } else {
-      selectDefaultLabel.value = (state.defaultValue && state.defaultValue[props.keywords.label]) || ""
+      selectDefaultLabel.value =
+        (state.defaultValue && state.defaultValue[props.keywords.label]) || ""
     }
   })
 }
@@ -494,7 +536,9 @@ const defaultSelect = (defaultSelectVal: any[]) => {
       })
     })
     setTimeout(() => {
-      state.defaultValue = multipleList.map((item: { [x: string]: any }) => item[props.keywords.label])
+      state.defaultValue = multipleList.map(
+        (item: { [x: string]: any }) => item[props.keywords.label]
+      )
       multipleList.forEach((row: { [x: string]: any }) => {
         const arr = state.tableData.filter(
           (item: { [x: string]: any }) => item[props.keywords.value] === row[props.keywords.value]
@@ -557,7 +601,10 @@ const filterMethodHandle = (val: string) => {
         radioVal.value = ""
       } else {
         tableData.map((item: { [x: string]: any }, index: number | any) => {
-          if (item[props.keywords.value] === selectDefaultLabel.value && selectDefaultLabel.value[props.keywords.value]) {
+          if (
+            item[props.keywords.value] === selectDefaultLabel.value &&
+            selectDefaultLabel.value[props.keywords.value]
+          ) {
             radioVal.value = index + 1
           }
         })
@@ -587,7 +634,8 @@ const initTableData = () => {
     } else {
       const arr = state.tableData.filter(
         (item: { [x: string]: any }) =>
-          item[props.keywords.value] === selectDefaultLabel.value && selectDefaultLabel.value[props.keywords.value]
+          item[props.keywords.value] === selectDefaultLabel.value &&
+          selectDefaultLabel.value[props.keywords.value]
       )
       selectTable.value.setCurrentRow(arr[0])
     }
@@ -656,7 +704,8 @@ const radioClick = (row: { [x: string]: any }, index: string) => {
   }
   // 是否显示下拉框
   if (props.isExpanded) {
-    selectDefaultLabel.value = (state.defaultValue && state.defaultValue[props.keywords.label]) || ""
+    selectDefaultLabel.value =
+      (state.defaultValue && state.defaultValue[props.keywords.label]) || ""
     selectRef.value.expanded = true
   } else {
     blur()
@@ -686,7 +735,9 @@ const rowClick = async (row: { [x: string]: any }) => {
 }
 // tags删除后回调
 const removeTag = (tag: any) => {
-  const row = state.tableData.find((item: { [x: string]: any }) => item[props.keywords.label] === tag)
+  const row = state.tableData.find(
+    (item: { [x: string]: any }) => item[props.keywords.label] === tag
+  )
   console.log("tags删除后回调", row)
   selectTable.value.toggleRowSelection(row, false)
   isDefaultSelectVal.value = true

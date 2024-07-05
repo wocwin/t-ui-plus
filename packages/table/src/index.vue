@@ -3,7 +3,15 @@
     <div
       class="header_wrap"
       :style="{
-        paddingBottom: tableTitle || title || isShow('title') || isShow('toolbar') || isSlotToolbar || columnSetting ? '10px' : 0
+        paddingBottom:
+          tableTitle ||
+          title ||
+          isShow('title') ||
+          isShow('toolbar') ||
+          isSlotToolbar ||
+          columnSetting
+            ? '10px'
+            : 0
       }"
     >
       <div class="header_title" v-if="tableTitle || title || $slots.title || isSlotTitle">
@@ -46,14 +54,14 @@
         row_sort: isRowSort,
         tree_style: isTree,
         highlightCurrentRow: highlightCurrentRow,
-        radioStyle: radioStyleClass
+        radioStyle: radioStyleClass,
+        multile_head_column: isTableHeader
       }"
       v-bind="$attrs"
       :highlight-current-row="highlightCurrentRow"
       :border="table.border || isTableBorder"
       @cell-dblclick="cellDblclick"
       @row-click="rowClick"
-      :cell-class-name="cellClassNameFuc"
     >
       <!-- 复选框/单选框/序列号 -->
       <template v-if="!Array.isArray(table.firstColumn) && table.firstColumn">
@@ -175,8 +183,7 @@
             :sortable="item.sort || sortable"
             :align="item.align || align"
             :fixed="item.fixed"
-            :show-overflow-tooltip="item.noShowTip === false ? item.noShowTip : item.canEdit ? false : true"
-            v-bind="{ ...item.bind, ...$attrs }"
+            v-bind="{ 'show-overflow-tooltip': true, ...item.bind, ...$attrs }"
           >
             <template #header v-if="item.headerRequired || item.renderHeader">
               <render-header v-if="item.renderHeader" :column="item" :render="item.renderHeader" />
@@ -188,7 +195,12 @@
             <template #default="scope">
               <!-- render渲染 -->
               <template v-if="item.render">
-                <render-col :column="item" :row="scope.row" :render="item.render" :index="scope.$index" />
+                <render-col
+                  :column="item"
+                  :row="scope.row"
+                  :render="item.render"
+                  :index="scope.$index"
+                />
               </template>
               <!-- 自定义插槽 -->
               <template v-if="item.slotName">
@@ -276,7 +288,12 @@
               >
                 <!-- render渲染 -->
                 <template v-if="item.render">
-                  <render-col :column="item" :row="scope.row" :render="item.render" :index="scope.$index" />
+                  <render-col
+                    :column="item"
+                    :row="scope.row"
+                    :render="item.render"
+                    :index="scope.$index"
+                  />
                 </template>
                 <span v-if="!item.render">{{ item.text }}</span>
               </el-button>
@@ -303,7 +320,10 @@
       <slot name="pagination"></slot>
     </el-pagination>
     <!-- 表格底部按钮 -->
-    <footer class="handle_wrap" v-if="isShowFooterBtn && state.tableData && state.tableData.length > 0">
+    <footer
+      class="handle_wrap"
+      v-if="isShowFooterBtn && state.tableData && state.tableData.length > 0"
+    >
       <slot name="footer" />
       <div v-if="!slots.footer">
         <el-button type="primary" @click="save">保存</el-button>
@@ -314,7 +334,7 @@
 
 <script setup lang="ts" name="TTable">
 import { computed, ref, watch, useSlots, reactive, onMounted, onUpdated } from "vue"
-import type { PropType } from "vue"
+// import type { PropType } from "vue"
 import { ElMessage } from "element-plus"
 import Sortable from "sortablejs"
 import TTableColumn from "./TTableColumn.vue"
@@ -354,7 +374,7 @@ const props: any = defineProps({
   tableTitle: String,
   // table对齐方式
   align: {
-    type: String as PropType<"left" | "center" | "right">,
+    type: String,
     // validator: (value: string) => ['left' | 'center' | 'right' | ''].includes(value),
     default: "center"
   },
@@ -405,11 +425,6 @@ const props: any = defineProps({
     type: Boolean,
     default: false
   },
-  // 是否开启合计行隐藏复选框/单选框/序列
-  isTableColumnHidden: {
-    type: Boolean,
-    default: false
-  },
   // 如果设置为 'custom'，则代表用户希望远程排序，需要监听 Table 的 sort-change 事件
   sortable: {
     type: [Boolean, String]
@@ -441,7 +456,11 @@ const TTableBox: any = ref<HTMLElement | null>(null)
 // 获取form ref
 const formRef: any = ref({})
 // 动态form ref
-const handleRef = (el: any, scope: { $index: any; column: { property: any } }, item: { prop: any }) => {
+const handleRef = (
+  el: any,
+  scope: { $index: any; column: { property: any } },
+  item: { prop: any }
+) => {
   if (el) {
     formRef.value[`formRef-${scope.$index}-${item.prop || scope.column.property}`] = el
   }
@@ -449,13 +468,24 @@ const handleRef = (el: any, scope: { $index: any; column: { property: any } }, i
 // 获取所有单元格编辑组件 ref
 const editTableRef: any = ref({})
 // 动态单元格编辑组件 ref
-const handleEditTableRef = (el: any, scope: { $index: any; column: { property: any } }, item: { prop: any }) => {
+const handleEditTableRef = (
+  el: any,
+  scope: { $index: any; column: { property: any } },
+  item: { prop: any }
+) => {
   if (el) {
     editTableRef.value[`singleEditRef-${scope.$index}-${item.prop || scope.column.property}`] = el
   }
 }
 // 抛出事件
-const emits = defineEmits(["save", "page-change", "handleEvent", "radioChange", "rowSort", "validateError"])
+const emits = defineEmits([
+  "save",
+  "page-change",
+  "handleEvent",
+  "radioChange",
+  "rowSort",
+  "validateError"
+])
 // 获取所有插槽
 const slots = useSlots()
 watch(
@@ -527,7 +557,8 @@ const radioStyleClass = computed(() => {
 // 单元格编辑是否存在校验
 const isEditRules = computed(() => {
   return (
-    (props.table.rules && Object.keys(props.table.rules).length > 0) || props.columns.some((item: any) => item?.configEdit?.rules)
+    (props.table.rules && Object.keys(props.table.rules).length > 0) ||
+    props.columns.some((item: any) => item?.configEdit?.rules)
   )
 })
 // 所有列（表头数据）
@@ -620,19 +651,6 @@ const handleKeyup = (event: { keyCode: number }, index: number, key: string) => 
       dom.focus()
       // dom.select()
     }
-  }
-}
-// 合并行隐藏复选框/单选框
-const cellClassNameFuc = ({ row }: any) => {
-  if (!props.isTableColumnHidden) {
-    return false
-  }
-  if (
-    state.tableData.length -
-      (state.tableData.length - props.table.pageSize < 0 ? 1 : state.tableData.length - props.table.pageSize) <=
-    row.rowIndex
-  ) {
-    return "table_column_hidden"
   }
 }
 // forbidden取值（选择单选或取消单选）
@@ -1059,6 +1077,20 @@ defineExpose({
       }
     }
   }
+  // 多级表头过长省略号
+  .multile_head_column {
+    :deep(.el-table__row) {
+      .el-tooltip {
+        div {
+          -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          word-break: break-all;
+        }
+      }
+    }
+  }
   // 单元格编辑且无规则校验
   .el-table {
     .cell {
@@ -1081,23 +1113,6 @@ defineExpose({
       .t_edit_cell_form_rules {
         .single_edit_cell {
           margin-bottom: 15px;
-        }
-      }
-    }
-  }
-  // 某行隐藏复选框/单选框
-  .el-table {
-    .el-table__row {
-      :deep(.table_column_hidden) {
-        .cell {
-          .el-radio__input,
-          .el-checkbox__input {
-            display: none;
-          }
-
-          & > span {
-            display: none;
-          }
         }
       }
     }
