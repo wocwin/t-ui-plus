@@ -7,8 +7,7 @@
 ## [T-ui-Plus使用Demo项目](https://github.com/wocwin/wocwin-admin)
 
 >`wocwin-admin`是基于 Vue3.3、TypeScript、Vite4、Pinia、Element-Plus 开源的一套后台管理模板；此项目全面使用了`T-ui-Plus`二次封装基础组件库
-  
-``
+
 ## 介绍
 
 > 基于 vue3+ ts+ Element-plus 二次封装组件
@@ -37,7 +36,7 @@
 ## npm 方式安装使用
 
 ```shell
-npm i @wocwin/t-ui-plus
+pnpm i @wocwin/t-ui-plus
 ```
 
 ## 全局注册使用
@@ -139,8 +138,6 @@ npm install -g pnpm
 pnpm install
 
 ```
-
-## 使用[t-ui-plus组件的后台管理系统地址](https://github.com/wocwin/wocwin-admin)
 
 ## 本地运行 vuepress 中组件文档
 
