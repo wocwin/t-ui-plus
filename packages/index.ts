@@ -66,6 +66,11 @@ const install: any = (app: any, router?: any) => {
   // !router && installRouter(app);
   installComponents(app)
 }
+// @ts-ignore
+if (typeof window !== 'undefined' && window.Vue) {
+  // @ts-ignore
+  install(window.Vue)
+}
 
 // 按需引入
 export {
