@@ -16,10 +16,15 @@
   --vp-code-block-bg: var(--vp-code-block-bg);
 } */
 
-/* .vp-doc {
+/* .vp-doc {    color: var(--vp-c-brand);
   background-color: var(--el-bg-color);
 } */
-
+.aside .outline-link.active {
+  color: var(--vp-c-brand);
+}
+.aside .outline-link:hover {
+  color: var(--vp-c-brand);
+}
 .vp-doc .t_detail th,
 .vp-doc .t_detail td {
   border: none;
