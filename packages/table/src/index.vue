@@ -26,7 +26,12 @@
           }"
         >
           <slot name="btn" />
-          <column-set v-if="columnSetting" v-bind="$attrs" :columns="renderColumns" @columnSetting="v => (state.columnSet = v)" />
+          <column-set
+            v-if="columnSetting && !isTableHeader"
+            v-bind="$attrs"
+            :columns="renderColumns"
+            @columnSetting="v => (state.columnSet = v)"
+          />
         </div>
       </div>
     </div>
@@ -540,6 +545,10 @@ const renderColumns = computed(() => {
         return acc
       }, [])
     : props.columns
+})
+// 判断是否是多级表头
+const isTableHeader = computed(() => {
+  return renderColumns.value.some((item: any) => item.children)
 })
 // 判断如果有表头合并就自动开启单元格缩放
 const isTableBorder = computed(() => {
