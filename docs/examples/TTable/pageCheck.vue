@@ -58,6 +58,12 @@ const table = ref({
     { prop: "shortRuleMore", label: "改余", minWidth: 120 },
     { prop: "shortRuleLess", label: "改损", minWidth: 120 },
     { prop: "materialSourceLabel", label: "数据来源", minWidth: "100" },
+    { prop: "materialPropertyLabel1", label: "物料属性1", minWidth: 120 },
+    { prop: "baseUnit1", label: "基本单位1", minWidth: 120 },
+    { prop: "singleWeight1", label: "单重1", minWidth: 120 },
+    { prop: "shortRuleMore1", label: "改余1", minWidth: 120 },
+    { prop: "shortRuleLess1", label: "改损1", minWidth: 120 },
+    { prop: "materialSourceLabel1", label: "数据来源1", minWidth: "100" },
     { prop: "updateTime", label: "最后更新日期", minWidth: 220 },
     { prop: "updateBy", label: "最后更新人", minWidth: 160 }
   ]

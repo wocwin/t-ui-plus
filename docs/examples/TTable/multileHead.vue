@@ -78,7 +78,9 @@ let table = ref({
                   prop: "address",
                   label: "地址换行",
                   minWidth: "180",
-                  noShowTip: false
+                  bind: {
+                    "show-overflow-tooltip": false
+                  }
                 }
               ]
             }
@@ -133,7 +135,7 @@ let table = ref({
       label: "表头合并2",
       minWidth: "180",
       children: [
-        { prop: "address", label: "地址22", minWidth: "160", noShowTip: false },
+        { prop: "address", label: "地址22", minWidth: "160" },
         {
           prop: "date",
           label: "日期",
@@ -142,9 +144,8 @@ let table = ref({
         }
       ]
     },
-    { prop: "address", label: "地址", minWidth: "220", noShowTip: false },
-    { prop: "date1", label: "日期", minWidth: "180" },
-    { prop: "address1", label: "地址", minWidth: "220" }
+    { prop: "address", label: "地址", minWidth: "220" },
+    { prop: "date1", label: "日期", minWidth: "180" }
   ]
 })
 </script>

@@ -107,7 +107,6 @@ const table = ref({
         return <span style="color:red">render for循环渲染</span>
       },
       minWidth: "180",
-      noShowTip: false,
       render: (text, record) => {
         return (
           <div>

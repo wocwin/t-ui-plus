@@ -145,7 +145,6 @@ TSelectTable/isShowInput
 | ---currentPage      | 当前页数                                                                                | Number                    | -          |
 | columns             | 表头信息                                                                                | Array                     | []         |
 | ----bind            | el-table-column Attributes                                                              | Object                    | -          |
-| ----noShowTip       | 是否换行 （设置：noShowTip:true）                                                       | Boolean                   | false      |
 | ----fixed           | 列是否固定( left, right)                                                                | string, boolean           | -          |
 | ----align           | 对齐方式(left/center/right)                                                             | String                    | center     |
 | ----render          | 返回三个参数(text：当前值,row：当前整条数据 ,index：当前行)                             | function                  | -          |

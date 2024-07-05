@@ -8,16 +8,43 @@
 TTable/base
 :::
 
+### 斑马线表格
+:::demo 在`t-table`标签中添加`stripe`
+TTable/stripe
+:::
+
+
 ### 边框表格
 
-:::demo 在`table`对象中添加`border:true`
+:::demo 在`table`标签中添加`border:true`
 TTable/border
+:::
+
+### 表格大小
+:::demo 在`table`标签中添加`size:'small'`设置表格大小，可选值`large`、`default`、`small`
+TTable/size
+:::
+
+:::demo 在`TTable`组件中添加`align:'center'`设置整个 table 对齐方式，在`columns`中设置`align`设置每列对齐方式（`columns优先级`高于`整体的对齐方式`）----`align`可选值`left`、`center`、`right`
+TTable/align
 :::
 
 ### 对齐方式
 
 :::demo 在`TTable`组件中添加`align:'center'`设置整个 table 对齐方式，在`columns`中设置`align`设置每列对齐方式（`columns优先级`高于`整体的对齐方式`）----`align`可选值`left`、`center`、`right`
 TTable/align
+:::
+
+### 基本表尾合计
+
+:::demo 在`TTable`标签中添加`show-summary`,默认情况下，对于合计行，第一列不进行数据求合操作，而是显示「合计」二字（可通过sum-text配置），其余列会将本列所有`数值`(不区分`Number`与`String`类型)进行求合操作，并显示出来。
+TTable/showSummary
+:::
+
+### 自定义表尾合计
+
+:::demo 在`TTable`标签中添加`show-summary`,自定义合计逻辑：使用 `summary-method` 并传入一个方法，返回一个数组，这个数组中的各项就会显示在合计行的各列中，可以是一个 VNode 或 String。
+TTable/summaryMethod
 :::
 
 ### 复选框表格
@@ -261,7 +288,6 @@ TTable/expand
 | ----bind                | el-table-column Attributes                                                | Object           | -         |
 | ----width               | 对应列的宽度(固定的)                                                      | string / number  | -         |
 | ----minWidth            | 对应列的最小宽度(会把剩余宽度按比例分配给设置了 min-width 的列)           | string / number  | -         |
-| ----noShowTip           | 是否换行 （设置：noShowTip:false 换行，不设置自动隐藏）                   | Boolean          | -         |
 | ----slotName            | 插槽显示此列数据（其值是具名作用域插槽                                    | String           | -         |
 | ----isShowHidden        | 是否动态显示隐藏列设置（隐藏/显示列）                                     | Boolean          | false     |
 | ----slotNameMerge       | 合并表头插槽显示此列数据（其值是具名作用域插槽）                          | String           | -         |
@@ -292,7 +318,6 @@ TTable/expand
 | tableTitle              | 表格左上标题（为解决顶层容器会出现原生的 title 属性）同时存在优先展示插槽 | String /slot     | -         |
 | isShowPagination        | 是否显示分页(默认显示分页)                                                | Boolean          | true      |
 | isPaginationCumulative  | 序列号显示是否分页累加                                                    | Boolean          | false     |
-| isTableColumnHidden     | 是否开启合计行隐藏复选框/单选框                                           | Boolean          | false     |
 | isCopy                  | 是否允许双击单元格复制                                                    | Boolean          | false     |
 | defaultRadioCol         | 设置默认选中项（单选）defaultRadioCol 值必须大于 0！                      | Number           | -         |
 | rowClickRadio           | 是否开启点击整行选中单选框                                                | Boolean          | true      |
