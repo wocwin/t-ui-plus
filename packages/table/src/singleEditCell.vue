@@ -3,7 +3,11 @@
     :is="isShowRules ? 'el-form-item' : 'div'"
     :prop="prop"
     :rules="configEdit.rules"
-    :class="[configEdit.className, { single_edit_cell_rules: configEdit.rules }, 'single_edit_cell']"
+    :class="[
+      configEdit.className,
+      { single_edit_cell_rules: configEdit.rules },
+      'single_edit_cell'
+    ]"
     v-bind="$attrs"
   >
     <!-- 编辑组件自定义插槽 -->
@@ -36,6 +40,7 @@
             ? configEdit.bind(scope)
             : { clearable: true, filterable: true, ...configEdit.bind }
         "
+        @change="handleEvent(configEdit.event)"
         :style="{ width: configEdit.width || '100%' }"
         v-on="cEvent(configEdit)"
       />
@@ -48,22 +53,20 @@
       :placeholder="configEdit.placeholder || getPlaceholder(configEdit)"
       ref="parentCom"
       :class="prop"
-      @change="handleEvent(configEdit.event, childValue, configEdit.editComponent)"
+      @change="handleEvent(configEdit.event)"
       @keyup="keyUpHandle"
       :style="{ width: configEdit.width || '100%' }"
       v-on="cEvent(configEdit)"
       v-bind="
-        typeof configEdit.bind == 'function' ? configEdit.bind(scope) : { clearable: true, filterable: true, ...configEdit.bind }
+        typeof configEdit.bind == 'function'
+          ? configEdit.bind(scope)
+          : { clearable: true, filterable: true, ...configEdit.bind }
       "
     >
       <!-- 前置文本 -->
-      <template #prepend v-if="configEdit.prepend">
-        {{ configEdit.prepend }}
-      </template>
+      <template #prepend v-if="configEdit.prepend">{{ configEdit.prepend }}</template>
       <!-- 后置文本 -->
-      <template #append v-if="configEdit.append">
-        {{ configEdit.append }}
-      </template>
+      <template #append v-if="configEdit.append">{{ configEdit.append }}</template>
       <!-- 子组件自定义插槽 -->
       <!-- <template v-if="configEdit.childSlotName">
         <slot />
@@ -76,8 +79,7 @@
           :disabled="value.disabled"
           :label="compChildLabel(configEdit, value)"
           :value="compChildValue(configEdit, value, key)"
-          >{{ compChildShowLabel(configEdit, value) }}</component
-        >
+        >{{ compChildShowLabel(configEdit, value) }}</component>
       </template>
     </component>
   </component>
@@ -131,14 +133,22 @@ let childValue: any = computed({
     return props?.modelValue
   },
   set(val) {
-    // console.log('update:modelValue', val)
     emits("update:modelValue", val)
   }
 })
 watch(
-  () => childValue.value,
-  data => emits("update:modelValue", data)
+  () => props.modelValue,
+  data => {
+    childValue.value = data
+  }
 )
+// 绑定的相关事件
+const handleEvent = (type: string) => {
+  setTimeout(() => {
+    // console.log("组件", type, childValue.value)
+    emits("handleEvent", { type, val: childValue.value })
+  }, 0)
+}
 // 键盘事件
 const keyUpHandle = ($event: any) => {
   emits("keyupHandle", $event, props.scope.$index, props.prop)
@@ -210,7 +220,11 @@ const compChildLabel = computed(() => {
 })
 // 子子组件value
 const compChildValue = computed(() => {
-  return (configEdit: { type: any; arrKey: any }, value: { [x: string]: any; value: any }, key: any) => {
+  return (
+    configEdit: { type: any; arrKey: any },
+    value: { [x: string]: any; value: any },
+    key: any
+  ) => {
     switch (configEdit.type) {
       case "radio":
       case "checkbox":
@@ -249,7 +263,9 @@ const handleRef = (el: any) => {
 // 重置下拉表格
 const resetTselectTableFields = () => {
   // 获取所有下拉选择表格组件
-  const refList = Object.keys(tselecttableref.value).filter(item => item.includes("tselecttableref"))
+  const refList = Object.keys(tselecttableref.value).filter(item =>
+    item.includes("tselecttableref")
+  )
   if (refList.length > 0 && tselecttableref.value) {
     refList.map(val => {
       tselecttableref.value[val].clear()
@@ -270,11 +286,7 @@ const getPlaceholder = (row: any) => {
   }
   return placeholder
 }
-// 绑定的相关事件
-const handleEvent = (type: any, val: any, editCom: any) => {
-  // console.log('组件', type, val, editCom)
-  emits("handleEvent", { type, val })
-}
+
 defineExpose({ resetTselectTableFields })
 </script>
 <style lang="scss">

@@ -5,7 +5,11 @@
       <el-dropdown-menu>
         <el-dropdown-item>
           <span class="title">{{ columnBind.title || "列设置" }}</span>
-          <Draggable class="t_table_column_setting_dropdown" v-model="state.columnSet" item-key="prop">
+          <Draggable
+            class="t_table_column_setting_dropdown"
+            v-model="state.columnSet"
+            item-key="prop"
+          >
             <template #item="{ element, index }">
               <el-checkbox
                 :checked="!element.hidden"
@@ -54,7 +58,9 @@ const getColumnSetCache = () => {
   let columnOption = initColumnSet()
   let valueArr = JSON.parse(value) || []
   columnOption.map(item => {
-    let findEle = valueArr.find((ele: { label: any; prop: any }) => ele.label === item.label && ele.prop === item.prop)
+    let findEle = valueArr.find(
+      (ele: { label: any; prop: any }) => ele.label === item.label && ele.prop === item.prop
+    )
     item.hidden = findEle ? findEle.hidden : false
   })
   initColumnSet().map(val => {
@@ -107,7 +113,10 @@ watch(
   val => {
     emits("columnSetting", val)
     // console.log(3333, val)
-    localStorage.setItem(`t-ui-plus:TTable.columnSet-${props.name || props.title}`, JSON.stringify(val))
+    localStorage.setItem(
+      `t-ui-plus:TTable.columnSet-${props.name || props.title}`,
+      JSON.stringify(val)
+    )
   },
   { deep: true }
 )
