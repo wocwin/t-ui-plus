@@ -49,7 +49,9 @@
             :ref="(el:any) => handleRef(el, index)"
             :placeholder="item.placeholder || getPlaceholder(item)"
             v-bind="
-              typeof item.bind == 'function' ? item.bind(formOpts.formData) : { clearable: true, filterable: true, ...item.bind }
+              typeof item.bind == 'function'
+                ? item.bind(formOpts.formData)
+                : { clearable: true, filterable: true, ...item.bind }
             "
             :style="{ width: item.width || '100%' }"
             v-on="cEvent(item, 't-select-table')"
@@ -61,7 +63,9 @@
             :placeholder="item.placeholder || getPlaceholder(item)"
             :ref="(el: any) => getRefs(el, item, index)"
             v-bind="
-              typeof item.bind == 'function' ? item.bind(formOpts.formData) : { clearable: true, filterable: true, ...item.bind }
+              typeof item.bind == 'function'
+                ? item.bind(formOpts.formData)
+                : { clearable: true, filterable: true, ...item.bind }
             "
             :style="{ width: item.width || '100%' }"
             v-on="cEvent(item)"
@@ -76,13 +80,17 @@
           @change="handleEvent(item.event, formOpts.formData[item.value], item)"
           :ref="(el: any) => getRefs(el, item, index)"
           v-bind="
-            typeof item.bind == 'function' ? item.bind(formOpts.formData) : { clearable: true, filterable: true, ...item.bind }
+            typeof item.bind == 'function'
+              ? item.bind(formOpts.formData)
+              : { clearable: true, filterable: true, ...item.bind }
           "
           :style="{ width: item.width || '100%' }"
           v-on="cEvent(item)"
         />
         <component
-          v-if="!item.slotName && !item.textShow && !item.isSelfCom && item.comp.includes('tree-select')"
+          v-if="
+            !item.slotName && !item.textShow && !item.isSelfCom && item.comp.includes('tree-select')
+          "
           :is="item.comp"
           v-model="formOpts.formData[item.value]"
           :type="item.type"
@@ -90,7 +98,9 @@
           @change="handleEvent(item.event, formOpts.formData[item.value], item)"
           :ref="(el: any) => getRefs(el, item, index)"
           v-bind="
-            typeof item.bind == 'function' ? item.bind(formOpts.formData) : { clearable: true, filterable: true, ...item.bind }
+            typeof item.bind == 'function'
+              ? item.bind(formOpts.formData)
+              : { clearable: true, filterable: true, ...item.bind }
           "
           :style="{ width: item.width || '100%' }"
           v-on="cEvent(item)"
@@ -110,7 +120,9 @@
           @change="handleEvent(item.event, formOpts.formData[item.value], item)"
           :ref="(el: any) => getRefs(el, item, index)"
           v-bind="
-            typeof item.bind == 'function' ? item.bind(formOpts.formData) : { clearable: true, filterable: true, ...item.bind }
+            typeof item.bind == 'function'
+              ? item.bind(formOpts.formData)
+              : { clearable: true, filterable: true, ...item.bind }
           "
           :style="{ width: item.width || '100%' }"
           v-on="cEvent(item)"
@@ -142,7 +154,9 @@
       <template v-if="formOpts.btnSlotName">
         <slot :name="formOpts.btnSlotName"></slot>
       </template>
-      <template v-if="!formOpts.btnSlotName && formOpts.operatorList && formOpts.operatorList.length > 0">
+      <template
+        v-if="!formOpts.btnSlotName && formOpts.operatorList && formOpts.operatorList.length > 0"
+      >
         <el-button
           v-for="(val, index) in formOpts.operatorList"
           :key="index"
@@ -409,7 +423,9 @@ const handleRef = (el: any, key: any) => {
 }
 const selfResetFields = () => {
   // 获取所有下拉选择表格组件
-  const refList = Object.keys(tselecttableref.value).filter(item => item.includes("tselecttableref"))
+  const refList = Object.keys(tselecttableref.value).filter(item =>
+    item.includes("tselecttableref")
+  )
   if (refList.length > 0 && tselecttableref.value) {
     refList.map(val => {
       // console.log('9999', val)

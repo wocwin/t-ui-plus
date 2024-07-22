@@ -34,7 +34,11 @@
         </template>
       </module-detail>
       <!-- tabs -->
-      <div class="tabs" v-if="tabs" :style="{ 'margin-top': isTabMargin ? `${tabMarginNum}px` : 0 }">
+      <div
+        class="tabs"
+        v-if="tabs"
+        :style="{ 'margin-top': isTabMargin ? `${tabMarginNum}px` : 0 }"
+      >
         <el-tabs v-if="tabs && tabs.length > 1" v-model="activeName" @tab-change="tabsChange">
           <el-tab-pane v-for="tab in tabs" :key="tab.key" :name="tab.key" :label="tab.title">
             <slot :name="tab.key"></slot>
@@ -49,9 +53,13 @@
       <slot name="footer" />
       <div v-if="!slots.footer">
         <el-button @click="back" v-bind="cancelAttrs">{{ cancelAttrs.btnTxt }}</el-button>
-        <el-button v-bind="saveAttrs" v-if="handleType === 'edit'" @click="saveHandle" :loading="loading">{{
-          saveAttrs.btnTxt
-        }}</el-button>
+        <el-button
+          v-bind="saveAttrs"
+          v-if="handleType === 'edit'"
+          @click="saveHandle"
+          :loading="loading"
+          >{{ saveAttrs.btnTxt }}</el-button
+        >
       </div>
     </footer>
   </div>

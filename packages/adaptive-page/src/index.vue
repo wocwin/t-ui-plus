@@ -1,6 +1,10 @@
 <template>
   <div class="t_adaptive_page">
-    <div :style="{ width: isShow('leftContent') ? `${leftWidth}px` : '0px' }" v-if="isShow('leftContent')" class="left_content">
+    <div
+      :style="{ width: isShow('leftContent') ? `${leftWidth}px` : '0px' }"
+      v-if="isShow('leftContent')"
+      class="left_content"
+    >
       <div class="left_tree">
         <slot name="leftContent" />
       </div>
@@ -13,7 +17,11 @@
           </template>
         </t-query-condition>
       </t-layout-page-item>
-      <t-layout-page-item class="table_main" :class="{ 't_table_self-filling': isTTableSelfFilling }" :style="tablePageStyle">
+      <t-layout-page-item
+        class="table_main"
+        :class="{ 't_table_self-filling': isTTableSelfFilling }"
+        :style="tablePageStyle"
+      >
         <t-table
           v-bind="{ columnSetting, ...$attrs }"
           :isSlotToolbar="isShow('toolbar')"

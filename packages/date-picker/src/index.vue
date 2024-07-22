@@ -1,6 +1,12 @@
 <template>
   <div class="t-date-picker" ref="DatePicker">
-    <el-date-picker :type="type" v-model="time" :shortcuts="state.dateOptions" @change="dateChange" v-bind="attrsBind">
+    <el-date-picker
+      :type="type"
+      v-model="time"
+      :shortcuts="state.dateOptions"
+      @change="dateChange"
+      v-bind="attrsBind"
+    >
       <template v-for="(index, name) in slots" v-slot:[name]="data">
         <slot :name="name" v-bind="data"></slot>
       </template>

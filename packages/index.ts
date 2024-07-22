@@ -67,7 +67,7 @@ const install: any = (app: any, router?: any) => {
   installComponents(app)
 }
 // @ts-ignore
-if (typeof window !== 'undefined' && window.Vue) {
+if (typeof window !== "undefined" && window.Vue) {
   // @ts-ignore
   install(window.Vue)
 }

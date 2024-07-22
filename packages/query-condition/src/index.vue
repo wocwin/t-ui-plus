@@ -72,7 +72,12 @@
         v-on="cEvent(opt)"
       />
       <component
-        v-if="!opt.isSelfCom && !opt.slotName && !opt.comp.includes('date') && !opt.comp.includes('tree-select')"
+        v-if="
+          !opt.isSelfCom &&
+          !opt.slotName &&
+          !opt.comp.includes('date') &&
+          !opt.comp.includes('tree-select')
+        "
         :is="opt.comp"
         v-bind="
           typeof opt.bind == 'function'
@@ -108,12 +113,22 @@
       <template v-if="footer !== null">
         <slot name="footerBtn" />
         <template v-if="!slots.footerBtn">
-          <el-button class="btn_check" @click="checkHandle" v-bind="queryAttrs" :loading="loading">{{
-            queryAttrs.btnTxt
+          <el-button
+            class="btn_check"
+            @click="checkHandle"
+            v-bind="queryAttrs"
+            :loading="loading"
+            >{{ queryAttrs.btnTxt }}</el-button
+          >
+          <el-button v-if="reset" class="btn_reset" v-bind="resetAttrs" @click="resetHandle">{{
+            resetAttrs.btnTxt
           }}</el-button>
-          <el-button v-if="reset" class="btn_reset" v-bind="resetAttrs" @click="resetHandle">{{ resetAttrs.btnTxt }}</el-button>
           <slot name="querybar"></slot>
-          <el-button v-if="originCellLength > maxVisibleRows * colLength && isShowOpen" @click="open = !open" link>
+          <el-button
+            v-if="originCellLength > maxVisibleRows * colLength && isShowOpen"
+            @click="open = !open"
+            link
+          >
             {{ open ? packUpTxt : unfoldTxt }}
             <el-icon v-if="open">
               <ArrowUp />
@@ -315,7 +330,11 @@ const cEvent = computed(() => {
     let changeEvent = {} as any
     Object.keys(event).forEach(v => {
       changeEvent[v] = (e: any) => {
-        if (opt.comp.includes("select") || opt.comp.includes("picker") || opt.comp.includes("date")) {
+        if (
+          opt.comp.includes("select") ||
+          opt.comp.includes("picker") ||
+          opt.comp.includes("date")
+        ) {
           event[v] && event[v](e, queryState.form)
         } else {
           if (e) {
@@ -364,7 +383,9 @@ const handleRef = (el: any, key: any) => {
 const resetHandle = () => {
   queryState.form = initForm(props.opts)
   // 获取所有下拉选择表格组件
-  const refList = Object.keys(tselecttableref.value).filter(item => item.includes("tselecttableref"))
+  const refList = Object.keys(tselecttableref.value).filter(item =>
+    item.includes("tselecttableref")
+  )
   if (refList.length > 0 && tselecttableref.value) {
     refList.map(val => {
       // console.log('9999', val)
@@ -378,7 +399,9 @@ const resetHandle = () => {
 const resetData = () => {
   queryState.form = initForm(props.opts)
   // 获取所有下拉选择表格组件
-  const refList = Object.keys(tselecttableref.value).filter(item => item.includes("tselecttableref"))
+  const refList = Object.keys(tselecttableref.value).filter(item =>
+    item.includes("tselecttableref")
+  )
   if (refList.length > 0 && tselecttableref.value) {
     refList.map(val => {
       // console.log('9999', val)
