@@ -19,7 +19,11 @@
       <slot :name="name" v-bind="data" />
     </template>
     <template v-if="!useVirtual">
-      <el-checkbox v-if="multiple && !isShowPagination" v-model="selectChecked" @change="selectAll" class="all_checkbox"
+      <el-checkbox
+        v-if="multiple && !isShowPagination"
+        v-model="selectChecked"
+        @change="selectAll"
+        class="all_checkbox"
         >全选</el-checkbox
       >
       <el-option
@@ -175,8 +179,8 @@ const selectAll = (val: any) => {
 }
 // 自定义label显示
 const customLabelHandler = (_item: any) => {
-  // console.log('customLabelHandler', item)
-  return eval(props.customLabel)
+  let fun = new Function("_item", "return " + props.customLabel)
+  return fun(_item)
 }
 </script>
 <style lang="scss" scoped>
