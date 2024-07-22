@@ -72,6 +72,12 @@ TSelectTable/multipleDefaultSelectVal
 TSelectTable/multiple
 :::
 
+### 多选--禁用复选框
+
+:::demo `multiple` 开启多选；设置`selectable`属性其类型：`Function(row: any, index: number)` 可根据返回值来决定 `CheckBox` 是否可以勾选.
+TSelectTable/selectable
+:::
+
 ### 开启分页功能（支持翻页选中且默认开启）
 
 :::demo `isShowPagination` 开启分页功能；`@page-change`页码改变事件;传出当前选中的页码；`table` 数据源及表头信息；`keywords` 选项中的 value（选项的值）,label(选项的标签)

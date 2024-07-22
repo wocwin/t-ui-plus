@@ -77,6 +77,7 @@
             width="55"
             align="center"
             :reserve-selection="reserveSelection"
+            :selectable="selectable"
             fixed
           ></el-table-column>
           <el-table-column
@@ -134,6 +135,7 @@
             v-model:current-page="table.currentPage"
             v-model:page-size="table.pageSize"
             small
+            size="small"
             background
             @current-change="handlesCurrentChange"
             layout="total, prev, pager, next, jumper"
@@ -308,7 +310,9 @@ const props = defineProps({
   defaultSelectVal: {
     type: Array,
     default: () => []
-  }
+  },
+  // Function(row: any, index: number) 的返回值用来决定这一行的 CheckBox 是否可以勾选
+  selectable:Function
 })
 const selectAttr = computed(() => {
   return {
