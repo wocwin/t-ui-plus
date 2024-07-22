@@ -15,7 +15,17 @@
 
 <script setup lang="tsx">
 import { ref, reactive } from "vue"
-const widthSize = ref(1)
+import type { Ref } from "vue"
+interface FormOpts {
+  labelPosition?: string
+  ref?: any
+  formData?: any
+  widthSize?: number
+}
+interface WidthSizeType {
+  widthSize?: 1 | 2 | 3 | 4 | 5 | 6 | undefined
+}
+const widthSize = ref(1) as Ref<WidthSizeType["widthSize"]>
 // 获取ref
 const TFormDemo: any = ref<HTMLElement | null>(null)
 // 提交formOpts.ref 方式form表单
@@ -31,11 +41,7 @@ const submitForm = () => {
 const resetForm = () => {
   TFormDemo.value.resetFields()
 }
-// 清除校验
-const clearValidate = () => {
-  TFormDemo.value.clearValidate()
-}
-const formOpts: any = reactive({
+const formOpts: FormOpts = reactive({
   labelPosition: "right",
   ref: null,
   formData: {
