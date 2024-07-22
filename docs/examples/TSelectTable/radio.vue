@@ -7,7 +7,7 @@
         :columns="table.columns"
         :max-height="400"
         :keywords="{ label: 'name', value: 'id' }"
-        @radioChange="radioChange"
+        @radioChange="(...args)=>radioChange(args,'单选')"
       ></t-select-table>
       <el-button style="margin-left: 15px" type="primary" @click="clear">清空选中</el-button>
     </t-layout-page-item>
@@ -47,8 +47,8 @@ const table = ref({
     { label: "单位111", width: "110px", prop: "unitName" }
   ]
 })
-const radioChange = row => {
-  console.log("单选--传给后台的值", row)
+const radioChange = (args, type) => {
+  console.log("单选--传给后台的值", args, type)
 }
 const clear = () => {
   console.log("selectTable.value", selectTable.value)
