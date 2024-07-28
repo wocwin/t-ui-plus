@@ -27,17 +27,22 @@ const props = defineProps({
   tipProps: {
     type: Object,
     default: () => ({})
+  },
+  isDebounce: {
+    type: Boolean,
+    default: true
   }
 })
 // 抛出事件
 const emits = defineEmits(["click"])
 const record = ref(0)
 const handleClick = () => {
-  let newTime = new Date()
+  if (!props.isDebounce) return emits("click")
+  const newTime = new Date()
   if (newTime.getTime() - record.value > props.time) {
     emits("click")
   }
-  record.value = new Date().getTime()
+  record.value = newTime.getTime()
 }
 </script>
 <style lang="scss" scoped>
