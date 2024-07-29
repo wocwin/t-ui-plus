@@ -1,6 +1,12 @@
 <template>
   <t-layout-page class="t_button_demo">
     <t-layout-page-item>
+      <el-switch
+        v-model="isDebounce"
+        size="large"
+        active-text="开启防抖"
+        inactive-text="关闭防抖"
+      />
       <div style="display: flex; align-items: center">
         <div style="width: 140px; font-weight: 700">输入防抖时间：</div>
         <el-input-number
@@ -13,8 +19,13 @@
           @change="handleChange"
         />
       </div>
-      <t-button style="margin-top: 15px" color="#626aef" :time="time" @click="exportExcel"
-        >导出</t-button
+      <t-button
+        style="margin-top: 15px"
+        :isDebounce="isDebounce"
+        :time="time"
+        type="primary"
+        @click="exportExcel"
+        >点击事件</t-button
       >
     </t-layout-page-item>
   </t-layout-page>
@@ -23,6 +34,7 @@
 import { ElMessage } from "element-plus"
 import { ref } from "vue"
 const time = ref(1000)
+const isDebounce = ref(false)
 const handleChange = val => {
   console.log("输入框的值：", val)
 }
