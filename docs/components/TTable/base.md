@@ -333,6 +333,7 @@ TTable/expand
 | align                   | table 对齐方式 可选值`left`、`center`、`right`                            | String           | 'center'  |
 | isSlotToolbar           | TAdaptivePage 组件是否使用了 Toolbar 插槽                                 | Boolean          | false     |
 | isSlotTitle             | TAdaptivePage 组件是否使用了 title 插槽                                   | Boolean          | -         |
+| sortable                | 设置为 'custom',需要监听 Table 的 sort-change 事件                        | Boolean/string   | -         |
 
 ### 3、events 其他事件按照 el-table 直接使用（如 sort-change 排序事件）
 

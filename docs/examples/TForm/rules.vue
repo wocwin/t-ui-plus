@@ -15,7 +15,8 @@
 <script setup lang="tsx">
 import { ref, reactive } from "vue"
 // 获取ref
-const TFormDemo: any = ref<HTMLElement | null>(null)
+// const TFormDemo: any = (ref < HTMLElement) | (null > null)
+const TFormDemo: any = ref(null)
 // 提交formOpts.ref 方式form表单
 const submitForm = () => {
   formOpts.ref.validate(valid => {
@@ -27,11 +28,11 @@ const submitForm = () => {
 }
 // 提交form表单
 // const submitForm = async () => {
-//   const { valid, formData } = await TFormDemo.value.validate()
-//   console.log('formOpts.ref', formOpts.ref)
-//   console.log('formOpts.formData', formData)
+//   const { valid, formData } = await TFormDemo.value.selfValidate()
+//   console.log("formOpts.ref", formOpts.ref)
+//   console.log("formOpts.formData", formData)
 //   if (!valid) return
-//   console.log('最终数据', formData)
+//   console.log("最终数据", formData)
 // }
 // 重置form表单
 const resetForm = () => {
