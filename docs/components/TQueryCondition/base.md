@@ -52,9 +52,15 @@ TQueryCondition/TSelectUse
 TQueryCondition/querybar
 :::
 
-### 自定义按钮
+### 自定义操作按钮
 
-::: demo 设置`footerBtn`插槽，可以自定义按钮,设置`:footer=null`,不展示按钮
+::: demo 设置`footerBtn`插槽，可以自定义按钮，不开启收起&展开功能
+TQueryCondition/footerBtn
+:::
+
+### 不展示操作按钮
+
+::: demo 设置`:isFooter=false`,不展示按钮，不开启收起&展开功能
 TQueryCondition/footer
 :::
 
@@ -68,6 +74,18 @@ TQueryCondition/widthSize
 
 ::: demo
 TQueryCondition/dynamic
+:::
+
+### 自定义修改按钮文案
+
+::: demo
+TQueryCondition/btnBind
+:::
+
+### 以下拉方式展示更多条件
+
+::: demo 设置`isDropDownSelectMore`开启； `popoverAttrs`默认值：{ showTxt: '更多', title: '所有条件', allTxt: '全选', reverseTxt: '反选', clearTxt: '清空',placement: 'bottom', width: 240, trigger: 'click', ...props.popoverAttrs }
+TQueryCondition/isDropDownSelectMore
 :::
 
 ### TQueryCondition 参数配置
@@ -91,24 +109,45 @@ TQueryCondition/dynamic
 
 ### 2、配置参数（Attributes）
 
-| 参数               | 说明                                      | 类型    | 默认值                                         |
-| :----------------- | :---------------------------------------- | :------ | :--------------------------------------------- |
-| opts               | 接收筛选器组件配置                        | object  | 无                                             |
-| loading            | 查询按钮 loading 状态，请求数据时需要体现 | Boolean | false                                          |
-| reset              | 是否显示“重置”按钮                        | Boolean | true                                           |
-| maxVisibleRows     | 收起时设置默认展示行数                    | Number  | 1                                              |
-| boolEnter          | 是否敲回车查询                            | Boolean | true                                           |
-| isShowOpen         | 是否显示“收起和展开”                      | Boolean | true                                           |
-| packUpTxt          | 收起文案                                  | String  | '收起'                                         |
-| unfoldTxt          | 展开文案                                  | String  | '展开'                                         |
-| isExpansion        | 是否默认展开                              | Boolean | false                                          |
-| labelWidth         | labelWidth 宽度                           | String  | '120px'                                        |
-| btnCheckBind       | 查询按钮配置（继承`el-button`所有属性）   | object  | `{type: primary, size: default,btnTxt:'查询'}` |
-| btnResetBind       | 重置按钮配置（继承`el-button`所有属性）   | object  | `{ size: default,btnTxt:'重置'}`               |
-| footer             | 自定义按钮(设置:footer="null"不显示按钮)  | object  | -                                              |
-| configChangedReset | 更新 opts 是否重置（默认重置）            | Boolean | false                                          |
-| isShowWidthSize    | 是否开启动态设置每行显示数                | Boolean | false                                          |
-| widthSize          | 每行显示多少项，最小值 2                  | Number  | 4                                              |
+| 参数                 | 说明                                      | 类型    | 默认值                                         |
+| :------------------- | :---------------------------------------- | :------ | :--------------------------------------------- |
+| opts                 | 接收筛选器组件配置                        | object  | 无                                             |
+| loading              | 查询按钮 loading 状态，请求数据时需要体现 | Boolean | false                                          |
+| reset                | 是否显示“重置”按钮                        | Boolean | true                                           |
+| maxVisibleRows       | 收起时设置默认展示行数                    | Number  | 1                                              |
+| boolEnter            | 是否敲回车查询                            | Boolean | true                                           |
+| isShowOpen           | 是否显示“收起和展开”                      | Boolean | true                                           |
+| packUpTxt            | 收起文案                                  | String  | '收起'                                         |
+| unfoldTxt            | 展开文案                                  | String  | '展开'                                         |
+| isExpansion          | 是否默认展开                              | Boolean | false                                          |
+| labelWidth           | labelWidth 宽度                           | String  | '120px'                                        |
+| btnCheckBind         | 查询按钮配置（继承`el-button`所有属性）   | object  | `{type: primary, size: default,btnTxt:'查询'}` |
+| btnResetBind         | 重置按钮配置（继承`el-button`所有属性）   | object  | `{ size: default,btnTxt:'重置'}`               |
+| isFooter             | 自定义按钮(设置:footer="false"不显示按钮) | Boolean | true                                           |
+| configChangedReset   | 更新 opts 是否重置（默认重置）            | Boolean | false                                          |
+| isShowWidthSize      | 是否开启动态设置每行显示数                | Boolean | false                                          |
+| widthSize            | 每行显示多少项，最小值 2                  | Number  | 4                                              |
+| isDropDownSelectMore | 是否以下拉方式展示更多条件                | Boolean | false                                          |
+
+### 2-1 以下拉方式展示更多条件--配置参数（Attributes）
+| 参数              | 说明                                                   | 类型             | 默认值     |
+| :---------------- | :----------------------------------------------------- | :--------------- | :--------- |
+| popoverAttrs      | el-popover配置及中文文案                               | object           | 具体看源码 |
+| moreCheckList     | 数据源                                                 | Array            | -          |
+| -----label        | 标题                                                   | string           | -          |
+| -----comp         | 组件名称，可直接指定全局注册的组件                     | string,component | -          |
+| -----isSelfCom    | 是否使用自己封装的下拉组件（即没有el-option）          | Boolean          | false      |
+| -----prop         | 接收字段（即后台接收字段）                             | string           | -          |
+| -----bind         | 组件配置参数（Attributes）                             | object           | -          |
+| -----slotName     | 自定义输入框插槽                                       | string           | -          |
+| -----span         | 控件占用的列宽，默认占用 1 列，最多 4 列 (独占一行)    | number           | 1          |
+| -----changeEvent  | 事件名称                                               | string           | -          |
+| -----defaultVal   | 默认值                                                 | string           | -          |
+| -----type         | element 组件type(radio,checkbox,select-arr,select-obj) | string           | -          |
+| -----arrLabel     | el-select 组件options label显示                        | string           | label      |
+| -----arrKey       | el-select 组件options key显示                          | string           | key        |
+| -----list         | el-select 组件options 数据标识                         | string           | -          |
+| -----listTypeInfo | el-select 组件options 数据源                           | object           | -          |
 
 ### 3、opts Attributes
 
@@ -130,11 +169,12 @@ TQueryCondition/dynamic
 
 #### 4、事件（events）
 
-| 事件名      | 说明                     | 返回值                                        |
-| :---------- | :----------------------- | :-------------------------------------------- |
-| handleEvent | 筛选器数据发生变化时触发 | event 标识, val：输入值,form:整个查询条件数据 |
-| submit      | 点击筛选器查询按钮时触发 | form:整个查询条件数据                         |
-| reset       | 点击筛选器重置按钮时触发 | -                                             |
+| 事件名       | 说明                                              | 返回值                                        |
+| :----------- | :------------------------------------------------ | :-------------------------------------------- |
+| handleEvent  | 筛选器数据发生变化时触发                          | event 标识, val：输入值,form:整个查询条件数据 |
+| submit       | 点击筛选器查询按钮时触发                          | form:整个查询条件数据                         |
+| reset        | 点击筛选器重置按钮时触发                          | -                                             |
+| getCheckList | 下拉动态添加条件（isDropDownSelectMore:true生效） | 返回选中的条件项                              |
 
 #### 5、Slots
 

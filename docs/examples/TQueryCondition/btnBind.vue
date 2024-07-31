@@ -7,6 +7,8 @@
         @handleEvent="handleEvent"
         isExpansion
         labelWidth="160px"
+        :btnResetBind="{ size: 'small', btnTxt: '重置', icon: 'Search' }"
+        :btnCheckBind="{ size: 'small', btnTxt: '查询', icon: 'Search' }"
       >
         <template #disabledDate="{ param }">
           <el-date-picker

@@ -46,38 +46,7 @@
         />
       </template>
       <component
-        v-if="!opt.slotName && !opt.isSelfCom && opt.comp.includes('date')"
-        :is="opt.comp"
-        v-bind="
-          typeof opt.bind == 'function'
-            ? opt.bind(queryState.form)
-            : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
-        "
-        :placeholder="opt.placeholder || getPlaceholder(opt)"
-        @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
-        v-model="queryState.form[opt.dataIndex]"
-        v-on="cEvent(opt)"
-      />
-      <component
-        v-if="!opt.slotName && !opt.isSelfCom && opt.comp.includes('tree-select')"
-        :is="opt.comp"
-        v-bind="
-          typeof opt.bind == 'function'
-            ? opt.bind(queryState.form)
-            : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
-        "
-        :placeholder="opt.placeholder || getPlaceholder(opt)"
-        @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
-        v-model="queryState.form[opt.dataIndex]"
-        v-on="cEvent(opt)"
-      />
-      <component
-        v-if="
-          !opt.isSelfCom &&
-          !opt.slotName &&
-          !opt.comp.includes('date') &&
-          !opt.comp.includes('tree-select')
-        "
+        v-if="!opt.isSelfCom && !opt.slotName"
         :is="opt.comp"
         v-bind="
           typeof opt.bind == 'function'
@@ -110,7 +79,7 @@
         { btn_flex_end: Object.keys(cOpts).length === 4 || cellLength > 3 }
       ]"
     >
-      <template v-if="footer !== null">
+      <template v-if="isFooter">
         <slot name="footerBtn" />
         <template v-if="!slots.footerBtn">
           <el-button
@@ -125,7 +94,7 @@
           }}</el-button>
           <slot name="querybar"></slot>
           <el-button
-            v-if="originCellLength > maxVisibleRows * colLength && isShowOpen"
+            v-if="originCellLength > maxVisibleRows * colLength && showOpen"
             @click="open = !open"
             link
           >
@@ -137,6 +106,12 @@
               <ArrowDown />
             </el-icon>
           </el-button>
+          <more-choose
+            :isDropDownSelectMore="isDropDownSelectMore"
+            :moreCheckList="moreCheckList"
+            :popoverAttrsBind="popoverAttrsBind"
+            @getCheckList="event => emits('getCheckList', event)"
+          />
         </template>
       </template>
     </el-form-item>
@@ -145,7 +120,9 @@
 
 <script setup lang="ts" name="TQueryCondition">
 import RenderComp from "./renderComp.vue"
+import MoreChoose from "./moreChoose.vue"
 import { computed, ref, watch, useSlots, onMounted, reactive } from "vue"
+
 const props = defineProps({
   opts: {
     type: Object,
@@ -201,8 +178,11 @@ const props = defineProps({
     type: String,
     default: "展开"
   },
-  // 是否显示底部操作按钮 :footer="null"
-  footer: Object,
+  // 是否显示底部操作按钮
+  isFooter: {
+    type: Boolean,
+    default: true
+  },
   configChangedReset: {
     type: Boolean,
     default: false
@@ -216,6 +196,21 @@ const props = defineProps({
   widthSize: {
     type: Number,
     default: 4
+  },
+  // 是否以下拉方式展示更多条件
+  isDropDownSelectMore: {
+    type: Boolean,
+    default: false
+  },
+  // 以下拉方式展示更多条件---数据源
+  moreCheckList: {
+    type: Array,
+    default: () => []
+  },
+  // 更多条件--el-popover属性
+  popoverAttrs: {
+    type: Object,
+    default: () => ({})
   }
 })
 const slots = useSlots()
@@ -223,6 +218,16 @@ const slots = useSlots()
 const isShow = (name: string) => {
   return Object.keys(slots).includes(name)
 }
+const popoverAttrsBind = computed(() => {
+  return {
+    showTxt: "更多",
+    title: "所有条件",
+    allTxt: "全选",
+    reverseTxt: "反选",
+    clearTxt: "清空",
+    ...props.popoverAttrs
+  }
+})
 // 初始化表单数据
 let queryState = reactive({
   form: Object.keys(props.opts).reduce((acc: any, field: any) => {
@@ -231,25 +236,21 @@ let queryState = reactive({
   }, {})
 })
 let colLength = ref(4)
+let showOpen = ref(false)
+
 let open = ref(false)
-// 默认展开
-if (props.isExpansion) {
-  open.value = true
-} else {
-  open.value = false
-}
+
 // 查询按钮配置
 const queryAttrs = computed(() => {
   return {
     type: "primary",
-    size: "default",
     btnTxt: "查询",
     ...props.btnCheckBind
   }
 })
 // 重置按钮配置
 const resetAttrs = computed(() => {
-  return { size: "default", btnTxt: "重置", ...props.btnResetBind }
+  return { btnTxt: "重置", ...props.btnResetBind }
 })
 const originCellLength = computed(() => {
   let length = 0
@@ -269,9 +270,11 @@ const cOpts = computed(() => {
       ...props.opts[field]
     }
     // 收起、展开操作
-    if (props.isShowOpen) {
+    if (showOpen.value) {
       renderSpan += opt.span ?? 1
-      if (!open.value && renderSpan - 1 >= props.maxVisibleRows * colLength.value) return acc
+      if (!open.value && renderSpan - 1 >= props.maxVisibleRows * colLength.value) {
+        return acc
+      }
     }
     opt.dataIndex = field
     acc[field] = opt
@@ -310,7 +313,6 @@ const gridAreas = computed(() => {
     }
   }
   if (areas[rowIndex].length === colLength.value) {
-    // areas.push(['submit_btn', 'submit_btn', 'submit_btn', 'submit_btn'])
     areas.push(Array(colLength.value).fill("submit_btn"))
   } else {
     while (areas[rowIndex].length < colLength.value) {
@@ -363,14 +365,16 @@ const getColLength = () => {
   // 行列数
   const width = window.innerWidth
   let colLength = 4
-  if (width > 768 && width < 1280) {
+  if (width > 1000 && width < 1280) {
     colLength = 3
-  } else if (width <= 768) {
+  } else if (width > 768 && width <= 1000) {
     colLength = 2
+  } else if (width <= 768) {
+    colLength = 1
   }
   return colLength
 }
-const emits = defineEmits(["handleEvent", "submit", "reset"])
+const emits = defineEmits(["handleEvent", "submit", "reset", "getCheckList"])
 // 下拉选择表格组件 ref
 const tselecttableref: any = ref({})
 // 下拉选择表格组件 动态ref
@@ -488,7 +492,7 @@ const compChildShowLabel = computed(() => {
 })
 // placeholder的显示
 const getPlaceholder = (row: any) => {
-  // console.log(77, row.date)
+  // console.log(77, row)
   let placeholder
   if (row.comp && typeof row.comp == "string") {
     if (row.comp.includes("input")) {
@@ -502,6 +506,18 @@ const getPlaceholder = (row: any) => {
   return placeholder
 }
 onMounted(() => {
+  // 是否显示展开按钮
+  if (props.isShowOpen) {
+    showOpen.value = true
+  } else {
+    showOpen.value = false
+  }
+  // 默认展开
+  if (props.isExpansion) {
+    open.value = true
+  } else {
+    open.value = false
+  }
   if (props.isShowWidthSize) {
     colLength.value = props.widthSize
   } else {
@@ -532,8 +548,14 @@ onMounted(() => {
     }
   }
   // 使用自定义按钮插槽默认展开所有查询条件
-  if (isShow("footer")) {
+  if (isShow("footerBtn") || !props.isFooter) {
+    // console.log("使用自定义按钮插槽默认展开所有查询条件", props.isFooter)
     open.value = true
+  }
+  // 以下拉方式展示更多条件禁用展开&收起功能
+  if (props.isDropDownSelectMore) {
+    open.value = true
+    showOpen.value = false
   }
 })
 watch(
@@ -591,6 +613,10 @@ defineExpose({
     .el-form-item__content {
       display: flex;
       // justify-content: flex-end;
+    }
+    .more_dropdown_icon {
+      margin-left: 10px;
+      cursor: pointer;
     }
   }
 

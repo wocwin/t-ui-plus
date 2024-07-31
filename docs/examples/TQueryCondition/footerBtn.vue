@@ -6,8 +6,12 @@
         :opts="opts"
         @submit="conditionEnter"
         @handleEvent="handleEvent"
-        :isFooter="false"
-      />
+      >
+        <template #footerBtn>
+          <el-button type="danger" @click="queryConditionRef.resetHandle()">重置</el-button>
+          <el-button type="primary" @click="queryConditionRef.checkHandle()">查询</el-button>
+        </template>
+      </t-query-condition>
     </t-layout-page-item>
   </t-layout-page>
 </template>
