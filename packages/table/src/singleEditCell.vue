@@ -79,7 +79,8 @@
           :disabled="value.disabled"
           :label="compChildLabel(configEdit, value)"
           :value="compChildValue(configEdit, value, key)"
-        >{{ compChildShowLabel(configEdit, value) }}</component>
+          >{{ compChildShowLabel(configEdit, value) }}</component
+        >
       </template>
     </component>
   </component>
@@ -180,6 +181,7 @@ const cEvent: any = computed(() => {
     return { ...changeEvent }
   }
 })
+
 const selectListType = computed(() => {
   return (item: { list: string | number }) => {
     if (props.listTypeInfo) {
@@ -274,17 +276,16 @@ const resetTselectTableFields = () => {
 }
 // placeholder的显示
 const getPlaceholder = (row: any) => {
-  let placeholder
-  if (row.editComponent && typeof row.editComponent == "string") {
-    if (row.editComponent.includes("input")) {
-      placeholder = "请输入" + row.label
-    } else if (row.editComponent.includes("select") || row.editComponent.includes("date")) {
-      placeholder = "请选择" + row.label
-    } else {
-      placeholder = row.label
-    }
+  if (!row.editComponent || typeof row.editComponent !== "string") {
+    return row.label
   }
-  return placeholder
+  const componentType = row.editComponent.toLowerCase()
+  if (componentType.includes("input")) {
+    return "请输入" + row.label
+  } else if (componentType.includes("select") || componentType.includes("date")) {
+    return "请选择" + row.label
+  }
+  return row.label
 }
 
 defineExpose({ resetTselectTableFields })

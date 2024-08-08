@@ -566,20 +566,16 @@ const isEditRules = computed(() => {
 })
 // 所有列（表头数据）
 const renderColumns = computed(() => {
-  return state.columnSet.length > 0
-    ? state.columnSet.reduce((acc: any, cur: any) => {
-        if (!cur.hidden) {
-          let columnByProp: any = props.columns.reduce((acc: any, cur: any) => {
-            acc[cur.prop] = cur
-            return acc
-          }, {})
-          acc.push(columnByProp[cur.prop])
-        }
-        // console.log('columnSet', acc)
-        return acc
-      }, [])
-    : props.columns
+  if (state.columnSet.length === 0) {
+    return props.columns
+  }
+  const columnByProp = props.columns.reduce((acc: any, cur: any) => {
+    acc[cur.prop] = cur
+    return acc
+  }, {})
+  return state.columnSet.filter((cur: any) => !cur.hidden).map((cur: any) => columnByProp[cur.prop])
 })
+
 // 判断是否是多级表头
 const isTableHeader = computed(() => {
   return renderColumns.value.some((item: any) => item.children)
@@ -591,71 +587,48 @@ const isTableBorder = computed(() => {
 // 单元格编辑键盘事件
 const handleKeyup = (event: { keyCode: number }, index: number, key: string) => {
   if (!props.isKeyup) return
-  state.copyTableData = JSON.parse(JSON.stringify(state.tableData))
-  // 向上键
-  if (event.keyCode === 38) {
-    let doms = document.getElementsByClassName(key)
-    if (!index) {
-      index = state.copyTableData.length
-    }
-    if (doms.length) {
-      let dom
-      if (doms[index - 1].getElementsByTagName("input")[0]) {
-        dom = doms[index - 1].getElementsByTagName("input")[0]
-      } else {
-        dom = doms[index - 1].getElementsByTagName("textarea")[0]
-      }
-      dom.focus()
-      // dom.select()
-    }
+  const copyTableData = JSON.parse(JSON.stringify(state.tableData))
+  const doms = document.getElementsByClassName(key)
+  const focusNextElement = (nextIndex: number) => {
+    const nextDom =
+      doms[nextIndex]?.getElementsByTagName("input")[0] ||
+      doms[nextIndex]?.getElementsByTagName("textarea")[0]
+    if (nextDom) nextDom.focus()
   }
-  // 向下键
-  if (event.keyCode === 40) {
-    let doms = document.getElementsByClassName(key)
-    if (+index === state.copyTableData.length - 1) {
-      index = -1
-    }
-    if (doms.length) {
-      let dom
-      if (doms[index + 1].getElementsByTagName("input")[0]) {
-        dom = doms[index + 1].getElementsByTagName("input")[0]
-      } else {
-        dom = doms[index + 1].getElementsByTagName("textarea")[0]
-      }
-      dom.focus()
-      // dom.select()
-    }
-  }
-  // 回车横向 向右移动
-  if (event.keyCode === 13) {
-    let keyName = props.columns.map((val: any) => val.prop)
-    let num = 0
-    if (key === keyName[keyName.length - 1]) {
-      if (index === state.copyTableData.length - 1) {
-        index = 0
-      } else {
-        ++index
-      }
-    } else {
-      keyName.map((v: string, i: number) => {
-        if (v === key) {
-          num = i + 1
+  switch (event.keyCode) {
+    case 38: // 向上键
+      if (!index) index = copyTableData.length
+      focusNextElement(index - 1)
+      break
+    case 40: // 向下键
+      if (index === copyTableData.length - 1) index = -1
+      focusNextElement(index + 1)
+      break
+    case 13: // 回车键
+      let keyName = props.columns.map((val: any) => val.prop)
+      let num = keyName.indexOf(key)
+      if (num === -1) {
+        num = 0
+      } else if (num === keyName.length - 1) {
+        if (index === state.copyTableData.length - 1) {
+          index = 0
+        } else {
+          ++index
         }
-      })
-    }
-    let doms = document.getElementsByClassName(keyName[num])
-    if (doms.length) {
-      let dom
-      if (doms[index].getElementsByTagName("input")[0]) {
-        dom = doms[index].getElementsByTagName("input")[0]
       } else {
-        dom = doms[index].getElementsByTagName("textarea")[0]
+        ++num
       }
-      dom.focus()
-      // dom.select()
-    }
+      let doms = document.getElementsByClassName(keyName[num])
+      if (doms.length) {
+        let dom =
+          doms[index].getElementsByTagName("input")[0] ||
+          doms[index].getElementsByTagName("textarea")[0]
+        dom.focus()
+      }
+      break
   }
 }
+
 // forbidden取值（选择单选或取消单选）
 const isForbidden = () => {
   forbidden.value = false
@@ -665,24 +638,17 @@ const isForbidden = () => {
 }
 // 单选抛出事件radioChange
 const radioClick = (row: any, index: any) => {
-  forbidden.value = !!forbidden.value
-  if (radioVal.value) {
-    if (radioVal.value === index) {
-      radioVal.value = null
-      isForbidden()
-      // 取消勾选就把回传数据清除
-      emits("radioChange", null, radioVal.value)
-    } else {
-      isForbidden()
-      radioVal.value = index
-      emits("radioChange", row, radioVal.value)
-    }
+  forbidden.value = !forbidden.value
+  const isCurrentlySelected = radioVal.value === index
+  if (isCurrentlySelected) {
+    radioVal.value = null
   } else {
-    isForbidden()
     radioVal.value = index
-    emits("radioChange", row, radioVal.value)
   }
+  isForbidden()
+  emits("radioChange", radioVal.value ? row : null, radioVal.value)
 }
+
 // 点击单选框单元格触发事件
 const radioHandleChange = (row: any, index: any) => {
   if (props.rowClickRadio) {
