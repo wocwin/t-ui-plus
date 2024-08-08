@@ -87,211 +87,92 @@ let time: any = computed({
 })
 const DatePicker = ref()
 const attrsBind = computed(() => {
-  let attrs = {} as any
-  switch (props.type) {
-    case "date":
-    case "dates":
-      attrs["value-format"] = "YYYY-MM-DD"
-      attrs["placeholder"] = "请选择日期"
-      break
-    case "week":
-      // attrs['value-format'] = 'YYYY - ww'
-      attrs["format"] = "YYYY 第 ww 周"
-      attrs["placeholder"] = "请选择周"
-      break
-    case "month":
-    case "months":
-      attrs["value-format"] = "YYYY-MM"
-      attrs["format"] = "YYYY-MM"
-      attrs["placeholder"] = "请选择月"
-      break
-    case "year":
-    case "years":
-      attrs["value-format"] = "YYYY"
-      attrs["format"] = "YYYY"
-      attrs["placeholder"] = "请选择年"
-      break
-    /**
-     * 日期范围
-     */
-    case "daterange":
-      attrs["value-format"] = "YYYY-MM-DD"
-      attrs["range-separator"] = "~"
-      attrs["start-placeholder"] = "请选择开始日期"
-      attrs["end-placeholder"] = "请选择结束日期"
-      break
-    case "monthrange":
-      attrs["value-format"] = "YYYY-MM"
-      attrs["range-separator"] = "~"
-      attrs["start-placeholder"] = "请选择开始月份"
-      attrs["end-placeholder"] = "请选择结束月份"
-      break
-    /**
-     * 日期和时间点
-     */
-    case "datetime":
-      attrs["format"] = "YYYY-MM-DD HH:mm:ss"
-      attrs["value-format"] = "YYYY-MM-DD HH:mm:ss"
-      attrs["placeholder"] = "请选择日期时间"
-      break
-    case "datetimerange":
-      attrs["format"] = "YYYY-MM-DD HH:mm:ss"
-      attrs["value-format"] = "YYYY-MM-DD HH:mm:ss"
-      attrs["range-separator"] = "~"
-      attrs["start-placeholder"] = "请选择开始日期"
-      attrs["end-placeholder"] = "请选择结束日期"
-      break
+  const baseAttrs = {
+    date: { "value-format": "YYYY-MM-DD", placeholder: "请选择日期" },
+    dates: { "value-format": "YYYY-MM-DD", placeholder: "请选择日期" },
+    week: { format: "YYYY 第 ww 周", placeholder: "请选择周" },
+    month: { "value-format": "YYYY-MM", format: "YYYY-MM", placeholder: "请选择月" },
+    months: { "value-format": "YYYY-MM", format: "YYYY-MM", placeholder: "请选择月" },
+    year: { "value-format": "YYYY", format: "YYYY", placeholder: "请选择年" },
+    years: { "value-format": "YYYY", format: "YYYY", placeholder: "请选择年" },
+    daterange: {
+      "value-format": "YYYY-MM-DD",
+      "range-separator": "~",
+      "start-placeholder": "请选择开始日期",
+      "end-placeholder": "请选择结束日期"
+    },
+    monthrange: {
+      "value-format": "YYYY-MM",
+      "range-separator": "~",
+      "start-placeholder": "请选择开始月份",
+      "end-placeholder": "请选择结束月份"
+    },
+    datetime: {
+      format: "YYYY-MM-DD HH:mm:ss",
+      "value-format": "YYYY-MM-DD HH:mm:ss",
+      placeholder: "请选择日期时间"
+    },
+    datetimerange: {
+      format: "YYYY-MM-DD HH:mm:ss",
+      "value-format": "YYYY-MM-DD HH:mm:ss",
+      "range-separator": "~",
+      "start-placeholder": "请选择开始日期",
+      "end-placeholder": "请选择结束日期"
+    }
   }
+  const typeAttrs = baseAttrs[props.type] || {}
   return {
-    ...attrs,
+    ...typeAttrs,
     ...$attrs
   }
 })
+
 const state = reactive({
   dateOptions: props.shortcuts
 })
 // 获取快捷配置
 const getShortcuts = (type: any) => {
-  let shortcuts: any = []
-  switch (type) {
-    case "date":
-      shortcuts = [
-        {
-          text: "今天",
-          value: new Date()
-        },
-        {
-          text: "昨天",
-          value: () => {
-            const date = new Date()
-            date.setTime(date.getTime() - 3600 * 1000 * 24)
-            return date
-          }
-        },
-        {
-          text: "一周前",
-          value: () => {
-            const date = new Date()
-            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
-            return date
-          }
-        }
-      ]
-      break
-    case "daterange":
-      shortcuts = [
-        {
-          text: "最近一周",
-          value: () => {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-            return [start, end]
-          }
-        },
-        {
-          text: "最近一个月",
-          value: () => {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-            return [start, end]
-          }
-        },
-        {
-          text: "最近三个月",
-          value: () => {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-            return [start, end]
-          }
-        }
-      ]
-      break
-    case "monthrange":
-      shortcuts = [
-        {
-          text: "本月",
-          value: [new Date(), new Date()]
-        },
-        {
-          text: "今年至今",
-          value: () => {
-            const end = new Date()
-            const start = new Date(new Date().getFullYear(), 0)
-            return [start, end]
-          }
-        },
-        {
-          text: "最近六个月",
-          value: () => {
-            const end = new Date()
-            const start = new Date()
-            start.setMonth(start.getMonth() - 6)
-            return [start, end]
-          }
-        }
-      ]
-      break
-    case "datetime":
-      shortcuts = [
-        {
-          text: "今天",
-          value: new Date()
-        },
-        {
-          text: "昨天",
-          value: () => {
-            const date = new Date()
-            date.setTime(date.getTime() - 3600 * 1000 * 24)
-            return date
-          }
-        },
-        {
-          text: "一周前",
-          value: () => {
-            const date = new Date()
-            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
-            return date
-          }
-        }
-      ]
-      break
-    case "datetimerange":
-      shortcuts = [
-        {
-          text: "最近一周",
-          value: () => {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-            return [start, end]
-          }
-        },
-        {
-          text: "最近一个月",
-          value: () => {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-            return [start, end]
-          }
-        },
-        {
-          text: "最近三个月",
-          value: () => {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-            return [start, end]
-          }
-        }
-      ]
-      break
+  const shortcuts = {
+    date: [
+      { text: "今天", value: new Date() },
+      { text: "昨天", value: () => subtractDays(new Date(), 1) },
+      { text: "一周前", value: () => subtractDays(new Date(), 7) }
+    ],
+    daterange: [
+      { text: "最近一周", value: () => [subtractDays(new Date(), 7), new Date()] },
+      { text: "最近一个月", value: () => [subtractDays(new Date(), 30), new Date()] },
+      { text: "最近三个月", value: () => [subtractDays(new Date(), 90), new Date()] }
+    ],
+    monthrange: [
+      { text: "本月", value: [new Date(), new Date()] },
+      { text: "今年至今", value: () => [new Date(new Date().getFullYear(), 0), new Date()] },
+      { text: "最近六个月", value: () => [subtractMonths(new Date(), 6), new Date()] }
+    ],
+    datetime: [
+      { text: "今天", value: new Date() },
+      { text: "昨天", value: () => subtractDays(new Date(), 1) },
+      { text: "一周前", value: () => subtractDays(new Date(), 7) }
+    ],
+    datetimerange: [
+      { text: "最近一周", value: () => [subtractDays(new Date(), 7), new Date()] },
+      { text: "最近一个月", value: () => [subtractDays(new Date(), 30), new Date()] },
+      { text: "最近三个月", value: () => [subtractDays(new Date(), 90), new Date()] }
+    ]
   }
-  return shortcuts
+
+  return shortcuts[type] || []
 }
+const subtractDays = (date: Date, days: number) => {
+  const newDate = new Date(date)
+  newDate.setDate(newDate.getDate() - days)
+  return newDate
+}
+const subtractMonths = (date: Date, months: number) => {
+  const newDate = new Date(date)
+  newDate.setMonth(newDate.getMonth() - months)
+  return newDate
+}
+
 const dateChange = (val: any[]) => {
   if (props.type === "daterange" && val) {
     let startTime = val[0]
