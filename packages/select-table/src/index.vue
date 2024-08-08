@@ -134,12 +134,11 @@
           <el-pagination
             v-model:current-page="table.currentPage"
             v-model:page-size="table.pageSize"
-            small
             size="small"
             background
             @current-change="handlesCurrentChange"
             layout="total, prev, pager, next, jumper"
-            :pager-count="5"
+            :pager-count="table['pager-count'] || 5"
             :total="table.total"
             v-bind="$attrs"
           />

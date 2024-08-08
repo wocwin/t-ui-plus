@@ -306,7 +306,6 @@
     <!-- 分页器 -->
     <el-pagination
       v-if="state.tableData && state.tableData.length && isShowPagination"
-      small
       v-model:current-page="table.currentPage"
       @current-change="handlesCurrentChange"
       :page-sizes="[10, 20, 50, 100]"
@@ -315,6 +314,7 @@
       :prev-text="table.prevText"
       :next-text="table.nextText"
       :total="table.total || 0"
+      :size="table.size || 'small'"
       v-bind="$attrs"
       background
     >
@@ -1008,7 +1008,8 @@ defineExpose({
   radioVal,
   clearValidate,
   resetFields,
-  saveMethod
+  saveMethod,
+  reSetColumnSet
 })
 </script>
 <style lang="scss" scoped>

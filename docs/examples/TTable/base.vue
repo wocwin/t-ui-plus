@@ -6,6 +6,8 @@
         :table="table"
         :columns="table.columns"
         :isShowPagination="false"
+        :header-cell-style="headerCellStyle"
+        :row-style="{ height: '52px'}"
         size="small"
       />
     </t-layout-page-item>
@@ -13,10 +15,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
+import { nextTick, ref } from "vue"
+const headerCellStyle = ref({
+  background: "red",
+  height: "50px"
+})
 const table = ref({
-  // border: true,
-  // 接口返回数据
   data: [
     {
       id: "1",

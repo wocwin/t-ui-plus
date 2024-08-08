@@ -46,7 +46,7 @@
           :total="paginationOption.total"
           @input.stop="(e: any) => emits('input', e.target.value)"
           v-bind="{
-            small: true,
+            size: 'small',
             background: true,
             ...$attrs,
             ...paginationOption.bind
