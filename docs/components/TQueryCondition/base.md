@@ -140,7 +140,7 @@ TQueryCondition/isDropDownSelectMore
 | -----prop         | 接收字段（即后台接收字段）                             | string           | -          |
 | -----bind         | 组件配置参数（Attributes）                             | object           | -          |
 | -----slotName     | 自定义输入框插槽                                       | string           | -          |
-| -----span         | 控件占用的列宽，默认占用 1 列，最多 4 列 (独占一行)    | number           | 1          |
+| -----span         | 控件占用的列宽，默认占用 1 列，最大值4 (独占一行)      | number           | 1          |
 | -----changeEvent  | 事件名称                                               | string           | -          |
 | -----defaultVal   | 默认值                                                 | string           | -          |
 | -----type         | element 组件type(radio,checkbox,select-arr,select-obj) | string           | -          |

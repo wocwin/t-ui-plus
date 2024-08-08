@@ -299,10 +299,11 @@ const gridAreas = computed(() => {
   for (let fieldIndex = 0; fieldIndex < fields.length; fieldIndex++) {
     const field = fields[fieldIndex]
     const opt = cOpts.value[field]
-    const span = Math.min(opt.span ?? 1, 4) // 最大4
+    const span = Math.min(opt.span ?? 1, Math.min(colLength.value, 4)) // 最大4
     if (rowSpan + span > colLength.value) {
-      if (rowSpan < colLength.value) {
+      while (rowSpan < colLength.value) {
         areas[rowIndex].push(".")
+        rowSpan += 1
       }
       rowSpan = 0
       areas[++rowIndex] = []

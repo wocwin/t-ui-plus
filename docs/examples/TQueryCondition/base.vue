@@ -84,7 +84,7 @@ const opts = computed(() => {
       changeEvent: "change",
       type: "select-arr",
       defaultVal: "",
-      span: 2,
+      span: 3,
       list: "sexList",
       arrLabel: "label",
       arrKey: "value",
