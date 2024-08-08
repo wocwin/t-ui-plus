@@ -354,6 +354,7 @@ TTable/expand
 | resetFields        | 对表单进行重置，并移除校验结果（单元格编辑时生效）             | —                   |
 | clearValidate      | 清空校验规则（单元格编辑时生效）                               | -                   |
 | defaultRadioSelect | 单选默认选中--且只能默认选中第一页的数据--传入值必须大于等于 1 | -                   |
+| reSetColumnSet     | 开启columnSetting，调用此方法columnSet显示修改后缓存数据       | -                   |
 
 ### 5、Slots 插槽
 

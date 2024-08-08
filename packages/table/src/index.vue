@@ -38,6 +38,7 @@
             v-if="columnSetting && !isTableHeader"
             v-bind="$attrs"
             :columns="renderColumns"
+            ref="columnSetRef"
             @columnSetting="v => (state.columnSet = v)"
           />
         </div>
@@ -453,6 +454,8 @@ const forbidden = ref(true)
 const TTable: any = ref<HTMLElement | null>(null)
 // 获取t-table ref
 const TTableBox: any = ref<HTMLElement | null>(null)
+// 获取columnSet Ref
+const columnSetRef: any = ref<HTMLElement | null>(null)
 // 获取form ref
 const formRef: any = ref({})
 // 动态form ref
@@ -1014,6 +1017,10 @@ const resetFields = () => {
     refEditList.map(val => {
       editTableRef.value[val].resetTselectTableFields()
     })
+}
+// 获取columnSet缓存数据
+const reSetColumnSet = () => {
+  return columnSetRef.value.reSetColumnSet()
 }
 // 暴露方法出去
 defineExpose({

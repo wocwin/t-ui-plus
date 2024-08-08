@@ -98,6 +98,7 @@ const initColumnSet = () => {
   )
   return columnSet
 }
+
 // 抛出事件
 const emits = defineEmits(["columnSetting"])
 const state: any = reactive({
@@ -112,7 +113,6 @@ watch(
   () => state.columnSet,
   val => {
     emits("columnSetting", val)
-    // console.log(3333, val)
     localStorage.setItem(
       `t-ui-plus:TTable.columnSet-${props.name || props.title}`,
       JSON.stringify(val)
@@ -120,6 +120,13 @@ watch(
   },
   { deep: true }
 )
+// 重新赋值
+const reSetColumnSet = () => {
+  let value: any = localStorage.getItem(`t-ui-plus:TTable.columnSet-${props.name || props.title}`)
+  // console.log("重新赋值", JSON.parse(value))
+  state.columnSet = JSON.parse(value)
+  emits("columnSetting", state.columnSet)
+}
 // checkbox改变选中状态
 const checkChanged = (checked: any, index: string | number) => {
   state.columnSet[index].hidden = !checked
@@ -142,6 +149,9 @@ const checkChanged = (checked: any, index: string | number) => {
     })
   }
 }
+defineExpose({
+  reSetColumnSet
+})
 </script>
 <style lang="scss">
 .el-dropdown-menu {

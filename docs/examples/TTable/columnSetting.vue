@@ -6,6 +6,7 @@
         :table="table"
         name="Vuepress2Docs"
         columnSetting
+        ref="tableColumnSetRef"
         :columns="table.columns"
         :isShowPagination="false"
         :columnSetBind="{
@@ -14,13 +15,18 @@
           type: 'primary',
           icon: 'Edit'
         }"
-      />
+      >
+        <template #toolbar>
+          <t-button @click="restColumnSet" type="danger">更新缓存数据</t-button>
+        </template>
+      </t-table>
     </t-layout-page-item>
   </t-layout-page>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue"
+const tableColumnSetRef: any = ref(null)
 let table = ref({
   // 接口返回数据
   data: [
@@ -65,4 +71,8 @@ let table = ref({
     { prop: "address", label: "地址", minWidth: "220" }
   ]
 })
+const restColumnSet = () => {
+  console.log("restColumnSet---", tableColumnSetRef.value)
+  tableColumnSetRef.value.reSetColumnSet()
+}
 </script>
