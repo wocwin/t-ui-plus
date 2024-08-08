@@ -231,7 +231,7 @@ const popoverAttrsBind = computed(() => {
 // 初始化表单数据
 let queryState = reactive({
   form: Object.keys(props.opts).reduce((acc: any, field: any) => {
-    acc[field] = props.opts[field].defaultVal || null
+    acc[field] = props.opts[field].defaultVal ?? null
     return acc
   }, {})
 })
