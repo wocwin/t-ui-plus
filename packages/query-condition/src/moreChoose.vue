@@ -135,16 +135,17 @@ const analysisObj = (val: any[]) => {
       label: item.label,
       comp: item.comp,
       bind: item.bind,
-      list: item && item.list,
-      changeEvent: item && item.changeEvent,
-      listTypeInfo: item && item.listTypeInfo,
-      arrLabel: item && item.arrLabel,
-      arrKey: item && item.arrKey,
-      slotName: item && item.slotName,
-      span: item && item.span,
-      type: item && item.type,
+      list: item?.list,
+      eventHandle: item?.eventHandle,
+      changeEvent: item?.changeEvent,
+      listTypeInfo: item?.listTypeInfo,
+      arrLabel: item?.arrLabel,
+      arrKey: item?.arrKey,
+      slotName: item?.slotName,
+      span: item?.span,
+      type: item?.type,
       isSelfCom: (item && item.isSelfCom) || false,
-      defaultVal: item && item.defaultVal
+      defaultVal: item?.defaultVal
     }
     return obj
   }, {})
