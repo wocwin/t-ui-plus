@@ -312,7 +312,7 @@ const props = defineProps({
     default: () => []
   },
   // Function(row: any, index: number) 的返回值用来决定这一行的 CheckBox 是否可以勾选
-  selectable:Function
+  selectable: Function
 })
 const selectAttr = computed(() => {
   return {
@@ -475,34 +475,20 @@ const closeBox = () => {
 }
 // 单选键盘事件
 const selectKeyup = (e: { keyCode: any }) => {
-  if (!props.multiple) {
-    if (!props.isKeyup) return
-    if (state.tableData.length === 0) return
-    switch (e.keyCode) {
-      case 40: // 下键
-        if (state.tableData[nowIndex.value * 1 + 1] !== undefined) {
-          selectTable.value.setCurrentRow(state.tableData[nowIndex.value * 1 + 1])
-          nowIndex.value = nowIndex.value * 1 + 1
-        } else {
-          nowIndex.value = 0
-          selectTable.value.setCurrentRow(state.tableData[0])
-        }
-        break
-      case 38: // 上键
-        if (state.tableData[nowIndex.value * 1 - 1] !== undefined && nowIndex.value > 0) {
-          selectTable.value.setCurrentRow(state.tableData[nowIndex.value * 1 - 1])
-          nowIndex.value = nowIndex.value * 1 - 1
-        } else {
-          nowIndex.value = 0
-          selectTable.value.setCurrentRow(state.tableData[0])
-        }
-        break
-      case 13: // 回车
-        rowClick(state.tableData[nowIndex.value])
-        break
+  if (!props.multiple && props.isKeyup && state.tableData.length > 0) {
+    const newIndex = nowIndex.value * 1
+    const nextIndex = e.keyCode === 40 ? newIndex + 1 : e.keyCode === 38 ? newIndex - 1 : newIndex
+    const validNextIndex = Math.max(0, Math.min(nextIndex, state.tableData.length - 1))
+
+    selectTable.value.setCurrentRow(state.tableData[validNextIndex])
+    nowIndex.value = validNextIndex
+
+    if (e.keyCode === 13) {
+      rowClick(state.tableData[validNextIndex])
     }
   }
 }
+
 // 赋值
 const findLabel = () => {
   nextTick(() => {
@@ -531,47 +517,32 @@ const handlesCurrentChange = (val: any) => {
 // 默认选中（且只能默认选中第一页的数据）
 const defaultSelect = (defaultSelectVal: any[]) => {
   if (props.multiple) {
-    let multipleList: any = []
-    defaultSelectVal.map(val => {
-      state.tableData.forEach((row: any) => {
-        if (val === row[props.keywords.value]) {
-          multipleList.push(row)
-        }
-      })
-    })
+    const multipleList = defaultSelectVal
+      .map(val => state.tableData.find(row => row[props.keywords.value] === val))
+      .filter(Boolean) as any[]
+
     setTimeout(() => {
-      state.defaultValue = multipleList.map(
-        (item: { [x: string]: any }) => item[props.keywords.label]
-      )
-      multipleList.forEach((row: { [x: string]: any }) => {
-        const arr = state.tableData.filter(
-          (item: { [x: string]: any }) => item[props.keywords.value] === row[props.keywords.value]
-        )
-        if (arr.length > 0) {
-          selectTable.value.toggleRowSelection(arr[0], true)
-        }
+      state.defaultValue = multipleList.map(item => item[props.keywords.label])
+      multipleList.forEach(row => {
+        selectTable.value.toggleRowSelection(row, true)
       })
-      selectRef.value?.selected?.forEach((item: { currentLabel: any; value: any }) => {
+      selectRef.value?.selected?.forEach(item => {
         item.currentLabel = item.value
       })
     }, 0)
   } else {
-    let row = {} as any
-    let index: any
-    state.tableData.map((val: { [x: string]: any }, i: any) => {
-      if (val[props.keywords.value] === defaultSelectVal[0]) {
-        row = val
-        index = i
-      }
-    })
-    radioVal.value = index + 1
-    state.defaultValue = row
-    setTimeout(() => {
-      selectDefaultLabel.value = row && row[props.keywords.label]
-    }, 0)
-    emits("radioChange", row, row && row[props.keywords.value])
+    const row = state.tableData.find(item => item[props.keywords.value] === defaultSelectVal[0])
+    if (row) {
+      radioVal.value = state.tableData.indexOf(row) + 1
+      state.defaultValue = row
+      setTimeout(() => {
+        selectDefaultLabel.value = row[props.keywords.label]
+      }, 0)
+      emits("radioChange", row, row[props.keywords.value])
+    }
   }
 }
+
 // 复选框(多选)
 const handlesSelectionChange = (val: any[]) => {
   // console.log('复选框', val)
@@ -599,27 +570,22 @@ const getRowKey = (row: { [x: string]: any }) => {
 const filterMethodHandle = (val: string) => {
   if (!props.filterable) return
   const tableData = JSON.parse(JSON.stringify(props.table?.data))
-  if (tableData && tableData.length > 0) {
-    if (!props.multiple) {
-      if (val) {
-        radioVal.value = ""
-      } else {
-        tableData.map((item: { [x: string]: any }, index: number | any) => {
-          if (
-            item[props.keywords.value] === selectDefaultLabel.value &&
-            selectDefaultLabel.value[props.keywords.value]
-          ) {
-            radioVal.value = index + 1
-          }
-        })
+  if (!tableData || tableData.length === 0) return
+  if (!props.multiple) {
+    if (val) {
+      radioVal.value = ""
+    } else {
+      const defaultIndex = tableData.findIndex(
+        item => item[props.keywords.value] === selectDefaultLabel.value
+      )
+      if (defaultIndex !== -1) {
+        radioVal.value = defaultIndex + 1
       }
     }
-    state.tableData = tableData.filter((item: { [x: string]: string | string[] }) => {
-      if (item[props.keywords.label].includes(val)) {
-        return item
-      }
-    })
   }
+  state.tableData = tableData.filter(item => {
+    return item[props.keywords.label].includes(val)
+  })
 }
 
 // 获取表格数据
@@ -627,24 +593,25 @@ const initTableData = () => {
   // 表格默认赋值
   nextTick(() => {
     if (props.multiple) {
-      state.defaultValue?.forEach((row: { [x: string]: any }) => {
-        const arr = state.tableData.filter(
-          (item: { [x: string]: any }) => item[props.keywords.value] === row[props.keywords.value]
+      state.defaultValue?.forEach(row => {
+        const matchedRow = state.tableData.find(
+          item => item[props.keywords.value] === row[props.keywords.value]
         )
-        if (arr.length > 0) {
-          selectTable.value.toggleRowSelection(arr[0], true)
+        if (matchedRow) {
+          selectTable.value.toggleRowSelection(matchedRow, true)
         }
       })
     } else {
-      const arr = state.tableData.filter(
-        (item: { [x: string]: any }) =>
-          item[props.keywords.value] === selectDefaultLabel.value &&
-          selectDefaultLabel.value[props.keywords.value]
+      const matchedRow = state.tableData.find(
+        item => item[props.keywords.value] === selectDefaultLabel.value
       )
-      selectTable.value.setCurrentRow(arr[0])
+      if (matchedRow) {
+        selectTable.value.setCurrentRow(matchedRow)
+      }
     }
   })
 }
+
 // 复制内容
 const copyDomText = (val: any) => {
   // 获取需要复制的元素以及元素内的文本内容
@@ -683,60 +650,54 @@ const isForbidden = () => {
 }
 // 单选抛出事件radioChange
 const radioClick = (row: { [x: string]: any }, index: string) => {
-  forbidden.value = !!forbidden.value
-  if (radioVal.value) {
-    if (radioVal.value === index) {
-      radioVal.value = ""
-      isForbidden()
-      state.defaultValue = {}
-      state.defaultSelectValue = []
-      isDefaultSelectVal.value = true
-      emits("radioChange", {}, null) // 取消勾选就把回传数据清除
-      // blur()
-    } else {
-      isForbidden()
-      radioVal.value = index
-      state.defaultValue = row
-      emits("radioChange", row, row[props.keywords.value])
-      // blur()
-    }
-  } else {
+  forbidden.value = !forbidden.value
+  if (radioVal.value === index) {
+    radioVal.value = ""
     isForbidden()
-    radioVal.value = index
-    state.defaultValue = row
-    emits("radioChange", row, row[props.keywords.value])
+    resetState()
+    emits("radioChange", {}, null)
+  } else {
+    updateState(row, index)
   }
-  // 是否显示下拉框
+
   if (props.isExpanded) {
-    selectDefaultLabel.value =
-      (state.defaultValue && state.defaultValue[props.keywords.label]) || ""
+    selectDefaultLabel.value = state.defaultValue[props.keywords.label] || ""
     selectRef.value.expanded = true
   } else {
     blur()
   }
 }
+const resetState = () => {
+  state.defaultValue = {}
+  state.defaultSelectValue = []
+  isDefaultSelectVal.value = true
+}
+const updateState = (row: { [x: string]: any }, index: string) => {
+  isForbidden()
+  radioVal.value = index
+  state.defaultValue = row
+  emits("radioChange", row, row[props.keywords.value])
+}
+
 // 单击行
 const rowClick = async (row: { [x: string]: any }) => {
   if (!props.rowClickRadio) return
   if (!props.multiple) {
-    let rowIndex: any
-    // eslint-disable-next-line no-unused-expressions
-    props.table?.data.forEach((item: { [x: string]: any }, index: any) => {
-      if (item[props.keywords.value] === row[props.keywords.value]) {
-        // console.log('index', index)
-        rowIndex = index
+    const rowIndex = props.table?.data.findIndex(
+      item => item[props.keywords.value] === row[props.keywords.value]
+    )
+    if (rowIndex !== -1) {
+      isDefaultSelectVal.value = false
+      await radioClick(row, rowIndex + 1)
+      if (radioVal.value) {
+        isRadio.value = true
+      } else {
+        isRadio.value = false
       }
-    })
-    // await this.radioClick(row, rowIndex + 1)
-    isDefaultSelectVal.value = false
-    await radioClick(row, rowIndex + 1)
-    if (radioVal.value) {
-      isRadio.value = true
-    } else {
-      isRadio.value = false
     }
   }
 }
+
 // tags删除后回调
 const removeTag = (tag: any) => {
   const row = state.tableData.find(
