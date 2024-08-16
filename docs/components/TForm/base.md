@@ -22,7 +22,7 @@ TForm/isTrim
 
 ### 对齐方式
 
-:::demo 通过设置 `formOpts.labelPosition` 属性可以改变表单域标签的位置，可选值为 `top`、`left`、`right`，默认`right`；**前提：需设置`formOpts.labelWidth`(默认是：100px——即 `label` 的宽度)**
+:::demo 通过设置 `formOpts.labelPosition` 属性可以改变表单域标签的位置，可选值为 `top`、`left`、`right`，默认`right`；**前提：需设置`formOpts.labelWidth`(默认是：100px——即 `label` 的宽度)**;也可以通过组件中设置`labelPosition`
 TForm/labelPosition
 :::
 
@@ -95,42 +95,43 @@ TForm/isHideItem
 
 ### 2. 配置参数
 
-| 参数                | 说明                                                                                                    | 类型             | 是否必须 |
-| :------------------ | :------------------------------------------------------------------------------------------------------ | :--------------- | :------- |
-| className           | 自定义类名                                                                                              | String           | -        |
-| labelPosition       | 改变表单项 label 与输入框的布局方式(默认：right) /top                                                   | String           | right    |
-| widthSize           | 每行显示几个输入项（默认两项） 最大值 6                                                                 | Number           | 2        |
-| isTrim              | 全局是否开启清除前后空格(comp 为 el-input 且 type 不等于'password')                                     | Boolean          | true     |
-| formOpts            | 表单配置项                                                                                              | Object           | -        |
-| ---listTypeInfo     | 下拉选择数据源（type:'select'有效）                                                                     | Object           | -        |
-| ---fieldList        | form 表单每项 list                                                                                      | Array            | 是-      |
-| ------isHideItem    | 某一项不显示                                                                                            | Boolean          | false    |
-| ------slotName      | 自定义表单某一项输入框                                                                                  | slot             | -        |
-| ------childSlotName | 自定义表单某一下拉选择项子组件插槽（el-option）                                                         | slot             | -        |
-| ------comp          | form 表单每一项组件是输入框还是下拉选择等（可使用第三方 UI 如 el-select/el-input 也可以使用自定义组件） | String           | -        |
-| ------bind          | 继承第三方 UI 的 Attributes,function 传出 formData                                                      | Object/funnction | -        |
-| ------isSelfCom     | 是否使用自己封装的组件（即不需要嵌套 el-option 等）                                                     | Boolean          | false    |
-| ------isTrim        | 是否不清除前后空格(comp 为 el-input 且 type 不等于'password')                                           | Boolean          | false    |
-| ------type          | form 表单每一项类型                                                                                     | String           | -        |
-| ------widthSize     | form 表单某一项所占比例(如果占一整行则设置 1)                                                           | Number           | -        |
-| ------width         | form 表单某一项所占实际宽度                                                                             | String           | -        |
-| ------arrLabel      | type=select-arr 时，每个下拉显示的中文                                                                  | String           | label    |
-| ------arrKey        | type=select-arr 时，每个下拉显示的中文传后台的数字                                                      | String           | key      |
-| ------label         | form 表单每一项 title                                                                                   | String           | -        |
-| ------labelRender   | 自定义某一项 title                                                                                      | function         | -        |
-| ------labelSlotName | 自定义某一项 title（插槽名：就是 labelSlotName 值                                                       | slot             | -        |
-| ------value         | form 表单每一项传给后台的参数                                                                           | String           | -        |
-| ------rules         | 每一项输入框的表单校验规则                                                                              | Object/Array     | -        |
-| ------list          | 下拉选择数据源（仅仅对 type:'select'有效）                                                              | String           | -        |
-| ------event         | 表单每一项事件标志（即是：handleEvent 事件第一个参数值）                                                | String           | -        |
-| ------eventHandle   | 继承 comp 组件的事件                                                                                    | Object           | -        |
-| ------ref           | 当前使用组件的 ref 标识（可以通过 getRefs 事件返回）                                                    | String           | -        |
-| ---formData         | 表单提交数据(对应 fieldList 每一项的 value 值)                                                          | Object           | -        |
-| ---labelWidth       | label 宽度                                                                                              | String           | 120px    |
-| ---rules            | 规则（可依据 elementUI el-form 配置————对应 formData 的值）                                             | Object/Array     | -        |
-| ---operatorList     | 操作按钮 list                                                                                           | Array            | -        |
-| -------bind         | 继承 el-button 所有 Attributes(默认值{ type:'primary',size:'small',})                                   | Object           | -        |
-| -------fun          | 事件名                                                                                                  | function         | -        |
+| 参数                | 说明                                                                                                    | 类型             | 默认值 |
+| :------------------ | :------------------------------------------------------------------------------------------------------ | :--------------- | :----- |
+| className           | 自定义类名                                                                                              | String           | -      |
+| labelPosition       | 改变表单项 label 与输入框的布局方式(`right,left,top`)                                                   | String           | ''     |
+| widthSize           | 每行显示几个输入项（默认两项） 最大值 6                                                                 | Number           | 2      |
+| isTrim              | 全局是否开启清除前后空格(comp 为 el-input 且 type 不等于'password')                                     | Boolean          | true   |
+| formOpts            | 表单配置项                                                                                              | Object           | -      |
+| ---labelPosition    | 改变表单项 label 与输入框的布局方式(默认：right) /top （优先展示组件`labelPosition`）                   | String           | right  |
+| ---listTypeInfo     | 下拉选择数据源（type:'select'有效）                                                                     | Object           | -      |
+| ---fieldList        | form 表单每项 list                                                                                      | Array            | 是-    |
+| ------isHideItem    | 某一项不显示                                                                                            | Boolean          | false  |
+| ------slotName      | 自定义表单某一项输入框                                                                                  | slot             | -      |
+| ------childSlotName | 自定义表单某一下拉选择项子组件插槽（el-option）                                                         | slot             | -      |
+| ------comp          | form 表单每一项组件是输入框还是下拉选择等（可使用第三方 UI 如 el-select/el-input 也可以使用自定义组件） | String           | -      |
+| ------bind          | 继承第三方 UI 的 Attributes,function 传出 formData                                                      | Object/funnction | -      |
+| ------isSelfCom     | 是否使用自己封装的组件（即不需要嵌套 el-option 等）                                                     | Boolean          | false  |
+| ------isTrim        | 是否不清除前后空格(comp 为 el-input 且 type 不等于'password')                                           | Boolean          | false  |
+| ------type          | form 表单每一项类型                                                                                     | String           | -      |
+| ------widthSize     | form 表单某一项所占比例(如果占一整行则设置 1)                                                           | Number           | -      |
+| ------width         | form 表单某一项所占实际宽度                                                                             | String           | -      |
+| ------arrLabel      | type=select-arr 时，每个下拉显示的中文                                                                  | String           | label  |
+| ------arrKey        | type=select-arr 时，每个下拉显示的中文传后台的数字                                                      | String           | key    |
+| ------label         | form 表单每一项 title                                                                                   | String           | -      |
+| ------labelRender   | 自定义某一项 title                                                                                      | function         | -      |
+| ------labelSlotName | 自定义某一项 title（插槽名：就是 labelSlotName 值                                                       | slot             | -      |
+| ------value         | form 表单每一项传给后台的参数                                                                           | String           | -      |
+| ------rules         | 每一项输入框的表单校验规则                                                                              | Object/Array     | -      |
+| ------list          | 下拉选择数据源（仅仅对 type:'select'有效）                                                              | String           | -      |
+| ------event         | 表单每一项事件标志（即是：handleEvent 事件第一个参数值）                                                | String           | -      |
+| ------eventHandle   | 继承 comp 组件的事件                                                                                    | Object           | -      |
+| ------ref           | 当前使用组件的 ref 标识（可以通过 getRefs 事件返回）                                                    | String           | -      |
+| ---formData         | 表单提交数据(对应 fieldList 每一项的 value 值)                                                          | Object           | -      |
+| ---labelWidth       | label 宽度                                                                                              | String           | 120px  |
+| ---rules            | 规则（可依据 elementUI el-form 配置————对应 formData 的值）                                             | Object/Array     | -      |
+| ---operatorList     | 操作按钮 list                                                                                           | Array            | -      |
+| -------bind         | 继承 el-button 所有 Attributes(默认值{ type:'primary',size:'small',})                                   | Object           | -      |
+| -------fun          | 事件名                                                                                                  | function         | -      |
 
 ### 3. events
 

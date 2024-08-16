@@ -6,7 +6,7 @@
     :model="formOpts.formData"
     :rules="formOpts.rules"
     :label-width="formOpts.labelWidth || '120px'"
-    :label-position="formOpts.labelPosition || 'right'"
+    :label-position="labelPosition || formOpts.labelPosition || 'right'"
     v-bind="$attrs"
   >
     <template v-for="(item, index) in formOpts.fieldList">
@@ -199,6 +199,11 @@ const props = defineProps({
     type: Number as PropType<1 | 2 | 3 | 4 | 5 | 6>,
     validator: (value: number) => [1, 2, 3, 4, 5, 6].includes(value),
     default: 2
+  },
+  // label对齐方式
+  labelPosition: {
+    type: String as PropType<"left" | "right" | "top">,
+    default: ""
   },
   // 全局是否开启清除前后空格
   isTrim: {
