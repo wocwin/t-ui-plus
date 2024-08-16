@@ -12,7 +12,7 @@
     </t-layout-page-item>
   </t-layout-page>
 </template>
-<script setup lang="ts">
+<script setup lang="tsx">
 import { onMounted, reactive } from "vue"
 // 具体详情模块回显源
 const descData: any = reactive({
@@ -22,6 +22,9 @@ const descData: any = reactive({
     data: [
       {
         label: "货品名称",
+        labelRender: () => {
+          return <span style="color:red;">货品名称：</span>
+        },
         fieldName: "cargoName",
         value: ""
       },
@@ -33,12 +36,14 @@ const descData: any = reactive({
       {
         label: "货品价值",
         fieldName: "cargoMoneyCentPerTon",
-        value: ""
+        value: "",
+        unit: "元/吨"
       },
       {
         label: "总重量",
         fieldName: "cargoWeightKg",
-        value: ""
+        value: "",
+        unit: "kg"
       },
       {
         label: "总体积",

@@ -126,7 +126,7 @@
               width: item.width || 55,
               label: item.label,
               fixed: item.fixed,
-              align: item.align || 'center',
+              align: item.align || align,
               'reserve-selection': item.isPaging || false,
               selectable: item.selectable,
               ...item.bind
@@ -145,7 +145,7 @@
                 (item.type === 'expand' && '') ||
                 '',
               fixed: item.fixed,
-              align: item.align || 'center',
+              align: item.align || align,
               ...item.bind
             }"
           >
@@ -181,7 +181,7 @@
             :prop="item.prop"
             :min-width="item['min-width'] || item.minWidth"
             :width="item.width"
-            :sortable="item.sort || sortable"
+            :sortable="item.sortable || item.sort || sortable"
             :align="item.align || align"
             :fixed="item.fixed"
             v-bind="{ 'show-overflow-tooltip': true, ...item.bind, ...$attrs }"

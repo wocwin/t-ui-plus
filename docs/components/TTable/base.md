@@ -47,6 +47,30 @@ TTable/showSummary
 TTable/summaryMethod
 :::
 
+### 常规排序
+
+:::demo 在`columns`某一项中添加`sort`或`sortable`
+TTable/sort
+:::
+
+### 指定数据排序
+
+:::demo 在`columns`某一项中添加`sort:true`或`sortable:true`,在`bind`中添加`sortMethod`来指定按照哪个属性数据排序
+TTable/sortMethod
+:::
+
+### 特定项远程排序
+
+:::demo 在`columns`某一项中添加`sort:custom`或`sortable:custom`,则代表用户希望远程排序，需要监听 `Table` 的 `sort-change` 事件
+TTable/sortCellChange
+:::
+
+### 自定义排序规则
+
+:::demo 在`TTable`组件标签中添加`sortable:custom`,则表示需要自定义排序，需要监听 `Table` 的 `sort-change` 事件
+TTable/sortable
+:::
+
 ### 复选框表格
 
 :::demo 在`table`对象中添加`firstColumn:{ type: 'selection', fixed: true }`
@@ -282,6 +306,7 @@ TTable/expand
 | ---currentPage          | 是否需要显示切换页条数                                                    | Number           | -         |
 | columns                 | 表头信息                                                                  | Array            | []        |
 | ----sort                | 排序 （设置：sort:true）                                                  | Boolean          | false     |
+| ----sortable            | 排序，若设置为 'custom'，需要监听 Table 的 sort-change 事件               | Boolean /string  | false     |
 | ----align               | 对齐方式 （left / center / right）                                        | string           | 'center'  |
 | ----renderHeader        | 列标题 Label 区域渲染使用的 Function(val) 可以用 jsx 方式                 | Function         | -         |
 | ----render              | 某列 render 函数渲染使用的 Function(val) 可以用 jsx 方式                  | Function         | -         |
