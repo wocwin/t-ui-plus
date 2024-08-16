@@ -1,5 +1,5 @@
 <template>
-  <div class="step-wizard">
+  <div class="t_step-wizard">
     <el-steps :active="active" finish-status="success" v-bind="$attrs">
       <el-step
         v-bind="$attrs"
@@ -111,26 +111,7 @@ const complete = () => {
 }
 </script>
 <style lang="scss">
-.i_layout {
-  .section {
-    .layout-content {
-      padding: 0;
-    }
-  }
-}
-.flex-box {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-}
-.flex-ver {
-  align-items: center;
-  justify-content: center;
-}
-.flex-col {
-  flex-direction: column;
-}
-.step-wizard {
+.t_step-wizard {
   position: relative;
   .el-steps--simple {
     .el-step__head {
@@ -161,6 +142,18 @@ const complete = () => {
       text-align: center;
       background: var(--el-bg-color);
     }
+  }
+  .flex-box {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+  }
+  .flex-ver {
+    align-items: center;
+    justify-content: center;
+  }
+  .flex-col {
+    flex-direction: column;
   }
 }
 </style>
