@@ -1,5 +1,5 @@
 <template>
-  <el-dropdown trigger="click">
+  <el-dropdown trigger="click" popper-class="column_set">
     <el-button v-bind="columnBind">{{ columnBind.btnTxt || "列设置" }}</el-button>
     <template #dropdown>
       <el-dropdown-menu>
@@ -154,30 +154,32 @@ defineExpose({
 })
 </script>
 <style lang="scss">
-.el-dropdown-menu {
-  padding: 10px;
-  font-size: 14px;
+.column_set{
+  .el-dropdown-menu {
+    padding: 10px;
+    font-size: 14px;
 
-  .el-dropdown-menu__item {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-
-    .title {
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    .t_table_column_setting_dropdown {
+    .el-dropdown-menu__item {
       display: flex;
       flex-direction: column;
-      max-height: 300px;
-      overflow-y: auto;
-      gap: 10px;
+      align-items: flex-start;
 
-      .el-checkbox {
-        .el-checkbox__input.is-checked + .el-checkbox__label {
-          color: var(--el-text-color-primary);
+      .title {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .t_table_column_setting_dropdown {
+        display: flex;
+        flex-direction: column;
+        max-height: 300px;
+        overflow-y: auto;
+        gap: 10px;
+
+        .el-checkbox {
+          .el-checkbox__input.is-checked + .el-checkbox__label {
+            color: var(--el-text-color-primary);
+          }
         }
       }
     }
