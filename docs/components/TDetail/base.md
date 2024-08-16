@@ -42,6 +42,24 @@ TDetail/echo
 TDetail/tooltip
 :::
 
+### label不显示冒号
+
+:::demo
+TDetail/isColon
+:::
+
+### label文字不加粗
+
+:::demo
+TDetail/isLabelBold
+:::
+
+### label render显示
+
+:::demo
+TDetail/labelRender
+:::
+
 ### TDetail Attributes
 
 ---
@@ -68,6 +86,7 @@ TDetail/tooltip
 | ----slotName  | 插槽（自定义 value）                               | slot            | -            |
 | ----bind      | 继承 el-descriptions-item 属性                     | Object          | -            |
 | ----span      | 占用的列宽，默认占用 1 列，最多 4 列               | Number          | 1            |
+| ----unit      | value值后面占位（通常:单位）                       | String          | -            |
 | ----tooltip   | value 值的提示语                                   | String/function | -            |
 | ----iconSize  | tooltip 提示语的 icon 大小                         | String/Number   | 继承字体大小 |
 | ----iconColor | tooltip 提示语的 icon 颜色                         | String          | 继承颜色     |
@@ -76,6 +95,9 @@ TDetail/tooltip
 | -------key    | 下拉数据源的 key 字段                              | String          | 'value'      |
 | -------label  | 下拉数据源的 label 字段                            | String          | 'label'      |
 | descColumn    | 布局一行显示几列（默认：一行显示 4 列）            | Number          | 4            |
+| isColon       | 是否显示冒号                                       | Boolean         | true         |
+| isLabelBold   | label是否加粗显示                                  | Boolean         | true         |
+| labelRender   | 自定义label                                        | function        | -            |
 | dataList      | 开启 filters 时详情接口返回的数据                  | Object          | {}           |
 | listTypeInfo  | 开启 filters 时下拉数据源                          | Object          | {}           |
 

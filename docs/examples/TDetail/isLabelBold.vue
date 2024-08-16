@@ -1,21 +1,12 @@
 <template>
   <t-layout-page class="t_detail_demo">
     <t-layout-page-item>
-      <el-radio-group v-model="descColumn" size="small" style="margin-bottom: 15px">
-        <el-radio-button :value="1">一行展示</el-radio-button>
-        <el-radio-button :value="2">一行展示2项</el-radio-button>
-        <el-radio-button :value="3">一行展示3项</el-radio-button>
-        <el-radio-button :value="4">一行展示4项</el-radio-button>
-      </el-radio-group>
-    </t-layout-page-item>
-    <t-layout-page-item>
-      <t-detail :descData="DataSource.descData" :descColumn="descColumn" />
+      <t-detail :descData="DataSource.descData" :isLabelBold="false" />
     </t-layout-page-item>
   </t-layout-page>
 </template>
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue"
-const descColumn = ref(1)
 const DataSource: any = reactive({
   dataList: {
     id: "1498904492217241602",
@@ -54,7 +45,6 @@ const DataSource: any = reactive({
     {
       label: "计划盘点日期",
       fieldName: "planStocktakeDate",
-      bind: { "label-class-name": "custom_name" },
       value: ""
     },
     {

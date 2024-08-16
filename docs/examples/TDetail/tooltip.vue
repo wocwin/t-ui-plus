@@ -34,17 +34,17 @@ const DataSource: any = reactive({
   },
   descData: [
     {
-      label: "盘点单编号：",
+      label: "盘点单编号",
       fieldName: "stocktakePlanNo",
       value: ""
     },
     {
-      label: "盘点单状态：",
+      label: "盘点单状态",
       fieldName: "stocktakeJobStatusLabel",
       value: ""
     },
     {
-      label: "盘点负责人：",
+      label: "盘点负责人",
       fieldName: "planStocktakeUserName",
       value: "",
       tooltip: () => {
@@ -52,34 +52,34 @@ const DataSource: any = reactive({
       }
     },
     {
-      label: "计划盘点日期：",
+      label: "计划盘点日期",
       fieldName: "planStocktakeDate",
       value: "",
       tooltip: "tooltip字符串显示"
     },
     {
-      label: "插槽显示编号+负责人：",
+      label: "插槽显示编号+负责人",
       slotName: "slotName",
       span: 4,
       value: ""
     },
     {
-      label: "车间：",
+      label: "车间",
       fieldName: "workshopLabel",
       value: ""
     },
     {
-      label: "仓库：",
+      label: "仓库",
       fieldName: "warehouseName",
       value: ""
     },
     {
-      label: "盘点所有物料：",
+      label: "盘点所有物料",
       fieldName: "originTypeListLabel",
       value: ""
     },
     {
-      label: "备注：",
+      label: "备注",
       fieldName: "createRemark",
       value: "",
       span: 4

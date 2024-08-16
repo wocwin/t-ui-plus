@@ -3,10 +3,15 @@
     <el-descriptions-item
       v-for="(item, key) in descData"
       :key="key"
-      :label="item.label"
       :span="item.span || 1"
       v-bind="{ ...item.bind, ...$attrs }"
     >
+      <template #label>
+        <render-label v-if="item.labelRender" :render="item.labelRender" :item="item" />
+        <span v-else :style="{ fontWeight: isLabelBold ? 'bold' : '' }"
+          >{{ item.label }}<span v-if="isColon">：</span></span
+        >
+      </template>
       <template v-if="item.slotName">
         <slot :name="item.slotName"></slot>
       </template>
@@ -23,7 +28,9 @@
                 )
               }}
             </span>
-            <span v-else>{{ item.value }}</span>
+            <span v-else
+              >{{ item.value }}<span v-if="item.unit && item.value">{{ item.unit }}</span></span
+            >
             <el-icon
               :size="item.iconSize"
               :color="item.iconColor"
@@ -50,7 +57,9 @@
               )
             }}
           </span>
-          <span v-else>{{ item.value }}</span>
+          <span v-else
+            >{{ item.value }}<span v-if="item.unit && item.value">{{ item.unit }}</span></span
+          >
         </span>
       </span>
     </el-descriptions-item>
@@ -59,6 +68,7 @@
 
 <script setup lang="ts" name="TDetail">
 import RenderTooltip from "./renderTooltip.vue"
+import RenderLabel from "./renderLabel.vue"
 defineProps({
   descColumn: {
     type: Number,
@@ -77,6 +87,16 @@ defineProps({
   descData: {
     type: Array as unknown as any[],
     default: () => []
+  },
+  // 是否显示冒号
+  isColon: {
+    type: Boolean,
+    default: true
+  },
+  // label是否加粗显示
+  isLabelBold: {
+    type: Boolean,
+    default: true
   }
 })
 /**
@@ -95,9 +115,10 @@ const constantEscape = (value: any, list: any[], key: string | number, label: st
 </script>
 <style lang="scss" scoped>
 .t_detail {
-  :deep(.el-descriptions__label) {
-    font-weight: bold;
-    min-width: 65px;
+  :deep(.el-descriptions__body) {
+    .el-descriptions__label:not(.is-bordered-label) {
+      margin-right: 10px;
+    }
   }
 }
 </style>
