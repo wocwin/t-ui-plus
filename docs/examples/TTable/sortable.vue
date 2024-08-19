@@ -62,9 +62,9 @@ const table = ref({
 const sortChange = val => {
   // console.log("自定义排序", val)
   // 不参与排序的数组
-  let freeGood = []
+  let freeGood: any = []
   // 参与排序的数组
-  let elseFree = []
+  let elseFree: any = []
   // fieldName 为对应列的prop
   let fieldName = val.prop
   let sortingType = val.order
