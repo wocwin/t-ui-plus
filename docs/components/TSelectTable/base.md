@@ -12,6 +12,18 @@
 TSelectTable/radio
 :::
 
+### 单选--禁用
+
+::: demo `table`的`data` 数据源满足某条件时，新增`isRadioDisabled`属性为`true`，禁用单选。
+TSelectTable/isRadioDisabled
+:::
+
+### 多选--禁用复选框
+
+:::demo `multiple` 开启多选；设置`selectable`属性其类型：`Function(row: any, index: number)` 可根据返回值来决定 `CheckBox` 是否可以勾选.
+TSelectTable/selectable
+:::
+
 ### 是否显示下拉框
 
 ::: demo 若设置`selfExpanded`为`true`，下拉框将始终不会关闭；另一种方式： 设置`isExpanded` 为`true`;
@@ -72,11 +84,7 @@ TSelectTable/multipleDefaultSelectVal
 TSelectTable/multiple
 :::
 
-### 多选--禁用复选框
 
-:::demo `multiple` 开启多选；设置`selectable`属性其类型：`Function(row: any, index: number)` 可根据返回值来决定 `CheckBox` 是否可以勾选.
-TSelectTable/selectable
-:::
 
 ### 开启分页功能（支持翻页选中且默认开启）
 

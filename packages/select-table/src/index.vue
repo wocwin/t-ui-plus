@@ -92,6 +92,7 @@
               <el-radio
                 v-model="radioVal"
                 :label="scope.$index + 1"
+                :disabled="scope.row.isRadioDisabled"
                 @click.stop="radioChangeHandle($event, scope.row, scope.$index + 1)"
               ></el-radio>
             </template>
@@ -637,6 +638,7 @@ const cellDblclick = (row: { [x: string]: any }, column: { property: string | nu
 // 点击单选框单元格触发事件
 const radioChangeHandle = (event: { preventDefault: () => void }, row: any, index: any) => {
   event.preventDefault()
+  if (row.isRadioDisabled) return
   isDefaultSelectVal.value = false
   radioClick(row, index)
 }
@@ -680,6 +682,7 @@ const updateState = (row: { [x: string]: any }, index: string) => {
 
 // 单击行
 const rowClick = async (row: { [x: string]: any }) => {
+  if (row.isRadioDisabled) return
   if (!props.rowClickRadio) return
   if (!props.multiple) {
     const rowIndex = props.table?.data.findIndex(
