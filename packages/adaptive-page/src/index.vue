@@ -10,7 +10,7 @@
       </div>
     </div>
     <t-layout-page class="right_content" :style="pageStyle">
-      <t-layout-page-item class="table_search" :style="queryPageStyle">
+      <t-layout-page-item class="table_search" :style="queryPageStyle" v-if="$attrs.opts">
         <t-query-condition v-bind="$attrs" ref="TQueryConditionPage">
           <template v-for="(index, name) in slots" #[name]="data">
             <slot :name="name" v-bind="data" />
