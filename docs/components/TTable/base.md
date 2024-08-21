@@ -77,10 +77,22 @@ TTable/sortable
 TTable/selection
 :::
 
-### 复选框表格--翻页选中功能
+### 复选框表格--翻页选中功能selectionDisabled
 
 :::demo 在`table`对象中添加`firstColumn:{ type: 'selection', isPaging: true , fixed: true }`
 TTable/pageCheck
+:::
+
+### 复选框表格--禁用功能
+
+:::demo 在`table`对象中添加`firstColumn:{ type: 'selection', selectable: selectableFun }`;`selectableFun`的返回值用来决定这一行的 `CheckBox` 是否可以勾选。
+TTable/selectionDisabled
+:::
+
+### 表格--筛选功能
+
+:::demo 在`columns`列中某一项的`bind`中设置`filters`和`filter-method`属性即可开启该列的筛选，`filters`是一个数组，`filter-method` 是一个方法，它用于决定某些数据是否显示， 会传入`三个参数`：`value`、 `row` 、`column`。
+TTable/filterMethod
 :::
 
 ### 单选框表格
