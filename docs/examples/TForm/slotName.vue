@@ -14,6 +14,14 @@
             :value="key"
           ></el-option>
         </template>
+        <template #accountType1>
+          <el-option
+            v-for="(item, key) in formOpts.listTypeInfo.accountTypeList1"
+            :key="key"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </template>
       </t-form>
     </t-layout-page-item>
   </t-layout-page>
@@ -48,18 +56,24 @@ const formOpts: any = reactive({
   ref: null,
   formData: {
     accountType: "", // *用户类型: 0: 手机注册 1: 论坛注册 2: 管理平台添加
+    accountType1: "", // *用户类型: 0: 手机注册 1: 论坛注册 2: 管理平台添加
     wechat: "", // 邮箱
     desc: "" // 描述
   },
   fieldList: [
     {
       label: "平台用户",
-      placeholder: "自定义option插槽",
+      placeholder: "自定义option--obj插槽",
       value: "accountType",
-      type: "select-obj",
       comp: "el-select",
-      list: "accountTypeList",
       childSlotName: "accountType"
+    },
+    {
+      label: "平台用户1",
+      placeholder: "自定义option--arr插槽",
+      value: "accountType1",
+      comp: "el-select",
+      childSlotName: "accountType1"
     },
     { label: "微信", value: "wechat", slotName: "wechat" },
     {
@@ -80,7 +94,12 @@ const formOpts: any = reactive({
       0: "手机用户",
       1: "论坛用户",
       2: "平台用户"
-    }
+    },
+    accountTypeList1: [
+      { label: "手机用户", value: 0 },
+      { label: "论坛用户", value: 1 },
+      { label: "平台用户", value: 2 }
+    ]
   }
 })
 </script>

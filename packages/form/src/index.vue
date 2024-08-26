@@ -34,13 +34,11 @@
         </template>
         <!-- 自定义输入框插槽 -->
         <template v-if="item.slotName">
-          <slot :name="item.slotName"></slot>
+          <slot :name="item.slotName" :scope="formOpts.formData"></slot>
         </template>
         <!-- 文本展示值 -->
         <template v-if="item.textShow">
-          <span class="text_show">
-            {{ item.textValue || formOpts.formData[item.value] }}
-          </span>
+          <span class="text_show">{{ item.textValue || formOpts.formData[item.value] }}</span>
         </template>
         <template v-if="item.isSelfCom">
           <component
@@ -72,47 +70,7 @@
           />
         </template>
         <component
-          v-if="!item.slotName && !item.textShow && !item.isSelfCom && item.comp.includes('date')"
-          :is="item.comp"
-          v-model="formOpts.formData[item.value]"
-          :type="item.type"
-          :placeholder="item.placeholder || getPlaceholder(item)"
-          @change="handleEvent(item.event, formOpts.formData[item.value], item)"
-          :ref="(el: any) => getRefs(el, item, index)"
-          v-bind="
-            typeof item.bind == 'function'
-              ? item.bind(formOpts.formData)
-              : { clearable: true, filterable: true, ...item.bind }
-          "
-          :style="{ width: item.width || '100%' }"
-          v-on="cEvent(item)"
-        />
-        <component
-          v-if="
-            !item.slotName && !item.textShow && !item.isSelfCom && item.comp.includes('tree-select')
-          "
-          :is="item.comp"
-          v-model="formOpts.formData[item.value]"
-          :type="item.type"
-          :placeholder="item.placeholder || getPlaceholder(item)"
-          @change="handleEvent(item.event, formOpts.formData[item.value], item)"
-          :ref="(el: any) => getRefs(el, item, index)"
-          v-bind="
-            typeof item.bind == 'function'
-              ? item.bind(formOpts.formData)
-              : { clearable: true, filterable: true, ...item.bind }
-          "
-          :style="{ width: item.width || '100%' }"
-          v-on="cEvent(item)"
-        />
-        <component
-          v-if="
-            !item.slotName &&
-            !item.textShow &&
-            !item.isSelfCom &&
-            !item.comp.includes('date') &&
-            !item.comp.includes('tree-select')
-          "
+          v-if="!item.slotName && !item.textShow && !item.isSelfCom"
           :is="item.comp"
           v-model="formOpts.formData[item.value]"
           :type="item.type"
@@ -135,7 +93,6 @@
           <template v-if="item.childSlotName">
             <slot :name="item.childSlotName"></slot>
           </template>
-          <!-- <template v-if="!item.comp.includes('date') && !item.childSlotName"> -->
           <component
             :is="compChildName(item)"
             v-for="(value, key, index) in selectListType(item)"
@@ -220,11 +177,7 @@ const cEvent: any = computed(() => {
         if (type === "t-select-table") {
           event[v] && event[v](e, ids)
         } else {
-          if ((typeof e === "number" && e === 0) || e) {
-            event[v] && event[v](e, props.formOpts)
-          } else {
-            event[v] && event[v](props.formOpts)
-          }
+          event[v] && event[v](e, props.formOpts)
         }
       }
     })

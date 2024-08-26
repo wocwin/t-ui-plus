@@ -81,7 +81,77 @@ const state: any = reactive({
       { prop: "updateTime", label: "最后更新日期", minWidth: "100" },
       { prop: "updateBy", label: "最后更新人", minWidth: "100" }
     ]
-  }
+  },
+  list: [
+    {
+      value: "1",
+      label: "Level one 1",
+      children: [
+        {
+          value: "1-1",
+          label: "Level two 1-1",
+          children: [
+            {
+              value: "1-1-1",
+              label: "Level three 1-1-1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      value: "2",
+      label: "Level one 2",
+      children: [
+        {
+          value: "2-1",
+          label: "Level two 2-1",
+          children: [
+            {
+              value: "2-1-1",
+              label: "Level three 2-1-1"
+            }
+          ]
+        },
+        {
+          value: "2-2",
+          label: "Level two 2-2",
+          children: [
+            {
+              value: "2-2-1",
+              label: "Level three 2-2-1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      value: "3",
+      label: "Level one 3",
+      children: [
+        {
+          value: "3-1",
+          label: "Level two 3-1",
+          children: [
+            {
+              value: "3-1-1",
+              label: "Level three 3-1-1"
+            }
+          ]
+        },
+        {
+          value: "3-2",
+          label: "Level two 3-2",
+          children: [
+            {
+              value: "3-2-1",
+              label: "Level three 3-2-1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 })
 onMounted(() => {
   getData(1)
@@ -159,6 +229,7 @@ const formOpts: any = reactive({
     account: "wocwin", // *用户账号
     password: 123456, // *用户密码
     name: null, // *用户昵称
+    name1: null, // 树形下拉
     sex: null, // *性别: 0:男 1:女
     sex1: null, // *性别: 0:男 1:女
     hobby: [], // *爱好: 0:男 1:女
@@ -192,6 +263,17 @@ const formOpts: any = reactive({
       bind: { "show-password": true }
     },
     { label: "昵称", value: "name", type: "input", comp: "el-input" },
+    {
+      label: "树形下拉",
+      value: "name1",
+      // type: "select-arr",
+      comp: "el-tree-select",
+      // isSelfCom: true,
+      bind: {
+        "check-strictly": true,
+        data: state.list
+      }
+    },
     {
       label: "性别",
       value: "sex",
