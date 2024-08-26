@@ -17,7 +17,12 @@
         }"
       >
         <template #toolbar>
-          <t-button @click="restColumnSet" type="danger">更新缓存数据</t-button>
+          <el-tooltip
+            content="不建议使用此功能；手动修改localStorage数据调用此方法来更新列设置下拉数据"
+            placement="top"
+          >
+            <t-button @click="restColumnSet" type="danger">更新缓存数据</t-button>
+          </el-tooltip>
         </template>
       </t-table>
     </t-layout-page-item>

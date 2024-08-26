@@ -2,9 +2,9 @@
   <el-dropdown trigger="click" popper-class="column_set">
     <el-button v-bind="columnBind">{{ columnBind.btnTxt || "列设置" }}</el-button>
     <template #dropdown>
+      <div class="title" v-if="columnBind.isShowTitle">{{ columnBind.title || "列设置" }}</div>
       <el-dropdown-menu>
-        <el-dropdown-item>
-          <span class="title">{{ columnBind.title || "列设置" }}</span>
+        <el-dropdown-item :divided="columnBind.isShowTitle">
           <Draggable
             class="t_table_column_setting_dropdown"
             v-model="state.columnSet"
@@ -50,7 +50,7 @@ const props = defineProps({
 const $attrs: any = useAttrs()
 const columnBind = computed(() => {
   const columnSetBind = { btnTxt: "列设置", title: "列设置", ...props.columnSetBind }
-  return { size: "default", icon: "Setting", ...$attrs, ...columnSetBind }
+  return { size: "default", icon: "Setting", isShowTitle: true, ...$attrs, ...columnSetBind }
 })
 // 获取缓存数据
 const getColumnSetCache = () => {
@@ -75,7 +75,9 @@ const getColumnSetCache = () => {
       }
     })
   })
-  value = JSON.stringify(columnOption)
+  if (columnOption.length !== valueArr.length) {
+    value = JSON.stringify(columnOption)
+  }
   return value ? JSON.parse(value) : initColumnSet()
 }
 // 初始化
@@ -154,20 +156,23 @@ defineExpose({
 })
 </script>
 <style lang="scss">
-.column_set{
+.column_set {
+  .title {
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px 0 10px;
+  }
   .el-dropdown-menu {
-    padding: 10px;
+    padding: 0;
     font-size: 14px;
 
     .el-dropdown-menu__item {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-
-      .title {
-        font-weight: bold;
-        margin-bottom: 5px;
-      }
 
       .t_table_column_setting_dropdown {
         display: flex;
@@ -178,6 +183,7 @@ defineExpose({
 
         .el-checkbox {
           .el-checkbox__input.is-checked + .el-checkbox__label {
+            cursor: move;
             color: var(--el-text-color-primary);
           }
         }

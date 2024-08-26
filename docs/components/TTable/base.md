@@ -169,7 +169,7 @@ TTable/renderHeader
 
 ### 列--动态显示隐藏且拖动排序
 
-:::demo 属性`columnSetBind`配置更改 button 样式：继承`el-button`所有属性;`column`配置`isShowHidden`属性更改是否默认隐藏显示（true:默认设置列不显示；反之或者不设置`isShowHidden`属性显示）;`注意：如果isShowHidden设置为true后，即便选中显示，但每次刷新都不会显示`
+:::demo 在`TTable标签`中设置`columnSetting`开启`并且`需要设置`name`属性且在项目中`必须`保持唯一性。属性`columnSetBind`配置更改 button 样式：继承`el-button`所有属性;`column`配置`isShowHidden`属性更改是否默认隐藏显示（true:默认设置列不显示；反之或者不设置`isShowHidden`属性显示）;`注意：如果isShowHidden设置为true后，即便选中显示，但每次刷新都不会显示`。
 TTable/columnSetting
 :::
 
@@ -365,6 +365,7 @@ TTable/expand
 | columnSetBind           | 列设置按钮配置（继承`el-button`所有属性）                                 | Object           | -         |
 | ----btnTxt              | 按钮显示文字                                                              | String           | '列设置'  |
 | ----title               | 点击按钮下拉显示 title                                                    | String           | '列设置'  |
+| ----isShowTitle         | 点击按钮下拉是否显示 title                                                | Boolean          | true      |
 | ----size                | el-button 的 size                                                         | String           | 'default' |
 | ----icon                | el-button 的 icon                                                         | String           | 'Setting' |
 | align                   | table 对齐方式 可选值`left`、`center`、`right`                            | String           | 'center'  |
