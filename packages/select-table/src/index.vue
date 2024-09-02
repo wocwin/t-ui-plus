@@ -473,11 +473,23 @@ const closeBox = () => {
     }
   }
 }
+const attrs: any = useAttrs()
 // 单选键盘事件
 const selectKeyup = (e: { keyCode: any }) => {
   if (!props.multiple && props.isKeyup && state.tableData.length > 0) {
     const newIndex = nowIndex.value * 1
     const nextIndex = e.keyCode === 40 ? newIndex + 1 : e.keyCode === 38 ? newIndex - 1 : newIndex
+    // 键盘向上/下滚动条根据移动的选择区域而滚动
+    const rowHeight = selectTable.value.$el.querySelectorAll('.el-table__row')[0].clientHeight;
+    const headerHeight = selectTable.value.$el.querySelectorAll('.el-table__header')[0].clientHeight;
+    const maxHeight = attrs['max-height'] ? attrs['max-height'] - headerHeight : 0;
+    const height = rowHeight * (nextIndex + 3);
+    const scrollTop = height > maxHeight ? height - maxHeight : 0;
+
+    if (attrs['max-height']) {
+      selectTable.value.setScrollTop(scrollTop);
+    }
+
     const validNextIndex = Math.max(0, Math.min(nextIndex, state.tableData.length - 1))
 
     selectTable.value.setCurrentRow(state.tableData[validNextIndex])
