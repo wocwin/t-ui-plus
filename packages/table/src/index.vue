@@ -101,6 +101,7 @@
               v-if="table.firstColumn.type === 'radio'"
               v-model="radioVal"
               :label="scope.$index + 1"
+              :disabled="scope.row.isRadioDisabled"
               @click="radioHandleChange(scope.row, scope.$index + 1)"
             ></el-radio>
             <template v-if="table.firstColumn.type === 'index'">
@@ -154,6 +155,7 @@
                 v-if="item.type === 'radio'"
                 v-model="radioVal"
                 :label="scope.$index + 1"
+                :disabled="scope.row.isRadioDisabled"
                 @click="radioHandleChange(scope.row, scope.$index + 1)"
               ></el-radio>
               <template v-if="item.type === 'index'">
@@ -651,6 +653,7 @@ const radioClick = (row: any, index: any) => {
 
 // 点击单选框单元格触发事件
 const radioHandleChange = (row: any, index: any) => {
+  if (row?.isRadioDisabled) return
   if (props.rowClickRadio) {
     return
   }
@@ -658,6 +661,7 @@ const radioHandleChange = (row: any, index: any) => {
 }
 // 点击某行事件
 const rowClick = (row: any) => {
+  if (row.isRadioDisabled) return
   if (!props.rowClickRadio) {
     return
   }
