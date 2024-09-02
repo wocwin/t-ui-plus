@@ -66,7 +66,8 @@ TQueryCondition/footer
 
 ### 每行展示多少项
 
-::: demo 开启`isShowWidthSize`；设置`widthSize`值最小值 2，默认 4;不开启`isShowWidthSize`，则根据`width > 768 && width < 1280`展示 3 项，`width <= 768`展示 2 项(width=window.innerWidth)
+::: demo 开启`isShowWidthSize`；设置`widthSize`值`（默认 4）`；不开启`isShowWidthSize`，则根据`width > 1000 && width < 1280`展示 3 项，`width > 768 && width <= 1000`展示 2 项`width <= 768`展示1项；(width=window.innerWidth)
+
 TQueryCondition/widthSize
 :::
 
@@ -84,7 +85,8 @@ TQueryCondition/btnBind
 
 ### 以下拉方式展示更多条件
 
-::: demo 设置`isDropDownSelectMore`开启； `popoverAttrs`默认值：{ showTxt: '更多', title: '所有条件', allTxt: '全选', reverseTxt: '反选', clearTxt: '清空',placement: 'bottom', width: 240, trigger: 'click', ...props.popoverAttrs }
+::: demo 设置`isDropDownSelectMore`开启； `popoverAttrs`默认值：`{ showTxt: '更多', title: '所有条件', allTxt: '全选', reverseTxt: '反选', clearTxt: '清空'placement: 'bottom', width: 240, trigger: 'click', ...props.popoverAttrs }`
+
 TQueryCondition/isDropDownSelectMore
 :::
 
@@ -135,10 +137,10 @@ TQueryCondition/isDropDownSelectMore
 | popoverAttrs      | el-popover配置及中文文案                               | object           | 具体看源码 |
 | moreCheckList     | 数据源                                                 | Array            | -          |
 | -----label        | 标题                                                   | string           | -          |
-| -----comp         | 组件名称，可直接指定全局注册的组件                     | string,component | -          |
+| -----comp         | 组件名称，可直接指定全局注册的组件                     | string/component | -          |
 | -----isSelfCom    | 是否使用自己封装的下拉组件（即没有el-option）          | Boolean          | false      |
 | -----prop         | 接收字段（即后台接收字段）                             | string           | -          |
-| -----bind         | 组件配置参数（Attributes）                             | object           | -          |
+| -----bind         | 组件配置参数（Attributes）function 传出 form           | object/Function  | -          |
 | -----slotName     | 自定义输入框插槽                                       | string           | -          |
 | -----span         | 控件占用的列宽，默认占用 1 列，最大值4 (独占一行)      | number           | 1          |
 | -----changeEvent  | 事件名称                                               | string           | -          |
@@ -159,12 +161,12 @@ TQueryCondition/isDropDownSelectMore
 | placeholder | placeholder 提示语                                                               | string           | -                          |
 | labelRender | 自定义 label（render 函数 jsx 方式编写）                                         | function         | -                          |
 | slotName    | 自定义输入框插槽(作用域插槽解构接收{param/scope}返回当前所有表单初始值)          | string           | -                          |
-| comp        | 组件名称，可直接指定全局注册的组件，也可引入'elmentUI'如：Button 或者'el-button' | string,component | -                          |
+| comp        | 组件名称，可直接指定全局注册的组件，也可引入'elmentUI'如：Button 或者'el-button' | string/component | -                          |
 | span        | 控件占用的列宽，默认占用 1 列，最多 4 列 (独占一行)                              | number           | 1                          |
 | arrLabel    | type=select-arr 时，每个下拉显示的中文                                           | String           | label                      |
 | arrKey      | type=select-arr 时，每个下拉显示的中文传后台的数字                               | String           | key                        |
 | defaultVal  | 默认值                                                                           | -                | -                          |
-| bind        | 渲染时组件会调用 v-bind 指定设置该配置更新元素的属性(继承第三方组件属性)         | object，function | 无                         |
+| bind        | 继承第三方 UI 的 Attributes,function 传出 form                                   | object/function  | -                          |
 | eventHandle | 配置组件事件，与写组件时 change 等同理                                           | object           | 本身值，当前 formData 数据 |
 
 #### 4、事件（events）

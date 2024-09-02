@@ -2,6 +2,7 @@
   <t-layout-page>
     <t-layout-page-item>
       <el-radio-group v-model="widthSize" size="small" style="margin-bottom: 15px">
+        <el-radio-button :value="1">一行展示</el-radio-button>
         <el-radio-button :value="2">一行展示2项</el-radio-button>
         <el-radio-button :value="3">一行展示3项</el-radio-button>
         <el-radio-button :value="4">一行展示4项</el-radio-button>

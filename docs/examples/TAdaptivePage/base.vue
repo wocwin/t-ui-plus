@@ -6,7 +6,6 @@
     isCopy
     ref="tAdaptivePageRef"
     isExpansion
-    isTTableSelfFilling
     columnSetting
     :table="state.table"
     :columns="state.table.columns"

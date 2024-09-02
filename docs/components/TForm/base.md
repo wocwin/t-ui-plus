@@ -22,13 +22,13 @@ TForm/isTrim
 
 ### 对齐方式
 
-:::demo 通过设置 `formOpts.labelPosition` 属性可以改变表单域标签的位置，可选值为 `top`、`left`、`right`，默认`right`；**前提：需设置`formOpts.labelWidth`(默认是：100px——即 `label` 的宽度)**;也可以通过组件中设置`labelPosition`
+:::demo 通过设置 `formOpts.labelPosition` 属性可以改变表单域标签的位置，可选值为 `top`、`left`、`right`，默认`right`
 TForm/labelPosition
 :::
 
 ### 每行展示多少项
 
-:::demo 通过设置 `widthSize` 属性可以改变表单域每行显示项，可选值为 `1`、`2`、`3`、`4`，默认`2`————即每行显示两项；**若某一项需要单独显示一行（通常是备注或者文本域）需要在 fieldList 中设置 `widthSize` 为 1**
+:::demo 通过设置 `widthSize` 属性可以改变表单域每行显示项，可选值为 `1`、`2`、`3`、`4`、`5`、`6`，默认`2`————即每行显示两项；**若某一项需要单独显示一行（通常是备注或者文本域）需要在 fieldList 中设置 `widthSize` 为 1**
 TForm/widthSize
 :::
 
@@ -90,7 +90,6 @@ TForm/isHideItem
 
 ```html
 <t-form v-model="formOpts.ref" :formOpts="formOpts" :widthSize="2" @handleEvent="handleEvent" />
-//注意formOpts.ref(t-form组件实例相当于vue2 ref)需要要v-model接收
 ```
 
 ### 2. 配置参数
@@ -102,6 +101,7 @@ TForm/isHideItem
 | widthSize           | 每行显示几个输入项（默认两项） 最大值 6                                                                          | Number            | 2      |
 | isTrim              | 全局是否开启清除前后空格(comp 为 el-input 且 type 不等于'password')                                              | Boolean           | true   |
 | formOpts            | 表单配置项                                                                                                       | Object            | -      |
+| ---ref              | 当前TForm实例                                                                                                    | Object            | -      |
 | ---labelPosition    | 改变表单项 label 与输入框的布局方式(默认：right) /top （优先展示组件`labelPosition`）                            | String            | right  |
 | ---listTypeInfo     | 下拉选择数据源（type:'select'有效）                                                                              | Object            | -      |
 | ---fieldList        | form 表单每项 list                                                                                               | Array             | -      |
@@ -121,19 +121,19 @@ TForm/isHideItem
 | ------labelRender   | 自定义某一项 title                                                                                               | function          | -      |
 | ------labelSlotName | 自定义某一项 title（插槽名：就是 labelSlotName 值                                                                | slot              | -      |
 | ------value         | form 表单每一项传给后台的参数                                                                                    | String            | -      |
-| ------rules         | 每一项输入框的表单校验规则                                                                                       | Object/Array      | -      |
+| ------rules         | 每一项输入框的表单校验规则（可参考 element-plus el-form-item方式配置）                                           | Object/Array      | -      |
 | ------list          | 下拉选择数据源（仅仅对 type:'select'有效）                                                                       | String            | -      |
 | ------event         | 表单每一项事件标志（即是：handleEvent 事件第一个参数值）                                                         | String            | -      |
 | ------eventHandle   | 继承 comp 组件的事件                                                                                             | Object            | -      |
 | ------ref           | 当前使用组件的 ref 标识（可以通过 getRefs 事件返回）                                                             | String            | -      |
 | ---formData         | 表单提交数据(对应 fieldList 每一项的 value 值)                                                                   | Object            | -      |
 | ---labelWidth       | label 宽度                                                                                                       | String            | 120px  |
-| ---rules            | 规则（可依据 elementUI el-form 配置————对应 formData 的值）                                                      | Object/Array      | -      |
+| ---rules            | 校验规则（可参考 element-plus el-form 方式配置）                                                                 | Object/Array      | -      |
 | ---operatorList     | 操作按钮 list                                                                                                    | Array             | -      |
 | -------bind         | 继承 el-button 所有 Attributes(默认值{ type:'primary',size:'small',})                                            | Object            | -      |
 | -------fun          | 事件名                                                                                                           | function          | -      |
 
-### 3. events
+### 3. events 继承 element-plus el-form 的 events
 
 | 事件名      | 说明                      | 返回值                                                   |
 | :---------- | :------------------------ | :------------------------------------------------------- |
@@ -147,4 +147,3 @@ TForm/isHideItem
 | selfValidate    | 自定义校验                                       | valid:Boolean;formData:object |
 | selfResetFields | 自定义重置方法（主要清空使用 TSelectTable 组件） | -                             |
 
-### 5. 关于 element-plus el-form/el-form-item 提供的一些方法/属性可直接使用，无需其他配置

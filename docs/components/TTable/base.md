@@ -25,13 +25,9 @@ TTable/border
 TTable/size
 :::
 
-:::demo 在`TTable`组件中添加`align:'center'`设置整个 table 对齐方式，在`columns`中设置`align`设置每列对齐方式（`columns优先级`高于`整体的对齐方式`）----`align`可选值`left`、`center`、`right`
-TTable/align
-:::
-
 ### 对齐方式
 
-:::demo 在`TTable`组件中添加`align:'center'`设置整个 table 对齐方式，在`columns`中设置`align`设置每列对齐方式（`columns优先级`高于`整体的对齐方式`）----`align`可选值`left`、`center`、`right`
+:::demo 在`TTable`标签中添加`align:'center'`设置整个 table 对齐方式，在`columns`中设置`align`设置每列对齐方式（`columns优先级`高于`整体的对齐方式`）----`align`可选值`left`、`center`、`right`
 TTable/align
 :::
 
@@ -105,6 +101,12 @@ TTable/radio
 
 :::demo 在`table`对象中添加`firstColumn:{ type: 'radio', fixed: true }`,可以再次点击取消选中；添加`@radioChange`事件传当前选中行是数据；默认点击整行选中,defaultRadioCol: 表默认选中项
 TTable/radioDefault
+:::
+
+### 单选框--禁用
+
+:::demo `table`的`data` 数据源满足某条件时，新增`isRadioDisabled`属性为`true`，禁用单选。
+TTable/isRadioDisabled
 :::
 
 ### 序列号表格
@@ -333,9 +335,9 @@ TTable/expand
 | ----configEdit          | 表格编辑配置（开启编辑功能有效）                                          | Object           | -         |
 | ----------rules         | 规则（可依据 elementPlus el-form 配置————对应 columns 的 prop 值）        | Object           | -         |
 | ----------label         | placeholder 显示                                                          | String           | -         |
-| ----------editComponent | 组件名称可直接指定全局注册的组件，也可引入'element'如：'el-input'         | String           | -         |
+| ----------editComponent | 组件名称可直接指定全局注册的组件，也可引入'element'如：'el-input'         | String/component | -         |
 | ----------eventHandle   | 第三方 UI 的 事件（返回三个参数，需解构获取{val,prop,scope}）             | Object           | -         |
-| ----------bind          | 第三方 UI 的 Attributes，如 el-input 中的 clearable 清空功能              | Object           | -         |
+| ----------bind          | 第三方 UI 的 Attributes，（`Function`返回值scope）                        | Object/Function  | -         |
 | ----------event         | 触发 handleEvent 事件的标志                                               | String           | -         |
 | ----------type          | 下拉或者复选框显示（select-arr/select-obj/checkbox）                      | String           | -         |
 | ----------list          | 下拉选择数据源名称                                                        | String           | -         |

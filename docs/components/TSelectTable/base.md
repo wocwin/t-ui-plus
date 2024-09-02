@@ -32,7 +32,7 @@ TSelectTable/expanded
 
 ### 单选 -- 开启键盘事件（上下选择高亮，回车选中）
 
-::: demo `table` 数据源及表头信息;`keywords` 选项中的 value（选项的值）,label(选项的标签);`@radioChange` 选中事件，传出当前选中对象；`isKeyup` 是否开启键盘事件（默认不开启）上下选择高亮，回车选中
+::: demo `table` 数据源及表头信息;`keywords` 选项中的 value（选项的值）,label(选项的标签);`@radioChange` 选中事件，传出当前选中对象；`isKeyup` 是否开启键盘事件（默认不开启）上下选择高亮，回车选中；键盘向上/下滚动条根据移动的选择区域而滚动必须设置`max-height`。
 TSelectTable/radioKeyup
 :::
 
