@@ -482,7 +482,7 @@ defineExpose({ ...instance.exposed, selfValidate, selfResetFields })
     .el-form-item__content {
       // margin-left: 0 !important;
       label {
-        min-width: 108px;
+        // min-width: 108px;
         color: var(--el-text-color-primary);
         // text-align: right;
         margin-right: 12px;
