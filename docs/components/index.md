@@ -74,6 +74,7 @@ import '@wocwin/t-ui-plus/lib/style.css'
 | TCheckbox       | [多选组件](https://wocwin.github.io/t-ui-plus/components/TCheckbox/base.html?_blank)                                                                       |
 | TChart          | [图表组件](https://wocwin.github.io/t-ui-plus/components/TChart/base.html?_blank)                                                                          |
 | TTabs           | [标签页组件](https://wocwin.github.io/t-ui-plus/components/TTabs/base.html?_blank)                                                                         |
+| TSelectIcon     | [图标选择组件](https://wocwin.github.io/t-ui-plus/components/TSelectIcon/base.html?_blank)                                                                 |
 
 ### T-ui-plus 组件 Volar 类型提示
 
