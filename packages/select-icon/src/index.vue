@@ -79,7 +79,7 @@ let valueIcon = computed({
 const $attrs: any = useAttrs()
 const attrs = computed(() => {
   const selectBind = {
-    "prefix-icon": Icons[props.prefixIcon],
+    "prefix-icon": customIcons[props.prefixIcon],
     placeholder: "请选择图标",
     dialogTitle: "请选择图标",
     searchPlaceholder: "搜索图标",

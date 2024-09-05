@@ -102,7 +102,6 @@
             :value="compChildValue(item, value, key)"
             >{{ compChildShowLabel(item, value) }}</component
           >
-          <!-- </template> -->
         </component>
       </el-form-item>
     </template>

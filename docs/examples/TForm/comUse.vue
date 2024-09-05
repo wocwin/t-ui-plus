@@ -102,7 +102,8 @@ const formOpts: any = reactive({
     valDate1: null,
     valDate2: null,
     valDate3: null,
-    date: null
+    date: null,
+    icon: ""
   },
   fieldList: [
     {
@@ -139,6 +140,14 @@ const formOpts: any = reactive({
       comp: "t-select",
       isSelfCom: true,
       bind: { multiple: true, optionSource: hobbyList, valueCustom: "value" }
+    },
+    {
+      label: "图标选择器",
+      value: "icon",
+      placeholder: "TSelectIcon图标选择",
+      comp: "t-select-icon",
+      isSelfCom: true
+      // bind: { multiple: true }
     },
     {
       label: "年份",

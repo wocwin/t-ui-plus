@@ -43,7 +43,7 @@ TQueryCondition/eventHandle
 ### 结合自己封装组件使用
 
 ::: demo
-TQueryCondition/TSelectUse
+TQueryCondition/comUse
 :::
 
 ### 按钮操作使用

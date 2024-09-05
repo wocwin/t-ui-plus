@@ -23,7 +23,9 @@ let state = reactive({
     workshopNum2: null,
     workshopNum3: null,
     date: null,
-    deptCode: null
+    date1: null,
+    deptCode: null,
+    icon: ""
   },
   table: {
     data: [
@@ -148,6 +150,20 @@ const opts = computed(() => {
         optionSource: stepList
       }
     },
+    icon: {
+      label: "图标选择器",
+      comp: "t-select-icon",
+      span: 2
+    },
+    date1: {
+      label: "t-date-picker",
+      comp: "t-date-picker",
+      span: 2,
+      bind: {
+        type: "daterange",
+        isPickerOptions: true
+      }
+    },
     date: {
       label: "装炉时间",
       comp: "el-date-picker",
@@ -189,9 +205,17 @@ const radioChange2 = val => {
 }
 // 最终参数获取
 const getQueryData = computed(() => {
-  const { userName, userName2, workshopNum, date, workshopNum2, workshopNum3, deptCode } = toRefs(
-    state.queryData
-  )
+  const {
+    userName,
+    userName2,
+    workshopNum,
+    date,
+    workshopNum2,
+    workshopNum3,
+    deptCode,
+    date1,
+    icon
+  } = toRefs(state.queryData)
   return {
     userName: userName.value,
     userName2: userName2.value,
@@ -199,6 +223,8 @@ const getQueryData = computed(() => {
     workshopNum2: workshopNum2.value,
     workshopNum3: workshopNum3.value,
     deptCode: deptCode.value,
+    date1: date1.value,
+    icon: icon.value,
     beginDate: date.value && date.value[0] ? date.value[0] : null,
     endDate: date.value && date.value[1] ? date.value[1] : null
   }
