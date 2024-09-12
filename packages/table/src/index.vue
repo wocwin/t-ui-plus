@@ -1,5 +1,5 @@
 <template>
-  <div class="t-table" ref="TTableBox">
+  <div class="t-table" ref="TTableBox" v-loading="tableLoading" :element-loading-text="loadingTxt">
     <div
       class="header_wrap"
       :style="{
@@ -60,7 +60,7 @@
       }"
       v-bind="$attrs"
       :highlight-current-row="highlightCurrentRow"
-      :border="table.border || isTableBorder"
+      :border="border || table.border || isTableBorder"
       @cell-dblclick="cellDblclick"
       @row-click="rowClick"
     >
@@ -440,7 +440,21 @@ const props: any = defineProps({
   // TAdaptivePage组件是否使用了Toolbar插槽
   isSlotToolbar: Boolean,
   // TAdaptivePage组件是否使用了title插槽
-  isSlotTitle: Boolean
+  isSlotTitle: Boolean,
+  // 是否开启边框
+  border: {
+    type: Boolean,
+    default: false
+  },
+  // table loading
+  tableLoading: {
+    type: Boolean,
+    default: false
+  },
+  loadingTxt: {
+    type: String,
+    default: "加载中..."
+  }
 })
 // 初始化数据
 let state = reactive({
