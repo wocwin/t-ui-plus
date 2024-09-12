@@ -24,6 +24,18 @@ TAdaptivePage/lefttree
 TAdaptivePage/treeTable
 :::
 
+### 动态切换表头
+
+:::demo
+TAdaptivePage/dynamicCol
+:::
+
+### 菜单管理（弹窗使用）
+
+:::demo
+TAdaptivePage/menuMange
+:::
+
 ### TAdaptivePage 参数配置
 
 ---
