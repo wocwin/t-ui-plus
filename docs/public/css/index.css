@@ -25,6 +25,10 @@
 .aside .outline-link:hover {
   color: var(--vp-c-brand);
 }
+.VPSidebarItem .item .link .text el-tag {
+  margin-left: 10px;
+  color: #409eff;
+}
 .vp-doc .t_detail th,
 .vp-doc .t_detail td {
   border: none;
