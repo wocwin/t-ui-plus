@@ -16,6 +16,8 @@ import TRadio from "./radio/src/index.vue"
 import TCheckbox from "./checkbox/src/index.vue"
 import TChart from "./chart/src/index.vue"
 import TTabs from "./tabs/src/index.vue"
+import TSelectIcon from "./select-icon/src/index.vue"
+import TInput from "./input/src/index.vue"
 
 declare module "vue" {
   export interface GlobalComponents {
@@ -37,5 +39,7 @@ declare module "vue" {
     TCheckbox: typeof TCheckbox
     TChart: typeof TChart
     TTabs: typeof TTabs
+    TSelectIcon: typeof TSelectIcon
+    TInput: typeof TInput
   }
 }

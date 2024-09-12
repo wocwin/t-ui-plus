@@ -16,7 +16,7 @@ export default defineConfig({
         text: "安装指南",
         link: "/components/"
       },
-      { text: "基础组件", link: "/components/TSelect/base.md" },
+      { text: "基础组件", link: "/components/TInput/base.md" },
       {
         text: "GitHub地址",
         link: "https://github.com/wocwin/t-ui-plus"
@@ -41,6 +41,7 @@ export default defineConfig({
         {
           text: "常用组件",
           items: [
+            { text: "输入框组件<el-tag type='danger'>v1.4.12</el-tag> ", link: "/components/TInput/base.md" },
             { text: "下拉选择组件", link: "/components/TSelect/base.md" },
             { text: "详情组件", link: "/components/TDetail/base.md" },
             { text: "Button组件", link: "/components/TButton/base.md" },
@@ -49,7 +50,7 @@ export default defineConfig({
             { text: "日期组件", link: "/components/TDatePicker/base.md" },
             { text: "Tabs组件", link: "/components/TTabs/base.md" },
             { text: "步骤组件", link: "/components/TStepWizard/base.md" },
-            { text: "图标选择组件", link: "/components/TSelectIcon/base.md" },
+            { text: "图标选择组件<el-tag type='danger'>v1.4.12</el-tag> ", link: "/components/TSelectIcon/base.md" },
           ]
         },
         {

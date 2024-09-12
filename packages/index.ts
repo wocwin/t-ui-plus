@@ -22,6 +22,7 @@ import TCheckbox from "./checkbox"
 import TChart from "./chart"
 import TTabs from "./tabs"
 import TSelectIcon from "./select-icon"
+import TInput from "./input"
 
 // 存储组件列表
 const components: {
@@ -45,7 +46,8 @@ const components: {
   TCheckbox,
   TChart,
   TTabs,
-  TSelectIcon
+  TSelectIcon,
+  TInput
 }
 // 插件声明：声明所有插件
 // 插件注册：在 Vue 项目的入口文件中，通过 ( app.use(插件) ) 进行注册
@@ -94,7 +96,8 @@ export {
   TCheckbox,
   TChart,
   TTabs,
-  TSelectIcon
+  TSelectIcon,
+  TInput
 }
 /**
  * @description 公共方法
