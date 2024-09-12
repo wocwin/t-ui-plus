@@ -482,11 +482,12 @@ const selectKeyup = (e: { keyCode: any }) => {
     // 键盘向上/下滚动条根据移动的选择区域而滚动
     const rowHeight = selectTable.value.$el.querySelectorAll('.el-table__row')[0].clientHeight;
     const headerHeight = selectTable.value.$el.querySelectorAll('.el-table__header')[0].clientHeight;
-    const maxHeight = attrs['max-height'] ? attrs['max-height'] - headerHeight : 0;
+    const attrsMaxHeight = (typeof attrs['max-height'] === 'number' ? attrs['max-height'] : parseFloat(attrs['max-height'])) || 0;
+    const maxHeight = attrsMaxHeight ? attrsMaxHeight - headerHeight : 0;
     const height = rowHeight * (nextIndex + 3);
     const scrollTop = height > maxHeight ? height - maxHeight : 0;
-
-    if (attrs['max-height']) {
+    // console.log('attrsMaxHeight---22', attrsMaxHeight)
+    if (attrsMaxHeight) {
       selectTable.value.setScrollTop(scrollTop);
     }
 
