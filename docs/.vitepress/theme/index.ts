@@ -9,6 +9,7 @@ import * as ElementPlusIconsVue from "@element-plus/icons-vue"
 import * as echarts from "echarts" // 引入echarts
 import TVHtml from "../components/TVHtml.vue"
 import TIcon from "../components/TIcon.vue"
+import TTip from "../components/TTip.vue"
 import { VPDemo } from "../vitepress"
 // 基于element-plus二次封装基础组件
 import TuiPlus from "../../../packages"
@@ -33,6 +34,7 @@ export default {
     ctx.app.component("Demo", VPDemo)
     ctx.app.component("TVHtml", TVHtml)
     ctx.app.component("TIcon", TIcon)
+    ctx.app.component("TTip", TTip)
 
     // try {
     //   // 引入高德资源
