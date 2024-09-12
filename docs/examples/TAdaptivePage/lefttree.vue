@@ -3,8 +3,8 @@
     class="menu_mange"
     tableTitle="显示左侧tree结构"
     isCopy
-    :table="state.table"
-    :columns="state.table.columns"
+    :table="table"
+    :columns="table.columns"
     :opts="opts"
     isShowWidthSize
     :widthSize="2"
@@ -92,7 +92,7 @@ const data: Tree[] = [
     ]
   }
 ]
-const state: any = reactive({
+const state = reactive({
   queryData: {
     userName: null, // 登录名
     nickName: null, // 用户状态
@@ -118,49 +118,48 @@ const state: any = reactive({
       name: "前纺四车间",
       id: "W4"
     }
+  ]
+})
+const table = reactive<TableTypes.Table>({
+  currentPage: 1,
+  pageSize: 15,
+  total: 0,
+  // 接口返回数据
+  data: [],
+  // 表头数据
+  columns: [
+    { prop: "userName", label: "登录名", minWidth: 120 },
+    {
+      prop: "nickName",
+      label: "姓名",
+      slotName: "nickName"
+    },
+    { prop: "deptName", label: "部门", minWidth: 120 },
+    { prop: "roleName", label: "角色", minWidth: 120 },
+    { prop: "descript", label: "描述", minWidth: 260 },
+    { prop: "createTime", label: "创建时间", minWidth: 220 }
   ],
-  table: {
-    currentPage: 1,
-    pageSize: 15,
-    total: 0,
-    // 接口返回数据
-    data: [],
-    // 表头数据
-    columns: [
-      { prop: "userName", label: "登录名", minWidth: 120 },
-      {
-        prop: "nickName",
-        label: "姓名",
-        slotName: "nickName"
-      },
-      { prop: "deptName", label: "部门", minWidth: 120 },
-      { prop: "roleName", label: "角色", minWidth: 120 },
-      { prop: "descript", label: "描述", minWidth: 260 },
-      { prop: "createTime", label: "创建时间", minWidth: 220 }
-    ],
-    operator: [
-      {
-        text: "编辑"
-        // fun: edit
-      },
-      {
-        text: "重置密码"
-        // fun: resetHandle
-      },
-      {
-        text: "删除",
-        fun: handleDelete
-      }
-    ],
-    // 操作列样式
-    operatorConfig: {
-      fixed: "right", // 固定列表右边（left则固定在左边）
-      width: 200,
-      label: "操作"
+  operator: [
+    {
+      text: "编辑"
+      // fun: edit
+    },
+    {
+      text: "重置密码"
+      // fun: resetHandle
+    },
+    {
+      text: "删除",
+      fun: handleDelete
     }
+  ],
+  // 操作列样式
+  operatorConfig: {
+    fixed: "right", // 固定列表右边（left则固定在左边）
+    width: 200,
+    label: "操作"
   }
 })
-
 const opts = computed(() => {
   return {
     userName: {
@@ -216,8 +215,8 @@ const getQueryData = computed(() => {
     date1: date1.value,
     beginDate: date.value && date.value[0] ? date.value[0] : null,
     endDate: date.value && date.value[1] ? date.value[1] : null,
-    pageNum: state.table.currentPage,
-    pageSize: state.table.pageSize
+    pageNum: table.currentPage,
+    pageSize: table.pageSize
   }
 })
 // 点击查询按钮
@@ -234,18 +233,18 @@ onMounted(() => {
 const getData = async () => {
   const res = await dataList
   if (res.success) {
-    state.table.data = res?.data.rows
-    state.table.total = res.data.total
+    table.data = res?.data.rows
+    table.total = res.data.total
   }
 }
 // 页面大小
 const handlesSizeChange = (val: any) => {
-  state.table.pageSize = val
+  table.pageSize = val
   getData()
 }
 // 页码
 const handlesCurrentChange = (val: any) => {
-  state.table.currentPage = val
+  table.currentPage = val
   getData()
 }
 </script>

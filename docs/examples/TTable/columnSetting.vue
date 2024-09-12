@@ -31,8 +31,8 @@
 
 <script setup lang="ts">
 import { ref } from "vue"
-const tableColumnSetRef: any = ref(null)
-let table = ref({
+const tableColumnSetRef = ref<any>(null)
+let table = ref<TableTypes.Table>({
   // 接口返回数据
   data: [
     {

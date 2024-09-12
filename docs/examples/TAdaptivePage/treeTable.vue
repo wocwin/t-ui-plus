@@ -4,9 +4,9 @@
     title="treeTable列表"
     row-key="path"
     isTree
-    :table="state.table"
+    :table="table"
     :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-    :columns="state.table.columns"
+    :columns="table.columns"
     :isShowPagination="false"
     :opts="opts"
     align="left"
@@ -37,7 +37,7 @@
       <el-button
         size="default"
         type="danger"
-        @click="toggleSelection([state.table.data[1], state.table.data[2]])"
+        @click="toggleSelection([table.data[1], table.data[2]])"
         >{{ !isSelectRow ? "点击选中" : "点击取消" }}第二第三项</el-button
       >
       <el-button size="default" type="primary" @click="expandAll"
@@ -68,7 +68,7 @@ const expandAll = () => {
 }
 // 展开或收起第七行
 const expandRow = (index: number, isExpand: boolean) => {
-  const row = state.table.data[index]
+  const row = table.data[index]
   if (row) {
     TreeTableRef.value.toggleRowExpansion(row, isExpand)
   }
@@ -98,51 +98,51 @@ const cancelSelect = () => {
     TreeTableRef.value.clearSelection()
   }
 }
-const state: any = reactive({
+const table = reactive<TableTypes.Table>({
+  data: [],
+  firstColumn: { type: "selection", fixed: true },
+  columns: [
+    {
+      label: "菜单名称",
+      render: (text: any, row: any) => {
+        return <div>{row.meta.title}</div>
+      },
+      minWidth: 180
+    },
+    {
+      label: "菜单图标",
+      render: (text: any, row: any) => {
+        return <t-icon icon={row.meta.icon}></t-icon>
+      },
+      minWidth: 80
+    },
+    { prop: "name", label: "菜单 name", minWidth: 180 },
+    { prop: "path", label: "菜单路径", minWidth: 180 },
+    { prop: "component", label: "组件路径", minWidth: 180 }
+  ],
+  operator: [
+    {
+      text: "新增",
+      fun: handleAdd
+    },
+    {
+      text: "编辑",
+      fun: edit
+    }
+  ],
+  // 操作列样式
+  operatorConfig: {
+    fixed: "right", // 固定列表右边（left则固定在左边）
+    align: "left",
+    width: "160",
+    label: "操作"
+  }
+})
+const state = reactive({
   ids: [],
   queryData: {
     title: null, // 菜单名称
     path: null // 菜单路径
-  },
-  table: {
-    data: [],
-    firstColumn: { type: "selection", fixed: true },
-    columns: [
-      {
-        label: "菜单名称",
-        render: (text: any, row: any) => {
-          return <div>{row.meta.title}</div>
-        },
-        minWidth: 180
-      },
-      {
-        label: "菜单图标",
-        render: (text: any, row: any) => {
-          return <t-icon icon={row.meta.icon}></t-icon>
-        },
-        minWidth: 80
-      },
-      { prop: "name", label: "菜单 name", minWidth: 180 },
-      { prop: "path", label: "菜单路径", minWidth: 180 },
-      { prop: "component", label: "组件路径", minWidth: 180 }
-    ],
-    operator: [
-      {
-        text: "新增",
-        fun: handleAdd
-      },
-      {
-        text: "编辑",
-        fun: edit
-      }
-    ],
-    // 操作列样式
-    operatorConfig: {
-      fixed: "right", // 固定列表右边（left则固定在左边）
-      align: "left",
-      width: "160",
-      label: "操作"
-    }
   }
 })
 
@@ -180,7 +180,7 @@ const getMenuData = async () => {
   const res = await menuData
   // console.log(999, res);
   if (res.success) {
-    state.table.data = res.data
+    table.data = res.data
   }
 }
 </script>

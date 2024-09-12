@@ -27,7 +27,7 @@ import { ref } from "vue"
 const align = ref("center")
 const setDate = ref("设置日期")
 const setName = ref("设置姓名")
-const table = ref({
+const table = ref<TableTypes.Table>({
   border: true,
   data: [
     {

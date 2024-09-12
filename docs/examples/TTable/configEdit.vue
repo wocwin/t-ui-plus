@@ -4,10 +4,10 @@
       <t-table
         title="单元格编辑功能"
         ref="singleEdit"
-        :table="state.table"
-        :columns="state.table.columns"
+        :table="table"
+        :columns="table.columns"
         :isShowPagination="false"
-        :listTypeInfo="state.table.listTypeInfo"
+        :listTypeInfo="table.listTypeInfo"
         isShowFooterBtn
         @save="singleSave"
         @handleEvent="handleEvent"
@@ -17,10 +17,8 @@
             <el-input-number v-model="num" clearable placeholder="请输入追加条数"></el-input-number>
             <el-button type="primary" @click="add">追加{{ num ? num : "" }}条数据</el-button>
           </div>
-          <el-button type="primary" v-if="state.table.data.length > 0" @click="reset"
-            >重置表单</el-button
-          >
-          <el-button type="primary" v-if="state.table.data.length > 0" @click="save"
+          <el-button type="primary" v-if="table.data.length > 0" @click="reset">重置表单</el-button>
+          <el-button type="primary" v-if="table.data.length > 0" @click="save"
             >另一种获取table数据</el-button
           >
         </template>
@@ -38,7 +36,7 @@ const singleEdit: any = ref(null)
 const add = () => {
   if (num.value > 0) {
     for (let i = 0; i < num.value; i++) {
-      state.table.data.push({})
+      table.data.push({})
     }
   }
 }
@@ -79,142 +77,140 @@ const getList = () => {
       key: "3"
     }
   ]
-  state.table.columns.forEach(item => {
+  table.columns.forEach(item => {
     if (item.canEdit && item.prop === "area" && item.configEdit) {
       item.configEdit.bind.optionSource = list
       console.log("item.configEdit.bind.optionSource", item)
     }
   })
 }
-let state: any = reactive({
-  table: {
-    firstColumn: { type: "selection" },
-    // 接口返回数据
-    data: [],
-    // 表头数据
-    columns: [
-      {
-        prop: "area",
+let table = reactive<TableTypes.Table>({
+  firstColumn: { type: "selection" },
+  // 接口返回数据
+  data: [],
+  // 表头数据
+  columns: [
+    {
+      prop: "area",
+      label: "装炉位置",
+      width: "170",
+      canEdit: true,
+      configEdit: {
         label: "装炉位置",
-        width: "170",
-        canEdit: true,
-        configEdit: {
-          label: "装炉位置",
-          isSelfCom: true,
-          editComponent: "t-select",
-          bind: {
-            valueCustom: "key",
-            labelCustom: "label",
-            optionSource: []
-          }
-        }
-      },
-      {
-        prop: "layer",
-        label: "装炉层",
-        width: "170",
-        canEdit: true,
-        configEdit: {
-          label: "装炉层",
-          type: "select-arr",
-          editComponent: "el-select",
-          list: "furnaceLayerList",
-          arrLabel: "label",
-          arrKey: "key"
-          // event: '装炉层layer',
-        }
-      },
-      {
-        prop: "isTail",
-        label: "是否尾包",
-        width: "100",
-        canEdit: true,
-        // align: 'center',
-        configEdit: {
-          label: "是否尾包",
-          type: "checkbox",
-          editComponent: "el-checkbox"
-        }
-      },
-      {
-        prop: "packageNumStart",
-        label: "开始编号",
-        minWidth: "100",
-        canEdit: true,
-        configEdit: {
-          label: "开始编号",
-          type: "input",
-          editComponent: "el-input"
-        }
-      },
-      {
-        prop: "packageNumEnd",
-        label: "结束编号",
-        minWidth: "100",
-        canEdit: true,
-        configEdit: {
-          label: "结束编号",
-          type: "input",
-          editComponent: "el-input"
-        }
-      },
-      {
-        prop: "startDate",
-        label: "t-date-picker",
-        width: "160",
-        canEdit: true,
-        configEdit: {
-          label: "生产日期",
-          type: "date",
-          editComponent: "t-date-picker",
-          bind: {
-            isPickerOptions: true
-          }
-        }
-      },
-      {
-        prop: "endDate",
-        label: "el-date-picker",
-        width: "160",
-        canEdit: true,
-        configEdit: {
-          label: "出炉日期",
-          type: "date",
-          editComponent: "el-date-picker",
-          bind: {
-            "value-format": "YYYY-MM-DD"
-          }
-        }
-      },
-      {
-        prop: "singleWeight",
-        label: "单包重量（吨）",
-        minWidth: "160",
-        canEdit: true,
-        configEdit: {
-          label: "单包重量（吨）",
-          type: "input",
-          editComponent: "el-input-number",
-          event: "singleWeight"
+        isSelfCom: true,
+        editComponent: "t-select",
+        bind: {
+          valueCustom: "key",
+          labelCustom: "label",
+          optionSource: []
         }
       }
-    ],
-    listTypeInfo: {
-      furnaceLayerList: [
-        {
-          label: "上层",
-          key: "1"
-        },
-        {
-          label: "中层",
-          key: "2"
-        },
-        {
-          label: "下层",
-          key: "3"
+    },
+    {
+      prop: "layer",
+      label: "装炉层",
+      width: "170",
+      canEdit: true,
+      configEdit: {
+        label: "装炉层",
+        type: "select-arr",
+        editComponent: "el-select",
+        list: "furnaceLayerList",
+        arrLabel: "label",
+        arrKey: "key"
+        // event: '装炉层layer',
+      }
+    },
+    {
+      prop: "isTail",
+      label: "是否尾包",
+      width: "100",
+      canEdit: true,
+      // align: 'center',
+      configEdit: {
+        label: "是否尾包",
+        type: "checkbox",
+        editComponent: "el-checkbox"
+      }
+    },
+    {
+      prop: "packageNumStart",
+      label: "开始编号",
+      minWidth: "100",
+      canEdit: true,
+      configEdit: {
+        label: "开始编号",
+        type: "input",
+        editComponent: "el-input"
+      }
+    },
+    {
+      prop: "packageNumEnd",
+      label: "结束编号",
+      minWidth: "100",
+      canEdit: true,
+      configEdit: {
+        label: "结束编号",
+        type: "input",
+        editComponent: "el-input"
+      }
+    },
+    {
+      prop: "startDate",
+      label: "t-date-picker",
+      width: "160",
+      canEdit: true,
+      configEdit: {
+        label: "生产日期",
+        type: "date",
+        editComponent: "t-date-picker",
+        bind: {
+          isPickerOptions: true
         }
-      ]
+      }
+    },
+    {
+      prop: "endDate",
+      label: "el-date-picker",
+      width: "160",
+      canEdit: true,
+      configEdit: {
+        label: "出炉日期",
+        type: "date",
+        editComponent: "el-date-picker",
+        bind: {
+          "value-format": "YYYY-MM-DD"
+        }
+      }
+    },
+    {
+      prop: "singleWeight",
+      label: "单包重量（吨）",
+      minWidth: "160",
+      canEdit: true,
+      configEdit: {
+        label: "单包重量（吨）",
+        type: "input",
+        editComponent: "el-input-number",
+        event: "singleWeight"
+      }
     }
+  ],
+  listTypeInfo: {
+    furnaceLayerList: [
+      {
+        label: "上层",
+        key: "1"
+      },
+      {
+        label: "中层",
+        key: "2"
+      },
+      {
+        label: "下层",
+        key: "3"
+      }
+    ]
   }
 })
 </script>

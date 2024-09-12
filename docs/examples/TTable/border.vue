@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue"
-const table = ref({
+const table = ref<TableTypes.Table>({
   border: true,
   // 接口返回数据
   data: [

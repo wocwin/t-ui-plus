@@ -3,11 +3,11 @@
     <t-layout-page-item>
       <t-table
         title="单元格编辑TSelectTable--rules"
-        :table="state.table"
-        :columns="state.table.columns"
+        :table="table"
+        :columns="table.columns"
         :isShowPagination="false"
         ref="singleEditTSelectTable"
-        :listTypeInfo="state.listTypeInfo"
+        :listTypeInfo="table.listTypeInfo"
         @handleEvent="handleEvent"
         @save="singleSave"
         @validateError="validateError"
@@ -56,7 +56,7 @@ const handleEvent = (type, val, index) => {
 const add = () => {
   if (num.value > 0) {
     for (let i = 0; i < num.value; i++) {
-      state.table.data.push({})
+      table.data.push({})
     }
   }
 }
@@ -84,7 +84,7 @@ const validateError = list => {
 const radioChange = (row: any, scope: any) => {
   console.log("下拉选择表格-单选", row, scope)
   // formOpts.formData.deptCode = row.userId;
-  state.table.data[scope.$index].deptCode = row.userId
+  table.data[scope.$index].deptCode = row.userId
 }
 // 获取下拉选择表格数据
 const getSelectTableList = async () => {
@@ -96,153 +96,151 @@ const getSelectTableList = async () => {
 onMounted(() => {
   getSelectTableList()
 })
-let state: any = reactive({
-  table: {
-    rules: {
-      hobby: [{ required: true, message: "请至少选择一个爱好", trigger: "change" }],
-      deptCode: [{ required: true, message: "请选择用户名称", trigger: "change" }],
-      year: [{ required: true, message: "请选择年份", trigger: "change" }],
-      name: [{ required: true, message: "请输入姓名", trigger: "blur" }]
-    },
-    firstColumn: { type: "index", label: "序列" }, // 显示序列号
-    data: [],
-    columns: [
-      {
-        prop: "name",
+let table = reactive<TableTypes.Table>({
+  rules: {
+    hobby: [{ required: true, message: "请至少选择一个爱好", trigger: "change" }],
+    deptCode: [{ required: true, message: "请选择用户名称", trigger: "change" }],
+    year: [{ required: true, message: "请选择年份", trigger: "change" }],
+    name: [{ required: true, message: "请输入姓名", trigger: "blur" }]
+  },
+  firstColumn: { type: "index", label: "序列" }, // 显示序列号
+  data: [],
+  columns: [
+    {
+      prop: "name",
+      label: "姓名",
+      minWidth: "160",
+      canEdit: true,
+      headerRequired: true,
+      configEdit: {
         label: "姓名",
-        minWidth: "160",
-        canEdit: true,
-        headerRequired: true,
-        configEdit: {
-          label: "姓名",
-          type: "input",
-          editComponent: "el-input"
+        type: "input",
+        editComponent: "el-input"
+      }
+    },
+    {
+      prop: "deptCode",
+      label: "t-select-table使用",
+      minWidth: "220",
+      headerRequired: true,
+      canEdit: true,
+      configEdit: {
+        label: "用户名称",
+        editComponent: "t-select-table",
+        isSelfCom: true,
+        bind: {
+          isKeyup: true,
+          maxHeight: 400,
+          selectWidth: 500,
+          defaultSelectVal: [],
+          keywords: { label: "userName", value: "userId" },
+          table: { data: tableData },
+          columns: [
+            { prop: "userName", label: "登录名", minWidth: "120" },
+            { prop: "nickName", label: "插槽使用", minWidth: "120" },
+            { prop: "deptName", label: "部门", minWidth: "120" },
+            { prop: "roleName", label: "角色", minWidth: "120" },
+            { prop: "descript", label: "描述", minWidth: "180" },
+            { prop: "createTime", label: "创建时间", minWidth: "180" }
+          ]
+        },
+        eventHandle: {
+          radioChange: ({ row, scope }) => radioChange(row, scope)
         }
-      },
-      {
-        prop: "deptCode",
-        label: "t-select-table使用",
-        minWidth: "220",
-        headerRequired: true,
-        canEdit: true,
-        configEdit: {
-          label: "用户名称",
-          editComponent: "t-select-table",
-          isSelfCom: true,
-          bind: {
-            isKeyup: true,
-            maxHeight: 400,
-            selectWidth: 500,
-            defaultSelectVal: [],
-            keywords: { label: "userName", value: "userId" },
-            table: { data: tableData },
-            columns: [
-              { prop: "userName", label: "登录名", minWidth: "120" },
-              { prop: "nickName", label: "插槽使用", minWidth: "120" },
-              { prop: "deptName", label: "部门", minWidth: "120" },
-              { prop: "roleName", label: "角色", minWidth: "120" },
-              { prop: "descript", label: "描述", minWidth: "180" },
-              { prop: "createTime", label: "创建时间", minWidth: "180" }
-            ]
-          },
-          eventHandle: {
-            radioChange: ({ row, scope }) => radioChange(row, scope)
-          }
-        }
-      },
-      {
-        prop: "unit",
+      }
+    },
+    {
+      prop: "unit",
+      label: "单位",
+      minWidth: "220",
+      canEdit: true,
+      headerRequired: true,
+      configEdit: {
         label: "单位",
-        minWidth: "220",
-        canEdit: true,
-        headerRequired: true,
-        configEdit: {
-          label: "单位",
-          append: "吨",
-          rules: { required: true, message: "请输入单位", trigger: "blur" },
-          bind: { "prefix-icon": "el-icon-search" },
-          editComponent: "el-input"
-        }
-      },
-      {
-        prop: "hobby",
+        append: "吨",
+        rules: { required: true, message: "请输入单位", trigger: "blur" },
+        bind: { "prefix-icon": "el-icon-search" },
+        editComponent: "el-input"
+      }
+    },
+    {
+      prop: "hobby",
+      label: "爱好单选",
+      minWidth: "180",
+      headerRequired: true,
+      canEdit: true,
+      configEdit: {
         label: "爱好单选",
-        minWidth: "180",
-        headerRequired: true,
-        canEdit: true,
-        configEdit: {
-          label: "爱好单选",
-          type: "select-arr",
-          editComponent: "el-select",
-          list: "hobbyList",
-          event: "hobbyList",
-          arrLabel: "label",
-          arrKey: "value"
-        }
-      },
-      {
-        prop: "year",
+        type: "select-arr",
+        editComponent: "el-select",
+        list: "hobbyList",
+        event: "hobbyList",
+        arrLabel: "label",
+        arrKey: "value"
+      }
+    },
+    {
+      prop: "year",
+      label: "日期年",
+      minWidth: "180",
+      canEdit: true,
+      headerRequired: true,
+      configEdit: {
         label: "日期年",
-        minWidth: "180",
-        canEdit: true,
-        headerRequired: true,
-        configEdit: {
-          label: "日期年",
-          type: "year",
-          editComponent: "el-date-picker",
-          bind: { valueFormat: "YYYY" }
-        }
-      },
-      {
-        prop: "time",
+        type: "year",
+        editComponent: "el-date-picker",
+        bind: { valueFormat: "YYYY" }
+      }
+    },
+    {
+      prop: "time",
+      label: "日期时间",
+      minWidth: "180",
+      canEdit: true,
+      configEdit: {
         label: "日期时间",
-        minWidth: "180",
-        canEdit: true,
-        configEdit: {
-          label: "日期时间",
-          type: "datetime",
-          editComponent: "el-date-picker",
-          bind: {
-            valueFormat: "yyyy-MM-dd hh:mm:ss"
-          }
+        type: "datetime",
+        editComponent: "el-date-picker",
+        bind: {
+          valueFormat: "yyyy-MM-dd hh:mm:ss"
         }
-      },
-      {
-        prop: "number",
+      }
+    },
+    {
+      prop: "number",
+      label: "计数器",
+      minWidth: "220",
+      canEdit: true,
+      configEdit: {
         label: "计数器",
-        minWidth: "220",
-        canEdit: true,
-        configEdit: {
-          label: "计数器",
-          type: "inputNumber",
-          bind: { min: 0, max: 99 },
-          editComponent: "el-input-number"
-        }
-      },
-      {
-        prop: "remake",
+        type: "inputNumber",
+        bind: { min: 0, max: 99 },
+        editComponent: "el-input-number"
+      }
+    },
+    {
+      prop: "remake",
+      label: "备注",
+      minWidth: "220",
+      canEdit: true,
+      configEdit: {
         label: "备注",
-        minWidth: "220",
-        canEdit: true,
-        configEdit: {
-          label: "备注",
-          type: "textarea",
-          bind: { type: "textarea" },
-          editComponent: "el-input"
-        }
+        type: "textarea",
+        bind: { type: "textarea" },
+        editComponent: "el-input"
       }
-    ],
-    // 表格内操作列
-    operator: [
-      {
-        type: "danger",
-        text: "删除",
-        fun: editDel
-      }
-    ],
-    operatorConfig: {
-      fixed: "right"
     }
+  ],
+  // 表格内操作列
+  operator: [
+    {
+      type: "danger",
+      text: "删除",
+      fun: editDel
+    }
+  ],
+  operatorConfig: {
+    fixed: "right"
   },
   // 下拉选择项
   listTypeInfo: {

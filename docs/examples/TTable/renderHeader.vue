@@ -18,7 +18,7 @@
 
 <script setup lang="tsx">
 import { ref } from "vue"
-const table = ref({
+const table = ref<TableTypes.Table>({
   // 接口返回数据
   data: [
     {

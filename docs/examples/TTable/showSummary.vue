@@ -15,7 +15,7 @@
 
 <script setup lang="tsx">
 import { ref } from "vue"
-const table = ref({
+const table = ref<TableTypes.Table>({
   data: [
     {
       id: "1",

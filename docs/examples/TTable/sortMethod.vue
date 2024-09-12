@@ -1,19 +1,24 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-table title="指定数据按照哪个属性进行排序" :table="table" :columns="table.columns" :isShowPagination="false" />
+      <t-table
+        title="指定数据按照哪个属性进行排序"
+        :table="table"
+        :columns="table.columns"
+        :isShowPagination="false"
+      />
     </t-layout-page-item>
   </t-layout-page>
 </template>
 
 <script setup lang="ts">
-import { nextTick, ref } from "vue"
+import { ref } from "vue"
 // 指定数据按照哪个属性进行排序
 const sortMethod = (a, b) => {
   console.log("sortMethod", a, b)
   return a.address.length - b.address.length
 }
-const table = ref({
+const table = ref<TableTypes.Table>({
   data: [
     {
       id: "1",

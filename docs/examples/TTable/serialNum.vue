@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue"
-let table = ref({
+let table = ref<TableTypes.Table>({
   firstColumn: { type: "index", fixed: true },
   // 接口返回数据
   data: [

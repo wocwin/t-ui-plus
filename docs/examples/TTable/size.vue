@@ -21,7 +21,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
 const size = ref("")
-const table = ref({
+const table = ref<TableTypes.Table>({
   border: true,
   data: [
     {

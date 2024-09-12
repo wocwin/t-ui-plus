@@ -5,8 +5,8 @@
         title="部门管理列表"
         isCopy
         isTree
-        :table="state.table"
-        :columns="state.table.columns"
+        :table="table"
+        :columns="table.columns"
         row-key="deptId"
         :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
         :isShowPagination="false"
@@ -25,49 +25,47 @@ import deptData from "./dept.json"
 const handleDelete = (row: any) => {
   console.log("点击删除", row)
 }
-const state: any = reactive({
-  table: {
-    // 接口返回数据
-    data: [],
-    // 表头数据
-    columns: [
-      { prop: "deptName", label: "部门名称", minWidth: 180, align: "left" },
-      { prop: "deptNum", label: "部门编码", minWidth: 80, align: "left" },
-      { prop: "orderNum", label: "排序", minWidth: 60, align: "left" },
-      { prop: "createTime", label: "创建时间", minWidth: 160, align: "left" },
-      {
-        prop: "status",
-        label: "状态",
-        minWidth: 120,
-        render: (text: any, row: any) => {
-          return (
-            <el-switch
-              active-value={true}
-              v-model={row.status}
-              inactive-value={false}
-              onChange={() => handleStatusChange(row)}
-            ></el-switch>
-          )
-        }
+const table = reactive<TableTypes.Table>({
+  // 接口返回数据
+  data: [],
+  // 表头数据
+  columns: [
+    { prop: "deptName", label: "部门名称", minWidth: 180, align: "left" },
+    { prop: "deptNum", label: "部门编码", minWidth: 80, align: "left" },
+    { prop: "orderNum", label: "排序", minWidth: 60, align: "left" },
+    { prop: "createTime", label: "创建时间", minWidth: 160, align: "left" },
+    {
+      prop: "status",
+      label: "状态",
+      minWidth: 120,
+      render: (text: any, row: any) => {
+        return (
+          <el-switch
+            active-value={true}
+            v-model={row.status}
+            inactive-value={false}
+            onChange={() => handleStatusChange(row)}
+          ></el-switch>
+        )
       }
-    ],
-    operator: [
-      {
-        text: "编辑"
-        // fun: edit
-      },
-      {
-        text: "删除",
-        fun: handleDelete
-      }
-    ],
-    // 操作列样式
-    operatorConfig: {
-      fixed: "right", // 固定列表右边（left则固定在左边）
-      align: "left",
-      width: "160",
-      label: "操作"
     }
+  ],
+  operator: [
+    {
+      text: "编辑"
+      // fun: edit
+    },
+    {
+      text: "删除",
+      fun: handleDelete
+    }
+  ],
+  // 操作列样式
+  operatorConfig: {
+    fixed: "right", // 固定列表右边（left则固定在左边）
+    align: "left",
+    width: "160",
+    label: "操作"
   }
 })
 
@@ -115,7 +113,7 @@ onMounted(() => {
 const getData = async () => {
   const res = await deptData
   if (res.success) {
-    state.table.data = handleTree(res.data, "deptId")
+    table.data = handleTree(res.data, "deptId")
   }
 }
 </script>

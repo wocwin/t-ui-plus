@@ -7,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, ref } from "vue"
-const table = ref({
+import {  ref } from "vue"
+const table = ref<TableTypes.Table>({
   data: [
     {
       id: "1",

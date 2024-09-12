@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue"
-let table = ref({
+let table = ref<TableTypes.Table>({
   // 接口返回数据
   data: [
     {

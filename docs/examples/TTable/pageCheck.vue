@@ -20,7 +20,7 @@ import { onMounted, ref } from "vue"
 import { ElMessageBox } from "element-plus"
 import data from "./data.json"
 import data1 from "./data2.json"
-const table = ref({
+const table = ref<TableTypes.Table>({
   firstColumn: { type: "selection", isPaging: true },
   total: 0,
   currentPage: 1,

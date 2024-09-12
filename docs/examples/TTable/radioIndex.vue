@@ -15,8 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from "vue"
-let table = ref({
+import { ref } from "vue"
+let table = ref<TableTypes.Table>({
   firstColumn: [
     { type: "radio", fixed: true },
     { type: "index", label: "序号" }

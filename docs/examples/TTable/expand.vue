@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import type { TabsPaneContext } from "element-plus"
 import { ref } from "vue"
-let table = ref({
+let table = ref<TableTypes.Table>({
   firstColumn: { type: "expand", fixed: true },
   data: [
     {
