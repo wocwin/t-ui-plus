@@ -86,7 +86,7 @@ const getRefs = (el, item, index) => {
 onMounted(() => {
   console.log("获取所有的ref", allRefs.value)
 })
-const formOpts: any = reactive({
+const formOpts = reactive<FormTypes.FormOpts>({
   ref: null,
   labelWidth: "140px",
   formData: {

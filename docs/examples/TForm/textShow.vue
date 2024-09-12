@@ -11,7 +11,7 @@ import { ref, reactive } from "vue"
 // 获取ref
 const TFormDemo: any = ref<HTMLElement | null>(null)
 
-const formOpts: any = reactive({
+const formOpts = reactive<FormTypes.FormOpts>({
   ref: null,
   formData: {
     account: "张三", // *用户账号

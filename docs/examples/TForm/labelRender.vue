@@ -36,7 +36,7 @@ const submitForm = () => {
 const resetForm = () => {
   TFormDemo.value.resetFields()
 }
-const formOpts: any = reactive({
+const formOpts = reactive<FormTypes.FormOpts>({
   ref: null,
   formData: {
     account: "wocwin", // *用户账号

@@ -49,7 +49,7 @@ const validatorEmail = (rule, value, callback) => {
   }
   callback()
 }
-const formOpts: any = reactive({
+const formOpts = reactive<FormTypes.FormOpts>({
   // labelPosition: 'top',
   ref: null,
   formData: {

@@ -52,7 +52,7 @@ const submitForm = () => {
 const resetForm = () => {
   TFormDemo.value.resetFields()
 }
-const formOpts: any = reactive({
+const formOpts = reactive<FormTypes.FormOpts>({
   ref: null,
   formData: {
     accountType: "", // *用户类型: 0: 手机注册 1: 论坛注册 2: 管理平台添加

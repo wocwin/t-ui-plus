@@ -84,7 +84,7 @@ const onDisabled = () => {
 //   console.log('最终数据', formData)
 // }
 
-const formOpts: any = reactive({
+const formOpts = reactive<FormTypes.FormOpts>({
   ref: null,
   formData: {
     account: null, // *用户账号

@@ -32,7 +32,7 @@ const resetForm = () => {
 const clearValidate = () => {
   TFormDemo.value.clearValidate()
 }
-const formOpts: any = reactive({
+const formOpts = reactive<FormTypes.FormOpts>({
   labelPosition: "right",
   ref: null,
   formData: {

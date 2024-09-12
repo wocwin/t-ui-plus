@@ -47,7 +47,7 @@ const accountBlur = ({ type }) => {
 const nameBlur = ({ type }) => {
   console.log("昵称失焦事件", type)
 }
-const formOpts: any = reactive({
+const formOpts = reactive<FormTypes.FormOpts>({
   ref: null,
   formData: {
     account: "wocwin", // *用户账号

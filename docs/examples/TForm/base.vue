@@ -43,7 +43,8 @@ const submitForm = () => {
     console.log("最终数据", formOpts.formData)
   })
 }
-const state: any = reactive({
+
+const state= reactive({
   table: {
     total: 0,
     currentPage: 1,
@@ -222,11 +223,13 @@ const accountClear = () => {
 }
 const accountBlur = ({ type }) => {
   console.log("账号失焦事件", type)
+  // formOpts.formData.account = formOpts.formData.account ? Number(formOpts.formData.account.replace(/^\D*([0-9]\d*\.?\d{0,2})?.*$/, "$1")) : null
 }
-const formOpts: any = reactive({
+const getInputVal = val => (val ? Number(val.replace(/^\D*([0-9]\d*\.?\d{0,2})?.*$/, "$1")) : null)
+const formOpts = reactive<FormTypes.FormOpts>({
   ref: null,
   formData: {
-    account: "wocwin", // *用户账号
+    account: null, // *用户账号
     password: 123456, // *用户密码
     name: null, // *用户昵称
     name1: null, // 树形下拉
@@ -249,17 +252,24 @@ const formOpts: any = reactive({
       type: "input",
       comp: "el-input",
       event: "account",
+      isTrim: true,
       eventHandle: {
+        input: val => (formOpts.formData.account = getInputVal(val)),
         focus: val => accountFocus(val),
         clear: () => accountClear(),
         blur: val => accountBlur(val)
+      },
+      bind: {
+        type: "number",
+        min: 0,
+        step: 0.01
       }
     },
     {
       label: "密码",
       value: "password",
       type: "password",
-      comp: "el-input",
+      comp: "t-input",
       bind: { "show-password": true }
     },
     { label: "昵称", value: "name", type: "input", comp: "el-input" },

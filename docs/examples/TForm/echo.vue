@@ -129,7 +129,7 @@ const radioChange = row => {
 const radioChange1 = row => {
   formOpts.formData.deptCode = row?.id
 }
-const formOpts: any = reactive({
+const formOpts = reactive<FormTypes.FormOpts>({
   ref: null,
   formData: {
     account: "wocwin", // *用户账号

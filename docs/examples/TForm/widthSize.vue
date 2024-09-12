@@ -16,12 +16,7 @@
 <script setup lang="tsx">
 import { ref, reactive } from "vue"
 import type { Ref } from "vue"
-interface FormOpts {
-  labelPosition?: string
-  ref?: any
-  formData?: any
-  widthSize?: number
-}
+
 interface WidthSizeType {
   widthSize?: 1 | 2 | 3 | 4 | 5 | 6 | undefined
 }
@@ -41,7 +36,7 @@ const submitForm = () => {
 const resetForm = () => {
   TFormDemo.value.resetFields()
 }
-const formOpts: FormOpts = reactive({
+const formOpts = reactive<FormTypes.FormOpts>({
   labelPosition: "right",
   ref: null,
   formData: {
