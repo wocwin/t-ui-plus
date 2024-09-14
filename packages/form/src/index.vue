@@ -113,23 +113,31 @@
       <template
         v-if="!formOpts.btnSlotName && formOpts.operatorList && formOpts.operatorList.length > 0"
       >
-        <el-button
-          v-for="(val, index) in formOpts.operatorList"
-          :key="index"
-          @click="val.fun(val)"
-          v-bind="{
-            type: 'primary',
-            size: 'small',
-            ...val.bind
-          }"
-          >{{ val.label }}</el-button
-        >
+        <template v-for="(val, index) in formOpts.operatorList" :key="index">
+          <template v-if="val.render">
+            <render-btn :item="val" :render="val.render" />
+          </template>
+          <template v-else>
+            <el-button
+              @click="val.fun(val)"
+              v-bind="{
+                type: 'primary',
+                size: 'small',
+                ...val.bind
+              }"
+              v-if="!val.isHideBtn"
+            >
+              {{ val.label }}
+            </el-button>
+          </template>
+        </template>
       </template>
     </div>
   </el-form>
 </template>
 <script setup lang="ts" name="TForm">
 import RenderComp from "./renderComp.vue"
+import RenderBtn from "./renderBtn.vue"
 import { ElMessage } from "element-plus"
 import { computed, ref, watch, onMounted, getCurrentInstance } from "vue"
 import type { PropType } from "vue"

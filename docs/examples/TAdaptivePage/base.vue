@@ -80,6 +80,7 @@ const table = reactive<TableTypes.Table>({
     {
       prop: "status",
       minWidth: 100,
+      label: "字典过滤",
       renderHeader: () => {
         return <span style="color:red">字典过滤</span>
       },
