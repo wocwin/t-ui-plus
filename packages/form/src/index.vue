@@ -340,7 +340,7 @@ const handleEvent = (
     props.isTrim &&
     !item.isTrim &&
     item.comp.includes("el-input") &&
-    item.bind.type !== "number" &&
+    item?.bind?.type !== "number" &&
     item.type !== "password" &&
     item.type !== "inputNumber"
   ) {
