@@ -90,6 +90,13 @@ TQueryCondition/btnBind
 TQueryCondition/isDropDownSelectMore
 :::
 
+
+### 调用handleEvent动态修改查询条件值<el-tag>v1.4.13</el-tag>
+
+::: demo 最终方法调用`handleEventChangeRef.value.handleEvent(true, { val: "W1" }, "workshopNum")`。解析：`handleEventChangeRef.value`条件查询的`ref`；`handleEvent(true, { val: "W1" }, "workshopNum")`方法，参数：第一个`true`不可省略，`val`为修改后的值，`workshopNum`为对应查询条件项的`字段名`。
+TQueryCondition/handleEventChange
+:::
+
 ### TQueryCondition 参数配置
 
 ---
@@ -131,7 +138,7 @@ TQueryCondition/isDropDownSelectMore
 | widthSize            | 每行显示多少项，最小值 2                  | Number  | 4                                              |
 | isDropDownSelectMore | 是否以下拉方式展示更多条件                | Boolean | false                                          |
 
-### 2-1 以下拉方式展示更多条件--配置参数（Attributes）
+#### 2-1 以下拉方式展示更多条件--配置参数（Attributes）
 | 参数              | 说明                                                   | 类型             | 默认值     |
 | :---------------- | :----------------------------------------------------- | :--------------- | :--------- |
 | popoverAttrs      | el-popover配置及中文文案                               | object           | 具体看源码 |
@@ -151,7 +158,7 @@ TQueryCondition/isDropDownSelectMore
 | -----list         | el-select 组件options 数据标识                         | string           | -          |
 | -----listTypeInfo | el-select 组件options 数据源                           | object           | -          |
 
-### 3、opts Attributes
+#### 2-2、opts Attributes
 
 | 参数        | 说明                                                                             | 类型             | 默认值                     |
 | :---------- | :------------------------------------------------------------------------------- | :--------------- | :------------------------- |
@@ -169,7 +176,7 @@ TQueryCondition/isDropDownSelectMore
 | bind        | 继承第三方 UI 的 Attributes,function 传出 form                                   | object/function  | -                          |
 | eventHandle | 配置组件事件，与写组件时 change 等同理                                           | object           | 本身值，当前 formData 数据 |
 
-#### 4、事件（events）
+### 3、事件（events）
 
 | 事件名       | 说明                                              | 返回值                                        |
 | :----------- | :------------------------------------------------ | :-------------------------------------------- |
@@ -178,18 +185,19 @@ TQueryCondition/isDropDownSelectMore
 | reset        | 点击筛选器重置按钮时触发                          | -                                             |
 | getCheckList | 下拉动态添加条件（isDropDownSelectMore:true生效） | 返回选中的条件项                              |
 
-#### 5、Slots
+### 4、Slots
 
 | 插槽名    | 说明                             |
 | :-------- | :------------------------------- |
 | querybar  | 按钮操作插槽（位置基于重置后面） |
 | footerBtn | 按钮操作插槽                     |
 
-#### 6、Exposes（Method）
+### 5、Exposes（Method）
 
-| Method      | 说明                   | 类型     |
-| :---------- | :--------------------- | :------- |
-| queryState  | 初始化表单数据         | object   |
-| resetData   | 重置表单不调用查询接口 | Function |
-| resetHandle | 重置表单调用查询接口   | Function |
-| checkHandle | 查询操作               | Function |
+| Method      | 说明                   | 类型                                                                                       |
+| :---------- | :--------------------- | :----------------------------------------------------------------------------------------- |
+| queryState  | 初始化表单数据         | object                                                                                     |
+| resetData   | 重置表单不调用查询接口 | Function                                                                                   |
+| resetHandle | 重置表单调用查询接口   | Function                                                                                   |
+| checkHandle | 查询操作               | Function                                                                                   |
+| handleEvent<el-tag>v1.4.13</el-tag>  | 动态修改查询条件值     | Function<t-tip content='(flag: boolean, {val: 需要修改的值}, dataIndex: string) => void'/> |

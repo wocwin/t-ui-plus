@@ -41,7 +41,7 @@
               : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
           "
           :style="{ width: opt.width || '100%' }"
-          @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
+          @change="handleEvent(false,{type:opt.event, val:queryState.form[opt.dataIndex]})"
           v-on="cEvent(opt)"
         />
       </template>
@@ -54,7 +54,7 @@
             : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
         "
         :placeholder="opt.placeholder || getPlaceholder(opt)"
-        @change="handleEvent(opt.event, queryState.form[opt.dataIndex])"
+        @change="handleEvent(false,{type:opt.event, val:queryState.form[opt.dataIndex]})"
         v-on="cEvent(opt)"
         v-model="queryState.form[opt.dataIndex]"
       >
@@ -65,8 +65,7 @@
           :disabled="value.disabled"
           :label="compChildLabel(opt, value)"
           :value="compChildValue(opt, value, key)"
-          >{{ compChildShowLabel(opt, value) }}</component
-        >
+        >{{ compChildShowLabel(opt, value) }}</component>
       </component>
     </el-form-item>
     <el-form-item
@@ -87,11 +86,12 @@
             @click="checkHandle"
             v-bind="queryAttrs"
             :loading="loading"
-            >{{ queryAttrs.btnTxt }}</el-button
-          >
-          <el-button v-if="reset" class="btn_reset" v-bind="resetAttrs" @click="resetHandle">{{
+          >{{ queryAttrs.btnTxt }}</el-button>
+          <el-button v-if="reset" class="btn_reset" v-bind="resetAttrs" @click="resetHandle">
+            {{
             resetAttrs.btnTxt
-          }}</el-button>
+            }}
+          </el-button>
           <slot name="querybar"></slot>
           <el-button
             v-if="originCellLength > maxVisibleRows * colLength && showOpen"
@@ -415,8 +415,12 @@ const resetData = () => {
   }
 }
 // 查询条件change事件
-const handleEvent = (type: any, val: any) => {
-  emits("handleEvent", type, val, queryState.form)
+const handleEvent = (flag = false, { type, val }: any, dataIndex: string) => {
+  if (!flag) {
+    emits("handleEvent", type, val, queryState.form)
+  } else {
+    queryState.form[dataIndex] = val
+  }
 }
 // 查询
 const checkHandle = (flagText: any = false) => {
@@ -580,7 +584,8 @@ defineExpose({
   colLength,
   resetData,
   resetHandle,
-  checkHandle
+  checkHandle,
+  handleEvent
 })
 </script>
 
