@@ -17,6 +17,7 @@
           </template>
         </t-query-condition>
       </t-layout-page-item>
+      <slot name="content" />
       <t-layout-page-item
         class="table_main"
         :class="{ 't_table_self-filling': isTTableSelfFilling }"

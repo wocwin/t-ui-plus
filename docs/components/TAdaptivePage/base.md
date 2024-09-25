@@ -30,10 +30,16 @@ TAdaptivePage/treeTable
 TAdaptivePage/dynamicCol
 :::
 
-### 菜单管理（弹窗使用）
+### 菜单管理（弹窗--默认插槽使用）
 
 :::demo
 TAdaptivePage/menuMange
+:::
+
+### content插槽使用<el-tag>v1.4.13</el-tag>
+
+:::demo
+TAdaptivePage/contentSlot
 :::
 
 ### TAdaptivePage 参数配置
@@ -63,3 +69,12 @@ TAdaptivePage/menuMange
 | queryPageStyle      | 查询条件组件的 t-layout-page-item 行内样式                   | object        | -      |
 | tablePageStyle      | table 组件的 t-layout-page-item 行内样式                     | object        | -      |
 | isTTableSelfFilling | 一屏组件 TTable 自动撑满（即分页器显示最下，table 内容撑满） | Boolean       | false  |
+
+
+### 3、Slots
+
+| 插槽名                          | 说明                             |
+| :------------------------------ | :------------------------------- |
+| leftContent                     | 左侧具名插槽                     |
+| content<el-tag>v1.4.13</el-tag> | 条件查询与TTable组件之间具名插槽 |
+| -                               | 默认插槽                         |
