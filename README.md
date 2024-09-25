@@ -137,7 +137,13 @@ compilerOptions：{
 ```shell
 npm install -g pnpm
 
-pnpm install
+# 安装依赖
+pnpm install --registry=https://registry.npmjs.org/
+>pnpm config get registry 查看当前指向源
+
+# 如果安装依赖失败，可以尝试使用淘宝镜像  --registry=https://registry.npmmirror.com/
+>pnpm config set registry https://registry.npmmirror.com/ 切换淘宝镜像源
+>pnpm install
 
 ```
 
