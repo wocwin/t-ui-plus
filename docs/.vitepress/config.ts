@@ -71,7 +71,8 @@ export default defineConfig({
             },
             { text: "表单组件", link: "/components/TForm/base.md" },
             { text: "模块表单组件", link: "/components/TModuleForm/base.md" },
-            { text: "table组件", link: "/components/TTable/base.md" }
+            { text: "table组件", link: "/components/TTable/base.md" },
+            { text: "Virtualized TTable<el-tag type='danger'>v1.4.13</el-tag>", link: "/components/TTableVirtual/base.md" }
           ]
         }
       ]

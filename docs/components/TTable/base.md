@@ -293,6 +293,7 @@ TTable/rulesSelectTable
 TTable/expand
 :::
 
+
 ### TTable 参数配置
 
 ---
@@ -392,9 +393,10 @@ TTable/expand
 | isSlotToolbar                       | TAdaptivePage 组件是否使用了 Toolbar 插槽                                           | Boolean          | false                                      |
 | isSlotTitle                         | TAdaptivePage 组件是否使用了 title 插槽                                             | Boolean          | -                                          |
 | sortable                            | 设置为 'custom',需要监听 Table 的 sort-change 事件                                  | Boolean/string   | -                                          |
-| border<el-tag>1.4.12</el-tag>                               | 是否开启边框线                                                                      | Boolean          | false                                      |
+| border<el-tag>1.4.12</el-tag>       | 是否开启边框线                                                                      | Boolean          | false                                      |
 | tableLoading<el-tag>1.4.12</el-tag> | table loading                                                                       | Boolean          | false                                      |
-| loadingTxt<el-tag>1.4.12</el-tag>                           | table loading文字提示                                                               | string           | 加载中...                                  |
+| loadingTxt<el-tag>1.4.12</el-tag>   | table loading文字提示                                                               | string           | 加载中...                                  |
+| useVirtual<el-tag>1.4.13</el-tag>   | table 是否开启虚拟滚动                                                              | Boolean          | false                                      |
 
 ### 3、events 其他事件按照 el-table 直接使用（如 sort-change 排序事件）
 

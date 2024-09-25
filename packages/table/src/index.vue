@@ -60,7 +60,7 @@
       }"
       v-bind="$attrs"
       :highlight-current-row="highlightCurrentRow"
-      :border="border || table.border || isTableBorder"
+      :border="border || table.border || isTableBorder || useVirtual"
       @cell-dblclick="cellDblclick"
       @row-click="rowClick"
     >
@@ -336,7 +336,18 @@
 </template>
 
 <script setup lang="ts" name="TTable">
-import { computed, ref, watch, useSlots, reactive, onMounted, onUpdated } from "vue"
+import {
+  computed,
+  ref,
+  watch,
+  useSlots,
+  reactive,
+  onMounted,
+  onUpdated,
+  nextTick,
+  onBeforeUnmount
+} from "vue"
+import type { Ref } from "vue"
 // import type { PropType } from "vue"
 import { ElMessage } from "element-plus"
 import Sortable from "sortablejs"
@@ -345,7 +356,6 @@ import SingleEditCell from "./singleEditCell.vue"
 import ColumnSet from "./ColumnSet.vue"
 import RenderCol from "./renderCol.vue"
 import RenderHeader from "./renderHeader.vue"
-
 const props: any = defineProps({
   // table所需数据
   table: {
@@ -454,7 +464,9 @@ const props: any = defineProps({
   loadingTxt: {
     type: String,
     default: "加载中..."
-  }
+  },
+  // 是否开启虚拟列表
+  useVirtual: Boolean
 })
 // 初始化数据
 let state = reactive({
@@ -472,6 +484,16 @@ const TTable: any = ref<HTMLElement | null>(null)
 const TTableBox: any = ref<HTMLElement | null>(null)
 // 获取columnSet Ref
 const columnSetRef: any = ref<HTMLElement | null>(null)
+// 渲染实际高度的容器
+const actualHeightContainerEl: any = ref<HTMLElement | null>(null)
+// 用于偏移的元素选择器
+const translateContainerEl: any = ref<HTMLElement | null>(null)
+// 滚动容器的元素选择器
+const scrollContainerEl: any = ref<HTMLElement | null>(null)
+// 所有数据
+const saveDATA: Ref<any[]> = ref([])
+// 缓存已渲染元素的高度
+const RenderedItemsCache: any = {}
 // 获取form ref
 const formRef: any = ref({})
 // 动态form ref
@@ -511,10 +533,16 @@ watch(
   () => props.table.data,
   val => {
     // console.log(111, val)
-    state.tableData = val
+    if (props.useVirtual) {
+      saveDATA.value = val
+      updateRenderData(0)
+    } else {
+      state.tableData = val
+    }
   },
   { deep: true }
 )
+
 onMounted(() => {
   // console.log('onMounted', props.table.firstColumn)
   // 设置默认选中项（单选）
@@ -522,7 +550,85 @@ onMounted(() => {
     defaultRadioSelect(props.defaultRadioCol)
   }
   initSort()
+  if (props.useVirtual) {
+    saveDATA.value = props.table.data
+    actualHeightContainerEl.value = document.querySelector(".el-scrollbar__view")
+    translateContainerEl.value = document.querySelector(".el-table__body")
+    scrollContainerEl.value = document.querySelector(".el-scrollbar__wrap")
+    scrollContainerEl.value?.addEventListener("scroll", handleScroll)
+  }
 })
+// 开启虚拟滚动-----start------------
+// 获取缓存高度，无缓存，取配置项的 itemHeight
+const getItemHeightFromCache = (index: number | string) => {
+  const val = RenderedItemsCache[index]
+  return val === void 0 ? 40 : val
+}
+// 更新实际高度
+const updateActualHeight = () => {
+  let actualHeight = 0
+  saveDATA.value.forEach((_, i) => {
+    actualHeight += getItemHeightFromCache(i)
+  })
+  actualHeightContainerEl.value!.style.height = actualHeight + "px"
+}
+// 更新偏移值
+const updateOffset = (offset: number) => {
+  if (translateContainerEl.value && translateContainerEl.value.style) {
+    translateContainerEl.value!.style.transform = `translateY(${offset}px)`
+  }
+}
+// 更新已渲染列表项的缓存高度
+const updateRenderedItemCache = (index: number) => {
+  // 当所有元素的实际高度更新完毕，就不需要重新计算高度
+  const shouldUpdate = Object.keys(RenderedItemsCache).length < saveDATA.value.length
+  if (!shouldUpdate) return
+  nextTick(() => {
+    // 获取所有列表项元素
+    const Items: HTMLElement[] = Array.from(document.querySelectorAll(".el-table__row"))
+    // 进行缓存
+    Items.forEach(el => {
+      if (!RenderedItemsCache[index]) {
+        RenderedItemsCache[index] = el.offsetHeight
+      }
+      index++
+    })
+    // 更新实际高度
+    updateActualHeight()
+  })
+}
+// 更新实际渲染数据
+const updateRenderData = (scrollTop: number) => {
+  let startIndex = 0
+  let offsetHeight = 0
+  for (let i = 0; i < saveDATA.value.length; i++) {
+    offsetHeight += getItemHeightFromCache(i)
+    if (offsetHeight >= scrollTop) {
+      startIndex = i
+      break
+    }
+  }
+  // 计算得出的渲染数据
+  state.tableData = saveDATA.value.slice(startIndex, startIndex + 10)
+  // 缓存最新的列表项高度
+  updateRenderedItemCache(startIndex)
+  // 更新偏移值
+  updateOffset(offsetHeight - getItemHeightFromCache(startIndex))
+}
+// 滚动事件
+const handleScroll = (e: any) => {
+  // 渲染正确的数据
+  updateRenderData(e.target.scrollTop)
+  // console.log("滚动事件---handleScroll")
+}
+// 移除滚动事件
+onBeforeUnmount(() => {
+  // console.log("移除滚动事件")
+  if (props.useVirtual) {
+    scrollContainerEl.value?.removeEventListener("scroll", handleScroll)
+  }
+})
+// 开启虚拟滚动-----end------------
 onUpdated(() => {
   TTable.value.doLayout()
 })
