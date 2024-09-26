@@ -344,11 +344,8 @@ import {
   reactive,
   onMounted,
   onUpdated,
-  nextTick,
   onBeforeUnmount
 } from "vue"
-import type { Ref } from "vue"
-// import type { PropType } from "vue"
 import { ElMessage } from "element-plus"
 import Sortable from "sortablejs"
 import TTableColumn from "./TTableColumn.vue"
@@ -356,118 +353,36 @@ import SingleEditCell from "./singleEditCell.vue"
 import ColumnSet from "./ColumnSet.vue"
 import RenderCol from "./renderCol.vue"
 import RenderHeader from "./renderHeader.vue"
-const props: any = defineProps({
-  // table所需数据
-  table: {
-    type: Object,
-    default: () => {
-      return {}
-    },
-    required: true
-  },
-  // 表头数据
-  columns: {
-    type: Array,
-    default: () => {
-      return []
-    }
-    // required: true
-  },
-  // 按钮权限数据集
-  btnPermissions: {
-    type: Array,
-    default: () => {
-      return []
-    }
-  },
-  // 表格标题
-  title: {
-    type: String
-  },
-  tableTitle: String,
-  // table对齐方式
-  align: {
-    type: String,
-    // validator: (value: string) => ['left' | 'center' | 'right' | ''].includes(value),
-    default: "center"
-  },
-  // 是否开启Tree-table
-  isTree: {
-    type: Boolean,
-    default: false
-  },
-  // 是否开启行拖拽
-  isRowSort: {
-    type: Boolean,
-    default: false
-  },
-  // 是否复制单元格
-  isCopy: {
-    type: Boolean,
-    default: false
-  },
-  // 是否开启点击整行选中单选框
-  rowClickRadio: {
-    type: Boolean,
-    default: true
-  },
-  // 设置默认选中项（单选）defaultRadioCol值必须大于0！
-  defaultRadioCol: Number,
-  // 序列号显示是否分页累加
-  isPaginationCumulative: {
-    type: Boolean,
-    default: false
-  },
-  // 是否显示分页
-  isShowPagination: {
-    type: Boolean,
-    default: true
-  },
-  // 是否开启编辑保存按钮
-  isShowFooterBtn: {
-    type: Boolean,
-    default: false
-  },
-  // 是否显示设置（隐藏/显示列）
-  columnSetting: {
-    type: Boolean,
-    default: false
-  },
-  // 是否高亮选中行
-  highlightCurrentRow: {
-    type: Boolean,
-    default: false
-  },
-  // 如果设置为 'custom'，则代表用户希望远程排序，需要监听 Table 的 sort-change 事件
-  sortable: {
-    type: [Boolean, String]
-  },
-  // 单元格编辑是否开启键盘事件
-  isKeyup: {
-    type: Boolean,
-    default: false
-  },
-  // TAdaptivePage组件是否使用了Toolbar插槽
-  isSlotToolbar: Boolean,
-  // TAdaptivePage组件是否使用了title插槽
-  isSlotTitle: Boolean,
-  // 是否开启边框
-  border: {
-    type: Boolean,
-    default: false
-  },
-  // table loading
-  tableLoading: {
-    type: Boolean,
-    default: false
-  },
-  loadingTxt: {
-    type: String,
-    default: "加载中..."
-  },
-  // 是否开启虚拟列表
-  useVirtual: Boolean
-})
+// 虚拟滚动
+import { useVirtualized } from "./useVirtualized"
+const {
+  scrollContainerEl,
+  updateRenderedItemCache,
+  updateOffset,
+  getDom,
+  saveDATA,
+  getItemHeightFromCache
+} = useVirtualized()
+import { useExpose } from "./useExpose"
+const {
+  TTable,
+  clearSelection,
+  getSelectionRows,
+  toggleRowSelection,
+  toggleAllSelection,
+  toggleRowExpansion,
+  setCurrentRow,
+  clearSort,
+  clearFilter,
+  doLayout,
+  sort,
+  scrollTo,
+  setScrollTop,
+  setScrollLeft
+} = useExpose()
+import { tableProps } from "./tableProps"
+const props = defineProps(tableProps)
+
 // 初始化数据
 let state = reactive({
   tableData: props.table.data,
@@ -475,31 +390,19 @@ let state = reactive({
   copyTableData: [] // 键盘事件
 })
 // 单选框
-const radioVal = ref(null)
+const radioVal = ref<number | any>("")
 // 判断单选选中及取消选中
 const forbidden = ref(true)
-// 获取el-table ref
-const TTable: any = ref<HTMLElement | null>(null)
 // 获取t-table ref
-const TTableBox: any = ref<HTMLElement | null>(null)
+const TTableBox = ref<HTMLElement | any>(null)
 // 获取columnSet Ref
-const columnSetRef: any = ref<HTMLElement | null>(null)
-// 渲染实际高度的容器
-const actualHeightContainerEl: any = ref<HTMLElement | null>(null)
-// 用于偏移的元素选择器
-const translateContainerEl: any = ref<HTMLElement | null>(null)
-// 滚动容器的元素选择器
-const scrollContainerEl: any = ref<HTMLElement | null>(null)
-// 所有数据
-const saveDATA: Ref<any[]> = ref([])
-// 缓存已渲染元素的高度
-const RenderedItemsCache: any = {}
+const columnSetRef = ref<HTMLElement | any>(null)
 // 获取form ref
-const formRef: any = ref({})
+const formRef = ref({})
 // 动态form ref
 const handleRef = (
   el: any,
-  scope: { $index: any; column: { property: any } },
+  scope: { $index: number; column: { property: string } },
   item: { prop: any }
 ) => {
   if (el) {
@@ -511,7 +414,7 @@ const editTableRef: any = ref({})
 // 动态单元格编辑组件 ref
 const handleEditTableRef = (
   el: any,
-  scope: { $index: any; column: { property: any } },
+  scope: { $index: number; column: { property: string } },
   item: { prop: any }
 ) => {
   if (el) {
@@ -552,51 +455,10 @@ onMounted(() => {
   initSort()
   if (props.useVirtual) {
     saveDATA.value = props.table.data
-    actualHeightContainerEl.value = document.querySelector(".el-scrollbar__view")
-    translateContainerEl.value = document.querySelector(".el-table__body")
-    scrollContainerEl.value = document.querySelector(".el-scrollbar__wrap")
+    getDom()
     scrollContainerEl.value?.addEventListener("scroll", handleScroll)
   }
 })
-// 开启虚拟滚动-----start------------
-// 获取缓存高度，无缓存，取配置项的 itemHeight
-const getItemHeightFromCache = (index: number | string) => {
-  const val = RenderedItemsCache[index]
-  return val === void 0 ? 40 : val
-}
-// 更新实际高度
-const updateActualHeight = () => {
-  let actualHeight = 0
-  saveDATA.value.forEach((_, i) => {
-    actualHeight += getItemHeightFromCache(i)
-  })
-  actualHeightContainerEl.value!.style.height = actualHeight + "px"
-}
-// 更新偏移值
-const updateOffset = (offset: number) => {
-  if (translateContainerEl.value && translateContainerEl.value.style) {
-    translateContainerEl.value!.style.transform = `translateY(${offset}px)`
-  }
-}
-// 更新已渲染列表项的缓存高度
-const updateRenderedItemCache = (index: number) => {
-  // 当所有元素的实际高度更新完毕，就不需要重新计算高度
-  const shouldUpdate = Object.keys(RenderedItemsCache).length < saveDATA.value.length
-  if (!shouldUpdate) return
-  nextTick(() => {
-    // 获取所有列表项元素
-    const Items: HTMLElement[] = Array.from(document.querySelectorAll(".el-table__row"))
-    // 进行缓存
-    Items.forEach(el => {
-      if (!RenderedItemsCache[index]) {
-        RenderedItemsCache[index] = el.offsetHeight
-      }
-      index++
-    })
-    // 更新实际高度
-    updateActualHeight()
-  })
-}
 // 更新实际渲染数据
 const updateRenderData = (scrollTop: number) => {
   let startIndex = 0
@@ -628,7 +490,6 @@ onBeforeUnmount(() => {
     scrollContainerEl.value?.removeEventListener("scroll", handleScroll)
   }
 })
-// 开启虚拟滚动-----end------------
 onUpdated(() => {
   TTable.value.doLayout()
 })
@@ -640,7 +501,7 @@ const defaultRadioSelect = (index: number | any) => {
 // 行拖拽
 const initSort = () => {
   if (!props.isRowSort) return
-  const el = TTableBox.value.querySelector(".el-table__body-wrapper tbody")
+  const el = TTableBox.value?.querySelector(".el-table__body-wrapper tbody")
   // console.log('3333', el)
   Sortable.create(el, {
     animation: 150, // 动画
@@ -691,7 +552,7 @@ const renderColumns = computed(() => {
   if (state.columnSet.length === 0) {
     return props.columns
   }
-  const columnByProp = props.columns.reduce((acc: any, cur: any) => {
+  const columnByProp: any = props.columns.reduce((acc: any, cur: any) => {
     acc[cur.prop] = cur
     return acc
   }, {})
@@ -1033,59 +894,6 @@ const saveMethod = (callback: (arg0: any) => any) => {
     }
   }, 300)
 }
-// 清空复选框
-const clearSelection = () => {
-  return TTable.value.clearSelection()
-}
-// 返回当前选中的行
-const getSelectionRows = () => {
-  return TTable.value.getSelectionRows()
-}
-// 取消某一项选中项
-const toggleRowSelection = (row: any, selected = false) => {
-  return TTable.value.toggleRowSelection(row, selected)
-}
-// 全部选中
-const toggleAllSelection = () => {
-  return TTable.value.toggleAllSelection()
-}
-// 用于可扩展的表格或树表格，如果某行被扩展，则切换。 使用第二个参数，您可以直接设置该行应该被扩展或折叠。
-const toggleRowExpansion = (row: any, expanded: any) => {
-  return TTable.value.toggleRowExpansion(row, expanded)
-}
-// 用于单选表格，设定某一行为选中行， 如果调用时不加参数，则会取消目前高亮行的选中状态。
-const setCurrentRow = (row: any) => {
-  return TTable.value.setCurrentRow(row)
-}
-// 清空排序条件
-const clearSort = () => {
-  return TTable.value.clearSort()
-}
-// 传入由columnKey 组成的数组以清除指定列的过滤条件。 如果没有参数，清除所有过滤器
-const clearFilter = (columnKey: any) => {
-  return TTable.value.clearFilter(columnKey)
-}
-//  Table 进行重新布局
-const doLayout = (columnKey: any) => {
-  return TTable.value.doLayout(columnKey)
-}
-//  手动排序表格。 参数 prop 属性指定排序列，order 指定排序顺序。
-const sort = (prop: string, order: string) => {
-  return TTable.value.sort(prop, order)
-}
-//  滚动到一组特定坐标。
-const scrollTo = (options: any, yCoord: any) => {
-  return TTable.value.scrollTo(options, yCoord)
-}
-//  设置垂直滚动位置
-const setScrollTop = (top: any) => {
-  return TTable.value.setScrollTop(top)
-}
-//  设置水平滚动位置
-const setScrollLeft = (left: any) => {
-  return TTable.value.setScrollLeft(left)
-}
-
 // 清空校验规则
 const clearValidate = () => {
   const refList = Object.keys(formRef.value).filter(item => item.includes("formRef"))
@@ -1110,7 +918,7 @@ const resetFields = () => {
 }
 // 获取columnSet缓存数据
 const reSetColumnSet = () => {
-  return columnSetRef.value.reSetColumnSet()
+  return columnSetRef.value?.reSetColumnSet()
 }
 // 暴露方法出去
 defineExpose({

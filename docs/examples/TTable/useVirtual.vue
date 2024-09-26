@@ -45,16 +45,15 @@ const changeData = () => {
   initDate()
 }
 const initDate = () => {
-  const tableData = []
-  for (let i = 0; i < sumData.value; i++) {
-    tableData.push({
-      id: i + 1,
-      date: `2024-09-2${i}`,
-      status: `待维修 ${i}`,
-      name: `张三 ${i}`,
-      address: `广州市白云区 ${i}`
-    })
-  }
+  table.value.data = []
+  const tableData = Array.from({ length: sumData.value }, (_, i) => ({
+    id: i + 1,
+    date: `2024-09-2${i}`,
+    status: `待维修 ${i}`,
+    name: `张三 ${i}`,
+    address: `广州市白云区 ${i}`
+  }))
+
   table.value.data = tableData
 }
 </script>
