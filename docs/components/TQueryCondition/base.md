@@ -93,7 +93,7 @@ TQueryCondition/isDropDownSelectMore
 
 ### 调用handleEvent动态修改查询条件值<el-tag>v1.4.13</el-tag>
 
-::: demo 最终方法调用`handleEventChangeRef.value.handleEvent(true, { val: "W1" }, "workshopNum")`。解析：`handleEventChangeRef.value`条件查询的`ref`；`handleEvent(true, { val: "W1" }, "workshopNum")`方法，参数：第一个`true`不可省略，`val`为修改后的值，`workshopNum`为对应查询条件项的`字段名`。
+::: demo 最终方法调用`handleEventChangeRef.value.handleEvent({isChange:true, val: "W1" }, "workshopNum")`。解析：`handleEventChangeRef.value`条件查询的`ref`；`handleEvent({ isChange:true,val: "W1" }, "workshopNum")`方法，参数：第一个`isChange`必须为`true`且不可省略，`val`为修改后的值，`workshopNum`为对应查询条件项的`字段名`。
 TQueryCondition/handleEventChange
 :::
 
@@ -194,10 +194,10 @@ TQueryCondition/handleEventChange
 
 ### 5、Exposes（Method）
 
-| Method      | 说明                   | 类型                                                                                       |
-| :---------- | :--------------------- | :----------------------------------------------------------------------------------------- |
-| queryState  | 初始化表单数据         | object                                                                                     |
-| resetData   | 重置表单不调用查询接口 | Function                                                                                   |
-| resetHandle | 重置表单调用查询接口   | Function                                                                                   |
-| checkHandle | 查询操作               | Function                                                                                   |
-| handleEvent<el-tag>v1.4.13</el-tag>  | 动态修改查询条件值     | Function<t-tip content='(flag: boolean, {val: 需要修改的值}, dataIndex: string) => void'/> |
+| Method                              | 说明                   | 类型                                                                                       |
+| :---------------------------------- | :--------------------- | :----------------------------------------------------------------------------------------- |
+| queryState                          | 初始化表单数据         | object                                                                                     |
+| resetData                           | 重置表单不调用查询接口 | Function                                                                                   |
+| resetHandle                         | 重置表单调用查询接口   | Function                                                                                   |
+| checkHandle                         | 查询操作               | Function                                                                                   |
+| handleEvent<el-tag>v1.4.13</el-tag> | 动态修改查询条件值     | Function<t-tip content='(flag: boolean, {val: 需要修改的值}, dataIndex: string) => void'/> |

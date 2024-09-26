@@ -107,7 +107,7 @@ const getQueryData = computed(() => {
 onMounted(() => {
   // console.log("ref--", handleEventChangeRef.value)
   // 设置车间默认值
-  handleEventChangeRef.value.handleEvent(true, { val: "W1" }, "workshopNum")
+  handleEventChangeRef.value.handleEvent({ isChange: true, val: "W2" }, "workshopNum")
 })
 
 // 点击查询按钮

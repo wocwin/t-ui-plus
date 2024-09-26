@@ -41,7 +41,7 @@
               : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
           "
           :style="{ width: opt.width || '100%' }"
-          @change="handleEvent(false,{type:opt.event, val:queryState.form[opt.dataIndex]})"
+          @change="handleEvent({ type: opt.event, val: queryState.form[opt.dataIndex] })"
           v-on="cEvent(opt)"
         />
       </template>
@@ -54,7 +54,7 @@
             : { clearable: true, filterable: true, ...$attrs, ...opt.bind }
         "
         :placeholder="opt.placeholder || getPlaceholder(opt)"
-        @change="handleEvent(false,{type:opt.event, val:queryState.form[opt.dataIndex]})"
+        @change="handleEvent({ type: opt.event, val: queryState.form[opt.dataIndex] })"
         v-on="cEvent(opt)"
         v-model="queryState.form[opt.dataIndex]"
       >
@@ -65,7 +65,8 @@
           :disabled="value.disabled"
           :label="compChildLabel(opt, value)"
           :value="compChildValue(opt, value, key)"
-        >{{ compChildShowLabel(opt, value) }}</component>
+          >{{ compChildShowLabel(opt, value) }}</component
+        >
       </component>
     </el-form-item>
     <el-form-item
@@ -84,13 +85,12 @@
           <el-button
             class="btn_check"
             @click="checkHandle"
-            v-bind="queryAttrs"
+            v-bind="{ type: 'primary', ...queryAttrs }"
             :loading="loading"
-          >{{ queryAttrs.btnTxt }}</el-button>
+            >{{ queryAttrs.btnTxt }}</el-button
+          >
           <el-button v-if="reset" class="btn_reset" v-bind="resetAttrs" @click="resetHandle">
-            {{
-            resetAttrs.btnTxt
-            }}
+            {{ resetAttrs.btnTxt }}
           </el-button>
           <slot name="querybar"></slot>
           <el-button
@@ -122,97 +122,18 @@
 import RenderComp from "./renderComp.vue"
 import MoreChoose from "./moreChoose.vue"
 import { computed, ref, watch, useSlots, onMounted, reactive } from "vue"
-
-const props = defineProps({
-  opts: {
-    type: Object,
-    required: true,
-    default: () => ({})
-  },
-  labelWidth: {
-    type: String,
-    default: "120px"
-  },
-  // 查询按钮配置
-  btnCheckBind: {
-    type: Object,
-    default: () => ({})
-  },
-  // 重置按钮配置
-  btnResetBind: {
-    type: Object,
-    default: () => ({})
-  },
-  loading: {
-    type: Boolean,
-    default: false
-  },
-  reset: {
-    type: Boolean,
-    default: true
-  },
-  boolEnter: {
-    type: Boolean,
-    default: true
-  },
-  // 是否显示收起和展开
-  isShowOpen: {
-    type: Boolean,
-    default: true
-  },
-  // 是否默认展开
-  isExpansion: {
-    type: Boolean,
-    default: false
-  },
-  // 收起时设置默认展示行数
-  maxVisibleRows: {
-    type: Number,
-    default: 1
-  },
-  packUpTxt: {
-    type: String,
-    default: "收起"
-  },
-  unfoldTxt: {
-    type: String,
-    default: "展开"
-  },
-  // 是否显示底部操作按钮
-  isFooter: {
-    type: Boolean,
-    default: true
-  },
-  configChangedReset: {
-    type: Boolean,
-    default: false
-  },
-  // 是否开启一行显示几个查询条件
-  isShowWidthSize: {
-    type: Boolean,
-    default: false
-  },
-  // 一行显示几个查询条件
-  widthSize: {
-    type: Number,
-    default: 4
-  },
-  // 是否以下拉方式展示更多条件
-  isDropDownSelectMore: {
-    type: Boolean,
-    default: false
-  },
-  // 以下拉方式展示更多条件---数据源
-  moreCheckList: {
-    type: Array,
-    default: () => []
-  },
-  // 更多条件--el-popover属性
-  popoverAttrs: {
-    type: Object,
-    default: () => ({})
-  }
-})
+import { useComputed } from "./useComputed"
+const {
+  compChildName,
+  selectListType,
+  compChildLabel,
+  compChildValue,
+  compChildShowLabel,
+  getPlaceholder,
+  getColLength
+} = useComputed()
+import { queryProps } from "./useProps"
+const props = defineProps(queryProps)
 const slots = useSlots()
 // 判断是否使用了某个插槽
 const isShow = (name: string) => {
@@ -243,7 +164,6 @@ let open = ref(false)
 // 查询按钮配置
 const queryAttrs = computed(() => {
   return {
-    type: "primary",
     btnTxt: "查询",
     ...props.btnCheckBind
   }
@@ -362,19 +282,6 @@ const initForm = (opts: any, keepVal = false) => {
     return acc
   }, {})
 }
-const getColLength = () => {
-  // 行列数
-  const width = window.innerWidth
-  let colLength = 4
-  if (width > 1000 && width < 1280) {
-    colLength = 3
-  } else if (width > 768 && width <= 1000) {
-    colLength = 2
-  } else if (width <= 768) {
-    colLength = 1
-  }
-  return colLength
-}
 const emits = defineEmits(["handleEvent", "submit", "reset", "getCheckList"])
 // 下拉选择表格组件 ref
 const tselecttableref: any = ref({})
@@ -414,102 +321,24 @@ const resetData = () => {
     })
   }
 }
+
 // 查询条件change事件
-const handleEvent = (flag = false, { type, val }: any, dataIndex: string) => {
-  if (!flag) {
+const handleEvent = (
+  { isChange = false, type, val }: { isChange?: boolean; type: string; val: any },
+  dataIndex?: string
+) => {
+  if (!isChange) {
     emits("handleEvent", type, val, queryState.form)
-  } else {
+  } else if (dataIndex) {
     queryState.form[dataIndex] = val
   }
 }
+
 // 查询
 const checkHandle = (flagText: any = false) => {
   emits("submit", queryState.form, flagText)
 }
-// 子组件名称
-const compChildName: any = computed(() => {
-  return (opt: any) => {
-    switch (opt.type) {
-      case "checkbox":
-        return "el-checkbox"
-      case "radio":
-        return "el-radio"
-      case "select-arr":
-      case "select-obj":
-        return "el-option"
-    }
-  }
-})
-// 下拉数据
-const selectListType = computed(() => {
-  return (opt: any) => {
-    if (opt.listTypeInfo) {
-      return opt.listTypeInfo[opt.list]
-    } else {
-      return []
-    }
-  }
-})
-// 子子组件label
-const compChildLabel = computed(() => {
-  return (opt: { type: any; arrLabel: any }, value: { [x: string]: any; value: any }) => {
-    switch (opt.type) {
-      case "radio":
-      case "checkbox":
-        return value.value
-      case "el-select-multiple":
-      case "select-arr":
-        return value[opt.arrLabel || "label"]
-      case "select-obj":
-        return value
-    }
-  }
-})
-// 子子组件value
-const compChildValue = computed(() => {
-  return (opt: { type: any; arrKey: any }, value: { [x: string]: any; value: any }, key: any) => {
-    switch (opt.type) {
-      case "radio":
-      case "checkbox":
-        return value.value
-      case "el-select-multiple":
-      case "select-arr":
-        return value[opt.arrKey || "key"]
-      case "select-obj":
-        return key
-    }
-  }
-})
-// 子子组件文字展示
-const compChildShowLabel = computed(() => {
-  return (opt: { type: any; arrLabel: any }, value: { [x: string]: any; label: any }) => {
-    switch (opt.type) {
-      case "radio":
-      case "checkbox":
-        return value.label
-      case "el-select-multiple":
-      case "select-arr":
-        return value[opt.arrLabel || "label"]
-      case "select-obj":
-        return value
-    }
-  }
-})
-// placeholder的显示
-const getPlaceholder = (row: any) => {
-  // console.log(77, row)
-  let placeholder
-  if (row.comp && typeof row.comp == "string") {
-    if (row.comp.includes("input")) {
-      placeholder = "请输入" + row.label
-    } else if (row.comp.includes("select") || row.comp.includes("date")) {
-      placeholder = "请选择" + row.label
-    } else {
-      placeholder = row.label
-    }
-  }
-  return placeholder
-}
+
 onMounted(() => {
   // 是否显示展开按钮
   if (props.isShowOpen) {
