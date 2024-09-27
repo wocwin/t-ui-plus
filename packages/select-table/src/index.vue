@@ -60,7 +60,9 @@
           :class="{
             radioStyle: !multiple,
             highlightCurrentRow: isRadio,
-            keyUpStyle: isKeyup
+            keyUpStyle: isKeyup,
+            t_select_table_multiple: useVirtual && multiple,
+            t_select_table_radio: useVirtual && !multiple
           }"
           highlight-current-row
           border
@@ -78,15 +80,15 @@
             align="center"
             :reserve-selection="reserveSelection"
             :selectable="selectable"
-            fixed
+            :fixed="multipleFixed"
           ></el-table-column>
           <el-table-column
             type="radio"
             width="55"
             :label="radioTxt"
-            fixed
+            :fixed="radioFixed"
             align="center"
-            v-if="!multiple && isShowFirstColumn"
+            v-if="!multiple && isShowFirstRadio"
           >
             <template #default="scope">
               <el-radio
@@ -161,10 +163,21 @@ import {
   nextTick,
   reactive,
   onMounted,
-  onUpdated
+  onUpdated,
+  onBeforeUnmount
 } from "vue"
 import { ElMessage } from "element-plus"
 import ClickOutside from "../../utils/directives/click-outside/index"
+// 虚拟滚动
+import { useVirtualized } from "./useVirtualized"
+const {
+  scrollContainerEl,
+  updateRenderedItemCache,
+  updateOffset,
+  getDom,
+  saveDATA,
+  getItemHeightFromCache
+} = useVirtualized()
 import { selectTableProps } from "./useProps"
 const props = defineProps(selectTableProps)
 const selectAttr = computed(() => {
@@ -193,7 +206,9 @@ const isRadio = ref(false)
 const isQueryVisible = ref(false) // 查询条件是否显示隐藏下拉框
 const isVisible = ref(false) // 是否显示隐藏下拉框
 const radioVal = ref("")
+const isShowFirstRadio = ref(props.isShowFirstColumn) // 是否显示第一列
 const selectDefaultLabel: any = ref(props.modelValue) // 单选赋值
+const scrollTopNum = ref(0) // 滚动条位置
 // input回显值
 let selectInputVal: any = computed({
   get() {
@@ -219,7 +234,12 @@ const nowIndex = ref(-1)
 watch(
   () => props.table.data,
   val => {
-    state.tableData = val
+    if (props.useVirtual) {
+      saveDATA.value = val
+      updateRenderData(scrollTopNum.value)
+    } else {
+      state.tableData = val
+    }
     nextTick(() => {
       state.tableData &&
         state.tableData.length > 0 &&
@@ -249,6 +269,46 @@ onMounted(() => {
   if (props.selfExpanded) {
     selectRef.value.expanded = true
   }
+  if (props.useVirtual) {
+    saveDATA.value = props.table.data
+    isShowFirstRadio.value = false
+    getDom(props)
+    scrollContainerEl.value?.addEventListener("scroll", handleScroll)
+  }
+})
+
+// 更新实际渲染数据
+const updateRenderData = (scrollTop: number) => {
+  // console.log("更新实际渲染数据---scrollTop", scrollTop)
+  let startIndex = 0
+  let offsetHeight = 0
+  for (let i = 0; i < saveDATA.value.length; i++) {
+    offsetHeight += getItemHeightFromCache(i)
+    if (offsetHeight >= scrollTop) {
+      startIndex = i
+      break
+    }
+  }
+  // 计算得出的渲染数据
+  state.tableData = saveDATA.value.slice(startIndex, startIndex + props.virtualShowSize)
+  // 缓存最新的列表项高度
+  updateRenderedItemCache(startIndex)
+  // 更新偏移值
+  updateOffset(offsetHeight - getItemHeightFromCache(startIndex))
+}
+// 滚动事件
+const handleScroll = (e: any) => {
+  scrollTopNum.value = e.target.scrollTop
+  // 渲染正确的数据
+  updateRenderData(scrollTopNum.value)
+  // console.log("滚动事件---handleScroll")
+}
+// 移除滚动事件
+onBeforeUnmount(() => {
+  // console.log("移除滚动事件")
+  if (props.useVirtual) {
+    scrollContainerEl.value?.removeEventListener("scroll", handleScroll)
+  }
 })
 // 解决查询条件下拉选择table闪烁问题
 onUpdated(() => {
@@ -258,7 +318,7 @@ onUpdated(() => {
   }
 })
 // 表格显示隐藏回调
-const visibleChange = (visible: boolean) => {
+const visibleChange = async (visible: boolean) => {
   // console.log('表格显示隐藏回调', visible)
   isVisible.value = visible
   if (isQueryVisible.value) {
@@ -274,6 +334,10 @@ const visibleChange = (visible: boolean) => {
       defaultSelect(state.defaultSelectValue)
     }
     initTableData()
+    if (props.useVirtual) {
+      saveDATA.value = props.table.data
+      updateRenderData(scrollTopNum.value)
+    }
   } else {
     if (
       tQueryConditionRef.value &&
@@ -286,6 +350,11 @@ const visibleChange = (visible: boolean) => {
     }
     findLabel()
     filterMethodHandle("")
+    if (props.useVirtual) {
+      // console.log("props.useVirtual---清空")
+      state.tableData = []
+      saveDATA.value = []
+    }
   }
   if (props.selfExpanded) {
     selectRef.value.expanded = true

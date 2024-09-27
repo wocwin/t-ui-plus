@@ -65,6 +65,7 @@ export default defineConfig({
               text: "下拉选择表格组件",
               link: "/components/TSelectTable/base.md"
             },
+            { text: "Virtualized TSelectTable<el-tag type='danger'>v1.4.13</el-tag>", link: "/components/multipleVirtual/base.md" },
             {
               text: "条件查询组件",
               link: "/components/TQueryCondition/base.md"

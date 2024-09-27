@@ -1,4 +1,4 @@
-import type { PropType,ExtractPropTypes } from "vue"
+import type { PropType, ExtractPropTypes } from "vue"
 export const selectTableProps = {
   // input输入框的值（modelValue）
   inputValue: {
@@ -148,7 +148,18 @@ export const selectTableProps = {
   // Function(row: any, index: number) 的返回值用来决定这一行的 CheckBox 是否可以勾选
   selectable: {
     type: Function as PropType<(row: any, index: number) => boolean>
-  }
+  },
+  // 是否开启虚拟列表
+  useVirtual: Boolean,
+  // 虚拟列表显示条数
+  virtualShowSize: {
+    type: Number,
+    default: 30
+  },
+  // 是否固定多选
+  multipleFixed: Boolean,
+  // 是否固定单选
+  radioFixed: Boolean,
 }
 
 export type TSelectTableProps = ExtractPropTypes<typeof selectTableProps>
