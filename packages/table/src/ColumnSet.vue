@@ -164,6 +164,7 @@ defineExpose({
     justify-content: center;
     align-items: center;
     padding: 10px 10px 0 10px;
+    color: var(--el-text-color-primary);
   }
   .el-dropdown-menu {
     padding: 0;
