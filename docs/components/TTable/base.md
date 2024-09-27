@@ -397,6 +397,7 @@ TTable/expand
 | tableLoading<el-tag>1.4.12</el-tag> | table loading                                                                       | Boolean          | false                                      |
 | loadingTxt<el-tag>1.4.12</el-tag>   | table loading文字提示                                                               | string           | 加载中...                                  |
 | useVirtual<el-tag>1.4.13</el-tag>   | table 是否开启虚拟滚动                                                              | Boolean          | false                                      |
+| virtualShowSize<el-tag>1.4.13</el-tag>   | 虚拟列表的渲染行数                                                             | Number          | 30                                      |
 
 ### 3、events 其他事件按照 el-table 直接使用（如 sort-change 排序事件）
 

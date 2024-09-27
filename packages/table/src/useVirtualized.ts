@@ -13,9 +13,9 @@ export function useVirtualized() {
   const RenderedItemsCache: any = {}
   // 获取dom元素
   const getDom = () => {
-    actualHeightContainerEl.value = document.querySelector(".el-scrollbar__view")
-    translateContainerEl.value = document.querySelector(".el-table__body")
-    scrollContainerEl.value = document.querySelector(".el-scrollbar__wrap")
+    actualHeightContainerEl.value = document.querySelector(".t_table_use_virtual .el-scrollbar__view")
+    translateContainerEl.value = document.querySelector(".t_table_use_virtual .el-table__body")
+    scrollContainerEl.value = document.querySelector(".t_table_use_virtual .el-scrollbar__wrap")
   }
   // 获取缓存高度，无缓存，取配置项的 itemHeight
   const getItemHeightFromCache = (index: number | string) => {
@@ -43,7 +43,7 @@ export function useVirtualized() {
     if (!shouldUpdate) return
     nextTick(() => {
       // 获取所有列表项元素
-      const Items: HTMLElement[] = Array.from(document.querySelectorAll(".el-table__row"))
+      const Items: HTMLElement[] = Array.from(document.querySelectorAll(".t_table_use_virtual .el-table__row"))
       // 进行缓存
       Items.forEach(el => {
         if (!RenderedItemsCache[index]) {

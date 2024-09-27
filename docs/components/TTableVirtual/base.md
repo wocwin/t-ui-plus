@@ -1,5 +1,5 @@
 # Virtualized TTable 表格
-
+>默认显示`30`条数据,可以设置`virtualShowSize`属性来控制显示条数
 
 ### 虚拟滚动Table<el-tag>1.4.13</el-tag>
 

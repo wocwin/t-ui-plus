@@ -56,7 +56,8 @@
         tree_style: isTree,
         highlightCurrentRow: highlightCurrentRow,
         radioStyle: radioStyleClass,
-        multile_head_column: isTableHeader
+        multile_head_column: isTableHeader,
+        t_table_use_virtual: useVirtual
       }"
       v-bind="$attrs"
       :highlight-current-row="highlightCurrentRow"
@@ -471,7 +472,7 @@ const updateRenderData = (scrollTop: number) => {
     }
   }
   // 计算得出的渲染数据
-  state.tableData = saveDATA.value.slice(startIndex, startIndex + 10)
+  state.tableData = saveDATA.value.slice(startIndex, startIndex + props.virtualShowSize)
   // 缓存最新的列表项高度
   updateRenderedItemCache(startIndex)
   // 更新偏移值

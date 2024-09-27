@@ -18,6 +18,7 @@
         :columns="table.columns"
         :isShowPagination="false"
         useVirtual
+        :virtualShowSize="40"
         maxHeight="400px"
       />
     </t-layout-page-item>

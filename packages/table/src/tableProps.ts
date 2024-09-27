@@ -109,7 +109,12 @@ export const tableProps = {
     default: "加载中..."
   },
   // 是否开启虚拟列表
-  useVirtual: Boolean
+  useVirtual: Boolean,
+  // 虚拟列表的渲染行数
+  virtualShowSize: {
+    type: Number,
+    default: 30
+  }
 }
 
 export type TTableProps = ExtractPropTypes<typeof tableProps>
