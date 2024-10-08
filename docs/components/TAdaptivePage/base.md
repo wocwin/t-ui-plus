@@ -42,6 +42,12 @@ TAdaptivePage/menuMange
 TAdaptivePage/contentSlot
 :::
 
+### 解决TTable合计涉及到TSelectTable也出现合计问题解决<el-tag>v1.4.14</el-tag>
+
+:::demo
+TAdaptivePage/showSummary
+:::
+
 ### TAdaptivePage 参数配置
 
 ---

@@ -7,6 +7,7 @@
     ref="tAdaptivePageRef"
     isExpansion
     columnSetting
+    name="userManageColumnSetting"
     :table="table"
     :columns="table.columns"
     :opts="opts"
