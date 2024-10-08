@@ -34,14 +34,9 @@ const props = defineProps({
     type: Array,
     default: () => []
   },
-  title: {
-    type: String,
-    default: ""
-  },
-  name: {
-    type: String,
-    default: ""
-  },
+  title: String,
+  // 开启列拖拽，缓存唯一性标识
+  name: String,
   columnSetBind: {
     type: Object,
     default: () => {}

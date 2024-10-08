@@ -37,6 +37,7 @@
           <column-set
             v-if="columnSetting && !isTableHeader"
             v-bind="$attrs"
+            :title="title || tableTitle"
             :columns="renderColumns"
             ref="columnSetRef"
             @columnSetting="v => (state.columnSet = v)"
