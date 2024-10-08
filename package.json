@@ -24,7 +24,7 @@
     "build:browser": "vite -f iife build",
     "deploy": "deploy.sh",
     "pub": "npm publish --registry=https://registry.npmjs.org/",
-    "lib:prettier": "prettier --write \"packages/**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\"",
+    "prettier": "prettier --write \"packages/**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\"",
     "docs:prettier": "prettier --write \"docs/**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\"",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs"
