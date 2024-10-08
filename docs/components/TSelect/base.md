@@ -66,37 +66,38 @@ TSelect/useVirtualMultiple
 TSelect/useVirtualCollapseTags
 :::
 
+### 选中值返回对象<el-tag>1.4.14</el-tag>
+:::demo 在组件中配置：`returnObject` ；必须设置 `value-key` 属性且具有唯一性。支持多选
+TSelect/returnObject
+:::
+
 ### TSelect Attributes
 
 ---
 
 ### 1、代码示例
 
-> `下拉选择组件————可实现单选多选（多选可使用全选功能）`
-
 ```html
 <t-select
-  placeholder="请选择工序"
   v-model="selectVlaue"
   :optionSource="state.stepList"
-  valueCustom="label"
-  @change="selectChange"
 />
 ```
 
 ### 2、配置参数（Attributes）继承 el-select&el-select-v2 Attributes
 
-| 参数             | 说明                                             | 类型                            | 默认值  |
-| :--------------- | :----------------------------------------------- | :------------------------------ | :------ |
-| v-model          | 绑定值                                           | boolean / string / number/Array | 无      |
-| multiple         | 是否多选                                         | Boolean                         | false   |
-| optionSource     | 下拉数据源                                       | Array                           | 无      |
-| customLabel      | 是否自定义设置下拉 label                         | String                          | -       |
-| valueCustom      | 传入的 option 数组中，要作为最终选择项的键值 key | String                          | 'key'   |
-| labelCustom      | 传入的 option 数组中，要作为显示项的键值名称     | String                          | 'label' |
-| useVirtual       | 是否开启虚拟列表(继承 el-select-v2 属性)         | Boolean                         | false   |
-| isShowPagination | 是否开启分页                                     | Boolean                         | false   |
-| paginationOption | 分页配置                                         | Object                          | -       |
+| 参数                                | 说明                                             | 类型                            | 默认值  |
+| :---------------------------------- | :----------------------------------------------- | :------------------------------ | :------ |
+| v-model                             | 绑定值                                           | boolean / string / number/Array | 无      |
+| multiple                            | 是否多选                                         | Boolean                         | false   |
+| optionSource                        | 下拉数据源                                       | Array                           | 无      |
+| customLabel                         | 是否自定义设置下拉 label                         | String                          | -       |
+| valueCustom                         | 传入的 option 数组中，要作为最终选择项的键值 key | String                          | 'key'   |
+| labelCustom                         | 传入的 option 数组中，要作为显示项的键值名称     | String                          | 'label' |
+| useVirtual                          | 是否开启虚拟列表(继承 el-select-v2 属性)         | Boolean                         | false   |
+| isShowPagination                    | 是否开启分页                                     | Boolean                         | false   |
+| paginationOption                    | 分页配置                                         | Object                          | -       |
+| returnObject<el-tag>1.4.14</el-tag> | 选中值是否返回对象必须设置`value-key`            | Boolean                         | false   |
 
 ### 2-1、paginationOption 配置参数（Attributes）继承 el-pagination Attributes
 

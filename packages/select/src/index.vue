@@ -30,7 +30,7 @@
         v-for="(item, index) in optionSource"
         :key="index + 'i'"
         :label="customLabel ? customLabelHandler(item) : item[labelCustom]"
-        :value="item[valueCustom]"
+        :value="returnObject ? item : item[valueCustom]"
         :disabled="item.disabled"
       >
         <template v-for="(index, name) in slots" v-slot:[name]="data">
@@ -61,7 +61,7 @@
 import { computed, ref, useSlots } from "vue"
 const props: any = defineProps({
   modelValue: {
-    type: [String, Number, Array]
+    type: [String, Number, Array, Object]
   },
   // 是否多选
   multiple: {
@@ -117,6 +117,11 @@ const props: any = defineProps({
   useVirtual: {
     type: Boolean,
     default: false
+  },
+  // 是否返回对象
+  returnObject: {
+    type: Boolean,
+    default: false
   }
 })
 const tselectRef = ref()
@@ -137,7 +142,7 @@ let childSelectedValue: any = computed({
     return props.modelValue
   },
   set(val) {
-    // console.log(777, val)
+    // console.log("childSelectedValue", val)
     emits("update:modelValue", val)
   }
 })
