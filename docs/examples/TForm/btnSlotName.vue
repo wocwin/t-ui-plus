@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-import { Warning } from "@element-plus/icons-vue"
 import { ref, reactive } from "vue"
 // 获取ref
 const TFormDemo: any = ref<HTMLElement | null>(null)

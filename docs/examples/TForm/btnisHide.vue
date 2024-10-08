@@ -7,7 +7,6 @@
 </template>
 
 <script setup lang="tsx">
-import { Warning } from "@element-plus/icons-vue"
 import { ref, reactive } from "vue"
 // 获取ref
 const TFormDemo: any = ref<HTMLElement | null>(null)
@@ -38,6 +37,9 @@ const nullify = () => {
 // 隐藏重置按钮
 const hideReset = () => {
   console.log("隐藏重置按钮")
+  if (!formOpts.operatorList) {
+    formOpts.operatorList = []
+  }
   formOpts.operatorList.forEach(item => {
     if (item.label === "重置" && !item.isHideBtn) {
       item.isHideBtn = true
@@ -49,6 +51,9 @@ const hideReset = () => {
 // 隐藏提交按钮
 const hideSubmit = () => {
   console.log("隐藏提交按钮")
+  if (!formOpts.operatorList) {
+    formOpts.operatorList = []
+  }
   formOpts.operatorList.forEach(item => {
     if (item.label === "提交" && !item.isHideBtn) {
       item.isHideBtn = true

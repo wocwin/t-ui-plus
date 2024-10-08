@@ -46,8 +46,10 @@ declare namespace FormTypes {
   }
   interface OperatorList {
     label?: string; // 按钮名称
-    fun: (val: any) => void; // 按钮点击事件
+    fun?: (val: any) => void; // 按钮点击事件
     bind?: AnyObject; // 绑定数据
+    isHideBtn?: boolean; // 是否隐藏按钮
+    render?: (...ags: any[]) => any; // render函数
   }
 }
 /* TQueryCondition */
