@@ -401,9 +401,9 @@ const selectKeyup = (e: { keyCode: any }) => {
     const rowHeight = selectTable.value.$el.querySelectorAll(".el-table__row")[0].clientHeight
     const headerHeight = selectTable.value.$el.querySelectorAll(".el-table__header")[0].clientHeight
     const attrsMaxHeight =
-      (typeof attrs["max-height"] === "number"
-        ? attrs["max-height"]
-        : parseFloat(attrs["max-height"])) || 0
+      (typeof (attrs["max-height"]||attrs["maxHeight"]) === "number"
+        ? (attrs["max-height"]||attrs["maxHeight"])
+        : parseFloat((attrs["max-height"]||attrs["maxHeight"]))) || 0
     const maxHeight = attrsMaxHeight ? attrsMaxHeight - headerHeight : 0
     const height = rowHeight * (nextIndex + 3)
     const scrollTop = height > maxHeight ? height - maxHeight : 0

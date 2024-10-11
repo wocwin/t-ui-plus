@@ -4,7 +4,7 @@
       <t-select-table
         :table="table"
         :columns="table.columns"
-        :max-height="400"
+        :maxHeight="400"
         :keywords="{ label: 'name', value: 'id' }"
         @radioChange="radioChange"
         isKeyup
