@@ -186,7 +186,7 @@ onMounted(() => {
 })
 const chageDefaultVal = () => {
   opts.value.workshopNum.defaultVal = "W2"
-  console.log("opts.value.workshopNum", opts.value.workshopNum)
+  // console.log("opts.value.workshopNum", opts.value.workshopNum)
   const arr = [
     {
       label: "前纺一车间22",

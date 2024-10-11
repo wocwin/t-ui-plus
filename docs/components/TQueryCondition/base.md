@@ -46,6 +46,12 @@ TQueryCondition/eventHandle
 TQueryCondition/comUse
 :::
 
+### 默认值显示
+
+::: demo
+TQueryCondition/defaultVal
+:::
+
 ### 按钮操作使用
 
 ::: demo
