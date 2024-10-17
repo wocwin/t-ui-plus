@@ -287,6 +287,12 @@ TTable/rules
 TTable/rulesSelectTable
 :::
 
+### 单元格编辑-- 回显TSelectTable
+
+:::demo
+TTable/echoSelectTable
+:::
+
 ### 展开行
 
 :::demo 在`table`对象中添加`firstColumn:{ type: 'expand', fixed: true }` `expand`作用域插槽，解构传出`{scope}`
