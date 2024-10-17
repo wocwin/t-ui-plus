@@ -92,6 +92,13 @@ TSelectTable/multiple
 TSelectTable/isShowPagination
 :::
 
+### 是否隐藏删除icon<el-tag>1.4.14</el-tag>
+
+:::demo `multipleDisableDelete` 开启隐藏删除icon；`场景使用`：通常用于`切换分页`及`条件查询后`时，之前选中的数据不在`新数据源`下，隐藏`tag`删除icon。
+
+TSelectTable/multipleDisableDelete
+:::
+
 ### 显示查询条件
 
 :::demo `isShowQuery` 是否开启查询条件配置，其配置继承查询条件组件（TQueryCondition 组件）的所有属性/插槽/事件；注意：`不可设置TQueryCondition组件的maxVisibleSpans属性` ;
@@ -194,6 +201,8 @@ TSelectTable/isShowInput
 | radioFixed<el-tag>1.4.13</el-tag>      | table 是否固定单选                                                                      | Boolean                   | false      |
 | useVirtual<el-tag>1.4.13</el-tag>      | table 是否开启虚拟滚动                                                                  | Boolean                   | false      |
 | virtualShowSize<el-tag>1.4.13</el-tag> | 虚拟列表的渲染行数                                                                      | Number                    | 30         |
+| multipleDisableDelete<el-tag>1.4.14</el-tag> | 多选--之前选中的数据不在新数据源下，是否隐藏`tag`删除icon | Boolean     | false       |
+| defaultValIsOpenRadioChange<el-tag>1.4.14</el-tag> | 默认赋值--是否开启单选事件 | Boolean     | false       |
 
 
 ### 3、事件（events）继承 el-table 及 el-select 属性

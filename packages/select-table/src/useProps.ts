@@ -160,6 +160,8 @@ export const selectTableProps = {
   multipleFixed: Boolean,
   // 是否固定单选
   radioFixed: Boolean,
+  // 多选--之前选中的数据不在新数据源下，是否隐藏删除icon
+  multipleDisableDelete: Boolean,
 }
 
 export type TSelectTableProps = ExtractPropTypes<typeof selectTableProps>
