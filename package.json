@@ -17,11 +17,7 @@
     "global.d.ts"
   ],
   "scripts": {
-    "lib-all": "rimraf lib && run-p type-check build:es build:browser",
     "lib": "rimraf lib && vite build",
-    "type-check": "vue-tsc --noEmit",
-    "build:es": "vite build",
-    "build:browser": "vite -f iife build",
     "deploy": "deploy.sh",
     "pub": "npm publish --registry=https://registry.npmjs.org/",
     "prettier": "prettier --write \"packages/**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\"",
