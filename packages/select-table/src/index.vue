@@ -205,7 +205,7 @@ const forbidden = ref(true) // 判断单选选中及取消选中
 const isRadio = ref(false)
 const isQueryVisible = ref(false) // 查询条件是否显示隐藏下拉框
 const isVisible = ref(false) // 是否显示隐藏下拉框
-const radioVal = ref("")
+const radioVal = ref<any>("")
 const isShowFirstRadio = ref(props.isShowFirstColumn) // 是否显示第一列
 const selectDefaultLabel: any = ref(props.modelValue) // 单选赋值
 const scrollTopNum = ref(0) // 滚动条位置
@@ -219,7 +219,14 @@ let selectInputVal: any = computed({
     emits("update:inputValue", val)
   }
 })
-const state: any = reactive({
+interface InitState {
+  defaultSelectValue: any[]
+  tableData: any[]
+  defaultValue: any
+  ids: any[]
+  tabularMap: any
+}
+const state = reactive<InitState>({
   defaultSelectValue: props.defaultSelectVal, // 默认选中
   tableData: props.table.data, // table数据
   defaultValue: props.value,
@@ -231,6 +238,10 @@ const selectRef = ref<HTMLElement | any>(null)
 const selectTable = ref<HTMLElement | any>(null)
 const tQueryConditionRef = ref<HTMLElement | any>(null)
 const nowIndex = ref(-1)
+// 获取tableData的label
+const tableDataLabelList = computed(() => {
+  return state.tableData.map((item: any) => item[props.keywords.label])
+})
 watch(
   () => props.table.data,
   val => {
@@ -239,6 +250,20 @@ watch(
       updateRenderData(scrollTopNum.value)
     } else {
       state.tableData = val
+      // 解决查询后，之前选中的数据若不在查询结果中，则禁用删除
+      if (props.multiple && props.multipleDisableDelete) {
+        selectRef.value?.$el?.querySelectorAll(".el-tag").forEach(item => {
+          if (
+            tableDataLabelList.value?.includes(
+              item.querySelector(".el-select__tags-text")?.innerText
+            )
+          ) {
+            item.querySelector(".el-tag__close").style = "display: block"
+          } else {
+            item.querySelector(".el-tag__close").style = "display: none"
+          }
+        })
+      }
     }
     nextTick(() => {
       state.tableData &&
@@ -398,12 +423,13 @@ const selectKeyup = (e: { keyCode: any }) => {
     const newIndex = nowIndex.value * 1
     const nextIndex = e.keyCode === 40 ? newIndex + 1 : e.keyCode === 38 ? newIndex - 1 : newIndex
     // 键盘向上/下滚动条根据移动的选择区域而滚动
-    const rowHeight = selectTable.value.$el.querySelectorAll(".el-table__row")[0].clientHeight
-    const headerHeight = selectTable.value.$el.querySelectorAll(".el-table__header")[0].clientHeight
+    const rowHeight = selectTable.value.$el.querySelectorAll(".el-table__row")[0]?.clientHeight || 0
+    const headerHeight =
+      selectTable.value.$el.querySelectorAll(".el-table__header")[0]?.clientHeight || 0
     const attrsMaxHeight =
-      (typeof (attrs["max-height"]||attrs["maxHeight"]) === "number"
-        ? (attrs["max-height"]||attrs["maxHeight"])
-        : parseFloat((attrs["max-height"]||attrs["maxHeight"]))) || 0
+      (typeof (attrs["max-height"] || attrs["maxHeight"]) === "number"
+        ? attrs["max-height"] || attrs["maxHeight"]
+        : parseFloat(attrs["max-height"] || attrs["maxHeight"])) || 0
     const maxHeight = attrsMaxHeight ? attrsMaxHeight - headerHeight : 0
     const height = rowHeight * (nextIndex + 3)
     const scrollTop = height > maxHeight ? height - maxHeight : 0
@@ -472,7 +498,10 @@ const defaultSelect = (defaultSelectVal: any[]) => {
       setTimeout(() => {
         selectDefaultLabel.value = row[props.keywords.label]
       }, 0)
-      emits("radioChange", row, row[props.keywords.value])
+      // 是否开启单选事件
+      if (!props.defaultValIsOpenRadioChange) {
+        emits("radioChange", row, row[props.keywords.value])
+      }
     }
   }
 }
