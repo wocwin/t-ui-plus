@@ -539,7 +539,7 @@ const filterMethodHandle = (val: string) => {
       radioVal.value = ""
     } else {
       const defaultIndex = tableData.findIndex(
-        item => item[props.keywords.value] === selectDefaultLabel.value
+        item => item[props.keywords.label] === selectDefaultLabel.value
       )
       if (defaultIndex !== -1) {
         radioVal.value = defaultIndex + 1
@@ -547,8 +547,17 @@ const filterMethodHandle = (val: string) => {
     }
   }
   state.tableData = tableData.filter(item => {
-    return item[props.keywords.label].includes(val)
+    return item[props.keywords.label]?.includes(val)
   })
+  // 解决选中后，在过滤后，没有选中问题
+  if (selectDefaultLabel.value) {
+    const defaultIndex = state.tableData.findIndex(
+      item => item[props.keywords.label] === selectDefaultLabel.value
+    )
+    if (defaultIndex !== -1) {
+      radioVal.value = defaultIndex + 1
+    }
+  }
 }
 
 // 获取表格数据
