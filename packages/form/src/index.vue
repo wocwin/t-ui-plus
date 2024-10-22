@@ -388,7 +388,11 @@ const handleRef = (el: any, key: any) => {
   }
 }
 const selfResetFields = () => {
-  // 获取所有下拉选择表格组件
+  resetTselectTable()
+  tform.value.resetFields()
+}
+// 清除下拉表格组件
+const resetTselectTable = () => {
   const refList = Object.keys(tselecttableref.value).filter(item =>
     item.includes("tselecttableref")
   )
@@ -398,10 +402,9 @@ const selfResetFields = () => {
       tselecttableref.value[val].clear()
     })
   }
-  tform.value.resetFields()
 }
 // 暴露方法出去
-defineExpose({ ...instance.exposed, selfValidate, selfResetFields })
+defineExpose({ ...instance.exposed, selfValidate, selfResetFields, resetTselectTable })
 </script>
 
 <style lang="scss">

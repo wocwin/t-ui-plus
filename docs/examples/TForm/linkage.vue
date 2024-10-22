@@ -15,7 +15,26 @@
 <script setup lang="tsx">
 import { ref, reactive } from "vue"
 // 获取ref
-const TFormDemo: any = ref<HTMLElement | null>(null)
+const TFormDemo = ref<HTMLElement | any>(null)
+const table = {
+  data: [
+    { id: 1, code: "1111", codeName: "供应商1", mobile: "13011111111", contact: "张三" },
+    { id: 2, code: "2222", codeName: "供应商2", mobile: "13022222222", contact: "李四" },
+    { id: 3, code: "3333", codeName: "供应商3", mobile: "13033333333", contact: "王五" },
+    { id: 4, code: "4444", codeName: "供应商4", mobile: "13044444444", contact: "赵六" },
+    { id: 5, code: "5555", codeName: "供应商5", mobile: "13055555555", contact: "钱七" },
+    { id: 6, code: "6666", codeName: "供应商6", mobile: "13066666666", contact: "孙八" },
+    { id: 7, code: "7777", codeName: "供应商7", mobile: "13077777777", contact: "周九" },
+    { id: 8, code: "8888", codeName: "供应商8", mobile: "13088888888", contact: "吴十" },
+    { id: 9, code: "9999", codeName: "供应商9", mobile: "13099999999", contact: "郑十一" }
+  ],
+  columns: [
+    { label: "供应商编号", width: "100px", prop: "code" },
+    { label: "供应商名称", width: "149px", prop: "codeName" },
+    { label: "负责人", width: "149px", prop: "contact" },
+    { label: "电话号码", width: "110px", prop: "mobile" }
+  ]
+}
 // 提交formOpts.ref 方式form表单
 const submitForm = () => {
   formOpts.ref.validate(valid => {
@@ -27,7 +46,7 @@ const submitForm = () => {
 }
 // 重置form表单
 const resetForm = () => {
-  TFormDemo.value.resetFields()
+  TFormDemo.value.selfResetFields()
 }
 // 清除校验
 const clearValidate = () => {
@@ -54,7 +73,9 @@ const formOpts = reactive<FormTypes.FormOpts>({
     qq: null, // qq
     email: null, // 邮箱
     desc: null, // 描述
-    status: null // *状态: 0：停用，1：启用(默认为1)',
+    code: null, // 物料编号',
+    codeName: null, // 物料名称',
+    mobile: null // 单位名称',
   },
   fieldList: [
     {
@@ -107,13 +128,67 @@ const formOpts = reactive<FormTypes.FormOpts>({
       }
     },
     {
-      label: "状态",
-      value: "status",
-      type: "select-arr",
-      list: "statusList",
-      comp: "el-select",
-      arrLabel: "key",
-      arrKey: "value"
+      label: "供应商编号",
+      value: "code",
+      placeholder: "t-select-table联动使用",
+      comp: "t-select-table",
+      isSelfCom: true,
+      bind: (formData: any) => {
+        return {
+          isKeyup: true,
+          maxHeight: 400,
+          selectWidth: 500,
+          defaultSelectVal: [formData.code],
+          keywords: { label: "code", value: "code" },
+          table: table,
+          columns: table.columns
+        }
+      },
+      eventHandle: {
+        radioChange: (val: any) => radioChange(val)
+      }
+    },
+    {
+      label: "供应商名称",
+      value: "codeName",
+      placeholder: "t-select-table联动使用",
+      comp: "t-select-table",
+      isSelfCom: true,
+      bind: (formData: any) => {
+        return {
+          isKeyup: true,
+          maxHeight: 400,
+          selectWidth: 500,
+          defaultSelectVal: [formData.codeName],
+          keywords: { label: "codeName", value: "codeName" },
+          table: table,
+          columns: table.columns
+        }
+      },
+      eventHandle: {
+        radioChange: (val: any) => radioChange1(val)
+      }
+    },
+    {
+      label: "电话号码",
+      value: "mobile",
+      placeholder: "t-select-table联动使用",
+      comp: "t-select-table",
+      isSelfCom: true,
+      bind: (formData: any) => {
+        return {
+          isKeyup: true,
+          maxHeight: 400,
+          selectWidth: 500,
+          defaultSelectVal: [formData.mobile],
+          keywords: { label: "mobile", value: "mobile" },
+          table: table,
+          columns: table.columns
+        }
+      },
+      eventHandle: {
+        radioChange: (val: any) => radioChange2(val)
+      }
     },
     {
       label: "描述",
@@ -176,5 +251,20 @@ const handleEvent = (type, val) => {
       console.log("checkbox", val, type)
       break
   }
+}
+const radioChange = (row: any) => {
+  formOpts.formData.code = row?.code
+  formOpts.formData.codeName = row?.codeName
+  formOpts.formData.mobile = row?.mobile
+}
+const radioChange1 = (row: any) => {
+  formOpts.formData.code = row?.code
+  formOpts.formData.codeName = row?.codeName
+  formOpts.formData.mobile = row?.mobile
+}
+const radioChange2 = (row: any) => {
+  formOpts.formData.code = row?.code
+  formOpts.formData.codeName = row?.codeName
+  formOpts.formData.mobile = row?.mobile
 }
 </script>
