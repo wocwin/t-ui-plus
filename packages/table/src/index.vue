@@ -327,6 +327,7 @@
     <!-- 表格底部按钮 -->
     <footer
       class="handle_wrap"
+      :style="{textAlign: footerBtnAlign}"
       v-if="isShowFooterBtn && state.tableData && state.tableData.length > 0"
     >
       <slot name="footer" />
@@ -1189,7 +1190,6 @@ defineExpose({
     padding: 12px 16px;
     background-color: var(--el-bg-color);
     border-top: 1px solid var(--el-table-border);
-    text-align: right;
 
     .el-btn {
       margin-left: 8px;

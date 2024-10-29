@@ -293,6 +293,12 @@ TTable/rulesSelectTable
 TTable/echoSelectTable
 :::
 
+### 单元格编辑--底部按钮插槽使用
+
+:::demo 标签添加`isShowFooterBtn`属性，展示保存按钮，并点击按钮触发 `save`事件，返回当前可编辑的所有数据；若需要`自定义操作区`则需要使用`footer`插槽；`footerBtnAlign`: TTable 底部按钮对齐方式,有三个值：`left`、`center`、`right`。
+TTable/footerSlot
+:::
+
 ### 展开行
 
 :::demo 在`table`对象中添加`firstColumn:{ type: 'expand', fixed: true }` `expand`作用域插槽，解构传出`{scope}`
@@ -404,6 +410,7 @@ TTable/expand
 | loadingTxt<el-tag>1.4.12</el-tag>      | table loading文字提示                                                               | string           | 加载中...                                  |
 | useVirtual<el-tag>1.4.13</el-tag>      | table 是否开启虚拟滚动                                                              | Boolean          | false                                      |
 | virtualShowSize<el-tag>1.4.13</el-tag> | 虚拟列表的渲染行数                                                                  | Number           | 30                                         |
+| footerBtnAlign<el-tag>1.4.14</el-tag>  | TTable底部插槽操作布局方式有三个值（`left` `center` `right`）                       | String           | 'right'                                    |
 
 ### 3、events 其他事件按照 el-table 直接使用（如 sort-change 排序事件）
 
@@ -438,5 +445,5 @@ TTable/expand
 | -          | el-table-column 单元格编辑插槽（editSlotName 命名） | scope |
 | -          | el-table-column 表头合并插槽（slotNameMerge 命名）  | scope |
 | -          | 操作列前一列自定义默认内容插槽                      | -     |
-| footer     | 底部操作区（默认隐藏，使用插槽展示“保存”按钮）      | -     |
+| footer     | 底部操作区具名插槽需要设置`isShowFooterBtn`         | -     |
 | pagination | 分页器自定义内容 设置文案(table 设置 layout 才生效) | -     |

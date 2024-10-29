@@ -114,6 +114,10 @@ export const tableProps = {
   virtualShowSize: {
     type: Number,
     default: 30
+  },
+  footerBtnAlign: {
+    type: String,
+    default: "right"
   }
 }
 
