@@ -211,7 +211,7 @@ const compChildLabel = computed(() => {
     switch (configEdit.type) {
       case "radio":
       case "checkbox":
-        return value.value
+        return value[configEdit.arrLabel || "label"]
       case "el-select-multiple":
       case "select-arr":
         return value[configEdit.arrLabel || "label"]
@@ -230,7 +230,7 @@ const compChildValue = computed(() => {
     switch (configEdit.type) {
       case "radio":
       case "checkbox":
-        return value.value
+        return value[configEdit.arrKey || "key"]
       case "el-select-multiple":
       case "select-arr":
         return value[configEdit.arrKey || "key"]
@@ -245,7 +245,7 @@ const compChildShowLabel = computed(() => {
     switch (configEdit.type) {
       case "radio":
       case "checkbox":
-        return value.label
+        return value[configEdit.arrLabel || "label"]
       case "el-select-multiple":
       case "select-arr":
         return value[configEdit.arrLabel || "label"]

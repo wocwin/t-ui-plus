@@ -298,7 +298,8 @@ const formOpts = reactive<FormTypes.FormOpts>({
       value: "sex1",
       type: "radio",
       comp: "el-radio-group",
-      list: "sexList1"
+      list: "sexList1",
+      arrKey: "value"
     },
     {
       label: "状态",
@@ -315,7 +316,8 @@ const formOpts = reactive<FormTypes.FormOpts>({
       type: "checkbox",
       comp: "el-checkbox-group",
       list: "hobbyList",
-      event: "checkbox"
+      event: "checkbox",
+      arrKey: "value",
     },
     {
       label: "手机号码",

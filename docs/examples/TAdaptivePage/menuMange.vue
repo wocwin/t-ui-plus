@@ -107,6 +107,7 @@ const formOpts = reactive<FormTypes.FormOpts>({
       type: "radio",
       list: "menuTypeList",
       comp: "el-radio-group",
+      arrKey: "value",
       eventHandle: {
         change: (val: any) => menuTypeChange(val)
       }
@@ -116,7 +117,8 @@ const formOpts = reactive<FormTypes.FormOpts>({
       value: "isHide",
       type: "radio",
       list: "isHideList",
-      comp: "el-radio-group"
+      comp: "el-radio-group",
+      arrKey: "value",
     },
     { label: "菜单名称", value: "title", type: "input", comp: "el-input" },
     {
@@ -133,14 +135,16 @@ const formOpts = reactive<FormTypes.FormOpts>({
       type: "radio",
       list: "whetherList",
       comp: "el-radio-group",
-      event: "isShowLink"
+      event: "isShowLink",
+      arrKey: "value",
     },
     {
       label: "是否全屏",
       value: "isFull",
       type: "radio",
       list: "whetherList",
-      comp: "el-radio-group"
+      comp: "el-radio-group",
+      arrKey: "value",
     },
     {
       label: "是否固定",
@@ -159,7 +163,8 @@ const formOpts = reactive<FormTypes.FormOpts>({
       value: "isAffix",
       type: "radio",
       list: "whetherList",
-      comp: "el-radio-group"
+      comp: "el-radio-group",
+      arrKey: "value",
     },
     {
       label: "是否缓存",
@@ -167,6 +172,7 @@ const formOpts = reactive<FormTypes.FormOpts>({
       type: "radio",
       list: "whetherList",
       comp: "el-radio-group",
+      arrKey: "value",
       widthSize: 1
     },
     {

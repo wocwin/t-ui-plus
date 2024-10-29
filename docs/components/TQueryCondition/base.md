@@ -159,8 +159,8 @@ TQueryCondition/handleEventChange
 | -----changeEvent  | 事件名称                                               | string           | -          |
 | -----defaultVal   | 默认值                                                 | string           | -          |
 | -----type         | element 组件type(radio,checkbox,select-arr,select-obj) | string           | -          |
-| -----arrLabel     | el-select 组件options label显示                        | string           | label      |
-| -----arrKey       | el-select 组件options key显示                          | string           | key        |
+| -----arrLabel     | el-select/el-checkbox-group/el-radio-group 组件options label显示                        | string           | label      |
+| -----arrKey       | el-select/el-checkbox-group/el-radio-group 组件options key显示                          | string           | key        |
 | -----list         | el-select 组件options 数据标识                         | string           | -          |
 | -----listTypeInfo | el-select 组件options 数据源                           | object           | -          |
 
@@ -176,8 +176,8 @@ TQueryCondition/handleEventChange
 | slotName    | 自定义输入框插槽(作用域插槽解构接收{param/scope}返回当前所有表单初始值)          | string           | -                          |
 | comp        | 组件名称，可直接指定全局注册的组件，也可引入'elmentUI'如：Button 或者'el-button' | string/component | -                          |
 | span        | 控件占用的列宽，默认占用 1 列，最多 4 列 (独占一行)                              | number           | 1                          |
-| arrLabel    | type=select-arr 时，每个下拉显示的中文                                           | String           | label                      |
-| arrKey      | type=select-arr 时，每个下拉显示的中文传后台的数字                               | String           | key                        |
+| arrLabel    | type=select-arr/radio/checkbox 时，每个下拉显示的中文                                           | String           | label                      |
+| arrKey      | type=select-arr/radio/checkbox 时，每个下拉显示的中文传后台的数字                               | String           | key                        |
 | defaultVal  | 默认值                                                                           | -                | -                          |
 | bind        | 继承第三方 UI 的 Attributes,function 传出 form                                   | object/function  | -                          |
 | eventHandle | 配置组件事件，与写组件时 change 等同理                                           | object           | 本身值，当前 formData 数据 |

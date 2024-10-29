@@ -74,6 +74,7 @@ const opts = computed(() => {
       type: "checkbox",
       list: "hobbyList",
       listTypeInfo: state.listTypeInfo,
+      arrKey: "value",
       span: 2
     },
     workshopNum: {

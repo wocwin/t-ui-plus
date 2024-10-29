@@ -91,7 +91,8 @@ const formOpts = reactive<FormTypes.FormOpts>({
       type: "checkbox",
       comp: "el-checkbox-group",
       list: "hobbyList",
-      event: "checkbox"
+      event: "checkbox",
+      arrKey: "value",
     },
     {
       label: "手机号码",

@@ -372,8 +372,8 @@ TTable/expand
 | ----------event                        | 触发 handleEvent 事件的标志                                                         | String           | -                                          |
 | ----------type                         | 下拉或者复选框显示（select-arr/select-obj/checkbox）                                | String           | -                                          |
 | ----------list                         | 下拉选择数据源名称                                                                  | String           | -                                          |
-| ----------arrLabel                     | type:select-arr 时对应显示的中文字段                                                | String           | label                                      |
-| ----------arrKey                       | type:select-arr 时对应显示的数字字段                                                | String           | key                                        |
+| ----------arrLabel                     | type:select-arr/radio/checkbox 时对应显示的中文字段                                 | String           | label                                      |
+| ----------arrKey                       | type:select-arr/radio/checkbox 时对应显示的数字字段                                 | String           | key                                        |
 | ----filters                            | 字典过滤                                                                            | Object           | -                                          |
 | ----------list                         | listTypeInfo 里面对应的下拉数据源命名                                               | String           | -                                          |
 | ----------key                          | 数据源的 key 字段                                                                   | String           | 'value'                                    |

@@ -106,7 +106,8 @@ const formOpts: any = reactive({
           comp: "el-checkbox-group",
           list: "hobbyList",
           event: "checkbox",
-          widthSize: 1
+          widthSize: 1,
+          arrKey: "value",
         }
       ],
       rules: {

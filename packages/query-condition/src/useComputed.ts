@@ -31,7 +31,7 @@ export function useComputed() {
       switch (opt.type) {
         case "radio":
         case "checkbox":
-          return value.value
+          return value[opt.arrLabel || "label"]
         case "el-select-multiple":
         case "select-arr":
           return value[opt.arrLabel || "label"]
@@ -46,7 +46,7 @@ export function useComputed() {
       switch (opt.type) {
         case "radio":
         case "checkbox":
-          return value.value
+          return value[opt.arrKey || "key"]
         case "el-select-multiple":
         case "select-arr":
           return value[opt.arrKey || "key"]
@@ -61,7 +61,7 @@ export function useComputed() {
       switch (opt.type) {
         case "radio":
         case "checkbox":
-          return value.label
+          return value[opt.arrLabel || "label"]
         case "el-select-multiple":
         case "select-arr":
           return value[opt.arrLabel || "label"]
