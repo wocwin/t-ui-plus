@@ -62,6 +62,11 @@ TInput/compoundType
 TInput/size
 :::
 
+### 插槽使用
+:::demo 按照 `el-input` 方式来使用插槽
+TInput/slot
+:::
+
 ### TInput Attributes
 
 ---
