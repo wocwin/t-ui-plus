@@ -12,7 +12,10 @@
         @input-blur="blurInput"
         @input-click="clickInput"
         @radioChange="radioChange"
-      ></t-select-table>
+      >
+      <template #prepend>Http://</template>
+      <template #append>.com</template>
+      </t-select-table>
     </t-layout-page-item>
   </t-layout-page>
 </template>
