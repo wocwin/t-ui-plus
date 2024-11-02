@@ -9,7 +9,13 @@
         @radioChange="radioChange"
         :rowClickRadio="false"
         :isShowPagination="false"
-      />
+      >
+       <template #toolbar>
+          <el-button size="default" type="primary" @click="cancelSelect"
+            >取消选中</el-button
+          >
+        </template>
+      </t-table>
     </t-layout-page-item>
   </t-layout-page>
 </template>
@@ -66,5 +72,9 @@ const selectionTable: any = ref<HTMLElement | null>(null)
 // 选择单选框
 const radioChange = (val: any) => {
   console.log("选择单选框", val)
+}
+// 取消选择
+const cancelSelect = () => {
+  selectionTable.value.clearRadioHandle()
 }
 </script>

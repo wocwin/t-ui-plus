@@ -651,6 +651,11 @@ const rowClick = (row: any) => {
   }
   radioClick(row, state.tableData.indexOf(row) + 1)
 }
+// 清除单选框选中状态
+const clearRadioHandle = () => {
+  radioVal.value = null
+   TTable.value.setCurrentRow(-1)
+}
 // 复制内容
 const copyDomText = (val: any) => {
   // 获取需要复制的元素以及元素内的文本内容
@@ -944,7 +949,8 @@ defineExpose({
   clearValidate,
   resetFields,
   saveMethod,
-  reSetColumnSet
+  reSetColumnSet,
+  clearRadioHandle
 })
 </script>
 <style lang="scss" scoped>
