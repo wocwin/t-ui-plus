@@ -69,23 +69,13 @@ const table = ref<TableTypes.Table>({
         return <span style="color:red">render方式</span>
       },
       render: val => {
-        let label = ""
-        let type = ""
-        switch (val) {
-          case "1":
-            type = "info"
-            label = "待办"
-            break
-          case "2":
-            type = "warning"
-            label = "待提交"
-            break
-          case "3":
-            type = "success"
-            label = "完成"
-            break
-        }
-        return <el-tag type={type}>{label}</el-tag>
+        const statusMap = {
+          "1": { type: "info", label: "待办" },
+          "2": { type: "warning", label: "待提交" },
+          "3": { type: "success", label: "完成" }
+        };
+        const { type, label } = statusMap[val] || { type: "", label: "" };
+        return <el-tag type={type}>{label}</el-tag>;
       }
     },
     {
@@ -105,7 +95,7 @@ const table = ref<TableTypes.Table>({
       renderHeader: () => {
         return <span style="color:red">render for循环渲染</span>
       },
-      minWidth: "180",
+      minWidth: "220",
       render: (text, record) => {
         return (
           <div>

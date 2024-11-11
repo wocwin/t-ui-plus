@@ -625,26 +625,19 @@ const isForbidden = () => {
 const radioClick = (row: { [x: string]: any }, index: string) => {
   forbidden.value = !forbidden.value
   if (radioVal.value === index) {
-    radioVal.value = ""
-    isForbidden()
-    resetState()
-    emits("radioChange", {}, null)
+    clear()
   } else {
     updateState(row, index)
   }
 
-  if (props.isExpanded) {
+  if (props.isExpanded && state.defaultValue) {
     selectDefaultLabel.value = state.defaultValue[props.keywords.label] || ""
     selectRef.value.expanded = true
   } else {
     blur()
   }
 }
-const resetState = () => {
-  state.defaultValue = {}
-  state.defaultSelectValue = []
-  isDefaultSelectVal.value = true
-}
+
 const updateState = (row: { [x: string]: any }, index: string) => {
   isForbidden()
   radioVal.value = index
@@ -698,7 +691,7 @@ const clear = () => {
     forbidden.value = false
     selectDefaultLabel.value = null
     state.defaultValue = null
-    emits("radioChange", {}, null)
+    emits("radioChange", null, null)
   }
 }
 // 触发select隐藏
