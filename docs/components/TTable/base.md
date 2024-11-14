@@ -143,6 +143,19 @@ TTable/selectionIndex
 TTable/radioIndex
 :::
 
+### Table empty插槽使用<el-tag>1.4.15</el-tag>
+
+:::demo
+TTable/emptySlot
+:::
+
+### Table empty-text使用
+
+:::demo
+TTable/emptyText
+:::
+
+
 ### 双击单元格复制(默认不开启)
 
 :::demo 若需要关闭（在 TTable 标签中设置属性：`isCopy:true`）

@@ -306,6 +306,9 @@
           </div>
         </template>
       </el-table-column>
+      <template v-for="(index, name) in slots" v-slot:[name]="data">
+        <slot :name="name" v-bind="data"></slot>
+      </template>
     </el-table>
     <!-- 分页器 -->
     <el-pagination
