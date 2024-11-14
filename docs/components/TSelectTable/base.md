@@ -203,6 +203,7 @@ TSelectTable/isShowInput
 | virtualShowSize<el-tag>1.4.13</el-tag> | 虚拟列表的渲染行数                                                                      | Number                    | 30         |
 | multipleDisableDelete<el-tag>1.4.14</el-tag> | 多选--之前选中的数据不在新数据源下，是否隐藏`tag`删除icon | Boolean     | false       |
 | defaultValIsOpenRadioChange<el-tag>1.4.14</el-tag> | 默认赋值--是否开启单选事件 | Boolean     | false       |
+| radioSameIsCancel<el-tag>1.4.15</el-tag> | 单选选中同一条数据，是否取消选中 | Boolean     | true       |
 
 
 ### 3、事件（events）继承 el-table 及 el-select 属性

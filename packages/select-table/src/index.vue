@@ -625,6 +625,7 @@ const isForbidden = () => {
 const radioClick = (row: { [x: string]: any }, index: string) => {
   forbidden.value = !forbidden.value
   if (radioVal.value === index) {
+    if (!props.radioSameIsCancel) return
     clear()
   } else {
     updateState(row, index)

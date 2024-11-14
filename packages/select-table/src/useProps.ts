@@ -164,6 +164,11 @@ export const selectTableProps = {
   multipleDisableDelete: Boolean,
   // 默认赋值--是否开启单选事件
   defaultValIsOpenRadioChange: Boolean,
+  // 单选选中同一条数据，是否取消选中
+  radioSameIsCancel:  {
+    type: Boolean,
+    default: true
+  },
 }
 
 export type TSelectTableProps = ExtractPropTypes<typeof selectTableProps>
