@@ -11,7 +11,10 @@
   >
     <template v-for="(item, index) in formOpts.fieldList">
       <el-form-item
-        v-if="!item.isHideItem"
+       v-if="
+          typeof item.isHideItem == 'function'
+            ? item.isHideItem(formOpts.formData)
+            : !item.isHideItem"
         :key="index"
         :prop="item.value"
         :label="item.label"

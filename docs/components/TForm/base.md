@@ -73,6 +73,13 @@ TForm/echo
 :::demo
 TForm/linkage
 :::
+### 动态显示隐藏表单项 <el-tag>v1.4.15</el-tag>
+
+:::demo 操作`formOpts.fieldList`中的`isHideItem`属性来控制表单项的显示与隐藏(function方式)
+
+TForm/isHideItemFunction
+
+:::
 
 ### 弹窗动态显示表单项
 
@@ -123,7 +130,7 @@ TForm/btnisHide
 | ---labelPosition                      | 改变表单项 label 与输入框的布局方式(默认：right) /top （优先展示组件`labelPosition`）                                                           | String            | right                           |
 | ---listTypeInfo                       | 下拉选择数据源（type:'select'有效）                                                                                                             | Object            | -                               |
 | ---fieldList                          | form 表单每项 list                                                                                                                              | Array             | -                               |
-| ------isHideItem                      | 某一项不显示                                                                                                                                    | Boolean           | false                           |
+| ------isHideItem                      | 动态显示隐藏某一项;function时传出formData                                                                                                       | Boolean /function | false                           |
 | ------slotName                        | 自定义表单某一项输入框                                                                                                                          | slot              | -                               |
 | ------childSlotName                   | 自定义表单某一下拉选择项子组件插槽（el-option）                                                                                                 | slot              | -                               |
 | ------comp                            | 表单每一项组件名称（可使用第三方 UI 如 el-select/el-input 也可以使用自定义组件）                                                                | String/components | -                               |
@@ -133,8 +140,8 @@ TForm/btnisHide
 | ------type                            | 某一项类型<t-tip content='(目前只有checkbox/radio/select-arr/select-obj/inputNumber)此值只有组件内嵌组件才设置（如：el-select内嵌el-option）'/> | String            | -                               |
 | ------widthSize                       | form 表单某一项所占比例(如果占一整行则设置 1)                                                                                                   | Number            | -                               |
 | ------width                           | form 表单某一项所占实际宽度                                                                                                                     | String            | -                               |
-| ------arrLabel                        | type=select-arr/radio/checkbox 时，每个下拉显示的中文                   | String            | label                           |
-| ------arrKey                          | type=select-arr/radio/checkbox时，每个下拉显示的中文传后台的数字                                                      | String            | key                             |
+| ------arrLabel                        | type=select-arr/radio/checkbox 时，每个下拉显示的中文                                                                                           | String            | label                           |
+| ------arrKey                          | type=select-arr/radio/checkbox时，每个下拉显示的中文传后台的数字                                                                                | String            | key                             |
 | ------label                           | form 表单每一项 title                                                                                                                           | String            | -                               |
 | ------labelRender                     | 自定义某一项 title                                                                                                                              | function          | -                               |
 | ------labelSlotName                   | 自定义某一项 title（插槽名：就是 labelSlotName 值                                                                                               | slot              | -                               |
@@ -145,14 +152,14 @@ TForm/btnisHide
 | ------eventHandle                     | 继承 comp 组件的事件                                                                                                                            | Object            | -                               |
 | ------ref                             | 当前使用组件的 ref 标识（可以通过 getRefs 事件返回）                                                                                            | String            | -                               |
 | ---formData                           | 表单提交数据(对应 fieldList 每一项的 value 值)                                                                                                  | Object            | -                               |
-| ---labelWidth                         | label 宽度                                            | String            | 120px                           |
+| ---labelWidth                         | label 宽度                                                                                                                                      | String            | 120px                           |
 | ---rules                              | 校验规则（可参考 element-plus el-form 方式配置）                                                                                                | Object/Array      | -                               |
 | ---btnSlotName                        | 操作按钮插槽命名                                                                                                                                | String            | -                               |
 | ---operatorList                       | 操作按钮 list                                                                                                                                   | Array             | -                               |
-| -----bind                             | 继承 el-button 所有 Attributes                 | Object            | `{type:'primary',size:'small'}` |
+| -----bind                             | 继承 el-button 所有 Attributes                                                                                                                  | Object            | `{type:'primary',size:'small'}` |
 | -----fun                              | 事件名                                                                                                                                          | function          | -                               |
-| -----isHideBtn<el-tag>1.4.12</el-tag> | 是否隐藏按钮                                      | Boolean           | false                           |
-| -----render<el-tag>1.4.12</el-tag>    | render函数<t-tip content='render函数不允跟bind、fun、isHideBtn同时使用'/>               | function          | -                               |
+| -----isHideBtn<el-tag>1.4.12</el-tag> | 是否隐藏按钮                                                                                                                                    | Boolean           | false                           |
+| -----render<el-tag>1.4.12</el-tag>    | render函数<t-tip content='render函数不允跟bind、fun、isHideBtn同时使用'/>                                                                       | function          | -                               |
 
 ### 3. events 继承 element-plus el-form 的 events
 
