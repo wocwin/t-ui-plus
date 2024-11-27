@@ -64,30 +64,28 @@
             t_select_table_multiple: useVirtual && multiple,
             t_select_table_radio: useVirtual && !multiple
           }"
-          highlight-current-row
-          border
           :row-class-name="getRowClassName"
           :row-key="getRowKey"
           @row-click="rowClick"
           @cell-dblclick="cellDblclick"
           @selection-change="handlesSelectionChange"
-          v-bind="$attrs"
+          v-bind="{ border, size: tableSize, 'highlight-current-row': true, ...$attrs }"
         >
           <el-table-column
             v-if="multiple"
             type="selection"
-            width="55"
-            align="center"
+            :width="tableSize === 'large' ? 65 : 55"
+            :align="align || 'center'"
             :reserve-selection="reserveSelection"
             :selectable="selectable"
             :fixed="multipleFixed"
           ></el-table-column>
           <el-table-column
             type="radio"
-            width="55"
+            :width="tableSize === 'large' ? 65 : 55"
             :label="radioTxt"
             :fixed="radioFixed"
-            align="center"
+            :align="align || 'center'"
             v-if="!multiple && isShowFirstRadio"
           >
             <template #default="scope">
@@ -107,7 +105,7 @@
             :prop="item.prop"
             :min-width="item['min-width'] || item.minWidth"
             :width="item.width"
-            :align="item.align || 'center'"
+            :align="item.align || align || 'center'"
             :fixed="item.fixed"
             v-bind="{ 'show-overflow-tooltip': true, ...item.bind, ...$attrs }"
           >
@@ -137,13 +135,11 @@
           <el-pagination
             v-model:current-page="table.currentPage"
             v-model:page-size="table.pageSize"
-            size="small"
-            background
             @current-change="handlesCurrentChange"
             layout="total, prev, pager, next, jumper"
             :pager-count="table['pager-count'] || 5"
             :total="table.total"
-            v-bind="$attrs"
+            v-bind="{ background: true, size: paginationSize || 'small', ...$attrs }"
           />
         </div>
       </div>

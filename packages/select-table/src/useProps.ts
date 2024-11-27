@@ -165,10 +165,30 @@ export const selectTableProps = {
   // 默认赋值--是否开启单选事件
   defaultValIsOpenRadioChange: Boolean,
   // 单选选中同一条数据，是否取消选中
-  radioSameIsCancel:  {
+  radioSameIsCancel: {
     type: Boolean,
     default: true
   },
+  // table是否显示边框
+  border: {
+    type: Boolean,
+    default: true
+  },
+  // table大小 可选值：`large`、`default`、`small`
+  tableSize: {
+    type: String,
+    default: ''
+  },
+  // table对齐方式 可选值：`left`、`center`、`right`
+  align: {
+    type: String,
+    default: 'center'
+  },
+  // 分页器大小 可选值：`large`、`default`、`small`
+  paginationSize: {
+    type: String,
+    default: 'small'
+  }
 }
 
 export type TSelectTableProps = ExtractPropTypes<typeof selectTableProps>
