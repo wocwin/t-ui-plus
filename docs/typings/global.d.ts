@@ -110,6 +110,8 @@ declare namespace TableTypes {
     render?: (...ags: any[]) => any; // 自定义列内容
     slotName?: string; // 自定义列内容插槽
     canEdit?: boolean; // 是否可编辑
+    isClickEdit?: boolean; // 是否点击编辑
+    isShowEditIcon?: boolean; // 是否显示编辑图标
     configEdit?: ConfigEdit; // 编辑配置
     filters?: Filters; // 字典过滤
     children?: any[]; // 子列
@@ -130,6 +132,8 @@ declare namespace TableTypes {
     type?: string; // 编辑框类型
     prepend?: string; // el-input前缀
     append?: string; // el-input后缀
+    ref?: string; // ref
+    isShowTips?: boolean; // 是否显示tips
     label?: string; // label
     list?: string; // 下拉数据字段名称
     arrLabel?: string; // 下拉数据label字段名称

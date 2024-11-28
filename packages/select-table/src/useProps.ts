@@ -176,17 +176,17 @@ export const selectTableProps = {
   },
   // table大小 可选值：`large`、`default`、`small`
   tableSize: {
-    type: String,
+    type: String as PropType<'' | 'large' | 'default' | 'small'>,
     default: ''
   },
   // table对齐方式 可选值：`left`、`center`、`right`
   align: {
-    type: String,
+    type: String as PropType<'left' | 'center' | 'right'>,
     default: 'center'
   },
   // 分页器大小 可选值：`large`、`default`、`small`
   paginationSize: {
-    type: String,
+    type: String as PropType<''| 'large' | 'default' | 'small' >,
     default: 'small'
   }
 }

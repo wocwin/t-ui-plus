@@ -19,7 +19,7 @@
     <template v-if="configEdit.isSelfCom">
       <component
         v-if="configEdit.editComponent === 't-select-table'"
-        :ref="(el:any) => handleRef(el)"
+        :ref="(el:any) => handleRef(el,configEdit)"
         :is="configEdit.editComponent"
         :placeholder="configEdit.placeholder || getPlaceholder(configEdit)"
         v-bind="
@@ -35,6 +35,7 @@
         :is="configEdit.editComponent"
         v-model="childValue"
         :placeholder="configEdit.placeholder || getPlaceholder(configEdit)"
+        :ref="(el: any) => getRefs(el, configEdit)"
         v-bind="
           typeof configEdit.bind == 'function'
             ? configEdit.bind(scope)
@@ -51,7 +52,7 @@
       v-model="childValue"
       :type="configEdit.type"
       :placeholder="configEdit.placeholder || getPlaceholder(configEdit)"
-      ref="parentCom"
+      :ref="(el: any) => getRefs(el, configEdit)"
       :class="prop"
       @change="handleEvent(configEdit.event)"
       @keyup="keyUpHandle"
@@ -127,7 +128,7 @@ const props = defineProps({
   indexColumns: [String, Number]
 })
 // 抛出事件
-const emits = defineEmits(["handleEvent", "update:modelValue", "keyupHandle"])
+const emits = defineEmits(["handleEvent", "update:modelValue", "keyupHandle", "getRefs"])
 // vue3 v-model简写
 let childValue: any = computed({
   get() {
@@ -254,10 +255,15 @@ const compChildShowLabel = computed(() => {
     }
   }
 })
+// 获取所有ref
+const getRefs = (el: any, item: any) => {
+  emits("getRefs", el, item)
+}
 // 下拉选择表格组件 ref
 const tselecttableref: any = ref({})
 // 下拉选择表格组件 动态ref
-const handleRef = (el: any) => {
+const handleRef = (el: any, item: any) => {
+  emits("getRefs", el, item)
   if (el) {
     tselecttableref.value[`tselecttableref-${props.indexColumns}`] = el
   }

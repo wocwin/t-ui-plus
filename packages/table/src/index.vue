@@ -54,6 +54,7 @@
       :class="{
         cursor: isCopy,
         row_sort: isRowSort,
+        row_sort_none: isRowSortIcon,
         tree_style: isTree,
         highlightCurrentRow: highlightCurrentRow,
         radioStyle: radioStyleClass,
@@ -66,6 +67,23 @@
       @cell-dblclick="cellDblclick"
       @row-click="rowClick"
     >
+      <el-table-column
+        v-if="isRowSortIcon"
+        v-bind="{
+          width: rowSortIconBind.width || 55,
+          'min-width': rowSortIconBind['min-width'] || rowSortIconBind.minWidth,
+          label: rowSortIconBind.label || '拖动',
+          fixed: rowSortIconBind.fixed,
+          align: rowSortIconBind.align || align,
+          ...rowSortIconBind
+        }"
+      >
+        <template #default="scope">
+          <el-icon class="row_drag" :color="rowSortIconBind.color" :size="rowSortIconBind.size"
+            ><Rank
+          /></el-icon>
+        </template>
+      </el-table-column>
       <!-- 复选框/单选框/序列号 -->
       <template v-if="!Array.isArray(table.firstColumn) && table.firstColumn">
         <!-- 复选框 -->
@@ -190,11 +208,17 @@
             :fixed="item.fixed"
             v-bind="{ 'show-overflow-tooltip': true, ...item.bind, ...$attrs }"
           >
-            <template #header v-if="item.headerRequired || item.renderHeader">
+            <template #header v-if="item.headerRequired || item.renderHeader || item.isClickEdit">
               <render-header v-if="item.renderHeader" :column="item" :render="item.renderHeader" />
               <div style="display: inline" v-if="item.headerRequired">
                 <span style="color: #f56c6c; font-size: 16px; margin-right: 3px">*</span>
                 <span>{{ item.label }}</span>
+              </div>
+              <div v-if="item.isClickEdit">
+                <span>{{ item.label }}</span>
+                <el-icon v-if="!item.isShowEditIcon" v-bind="{ ...item.editIconBind }">
+                  <Edit />
+                </el-icon>
               </div>
             </template>
             <template #default="scope">
@@ -240,6 +264,20 @@
                   </single-edit-cell>
                 </el-form>
               </template>
+              <!-- 单击单元格编辑 -->
+              <template v-if="item.isClickEdit">
+                <single-edit
+                  :isClickEdit="item.isClickEdit"
+                  :configEdit="item.configEdit"
+                  v-model="scope.row[scope.column.property]"
+                  v-bind="$attrs"
+                  ref="editClickCell"
+                >
+                  <template v-for="(index, name) in slots" v-slot:[name]="data">
+                    <slot :name="name" v-bind="data"></slot>
+                  </template>
+                </single-edit>
+              </template>
               <!-- 字典过滤 -->
               <template v-if="item.filters && item.filters.list">
                 {{
@@ -251,7 +289,15 @@
                   )
                 }}
               </template>
-              <div v-if="!item.render && !item.slotName && !item.canEdit && !item.filters">
+              <div
+                v-if="
+                  !item.render &&
+                  !item.slotName &&
+                  !item.canEdit &&
+                  !item.filters &&
+                  !item.isClickEdit
+                "
+              >
                 <span>{{ scope.row[item.prop] }}</span>
               </div>
             </template>
@@ -315,7 +361,7 @@
       v-if="state.tableData && state.tableData.length && isShowPagination"
       v-model:current-page="table.currentPage"
       @current-change="handlesCurrentChange"
-      :page-sizes="[10, 20, 50, 100]"
+      :page-sizes="table.pageSizes || [10, 20, 50, 100]"
       v-model:page-size="table.pageSize"
       :layout="table.layout || 'total,sizes, prev, pager, next, jumper'"
       :prev-text="table.prevText"
@@ -330,7 +376,7 @@
     <!-- 表格底部按钮 -->
     <footer
       class="handle_wrap"
-      :style="{textAlign: footerBtnAlign}"
+      :style="{ textAlign: footerBtnAlign as any }"
       v-if="isShowFooterBtn && state.tableData && state.tableData.length > 0"
     >
       <slot name="footer" />
@@ -356,6 +402,7 @@ import { ElMessage } from "element-plus"
 import Sortable from "sortablejs"
 import TTableColumn from "./TTableColumn.vue"
 import SingleEditCell from "./singleEditCell.vue"
+import SingleEdit from "./singleEdit.vue"
 import ColumnSet from "./ColumnSet.vue"
 import RenderCol from "./renderCol.vue"
 import RenderHeader from "./renderHeader.vue"
@@ -509,9 +556,10 @@ const initSort = () => {
   if (!props.isRowSort) return
   const el = TTableBox.value?.querySelector(".el-table__body-wrapper tbody")
   // console.log('3333', el)
+  const handle = props.isRowSortIcon ? ".row_drag" : ".el-table__row"
   Sortable.create(el, {
     animation: 150, // 动画
-    // handle: '.move', // 指定拖拽目标，点击此目标才可拖拽元素(此例中设置操作按钮拖拽)
+    handle, // 指定拖拽目标，点击此目标才可拖拽元素(此例中设置操作按钮拖拽)
     // filter: '.disabled', // 指定不可拖动的类名（el-table中可通过row-class-name设置行的class）
     // dragClass: 'dragClass', // 设置拖拽样式类名
     // ghostClass: 'ghostClass', // 设置拖拽停靠样式类名
@@ -657,7 +705,7 @@ const rowClick = (row: any) => {
 // 清除单选框选中状态
 const clearRadioHandle = () => {
   radioVal.value = null
-   TTable.value.setCurrentRow(-1)
+  TTable.value.setCurrentRow(-1)
 }
 // 复制内容
 const copyDomText = (val: any) => {
@@ -927,6 +975,15 @@ const resetFields = () => {
       editTableRef.value[val].resetTselectTableFields()
     })
 }
+// 重置下拉表格--单元格编辑
+const resetTselectTable = () => {
+  // 重置下拉表格
+  const refEditList = Object.keys(editTableRef.value).filter(item => item.includes("singleEditRef"))
+  refEditList.length > 0 &&
+    refEditList.map(val => {
+      editTableRef.value[val].resetTselectTableFields()
+    })
+}
 // 获取columnSet缓存数据
 const reSetColumnSet = () => {
   return columnSetRef.value?.reSetColumnSet()
@@ -953,7 +1010,8 @@ defineExpose({
   resetFields,
   saveMethod,
   reSetColumnSet,
-  clearRadioHandle
+  clearRadioHandle,
+  resetTselectTable
 })
 </script>
 <style lang="scss" scoped>
@@ -1133,6 +1191,16 @@ defineExpose({
   .row_sort {
     :deep(tbody) {
       .el-table__row {
+        cursor: move;
+      }
+    }
+  }
+  .row_sort_none {
+    :deep(tbody) {
+      .el-table__row {
+        cursor: default;
+      }
+      .row_drag {
         cursor: move;
       }
     }

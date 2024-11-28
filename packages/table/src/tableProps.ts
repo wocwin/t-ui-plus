@@ -1,4 +1,4 @@
-import type { ExtractPropTypes } from "vue"
+import type { PropType, ExtractPropTypes } from "vue"
 export const tableProps = {
   // table所需数据
   table: {
@@ -30,9 +30,8 @@ export const tableProps = {
   tableTitle: String,
   // table对齐方式
   align: {
-    type: String,
-    // validator: (value: string) => ['left' | 'center' | 'right' | ''].includes(value),
-    default: "center"
+    type: String as PropType<'left' | 'center' | 'right'>,
+    default: 'center'
   },
   // 是否开启Tree-table
   isTree: {
@@ -43,6 +42,18 @@ export const tableProps = {
   isRowSort: {
     type: Boolean,
     default: false
+  },
+  // 开启行拖拽，第一列是否显示拖拽图标
+  isRowSortIcon: {
+    type: Boolean,
+    default: false
+  },
+  // 显示拖拽列的配置
+  rowSortIconBind: {
+    type: Object,
+    default: () => {
+      return {}
+    }
   },
   // 是否复制单元格
   isCopy: {
