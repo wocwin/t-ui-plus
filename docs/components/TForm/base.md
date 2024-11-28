@@ -58,7 +58,7 @@ TForm/textShow
 
 ### 结合自己封装组件使用
 
-:::demo
+:::demo 可以通过`getRefs`事件获取`formOpts.fieldList`中某项设置的`ref`示例；具体参考示例
 TForm/comUse
 :::
 

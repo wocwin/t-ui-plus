@@ -5,7 +5,6 @@
         ref="TFormDemo"
         v-model="formOpts.ref"
         :formOpts="formOpts"
-        @getRefs="getRefs"
         :widthSize="2"
       />
     </t-layout-page-item>

@@ -47,7 +47,7 @@
           <component
             v-if="item.comp === 't-select-table'"
             :is="item.comp"
-            :ref="(el:any) => handleRef(el, index)"
+            :ref="(el:any) => handleRef(el, item, index)"
             :placeholder="item.placeholder || getPlaceholder(item)"
             v-bind="
               typeof item.bind == 'function'
@@ -385,7 +385,9 @@ const getRefs = (el: any, item: any, index: any) => {
 // 下拉选择表格组件 ref
 const tselecttableref: any = ref({})
 // 下拉选择表格组件 动态ref
-const handleRef = (el: any, key: any) => {
+const handleRef = (el: any,item: any, key: any) => {
+  // console.log('el---2', el,item, key)
+  emits("getRefs", el, item, key)
   if (el) {
     tselecttableref.value[`tselecttableref-${key}`] = el
   }

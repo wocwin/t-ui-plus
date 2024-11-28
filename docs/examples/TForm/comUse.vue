@@ -69,9 +69,13 @@ const submitForm = () => {
 const resetForm = () => {
   TFormDemo.value.selfResetFields()
 }
+const resetRadioForm = () => {
+  console.log("resetRadioForm---清空单选下拉表格")
+  allRefs.value["selectTableRef"].clear()
+}
 const radioChange = row => {
   console.log("下拉选择表格-单选", row)
-  formOpts.formData.deptCode = row.id
+  formOpts.formData.deptCode = row?.id
 }
 const selectionChangeHandler = (row, ids) => {
   console.log("下拉选择表格--复选框", row, ids)
@@ -210,6 +214,7 @@ const formOpts = reactive<FormTypes.FormOpts>({
       label: "下拉选择表格-单选",
       value: "deptCode",
       placeholder: "t-select-table单选使用",
+      ref: "selectTableRef",
       comp: "t-select-table",
       isSelfCom: true,
       bind: {
@@ -257,7 +262,8 @@ const formOpts = reactive<FormTypes.FormOpts>({
   ],
   operatorList: [
     { label: "提交", bind: { type: "danger" }, fun: submitForm },
-    { label: "重置", bind: { type: "primary" }, fun: resetForm }
+    { label: "重置", bind: { type: "primary" }, fun: resetForm },
+    { label: "重置单选下拉表格", bind: { type: "primary" }, fun: resetRadioForm }
   ]
 })
 
