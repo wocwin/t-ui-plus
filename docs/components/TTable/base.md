@@ -398,6 +398,7 @@ TTable/expand
 | ----canEdit                                 | 是否开启单元格编辑功能                                                              | Boolean          | false                                      |
 | ----isClickEdit<el-tag>1.4.15</el-tag>      | 是否开启单击-单元格编辑功能                                                         | Boolean          | false                                      |
 | ----isShowEditIcon<el-tag>1.4.15</el-tag>   | 开启单击-单元格编辑后表头是否显示编辑图标                                           | Boolean          | false                                      |
+| ----editIconAlign<el-tag>1.4.15</el-tag>    | 编辑icon表头的对齐方式(可选值：flex-end、center、flex-start)                        | String           | 'center'                                   |
 | ----configEdit                              | 表格编辑配置（开启编辑功能有效）                                                    | Object           | -                                          |
 | ----------rules                             | 规则（可依据 elementPlus el-form 配置————对应 columns 的 prop 值）                  | Object           | -                                          |
 | ----------label                             | placeholder 显示                                                                    | String           | -                                          |
@@ -411,6 +412,7 @@ TTable/expand
 | ----------arrKey                            | type:select-arr/radio/checkbox 时对应显示的数字字段                                 | String           | key                                        |
 | ----------ref                               | 当前使用组件的 ref 标识（可以通过 getRefs 事件返回）                                | String           | -                                          |
 | ----------isShowTips<el-tag>1.4.15</el-tag> | 开启单击-单元格编辑后鼠标移入是否显示tip                                            | Boolean          | false                                      |
+| ----------tipbind<el-tag>1.4.15</el-tag>    | 继承el-tooltip的所有属性                                                            | Object           | -                                          |
 | ----filters                                 | 字典过滤                                                                            | Object           | -                                          |
 | ----------list                              | listTypeInfo 里面对应的下拉数据源命名                                               | String           | -                                          |
 | ----------key                               | 数据源的 key 字段                                                                   | String           | 'value'                                    |

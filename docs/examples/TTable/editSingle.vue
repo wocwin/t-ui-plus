@@ -59,7 +59,6 @@ const table = ref<TableTypes.Table>({
       label: "爱好单选",
       minWidth: "180",
       isClickEdit: true,
-      isShowEditIcon: true,
       configEdit: {
         label: "爱好单选",
         type: "select-arr",
@@ -68,7 +67,6 @@ const table = ref<TableTypes.Table>({
         event: "hobbyList",
         arrLabel: "label",
         arrKey: "value",
-        isShowTips: true
       }
     },
     {

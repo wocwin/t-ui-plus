@@ -214,9 +214,13 @@
                 <span style="color: #f56c6c; font-size: 16px; margin-right: 3px">*</span>
                 <span>{{ item.label }}</span>
               </div>
-              <div v-if="item.isClickEdit">
+              <div
+                v-if="item.isClickEdit"
+                class="click_edit"
+                :style="{ justifyContent: item.editIconAlign || align || 'center' }"
+              >
                 <span>{{ item.label }}</span>
-                <el-icon v-if="!item.isShowEditIcon" v-bind="{ ...item.editIconBind }">
+                <el-icon v-if="!item.isShowEditIcon" v-bind="{ size: 14, ...item.editIconBind }">
                   <Edit />
                 </el-icon>
               </div>
@@ -1093,7 +1097,18 @@ defineExpose({
       }
     }
   }
-
+  .el-table {
+    .cell {
+      .click_edit {
+        display: flex;
+        align-items: center;
+        line-height: 1;
+        .el-icon {
+          margin-left: 2px;
+        }
+      }
+    }
+  }
   .el-table th,
   .el-table td {
     padding: 8px 0;

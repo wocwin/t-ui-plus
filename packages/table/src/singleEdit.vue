@@ -8,7 +8,7 @@
           effect: 'light',
           content: '单击可编辑',
           placement: 'top',
-          ...configEdit.bind
+          ...configEdit.tipbind
         }"
       >
         <div v-if="childCom.includes(configEdit.type)">{{ childVal }}&nbsp;</div>
