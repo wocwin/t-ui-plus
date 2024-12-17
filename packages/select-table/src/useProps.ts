@@ -28,7 +28,7 @@ export const selectTableProps = {
   },
   // 选择值
   value: {
-    type: [String, Number, Array]
+    type: [String, Number, Array, Object],
   },
   // table所需数据
   table: {
@@ -186,9 +186,16 @@ export const selectTableProps = {
   },
   // 分页器大小 可选值：`large`、`default`、`small`
   paginationSize: {
-    type: String as PropType<''| 'large' | 'default' | 'small' >,
+    type: String as PropType<'' | 'large' | 'default' | 'small'>,
     default: 'small'
-  }
+  },
+  // 单选--是否开启回显label
+  isRadioEchoLabel: {
+    type: Boolean,
+    default: true
+  },
+  // 单选--回显label
+  radioSelectValLabel: String
 }
 
 export type TSelectTableProps = ExtractPropTypes<typeof selectTableProps>

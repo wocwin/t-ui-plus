@@ -276,8 +276,18 @@ watch(
   val => {
     // console.log("props.defaultSelectVal---watch", val, isDefaultSelectVal.value)
     state.defaultSelectValue = val
-    if (val.length > 0 && isDefaultSelectVal.value) {
-      defaultSelect(val)
+    // if (val.length > 0 && isDefaultSelectVal.value) {
+    //   defaultSelect(val)
+    // }
+    if (val.length > 0) {
+      if (props.multiple) {
+        if (isDefaultSelectVal.value) {
+          defaultSelect(state.defaultSelectValue)
+        }
+      } else {
+        console.log("this.defaultSelectValue---watch---1111", state.defaultSelectValue)
+        defaultSelect(state.defaultSelectValue)
+      }
     }
   },
   { deep: true }
@@ -296,6 +306,7 @@ onMounted(() => {
     getDom(props)
     scrollContainerEl.value?.addEventListener("scroll", handleScroll)
   }
+  if (props.radioSelectValLabel) findLabel()
 })
 
 // 更新实际渲染数据
@@ -453,8 +464,14 @@ const findLabel = () => {
         item.currentLabel = item.value
       })
     } else {
-      selectDefaultLabel.value =
-        (state.defaultValue && state.defaultValue[props.keywords.label]) || ""
+      if (props.isRadioEchoLabel) {
+        selectDefaultLabel.value =
+          (state.defaultValue && state.defaultValue[props.keywords.label]) ||
+          props.radioSelectValLabel
+      } else {
+        selectDefaultLabel.value =
+          (state.defaultValue && state.defaultValue[props.keywords.label]) || ""
+      }
     }
   })
 }
@@ -487,18 +504,18 @@ const defaultSelect = (defaultSelectVal: any[]) => {
       })
     }, 0)
   } else {
-    const row = state.tableData.find(item => item[props.keywords.value] === defaultSelectVal[0])
-    if (row) {
-      radioVal.value = state.tableData.indexOf(row) + 1
-      state.defaultValue = row
-      setTimeout(() => {
+    setTimeout(() => {
+      const row = state.tableData.find(item => item[props.keywords.value] === defaultSelectVal[0])
+      if (row) {
+        radioVal.value = state.tableData.indexOf(row) + 1
+        state.defaultValue = row
         selectDefaultLabel.value = row[props.keywords.label]
-      }, 0)
-      // 是否开启单选事件
-      if (!props.defaultValIsOpenRadioChange) {
-        emits("radioChange", row, row[props.keywords.value])
+        // 是否开启单选事件
+        if (!props.defaultValIsOpenRadioChange) {
+          emits("radioChange", row, row[props.keywords.value])
+        }
       }
-    }
+    }, 0)
   }
 }
 

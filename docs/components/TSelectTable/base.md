@@ -42,6 +42,12 @@ TSelectTable/radioKeyup
 TSelectTable/dynamic
 :::
 
+### 单选--回显不是第一页的label<el-tag>1.4.16</el-tag>
+
+::: demo 需要开启`isRadioEchoLabel`（默认是开启），设置`radioSelectValLabel`，若想要`选中效果`，需要动态赋值`defaultSelectVal`
+TSelectTable/radioSelectValLabel
+:::
+
 ### 多选--动态获取下拉数据源
 
 :::demo `multiple` 开启多选；`table` 数据源及表头信息；`keywords` 选项中的 value（选项的值）,label(选项的标签)；`@selectionChange` 多选事件，传出当前选中项，及选中项的 keywords.value 集合
@@ -219,6 +225,8 @@ TSelectTable/tableSize
 | radioSameIsCancel<el-tag>1.4.15</el-tag>           | 单选选中同一条数据，是否取消选中                                                        | Boolean                   | true       |
 | border<el-tag>1.4.15</el-tag>                      | 下拉表格是否显示边框                                                                    | Boolean                   | true       |
 | tableSize<el-tag>1.4.15</el-tag>                   | 下拉表格大小可选值：`large`、`default`、`small`                                         | String                    | ''         |
+| radioSelectValLabel<el-tag>1.4.16</el-tag>  | 单选回显label需要动态配置defaultSelectVal 才有选中效果    | String                    | -         |
+| isRadioEchoLabel<el-tag>1.4.16</el-tag>  | 单选--是否开启回显label    | Boolean                    | true        |
 
 
 ### 3、事件（events）继承 el-table 及 el-select 属性
