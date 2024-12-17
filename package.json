@@ -14,6 +14,7 @@
     "README.md",
     "LICENSE",
     "lib",
+    "typings",
     "global.d.ts"
   ],
   "scripts": {
@@ -93,7 +94,6 @@
     "t-ui",
     "t-ui-plus",
     "wocwin",
-    "vitepress-theme-demoblock",
     "二次封装组件",
     "封装组件",
     "components"
