@@ -174,6 +174,13 @@ TTable/isShowPagination
 TTable/paginationSlot
 :::
 
+### 动态列显示隐藏<el-tag>1.4.16</el-tag>
+
+:::demo 在`columns`中某项动态设置`isShowCol`，默认`false`显示,`true`隐藏,也可以是`function`。
+TTable/isShowCol
+:::
+
+
 ### 字典过滤渲染
 
 :::demo `columns`中某项添加`filters: { list: 'statusList', key: 'id', label: 'label' }`；`table`中添加`listTypeInfo: { statusList:[数据源] }`字典类型的数据源
@@ -392,6 +399,7 @@ TTable/expand
 | ----width                                   | 对应列的宽度(固定的)                                                                | string / number  | -                                          |
 | ----minWidth                                | 对应列的最小宽度(会把剩余宽度按比例分配给设置了 min-width 的列)                     | string / number  | -                                          |
 | ----slotName                                | 插槽显示此列数据（其值是具名作用域插槽                                              | String           | -                                          |
+| ----isShowCol<el-tag>1.4.16</el-tag>        | 动态显示隐藏列                                                                      | Boolean/Function | false                                      |
 | ----isShowHidden                            | 是否动态显示隐藏列设置（隐藏/显示列）                                               | Boolean          | false                                      |
 | ----slotNameMerge                           | 合并表头插槽显示此列数据（其值是具名作用域插槽）                                    | String           | -                                          |
 | ----------scope                             | 具名插槽获取此行数据必须用解构接收{scope}.row 是当前行数据 }                        | Object           | -                                          |

@@ -196,7 +196,7 @@
         <template v-if="!item.children">
           <!-- 常规列 -->
           <el-table-column
-            v-if="item.isShowCol === false ? item.isShowCol : true"
+            v-if="typeof item.isShowCol == 'function' ? item.isShowCol(item) : !item.isShowCol"
             :key="index + 'i'"
             :type="item.type"
             :label="item.label"
