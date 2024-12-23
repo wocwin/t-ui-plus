@@ -58,41 +58,19 @@ const getColumnSetCache = () => {
     )
     item.hidden = findEle ? findEle.hidden : false
   })
-  initColumnSet().map(val => {
-    columnOption.map(item => {
-      if (Object.hasOwn(val, "isShowHidden")) {
-        if (val.label === item.label && val.prop === item.prop && val.isShowHidden) {
-          item.hidden = val.isShowHidden
-        }
-        if (val.label === item.label && val.prop === item.prop && !val.isShowHidden) {
-          item.hidden = val.isShowHidden
-        }
-      }
-    })
-  })
-  if (columnOption.length !== valueArr.length) {
-    value = JSON.stringify(columnOption)
-  }
+  value = JSON.stringify(columnOption)
   return value ? JSON.parse(value) : initColumnSet()
 }
 // 初始化
 const initColumnSet = () => {
-  const columnSet = props.columns.map((col: any, index) =>
-    col.isShowHidden
-      ? {
-          label: col.label,
-          prop: col.prop,
-          hidden: false,
-          checkBoxDisabled: false,
-          isShowHidden: col.isShowHidden
-        }
-      : {
+  const columnSet = props.columns.map((col: any) =>{
+    return{
           label: col.label,
           prop: col.prop,
           checkBoxDisabled: false,
           hidden: false
         }
-  )
+  })
   return columnSet
 }
 
