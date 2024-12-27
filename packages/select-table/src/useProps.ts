@@ -195,7 +195,11 @@ export const selectTableProps = {
     default: true
   },
   // 单选--回显label
-  radioSelectValLabel: String
+  radioSelectValLabel: String,
+  // 其中的选项是否从服务器远程加载
+  remote: Boolean,
+  // 自定义远程搜索方法
+  remoteMethod: Function,
 }
 
 export type TSelectTableProps = ExtractPropTypes<typeof selectTableProps>

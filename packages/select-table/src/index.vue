@@ -19,16 +19,14 @@
     :model-value="multiple ? state.defaultValue : selectDefaultLabel"
     popper-class="t-select-table"
     :style="{ width: selectWidth ? `${selectWidth}px` : '100%' }"
-    :multiple="multiple"
-    v-bind="selectAttr"
     :value-key="keywords.value"
-    :filterable="filterable"
     :filter-method="filterMethod || filterMethodHandle"
     v-click-outside="closeBox"
     @visible-change="visibleChange"
     @remove-tag="removeTag"
     @clear="clear"
     @keyup="selectKeyup"
+    v-bind="{ clearable: true, multiple, filterable, remote, remoteMethod, ...$attrs }"
   >
     <template #empty>
       <div
@@ -46,9 +44,9 @@
               <slot :name="name" v-bind="data"></slot>
             </template>
             <template #querybar v-if="isShowBlurBtn">
-              <el-button v-bind="{ type: 'danger', ...btnBind }" @click="blur">{{
-                btnBind.btnTxt || "关闭下拉框"
-              }}</el-button>
+              <el-button v-bind="{ type: 'danger', ...btnBind }" @click="blur">
+                {{ btnBind.btnTxt || "关闭下拉框" }}
+              </el-button>
               <slot name="querybar"></slot>
             </template>
           </t-query-condition>
@@ -176,12 +174,7 @@ const {
 } = useVirtualized()
 import { selectTableProps } from "./useProps"
 const props = defineProps(selectTableProps)
-const selectAttr = computed(() => {
-  return {
-    clearable: true,
-    ...useAttrs()
-  }
-})
+
 // 自定义指令
 const vClickOutside = ClickOutside
 // 抛出事件
@@ -285,7 +278,7 @@ watch(
           defaultSelect(state.defaultSelectValue)
         }
       } else {
-        console.log("this.defaultSelectValue---watch---1111", state.defaultSelectValue)
+        // console.log("this.defaultSelectValue---watch---1111", state.defaultSelectValue)
         defaultSelect(state.defaultSelectValue)
       }
     }
@@ -542,9 +535,14 @@ const getRowClassName = ({ row }: any) => {
 const getRowKey = (row: { [x: string]: any }) => {
   return row[props.keywords.value]
 }
+
 // 搜索过滤
 const filterMethodHandle = (val: string) => {
   if (!props.filterable) return
+  if (props.filterable && props.remote && typeof props.remoteMethod === "function") {
+    props.remoteMethod(val)
+    return
+  }
   const tableData = JSON.parse(JSON.stringify(props.table?.data))
   if (!tableData || tableData.length === 0) return
   if (!props.multiple) {

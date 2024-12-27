@@ -95,7 +95,7 @@ TForm/btnSlotName
 
 ### 操作按钮render渲染 <el-tag>v1.4.12</el-tag>
 
-:::demo
+:::demo  `render`函数`tsx`方式支持使用组件插槽使用
 TForm/btnRender
 :::
 
