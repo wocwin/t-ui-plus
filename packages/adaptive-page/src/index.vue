@@ -36,6 +36,7 @@
       </t-layout-page-item>
       <slot />
     </t-layout-page>
+    <slot name="footer" />
   </div>
 </template>
 
@@ -78,8 +79,8 @@ const TQueryConditionPage = ref<HTMLElement | null>(null) as any
 const TTablePage = ref<HTMLElement | null>(null) as any
 onMounted(() => {
   const exposedObj = {
-    ...TQueryConditionPage.value.$.exposed,
-    ...TTablePage.value.$.exposed
+    ...TQueryConditionPage.value?.$.exposed,
+    ...TTablePage.value?.$.exposed
   }
   const entries = Object.entries(exposedObj)
   // console.log('111', entries)

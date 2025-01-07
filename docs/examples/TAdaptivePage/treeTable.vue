@@ -1,6 +1,5 @@
 <template>
   <t-adaptive-page
-    class="tree_table_demo"
     title="treeTable列表"
     row-key="path"
     isTree
@@ -8,31 +7,33 @@
     :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
     :columns="table.columns"
     :isShowPagination="false"
-    :opts="opts"
     align="left"
     :key="isKey"
+    :opts="opts"
     ref="TreeTableRef"
     :default-expand-all="isExpandAll"
-    @submit="conditionEnter"
     @selection-change="selectionChange"
+    @submit="conditionEnter"
   >
-    <!-- <template #title> -->
-    <el-alert :closable="false" type="success">
-      <template #title>
-        <div style="display: flex; align-items: center">
-          <div>{{ state.ids.length ? `已选择${state.ids.length}条数据` : "未选中任何记录" }}</div>
-          <el-button
-            style="margin-left: 10px"
-            type="primary"
-            link
-            :disabled="state.ids.length < 1"
-            @click="cancelSelect"
-            >取消</el-button
-          >
-        </div>
-      </template>
-    </el-alert>
-    <!-- </template> -->
+    <template #title>
+      <el-alert :closable="false" type="success">
+        <template #title>
+          <div style="display: flex; align-items: center">
+            <div>
+              {{ state.ids.length ? `已选择${state.ids.length}条数据` : "未选中任何记录" }}
+            </div>
+            <el-button
+              style="margin-left: 10px"
+              type="primary"
+              link
+              :disabled="state.ids.length < 1"
+              @click="cancelSelect"
+              >取消</el-button
+            >
+          </div>
+        </template>
+      </el-alert>
+    </template>
     <template #toolbar>
       <el-button
         size="default"
@@ -49,10 +50,10 @@
   </t-adaptive-page>
 </template>
 
-<script setup lang="tsx" name="treeTableDemo">
-import { computed, onMounted, reactive, ref, toRefs } from "vue"
+<script setup lang="tsx">
+import { onMounted, reactive, ref, toRefs, computed } from "vue"
 import menuData from "./menu.json"
-const TreeTableRef: any = ref<HTMLElement | null>(null)
+const TreeTableRef = ref<HTMLElement | any>(null)
 // 选择复选框
 const selectionChange = (val: any) => {
   console.log("选择复选框", val)
@@ -98,6 +99,39 @@ const cancelSelect = () => {
     TreeTableRef.value.clearSelection()
   }
 }
+const state = reactive({
+  ids: [],
+  queryData: {
+    title: null, // 菜单名称
+    path: null // 菜单路径
+  }
+})
+const opts = computed(() => {
+  return {
+    title: {
+      label: "菜单名称",
+      comp: "el-input"
+    },
+    path: {
+      label: "菜单路径",
+      comp: "el-input"
+    }
+  }
+})
+// 最终参数获取
+const getQueryData = computed(() => {
+  const { title, path } = toRefs(state.queryData)
+  return {
+    title: title.value,
+    path: path.value
+  }
+})
+// 点击查询按钮
+const conditionEnter = (data: any) => {
+  console.log(1122, data)
+  state.queryData = data
+  console.log("最终参数", getQueryData.value)
+}
 const table = reactive<TableTypes.Table>({
   data: [],
   firstColumn: { type: "selection", fixed: true },
@@ -138,40 +172,6 @@ const table = reactive<TableTypes.Table>({
     label: "操作"
   }
 })
-const state = reactive({
-  ids: [],
-  queryData: {
-    title: null, // 菜单名称
-    path: null // 菜单路径
-  }
-})
-
-const opts = computed(() => {
-  return {
-    title: {
-      label: "菜单名称",
-      comp: "el-input"
-    },
-    path: {
-      label: "菜单路径",
-      comp: "el-input"
-    }
-  }
-})
-// 最终参数获取
-const getQueryData = computed(() => {
-  const { title, path } = toRefs(state.queryData)
-  return {
-    title: title.value,
-    path: path.value
-  }
-})
-// 点击查询按钮
-const conditionEnter = (data: any) => {
-  console.log(1122, data)
-  state.queryData = data
-  console.log("最终参数", getQueryData.value)
-}
 onMounted(() => {
   getMenuData()
 })

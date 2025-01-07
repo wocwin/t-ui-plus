@@ -1,44 +1,44 @@
 <template>
-  <t-adaptive-page
-    class="menu_mange"
-    title="菜单管理页面"
-    row-key="path"
-    isTree
-    align="left"
-    :table="table"
-    :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-    :columns="table.columns"
-    :isShowPagination="false"
-    :opts="opts"
-    @submit="conditionEnter"
-  >
-    <template #toolbar>
-      <el-button type="primary" @click="createHandle">新增菜单</el-button>
-    </template>
-    <template #footer>
-      <el-dialog :title="title" width="50%" draggable v-model="addDialog">
-        <t-form
-          v-model="formOpts.ref"
-          :formOpts="formOpts"
-          :widthSize="2"
-          @handle-event="handleEvent"
-        />
-        <template #footer>
-          <div class="dialog-footer">
-            <el-button @click="addDialog = false">取消</el-button>
-            <el-button type="primary" @click="addConfirm">确定</el-button>
-          </div>
+  <t-layout-page class="dept_mange">
+    <t-layout-page-item>
+      <t-table
+        class="menu_mange"
+        title="菜单管理页面"
+        row-key="path"
+        isTree
+        align="left"
+        :table="table"
+        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+        :columns="table.columns"
+        :isShowPagination="false"
+      >
+        <template #toolbar>
+          <el-button type="primary" @click="createHandle">新增菜单</el-button>
         </template>
-      </el-dialog>
-    </template>
-  </t-adaptive-page>
+      </t-table>
+    </t-layout-page-item>
+    <el-dialog :title="title" width="50%" draggable v-model="addDialog">
+      <t-form
+        v-model="formOpts.ref"
+        :formOpts="formOpts"
+        :widthSize="2"
+        @handle-event="handleEvent"
+      />
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="addDialog = false">取消</el-button>
+          <el-button type="primary" @click="addConfirm">确定</el-button>
+        </div>
+      </template>
+    </el-dialog>
+  </t-layout-page>
 </template>
 
 <script setup lang="tsx" name="menuMange">
-import { computed, onMounted, reactive, ref, toRefs } from "vue"
+import { onMounted, reactive, ref } from "vue"
 import { ElMessageBox, ElMessage } from "element-plus"
 import { Warning } from "@element-plus/icons-vue"
-import menuData from "./menu.json"
+import menuData from "./menu1.json"
 interface MenuOptions {
   menuId: number
   parentId: number // 上级菜单
@@ -361,39 +361,7 @@ const resetForm = () => {
   }
   formOpts.ref?.resetFields()
 }
-const state = reactive({
-  queryData: {
-    title: null, // 菜单名称
-    path: null // 菜单路径
-  }
-})
-const opts = computed(() => {
-  return {
-    title: {
-      label: "菜单名称",
-      comp: "el-input"
-    },
-    path: {
-      label: "菜单路径",
-      comp: "el-input"
-    }
-  }
-})
-// 最终参数获取
-const getQueryData = computed(() => {
-  const { title, path } = toRefs(state.queryData)
-  return {
-    title: title.value,
-    path: path.value
-  }
-})
-// 点击查询按钮
-const conditionEnter = (data: any) => {
-  // console.log(1122, data);
-  state.queryData = data
-  console.log("最终参数", getQueryData.value)
-  getMenuData()
-}
+
 const table = reactive<TableTypes.Table>({
   data: [],
   columns: [

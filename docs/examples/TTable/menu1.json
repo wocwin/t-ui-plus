@@ -6,6 +6,11 @@
     {
       "path": "/index",
       "name": "home",
+      "parentId": 0,
+      "menuId": 1,
+      "orderNum": 0,
+      "menuType": "C",
+      "isShowLink": false,
       "component": "/home/index",
       "meta": {
         "icon": "HomeFilled",
@@ -20,6 +25,11 @@
     {
       "path": "/map",
       "name": "Map",
+      "parentId": 0,
+      "menuId": 2,
+      "orderNum": 0,
+      "menuType": "M",
+      "isShowLink": false,
       "redirect": "/map/circle",
       "meta": {
         "icon": "MapLocation",
@@ -35,6 +45,11 @@
           "path": "/map/base",
           "name": "base",
           "component": "/map/index",
+          "parentId": 2,
+          "menuId": 3,
+          "orderNum": 1,
+          "menuType": "C",
+          "isShowLink": false,
           "meta": {
             "icon": "Menu",
             "title": "基本使用",
@@ -48,6 +63,11 @@
         {
           "path": "/map/circle",
           "name": "circle",
+          "parentId": 2,
+          "menuId": 4,
+          "orderNum": 2,
+          "menuType": "C",
+          "isShowLink": false,
           "component": "/map/circle/index",
           "meta": {
             "icon": "Menu",
@@ -62,6 +82,11 @@
         {
           "path": "/map/circlemarker",
           "name": "circlemarker",
+          "parentId": 2,
+          "menuId": 5,
+          "orderNum": 3,
+          "menuType": "C",
+          "isShowLink": false,
           "component": "/map/circlemarker/index",
           "meta": {
             "icon": "Menu",
@@ -76,6 +101,11 @@
         {
           "path": "/map/geocoding",
           "name": "geocoding",
+          "parentId": 2,
+          "menuId": 6,
+          "orderNum": 4,
+          "menuType": "C",
+          "isShowLink": false,
           "component": "/map/geocoding/index",
           "meta": {
             "icon": "Menu",
@@ -90,6 +120,11 @@
         {
           "path": "/map/mapControl",
           "name": "mapControl",
+          "parentId": 2,
+          "menuId": 7,
+          "orderNum": 5,
+          "menuType": "C",
+          "isShowLink": false,
           "component": "/map/mapControl/index",
           "meta": {
             "icon": "Menu",
@@ -106,6 +141,11 @@
     {
       "path": "/productionScreen",
       "name": "productionScreen",
+      "parentId": 0,
+      "menuId": 8,
+      "orderNum": 0,
+      "menuType": "C",
+      "isShowLink": false,
       "component": "/productionScreen/index",
       "meta": {
         "icon": "DataLine",
@@ -120,6 +160,11 @@
     {
       "path": "/echarts",
       "name": "echarts",
+      "parentId": 0,
+      "menuId": 9,
+      "orderNum": 0,
+      "menuType": "C",
+      "isShowLink": false,
       "component": "/echarts/index",
       "meta": {
         "icon": "TrendCharts",
@@ -132,8 +177,32 @@
       }
     },
     {
+      "path": "/workflow",
+      "name": "workflow",
+      "parentId": 0,
+      "menuId": 10,
+      "orderNum": 0,
+      "menuType": "C",
+      "isShowLink": false,
+      "component": "/workflow/index",
+      "meta": {
+        "icon": "DataAnalysis",
+        "title": "工作流",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      }
+    },
+    {
       "path": "/editor",
       "name": "editor",
+      "parentId": 0,
+      "menuId": 11,
+      "orderNum": 0,
+      "menuType": "C",
+      "isShowLink": false,
       "component": "/editor/index",
       "meta": {
         "icon": "MessageBox",
@@ -148,6 +217,11 @@
     {
       "path": "/auth",
       "name": "auth",
+      "parentId": 0,
+      "menuId": 12,
+      "orderNum": 0,
+      "menuType": "M",
+      "isShowLink": false,
       "redirect": "/auth/menu",
       "meta": {
         "icon": "Lock",
@@ -162,6 +236,11 @@
         {
           "path": "/auth/menu",
           "name": "authMenu",
+          "parentId": 12,
+          "menuId": 13,
+          "orderNum": 1,
+          "menuType": "C",
+          "isShowLink": false,
           "component": "/auth/menu/index",
           "meta": {
             "icon": "Menu",
@@ -176,6 +255,11 @@
         {
           "path": "/auth/button",
           "name": "button",
+          "parentId": 12,
+          "menuId": 14,
+          "orderNum": 2,
+          "menuType": "C",
+          "isShowLink": false,
           "component": "/auth/button/index",
           "meta": {
             "icon": "Menu",
@@ -192,6 +276,11 @@
     {
       "path": "/t-ui-plus",
       "name": "TuiPlus",
+      "parentId": 0,
+      "menuId": 15,
+      "orderNum": 0,
+      "menuType": "M",
+      "isShowLink": false,
       "redirect": "/t-ui-plus/base",
       "meta": {
         "icon": "Tickets",
@@ -206,6 +295,11 @@
         {
           "path": "/t-ui-plus/base",
           "name": "superDemo",
+          "parentId": 15,
+          "menuId": 16,
+          "orderNum": 1,
+          "menuType": "C",
+          "isShowLink": false,
           "component": "/super/base/index",
           "meta": {
             "icon": "Menu",
@@ -220,6 +314,11 @@
         {
           "path": "/t-ui-plus/form",
           "name": "formDemo",
+          "parentId": 15,
+          "menuId": 17,
+          "orderNum": 2,
+          "menuType": "C",
+          "isShowLink": false,
           "component": "/super/form/index",
           "meta": {
             "icon": "Menu",
@@ -234,6 +333,11 @@
         {
           "path": "/t-ui-plus/module-form",
           "name": "moduleFormDemo",
+          "parentId": 15,
+          "menuId": 18,
+          "orderNum": 3,
+          "menuType": "C",
+          "isShowLink": false,
           "component": "/super/moduleForm/index",
           "meta": {
             "icon": "Menu",
@@ -248,6 +352,11 @@
             {
               "path": "/t-ui-plus/module-form/edit",
               "name": "moduleFormDemoEdit",
+              "parentId": 18,
+              "menuId": 19,
+              "orderNum": 1,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/super/moduleForm/edit",
               "meta": {
                 "icon": "Menu",
@@ -263,6 +372,11 @@
             {
               "path": "/t-ui-plus/module-form/detail",
               "name": "moduleFormDemoDetail",
+              "parentId": 18,
+              "menuId": 20,
+              "orderNum": 2,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/super/moduleForm/detail",
               "meta": {
                 "icon": "Menu",
@@ -280,6 +394,11 @@
         {
           "path": "/t-ui-plus/table",
           "name": "TuiPlusTableDemo",
+          "parentId": 15,
+          "menuId": 21,
+          "orderNum": 4,
+          "menuType": "M",
+          "isShowLink": false,
           "redirect": "/t-ui-plus/table/multilevelHeader",
           "meta": {
             "icon": "Menu",
@@ -294,6 +413,11 @@
             {
               "path": "/t-ui-plus/table/multilevelHeader",
               "name": "multilevelHeader",
+              "parentId": 21,
+              "menuId": 22,
+              "orderNum": 1,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/super/table/index",
               "meta": {
                 "icon": "Menu",
@@ -309,6 +433,11 @@
             {
               "path": "/t-ui-plus/table/singleEdit",
               "name": "singleEditDemo",
+              "parentId": 21,
+              "menuId": 23,
+              "orderNum": 2,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/super/table/singleEdit",
               "meta": {
                 "icon": "Menu",
@@ -322,8 +451,33 @@
               }
             },
             {
+              "path": "/t-ui-plus/table/cellEdite",
+              "name": "cellEditeDemo",
+              "parentId": 21,
+              "menuId": 24,
+              "orderNum": 3,
+              "menuType": "C",
+              "isShowLink": false,
+              "component": "/super/table/cellEdite",
+              "meta": {
+                "icon": "Menu",
+                "title": "单元格单独编辑",
+                "isLink": "",
+                "isHide": false,
+                "isFull": false,
+                "isAffix": false,
+                "isKeepAlive": true,
+                "activeMenu": "/super/table"
+              }
+            },
+            {
               "path": "/t-ui-plus/table/multileHeadEdit",
               "name": "multileHeadEditDemo",
+              "parentId": 21,
+              "menuId": 25,
+              "orderNum": 4,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/super/table/multileHeadEdit",
               "meta": {
                 "icon": "Menu",
@@ -339,6 +493,11 @@
             {
               "path": "/t-ui-plus/table/singleEditRules",
               "name": "singleEditRulesDemo",
+              "parentId": 21,
+              "menuId": 26,
+              "orderNum": 5,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/super/table/singleEditRules",
               "meta": {
                 "icon": "Menu",
@@ -354,6 +513,11 @@
             {
               "path": "/t-ui-plus/table/treeTable",
               "name": "treeTableDemo",
+              "parentId": 21,
+              "menuId": 27,
+              "orderNum": 6,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/super/table/treeTable",
               "meta": {
                 "icon": "Menu",
@@ -373,6 +537,11 @@
     {
       "path": "/assembly",
       "name": "assembly",
+      "parentId": 0,
+      "menuId": 28,
+      "orderNum": 0,
+      "menuType": "M",
+      "isShowLink": false,
       "meta": {
         "icon": "Briefcase",
         "title": "常用组件",
@@ -386,6 +555,11 @@
         {
           "path": "/assembly/t-form",
           "name": "TForm",
+          "parentId": 28,
+          "menuId": 29,
+          "orderNum": 1,
+          "menuType": "M",
+          "isShowLink": false,
           "redirect": "/assembly/t-form/base",
           "meta": {
             "icon": "Tickets",
@@ -400,6 +574,11 @@
             {
               "path": "/assembly/t-form/base",
               "name": "baseDemo",
+              "parentId": 29,
+              "menuId": 30,
+              "orderNum": 1,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TForm/base/index",
               "meta": {
                 "icon": "Menu",
@@ -414,6 +593,11 @@
             {
               "path": "/assembly/t-form/comUse",
               "name": "comUse",
+              "parentId": 29,
+              "menuId": 31,
+              "orderNum": 2,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TForm/comUse/index",
               "meta": {
                 "icon": "Menu",
@@ -428,6 +612,11 @@
             {
               "path": "/assembly/t-form/echo",
               "name": "echo",
+              "parentId": 29,
+              "menuId": 32,
+              "orderNum": 3,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TForm/echo/index",
               "meta": {
                 "icon": "Menu",
@@ -442,6 +631,11 @@
             {
               "path": "/assembly/t-form/eventHandle",
               "name": "eventHandle",
+              "parentId": 29,
+              "menuId": 33,
+              "orderNum": 4,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TForm/eventHandle/index",
               "meta": {
                 "icon": "Menu",
@@ -456,6 +650,11 @@
             {
               "path": "/assembly/t-form/isHideItem",
               "name": "isHideItem",
+              "parentId": 29,
+              "menuId": 34,
+              "orderNum": 5,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TForm/isHideItem/index",
               "meta": {
                 "icon": "Menu",
@@ -470,6 +669,11 @@
             {
               "path": "/assembly/t-form/isTrim",
               "name": "isTrim",
+              "parentId": 29,
+              "menuId": 35,
+              "orderNum": 6,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TForm/isTrim/index",
               "meta": {
                 "icon": "Menu",
@@ -484,6 +688,11 @@
             {
               "path": "/assembly/t-form/labelPosition",
               "name": "labelPosition",
+              "parentId": 29,
+              "menuId": 36,
+              "orderNum": 7,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TForm/labelPosition/index",
               "meta": {
                 "icon": "Menu",
@@ -498,6 +707,11 @@
             {
               "path": "/assembly/t-form/labelRender",
               "name": "labelRenderForm",
+              "parentId": 29,
+              "menuId": 37,
+              "orderNum": 8,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TForm/labelRender/index",
               "meta": {
                 "icon": "Menu",
@@ -512,6 +726,11 @@
             {
               "path": "/assembly/t-form/rules",
               "name": "rules",
+              "parentId": 29,
+              "menuId": 38,
+              "orderNum": 9,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TForm/rules/index",
               "meta": {
                 "icon": "Menu",
@@ -526,6 +745,11 @@
             {
               "path": "/assembly/t-form/slotName",
               "name": "slotNameForm",
+              "parentId": 29,
+              "menuId": 39,
+              "orderNum": 10,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TForm/slotName/index",
               "meta": {
                 "icon": "Menu",
@@ -540,6 +764,11 @@
             {
               "path": "/assembly/t-form/textShow",
               "name": "textShow",
+              "parentId": 29,
+              "menuId": 40,
+              "orderNum": 11,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TForm/textShow/index",
               "meta": {
                 "icon": "Menu",
@@ -554,6 +783,11 @@
             {
               "path": "/assembly/t-form/widthSize",
               "name": "widthSize",
+              "parentId": 29,
+              "menuId": 41,
+              "orderNum": 12,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TForm/widthSize/index",
               "meta": {
                 "icon": "Menu",
@@ -570,6 +804,11 @@
         {
           "path": "/assembly/t-select-table",
           "name": "TSelectTable",
+          "parentId": 28,
+          "menuId": 42,
+          "orderNum": 2,
+          "menuType": "M",
+          "isShowLink": false,
           "redirect": "/assembly/t-select-table/radio",
           "meta": {
             "icon": "MessageBox",
@@ -584,6 +823,11 @@
             {
               "path": "/assembly/t-select-table/radio",
               "name": "radioSelectTable",
+              "parentId": 42,
+              "menuId": 43,
+              "orderNum": 1,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TSelectTable/radio",
               "meta": {
                 "icon": "Menu",
@@ -598,6 +842,11 @@
             {
               "path": "/assembly/t-select-table/radioKeyup",
               "name": "radioKeyupSelectTable",
+              "parentId": 42,
+              "menuId": 44,
+              "orderNum": 2,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TSelectTable/radioKeyup",
               "meta": {
                 "icon": "Menu",
@@ -612,6 +861,11 @@
             {
               "path": "/assembly/t-select-table/dynamic",
               "name": "dynamic",
+              "parentId": 42,
+              "menuId": 45,
+              "orderNum": 3,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TSelectTable/dynamic",
               "meta": {
                 "icon": "Menu",
@@ -626,6 +880,11 @@
             {
               "path": "/assembly/t-select-table/dynamicMultiple",
               "name": "dynamicMultiple",
+              "parentId": 42,
+              "menuId": 46,
+              "orderNum": 4,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TSelectTable/dynamicMultiple",
               "meta": {
                 "icon": "Menu",
@@ -640,6 +899,11 @@
             {
               "path": "/assembly/t-select-table/isShowFirstColumn",
               "name": "isShowFirstColumn",
+              "parentId": 42,
+              "menuId": 47,
+              "orderNum": 5,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TSelectTable/isShowFirstColumn",
               "meta": {
                 "icon": "Menu",
@@ -654,6 +918,11 @@
             {
               "path": "/assembly/t-select-table/radioDefaultSelectVal",
               "name": "radioDefaultSelectVal",
+              "parentId": 42,
+              "menuId": 48,
+              "orderNum": 6,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TSelectTable/radioDefaultSelectVal",
               "meta": {
                 "icon": "Menu",
@@ -668,6 +937,11 @@
             {
               "path": "/assembly/t-select-table/multipleDefaultSelectVal",
               "name": "multipleDefaultSelectVal",
+              "parentId": 42,
+              "menuId": 49,
+              "orderNum": 7,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TSelectTable/multipleDefaultSelectVal",
               "meta": {
                 "icon": "Menu",
@@ -682,6 +956,11 @@
             {
               "path": "/assembly/t-select-table/multiple",
               "name": "selectTableMultiple",
+              "parentId": 42,
+              "menuId": 50,
+              "orderNum": 8,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TSelectTable/multiple",
               "meta": {
                 "icon": "Menu",
@@ -696,6 +975,11 @@
             {
               "path": "/assembly/t-select-table/isShowPagination",
               "name": "isShowPagination",
+              "parentId": 42,
+              "menuId": 51,
+              "orderNum": 9,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TSelectTable/isShowPagination",
               "meta": {
                 "icon": "Menu",
@@ -710,6 +994,11 @@
             {
               "path": "/assembly/t-select-table/isShowQuery",
               "name": "isShowQuery",
+              "parentId": 42,
+              "menuId": 52,
+              "orderNum": 10,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TSelectTable/isShowQuery",
               "meta": {
                 "icon": "Menu",
@@ -724,6 +1013,11 @@
             {
               "path": "/assembly/t-select-table/isShowQueryMultiple",
               "name": "isShowQueryMultiple",
+              "parentId": 42,
+              "menuId": 53,
+              "orderNum": 11,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TSelectTable/isShowQueryMultiple",
               "meta": {
                 "icon": "Menu",
@@ -738,6 +1032,11 @@
             {
               "path": "/assembly/t-select-table/isShowQueryBtnBind",
               "name": "isShowQueryBtnBind",
+              "parentId": 42,
+              "menuId": 54,
+              "orderNum": 12,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TSelectTable/isShowQueryBtnBind",
               "meta": {
                 "icon": "Menu",
@@ -752,6 +1051,11 @@
             {
               "path": "/assembly/t-select-table/isShowQuerySpan",
               "name": "isShowQuerySpan",
+              "parentId": 42,
+              "menuId": 55,
+              "orderNum": 13,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TSelectTable/isShowQuerySpan",
               "meta": {
                 "icon": "Menu",
@@ -768,6 +1072,11 @@
         {
           "path": "/assembly/t-table",
           "name": "TTable",
+          "parentId": 28,
+          "menuId": 56,
+          "orderNum": 3,
+          "menuType": "M",
+          "isShowLink": false,
           "redirect": "/assembly/t-table/base",
           "meta": {
             "icon": "Menu",
@@ -782,6 +1091,11 @@
             {
               "path": "/assembly/t-table/base",
               "name": "baseTTable",
+              "parentId": 56,
+              "menuId": 57,
+              "orderNum": 1,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TTable/base/index",
               "meta": {
                 "icon": "Menu",
@@ -796,6 +1110,11 @@
             {
               "path": "/assembly/t-table/border",
               "name": "border",
+              "parentId": 56,
+              "menuId": 58,
+              "orderNum": 2,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TTable/border/index",
               "meta": {
                 "icon": "Menu",
@@ -810,6 +1129,11 @@
             {
               "path": "/assembly/t-table/columnSetting",
               "name": "columnSetting",
+              "parentId": 56,
+              "menuId": 59,
+              "orderNum": 3,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TTable/columnSetting/index",
               "meta": {
                 "icon": "Menu",
@@ -824,6 +1148,11 @@
             {
               "path": "/assembly/t-table/copy",
               "name": "copy",
+              "parentId": 56,
+              "menuId": 60,
+              "orderNum": 4,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TTable/copy/index",
               "meta": {
                 "icon": "Menu",
@@ -838,6 +1167,11 @@
             {
               "path": "/assembly/t-table/filters",
               "name": "filters",
+              "parentId": 56,
+              "menuId": 61,
+              "orderNum": 5,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TTable/filters/index",
               "meta": {
                 "icon": "Menu",
@@ -852,6 +1186,11 @@
             {
               "path": "/assembly/t-table/headMerge",
               "name": "headMerge",
+              "parentId": 56,
+              "menuId": 62,
+              "orderNum": 6,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TTable/headMerge/index",
               "meta": {
                 "icon": "Menu",
@@ -866,6 +1205,11 @@
             {
               "path": "/assembly/t-table/operator",
               "name": "operator",
+              "parentId": 56,
+              "menuId": 63,
+              "orderNum": 7,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TTable/operator/index",
               "meta": {
                 "icon": "Menu",
@@ -878,8 +1222,13 @@
               }
             },
             {
-              "path": "/assembly/t-table/pagination",
-              "name": "pagination",
+              "path": "/assembly/t-table/paginationTable",
+              "name": "paginationTable",
+              "parentId": 56,
+              "menuId": 64,
+              "orderNum": 8,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TTable/pagination/index",
               "meta": {
                 "icon": "Menu",
@@ -894,6 +1243,11 @@
             {
               "path": "/assembly/t-table/radio",
               "name": "radio",
+              "parentId": 56,
+              "menuId": 65,
+              "orderNum": 9,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TTable/radio/index",
               "meta": {
                 "icon": "Menu",
@@ -908,6 +1262,11 @@
             {
               "path": "/assembly/t-table/renderCol",
               "name": "renderCol",
+              "parentId": 56,
+              "menuId": 66,
+              "orderNum": 10,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TTable/renderCol/index",
               "meta": {
                 "icon": "Menu",
@@ -922,6 +1281,11 @@
             {
               "path": "/assembly/t-table/renderHeader",
               "name": "renderHeader",
+              "parentId": 56,
+              "menuId": 67,
+              "orderNum": 11,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TTable/renderHeader/index",
               "meta": {
                 "icon": "Menu",
@@ -936,6 +1300,11 @@
             {
               "path": "/assembly/t-table/selection",
               "name": "selection",
+              "parentId": 56,
+              "menuId": 68,
+              "orderNum": 12,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TTable/selection/index",
               "meta": {
                 "icon": "Menu",
@@ -950,6 +1319,11 @@
             {
               "path": "/assembly/t-table/singleEdit",
               "name": "singleEdit",
+              "parentId": 56,
+              "menuId": 69,
+              "orderNum": 13,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TTable/singleEdit/index",
               "meta": {
                 "icon": "Menu",
@@ -964,6 +1338,11 @@
             {
               "path": "/assembly/t-table/singleEditCell",
               "name": "singleEditCell",
+              "parentId": 56,
+              "menuId": 70,
+              "orderNum": 14,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TTable/singleEditCell/index",
               "meta": {
                 "icon": "Menu",
@@ -978,6 +1357,11 @@
             {
               "path": "/assembly/t-table/slotName",
               "name": "slotName",
+              "parentId": 56,
+              "menuId": 71,
+              "orderNum": 15,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TTable/slotName/index",
               "meta": {
                 "icon": "Menu",
@@ -994,6 +1378,11 @@
         {
           "path": "/assembly/t-query-condition",
           "name": "TQueryCondition",
+          "parentId": 28,
+          "menuId": 72,
+          "orderNum": 4,
+          "menuType": "M",
+          "isShowLink": false,
           "redirect": "/assembly/t-query-condition/base",
           "meta": {
             "icon": "MessageBox",
@@ -1008,6 +1397,11 @@
             {
               "path": "/assembly/t-query-condition/base",
               "name": "baseQueryDemo",
+              "parentId": 72,
+              "menuId": 73,
+              "orderNum": 1,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TQueryCondition/base/index",
               "meta": {
                 "icon": "Menu",
@@ -1022,6 +1416,11 @@
             {
               "path": "/assembly/t-query-condition/comUse",
               "name": "queryComUse",
+              "parentId": 72,
+              "menuId": 74,
+              "orderNum": 2,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TQueryCondition/comUse/index",
               "meta": {
                 "icon": "Menu",
@@ -1036,6 +1435,11 @@
             {
               "path": "/assembly/t-query-condition/isExpansion",
               "name": "isExpansion",
+              "parentId": 72,
+              "menuId": 75,
+              "orderNum": 3,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TQueryCondition/isExpansion/index",
               "meta": {
                 "icon": "Menu",
@@ -1050,6 +1454,11 @@
             {
               "path": "/assembly/t-query-condition/labelRender",
               "name": "labelRender",
+              "parentId": 72,
+              "menuId": 76,
+              "orderNum": 4,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TQueryCondition/labelRender/index",
               "meta": {
                 "icon": "Menu",
@@ -1064,6 +1473,11 @@
             {
               "path": "/assembly/t-query-condition/slotName",
               "name": "slotNameQuery",
+              "parentId": 72,
+              "menuId": 77,
+              "orderNum": 5,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TQueryCondition/slotName/index",
               "meta": {
                 "icon": "Menu",
@@ -1080,6 +1494,11 @@
         {
           "path": "/assembly/t-module-form",
           "name": "TModuleForm",
+          "parentId": 28,
+          "menuId": 78,
+          "orderNum": 5,
+          "menuType": "M",
+          "isShowLink": false,
           "redirect": "/assembly/t-module-form-index",
           "meta": {
             "icon": "Tickets",
@@ -1094,6 +1513,11 @@
             {
               "path": "/assembly/t-module-form/t-module-form-index",
               "name": "TModuleFormFormindex",
+              "parentId": 78,
+              "menuId": 79,
+              "orderNum": 1,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TModuleForm/index",
               "meta": {
                 "icon": "Menu",
@@ -1108,6 +1532,11 @@
             {
               "path": "/assembly/t-module-form/t-module-form-slotName",
               "name": "TModuleFormFormslotName",
+              "parentId": 78,
+              "menuId": 80,
+              "orderNum": 2,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TModuleForm/slotName",
               "meta": {
                 "icon": "Menu",
@@ -1122,6 +1551,11 @@
             {
               "path": "/assembly/t-module-form/t-module-form-disabled",
               "name": "TModuleFormFormdisabled",
+              "parentId": 78,
+              "menuId": 81,
+              "orderNum": 3,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TModuleForm/disabled",
               "meta": {
                 "icon": "Menu",
@@ -1136,6 +1570,11 @@
             {
               "path": "/assembly/t-module-form/t-module-form-labelPosition",
               "name": "TModuleFormFormlabelPosition",
+              "parentId": 78,
+              "menuId": 82,
+              "orderNum": 4,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TModuleForm/labelPosition",
               "meta": {
                 "icon": "Menu",
@@ -1150,6 +1589,11 @@
             {
               "path": "/assembly/t-module-form/t-module-form-rules",
               "name": "TModuleFormFormrules",
+              "parentId": 78,
+              "menuId": 83,
+              "orderNum": 5,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TModuleForm/rules",
               "meta": {
                 "icon": "Menu",
@@ -1164,6 +1608,11 @@
             {
               "path": "/assembly/t-module-form/t-module-form-validateError",
               "name": "TModuleFormFormvalidateError",
+              "parentId": 78,
+              "menuId": 84,
+              "orderNum": 6,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TModuleForm/validateError",
               "meta": {
                 "icon": "Menu",
@@ -1178,6 +1627,11 @@
             {
               "path": "/assembly/t-module-form/t-module-form-footer",
               "name": "TModuleFormFormfooter",
+              "parentId": 78,
+              "menuId": 85,
+              "orderNum": 7,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TModuleForm/footer",
               "meta": {
                 "icon": "Menu",
@@ -1192,6 +1646,11 @@
             {
               "path": "/assembly/t-module-form/t-module-form-tabs",
               "name": "TModuleFormFormtabs",
+              "parentId": 78,
+              "menuId": 86,
+              "orderNum": 8,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TModuleForm/tabs",
               "meta": {
                 "icon": "Menu",
@@ -1206,6 +1665,11 @@
             {
               "path": "/assembly/t-module-form/t-module-form-isGoBackEvent  ",
               "name": "TModuleFormFormisGoBackEvent",
+              "parentId": 78,
+              "menuId": 87,
+              "orderNum": 9,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TModuleForm/isGoBackEvent",
               "meta": {
                 "icon": "Menu",
@@ -1220,6 +1684,11 @@
             {
               "path": "/assembly/t-module-form/t-module-form-isShowBack",
               "name": "TModuleFormFormisShowBack",
+              "parentId": 78,
+              "menuId": 88,
+              "orderNum": 10,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TModuleForm/isShowBack",
               "meta": {
                 "icon": "Menu",
@@ -1234,6 +1703,11 @@
             {
               "path": "/assembly/t-module-form/t-module-form-extra",
               "name": "TModuleFormFormextra",
+              "parentId": 78,
+              "menuId": 89,
+              "orderNum": 11,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TModuleForm/extra",
               "meta": {
                 "icon": "Menu",
@@ -1248,6 +1722,11 @@
             {
               "path": "/assembly/t-module-form/t-module-form-titleBtn",
               "name": "TModuleFormFormtitleBtn",
+              "parentId": 78,
+              "menuId": 90,
+              "orderNum": 12,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TModuleForm/titleBtn",
               "meta": {
                 "icon": "Menu",
@@ -1262,6 +1741,11 @@
             {
               "path": "/assembly/t-module-form/t-module-form-detail",
               "name": "TModuleFormDetailsdetail",
+              "parentId": 78,
+              "menuId": 91,
+              "orderNum": 13,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TModuleForm/detail",
               "meta": {
                 "icon": "Menu",
@@ -1276,6 +1760,11 @@
             {
               "path": "/assembly/t-module-form/t-module-form-detailspan",
               "name": "TModuleFormDetailsdetailspan",
+              "parentId": 78,
+              "menuId": 92,
+              "orderNum": 14,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TModuleForm/detailspan",
               "meta": {
                 "icon": "Menu",
@@ -1290,6 +1779,11 @@
             {
               "path": "/assembly/t-module-form/t-module-form-tooltip",
               "name": "TModuleFormDetailstooltip",
+              "parentId": 78,
+              "menuId": 93,
+              "orderNum": 15,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TModuleForm/tooltip",
               "meta": {
                 "icon": "Menu",
@@ -1304,6 +1798,11 @@
             {
               "path": "/assembly/t-module-form/t-module-form-detailslot",
               "name": "TModuleFormDetailsdetailslot",
+              "parentId": 78,
+              "menuId": 94,
+              "orderNum": 16,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TModuleForm/detailslot",
               "meta": {
                 "icon": "Menu",
@@ -1318,6 +1817,11 @@
             {
               "path": "/assembly/t-module-form/t-module-form-detailslotName",
               "name": "TModuleFormDetailsdetailslotName",
+              "parentId": 78,
+              "menuId": 95,
+              "orderNum": 17,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TModuleForm/detailslotName",
               "meta": {
                 "icon": "Menu",
@@ -1332,6 +1836,11 @@
             {
               "path": "/assembly/t-module-form/t-module-form-detaildisabled",
               "name": "TModuleFormDetailsdetaildisabled",
+              "parentId": 78,
+              "menuId": 96,
+              "orderNum": 18,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TModuleForm/detaildisabled",
               "meta": {
                 "icon": "Menu",
@@ -1346,6 +1855,11 @@
             {
               "path": "/assembly/t-module-form/t-module-form-detailTitleBtn",
               "name": "TModuleFormDetailsdetailTitleBtn",
+              "parentId": 78,
+              "menuId": 97,
+              "orderNum": 19,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/TModuleForm/detailTitleBtn",
               "meta": {
                 "icon": "Menu",
@@ -1362,6 +1876,11 @@
         {
           "path": "/assembly/t-select",
           "name": "TSelect",
+          "parentId": 28,
+          "menuId": 98,
+          "orderNum": 6,
+          "menuType": "M",
+          "isShowLink": false,
           "redirect": "/assembly/t-select/single",
           "meta": {
             "icon": "MessageBox",
@@ -1376,6 +1895,11 @@
             {
               "path": "/assembly/t-select/single",
               "name": "single",
+              "parentId": 98,
+              "menuId": 99,
+              "orderNum": 1,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TSelect/single",
               "meta": {
                 "icon": "Menu",
@@ -1390,6 +1914,11 @@
             {
               "path": "/assembly/t-select/singePagination",
               "name": "singePagination",
+              "parentId": 98,
+              "menuId": 100,
+              "orderNum": 2,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TSelect/singePagination",
               "meta": {
                 "icon": "Menu",
@@ -1404,6 +1933,11 @@
             {
               "path": "/assembly/t-select/useVirtual",
               "name": "useVirtual",
+              "parentId": 98,
+              "menuId": 101,
+              "orderNum": 3,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TSelect/useVirtual",
               "meta": {
                 "icon": "Menu",
@@ -1418,6 +1952,11 @@
             {
               "path": "/assembly/t-select/multiple",
               "name": "multiple",
+              "parentId": 98,
+              "menuId": 102,
+              "orderNum": 4,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TSelect/multiple",
               "meta": {
                 "icon": "Menu",
@@ -1432,6 +1971,11 @@
             {
               "path": "/assembly/t-select/multipleCollapseTags",
               "name": "multipleCollapseTags",
+              "parentId": 98,
+              "menuId": 104,
+              "orderNum": 5,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TSelect/multipleCollapseTags",
               "meta": {
                 "icon": "Menu",
@@ -1446,6 +1990,11 @@
             {
               "path": "/assembly/t-select/pagination",
               "name": "pagination",
+              "parentId": 98,
+              "menuId": 105,
+              "orderNum": 6,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TSelect/pagination",
               "meta": {
                 "icon": "Menu",
@@ -1460,6 +2009,11 @@
             {
               "path": "/assembly/t-select/useVirtualMultiple",
               "name": "useVirtualMultiple",
+              "parentId": 98,
+              "menuId": 106,
+              "orderNum": 7,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TSelect/useVirtualMultiple",
               "meta": {
                 "icon": "Menu",
@@ -1476,7 +2030,12 @@
         {
           "path": "/assembly/t-detail",
           "name": "TDetail",
-          "redirect": "/assembly/t-detail/base",
+          "parentId": 28,
+          "menuId": 107,
+          "orderNum": 7,
+          "menuType": "M",
+          "isShowLink": false,
+          "redirect": "/assembly/t-detail/baseDetail",
           "meta": {
             "icon": "MessageBox",
             "title": "详情组件",
@@ -1488,8 +2047,13 @@
           },
           "children": [
             {
-              "path": "/assembly/t-detail/base",
-              "name": "baseTDetail",
+              "path": "/assembly/t-detail/baseDetail",
+              "name": "baseDetail",
+              "parentId": 107,
+              "menuId": 108,
+              "orderNum": 1,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TDetail/base/index",
               "meta": {
                 "icon": "Menu",
@@ -1502,8 +2066,13 @@
               }
             },
             {
-              "path": "/assembly/t-detail/border",
-              "name": "borderTDetail",
+              "path": "/assembly/t-detail/borderDetail",
+              "name": "borderDetail",
+              "parentId": 107,
+              "menuId": 109,
+              "orderNum": 2,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TDetail/border/index",
               "meta": {
                 "icon": "Menu",
@@ -1518,6 +2087,11 @@
             {
               "path": "/assembly/t-detail/descColumn",
               "name": "descColumn",
+              "parentId": 107,
+              "menuId": 110,
+              "orderNum": 3,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TDetail/descColumn/index",
               "meta": {
                 "icon": "Menu",
@@ -1532,6 +2106,11 @@
             {
               "path": "/assembly/t-detail/dictionaryEcho",
               "name": "dictionaryEcho",
+              "parentId": 107,
+              "menuId": 111,
+              "orderNum": 4,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TDetail/dictionaryEcho/index",
               "meta": {
                 "icon": "Menu",
@@ -1546,6 +2125,11 @@
             {
               "path": "/assembly/t-detail/slotName",
               "name": "slotNameTDetail",
+              "parentId": 107,
+              "menuId": 112,
+              "orderNum": 5,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TDetail/slotName/index",
               "meta": {
                 "icon": "Menu",
@@ -1560,6 +2144,11 @@
             {
               "path": "/assembly/t-detail/tooltip",
               "name": "tooltip",
+              "parentId": 107,
+              "menuId": 113,
+              "orderNum": 6,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TDetail/tooltip/index",
               "meta": {
                 "icon": "Menu",
@@ -1574,6 +2163,11 @@
             {
               "path": "/assembly/t-detail/vertical",
               "name": "vertical",
+              "parentId": 107,
+              "menuId": 114,
+              "orderNum": 7,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TDetail/vertical/index",
               "meta": {
                 "icon": "Menu",
@@ -1590,6 +2184,11 @@
         {
           "path": "/assembly/t-step-wizard",
           "name": "TStepWizard",
+          "parentId": 28,
+          "menuId": 115,
+          "orderNum": 8,
+          "menuType": "M",
+          "isShowLink": false,
           "redirect": "/assembly/t-step-wizard/index",
           "meta": {
             "icon": "MessageBox",
@@ -1604,6 +2203,11 @@
             {
               "path": "/assembly/t-step-wizard/index",
               "name": "baseTDetail",
+              "parentId": 115,
+              "menuId": 116,
+              "orderNum": 1,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TStepWizard/index",
               "meta": {
                 "icon": "Menu",
@@ -1618,6 +2222,11 @@
             {
               "path": "/assembly/t-step-wizard/demo",
               "name": "borderTDetail",
+              "parentId": 115,
+              "menuId": 117,
+              "orderNum": 2,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TStepWizard/demo",
               "meta": {
                 "icon": "Menu",
@@ -1634,6 +2243,11 @@
         {
           "path": "/assembly/draggable",
           "name": "draggable",
+          "parentId": 28,
+          "menuId": 118,
+          "orderNum": 9,
+          "menuType": "C",
+          "isShowLink": false,
           "component": "/tuiplus/draggable/index",
           "meta": {
             "icon": "Menu",
@@ -1648,6 +2262,11 @@
         {
           "path": "/assembly/t-antd-select-table",
           "name": "TAntdSelectTable",
+          "parentId": 28,
+          "menuId": 119,
+          "orderNum": 10,
+          "menuType": "M",
+          "isShowLink": false,
           "redirect": "/assembly/t-antd-select-table/radio",
           "meta": {
             "icon": "MessageBox",
@@ -1662,6 +2281,11 @@
             {
               "path": "/assembly/t-antd-select-table/radio",
               "name": "radioTAntdSelectTable",
+              "parentId": 119,
+              "menuId": 120,
+              "orderNum": 1,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TAntdSelectTable/radio",
               "meta": {
                 "icon": "Menu",
@@ -1676,6 +2300,11 @@
             {
               "path": "/assembly/t-antd-select-table/isKeyup",
               "name": "isKeyupTAntdSelectTable",
+              "parentId": 119,
+              "menuId": 121,
+              "orderNum": 2,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TAntdSelectTable/isKeyup",
               "meta": {
                 "icon": "Menu",
@@ -1690,6 +2319,11 @@
             {
               "path": "/assembly/t-antd-select-table/radiopagination",
               "name": "radiopaginationTAntdSelectTable",
+              "parentId": 119,
+              "menuId": 122,
+              "orderNum": 3,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TAntdSelectTable/radiopagination",
               "meta": {
                 "icon": "Menu",
@@ -1704,6 +2338,11 @@
             {
               "path": "/assembly/t-antd-select-table/radiodefaultSelectVal",
               "name": "radiodefaultSelectValTAntdSelectTable",
+              "parentId": 119,
+              "menuId": 123,
+              "orderNum": 4,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TAntdSelectTable/radiodefaultSelectVal",
               "meta": {
                 "icon": "Menu",
@@ -1718,6 +2357,11 @@
             {
               "path": "/assembly/t-antd-select-table/multiple",
               "name": "multipleTAntdSelectTable",
+              "parentId": 119,
+              "menuId": 124,
+              "orderNum": 5,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TAntdSelectTable/multiple",
               "meta": {
                 "icon": "Menu",
@@ -1732,6 +2376,11 @@
             {
               "path": "/assembly/t-antd-select-table/multiplepagination",
               "name": "multiplepaginationTAntdSelectTable",
+              "parentId": 119,
+              "menuId": 125,
+              "orderNum": 6,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TAntdSelectTable/multiplepagination",
               "meta": {
                 "icon": "Menu",
@@ -1746,6 +2395,11 @@
             {
               "path": "/assembly/t-antd-select-table/multipledefaultSelectVal",
               "name": "multipledefaultSelectValTAntdSelectTable",
+              "parentId": 119,
+              "menuId": 126,
+              "orderNum": 7,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/tuiplus/TAntdSelectTable/multipledefaultSelectVal",
               "meta": {
                 "icon": "Menu",
@@ -1764,6 +2418,11 @@
     {
       "path": "/menu",
       "name": "menu",
+      "parentId": 0,
+      "menuId": 127,
+      "orderNum": 0,
+      "menuType": "M",
+      "isShowLink": false,
       "redirect": "/menu/menu1",
       "meta": {
         "icon": "List",
@@ -1778,6 +2437,11 @@
         {
           "path": "/menu/menu1",
           "name": "menu1",
+          "parentId": 127,
+          "menuId": 128,
+          "orderNum": 1,
+          "menuType": "C",
+          "isShowLink": false,
           "component": "/menu/menu1/index",
           "meta": {
             "icon": "Menu",
@@ -1792,6 +2456,11 @@
         {
           "path": "/menu/menu2",
           "name": "menu2",
+          "parentId": 127,
+          "menuId": 129,
+          "orderNum": 2,
+          "menuType": "M",
+          "isShowLink": false,
           "redirect": "/menu/menu2/menu21",
           "meta": {
             "icon": "Menu",
@@ -1806,6 +2475,11 @@
             {
               "path": "/menu/menu2/menu21",
               "name": "menu21",
+              "parentId": 129,
+              "menuId": 130,
+              "orderNum": 1,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/menu/menu2/menu21/index",
               "meta": {
                 "icon": "Menu",
@@ -1820,6 +2494,11 @@
             {
               "path": "/menu/menu2/menu22",
               "name": "menu22",
+              "parentId": 129,
+              "menuId": 131,
+              "orderNum": 2,
+              "menuType": "M",
+              "isShowLink": false,
               "redirect": "/menu/menu2/menu22/menu221",
               "meta": {
                 "icon": "Menu",
@@ -1834,6 +2513,11 @@
                 {
                   "path": "/menu/menu2/menu22/menu221",
                   "name": "menu221",
+                  "parentId": 131,
+                  "menuId": 132,
+                  "orderNum": 1,
+                  "menuType": "C",
+                  "isShowLink": false,
                   "component": "/menu/menu2/menu22/menu221/index",
                   "meta": {
                     "icon": "Menu",
@@ -1848,6 +2532,11 @@
                 {
                   "path": "/menu/menu2/menu22/menu222",
                   "name": "menu222",
+                  "parentId": 131,
+                  "menuId": 133,
+                  "orderNum": 2,
+                  "menuType": "C",
+                  "isShowLink": false,
                   "component": "/menu/menu2/menu22/menu222/index",
                   "meta": {
                     "icon": "Menu",
@@ -1864,6 +2553,11 @@
             {
               "path": "/menu/menu2/menu23",
               "name": "menu23",
+              "parentId": 129,
+              "menuId": 134,
+              "orderNum": 3,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/menu/menu2/menu23/index",
               "meta": {
                 "icon": "Menu",
@@ -1880,6 +2574,11 @@
         {
           "path": "/menu/menu3",
           "name": "menu3",
+          "parentId": 127,
+          "menuId": 135,
+          "orderNum": 3,
+          "menuType": "C",
+          "isShowLink": false,
           "component": "/menu/menu3/index",
           "meta": {
             "icon": "Menu",
@@ -1896,6 +2595,11 @@
     {
       "path": "/system",
       "name": "system",
+      "parentId": 0,
+      "menuId": 136,
+      "orderNum": 0,
+      "menuType": "M",
+      "isShowLink": false,
       "redirect": "/system/accountManage",
       "meta": {
         "icon": "Tools",
@@ -1910,6 +2614,11 @@
         {
           "path": "/system/accountManage",
           "name": "accountManage",
+          "parentId": 136,
+          "menuId": 137,
+          "orderNum": 1,
+          "menuType": "C",
+          "isShowLink": false,
           "component": "/system/accountManage/index",
           "meta": {
             "icon": "User",
@@ -1924,6 +2633,11 @@
             {
               "path": "/system/accountManage/detail",
               "name": "accountManageDetail",
+              "parentId": 137,
+              "menuId": 138,
+              "orderNum": 1,
+              "menuType": "C",
+              "isShowLink": false,
               "component": "/system/accountManage/detail",
               "meta": {
                 "icon": "Menu",
@@ -1941,6 +2655,11 @@
         {
           "path": "/system/accountManage/detail1",
           "name": "accountManageDetail1",
+          "parentId": 136,
+          "menuId": 139,
+          "orderNum": 2,
+          "menuType": "C",
+          "isShowLink": false,
           "component": "/system/accountManage/detail1",
           "meta": {
             "icon": "Menu",
@@ -1956,6 +2675,11 @@
         {
           "path": "/system/roleManage",
           "name": "roleManage",
+          "parentId": 136,
+          "menuId": 140,
+          "orderNum": 3,
+          "menuType": "C",
+          "isShowLink": false,
           "component": "/system/roleManage/index",
           "meta": {
             "icon": "UserFilled",
@@ -1970,6 +2694,11 @@
         {
           "path": "/system/menuMange",
           "name": "menuMange",
+          "parentId": 136,
+          "menuId": 141,
+          "orderNum": 4,
+          "menuType": "C",
+          "isShowLink": false,
           "component": "/system/menuMange/index",
           "meta": {
             "icon": "Grid",
@@ -1984,6 +2713,11 @@
         {
           "path": "/system/departmentManage",
           "name": "departmentManage",
+          "parentId": 136,
+          "menuId": 142,
+          "orderNum": 5,
+          "menuType": "C",
+          "isShowLink": false,
           "component": "/system/departmentManage/index",
           "meta": {
             "icon": "Operation",
@@ -1998,6 +2732,11 @@
         {
           "path": "/system/dictManage",
           "name": "dictManage",
+          "parentId": 136,
+          "menuId": 143,
+          "orderNum": 6,
+          "menuType": "C",
+          "isShowLink": false,
           "component": "/system/dictManage/index",
           "meta": {
             "icon": "SetUp",
@@ -2012,11 +2751,132 @@
         {
           "path": "/system/systemLog",
           "name": "systemLog",
+          "parentId": 136,
+          "menuId": 144,
+          "orderNum": 7,
+          "menuType": "C",
+          "isShowLink": false,
           "component": "/system/systemLog/index",
           "meta": {
             "icon": "Memo",
             "title": "系统日志",
             "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        }
+      ]
+    },
+    {
+      "path": "/link",
+      "name": "link",
+      "parentId": 0,
+      "menuId": 145,
+      "orderNum": 0,
+      "menuType": "M",
+      "isShowLink": false,
+      "redirect": "/link/tuiplus",
+      "meta": {
+        "icon": "Paperclip",
+        "title": "外部链接",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      },
+      "children": [
+        {
+          "path": "/link/tuiplus",
+          "name": "tuiplus",
+          "parentId": 145,
+          "menuId": 146,
+          "orderNum": 1,
+          "menuType": "C",
+          "isShowLink": true,
+          "component": "/link/tuiplus/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "V3基础组件文档",
+            "isLink": "https://wocwin.github.io/t-ui-plus/",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/link/github",
+          "name": "github",
+          "parentId": 145,
+          "menuId": 147,
+          "orderNum": 2,
+          "menuType": "C",
+          "isShowLink": true,
+          "component": "/link/github/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "GitHub 仓库",
+            "isLink": "https://github.com/wocwin/wocwin-admin",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/link/gitee",
+          "name": "gitee",
+          "parentId": 145,
+          "menuId": 148,
+          "orderNum": 3,
+          "menuType": "C",
+          "isShowLink": true,
+          "component": "/link/gitee/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "Gitee 仓库",
+            "isLink": "https://gitee.com/wocwin/wocwin-admin",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/link/csdn",
+          "name": "csdn",
+          "parentId": 145,
+          "menuId": 150,
+          "orderNum": 4,
+          "menuType": "C",
+          "isShowLink": true,
+          "component": "/link/csdn/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "CSDN主页",
+            "isLink": "https://blog.csdn.net/cwin8951",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/link/tui",
+          "name": "tui",
+          "parentId": 145,
+          "menuId": 151,
+          "orderNum": 5,
+          "menuType": "C",
+          "isShowLink": true,
+          "component": "/link/tui/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "V2基础组件文档",
+            "isLink": "https://wocwin.github.io/t-ui/",
             "isHide": false,
             "isFull": false,
             "isAffix": false,

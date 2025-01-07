@@ -30,7 +30,7 @@ TAdaptivePage/treeTable
 TAdaptivePage/dynamicCol
 :::
 
-### 菜单管理（弹窗--默认插槽使用）
+### 菜单管理（弹窗--最外层footer插槽使用）<el-tag>v1.4.17</el-tag>
 
 :::demo
 TAdaptivePage/menuMange
@@ -79,8 +79,9 @@ TAdaptivePage/showSummary
 
 ### 3、Slots
 
-| 插槽名                          | 说明                             |
-| :------------------------------ | :------------------------------- |
-| leftContent                     | 左侧具名插槽                     |
-| content<el-tag>v1.4.13</el-tag> | 条件查询与TTable组件之间具名插槽 |
-| -                               | 默认插槽                         |
+| 插槽名                          | 说明                                          |
+| :------------------------------ | :-------------------------------------------- |
+| leftContent                     | 左侧具名插槽                                  |
+| content<el-tag>v1.4.13</el-tag> | t-layout-page条件查询与TTable组件之间具名插槽 |
+| -                               | 内部t-layout-page默认插槽                     |
+| footer                          | 最外层底部具名插槽                            |
