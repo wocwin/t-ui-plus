@@ -285,6 +285,13 @@ watch(
   },
   { deep: true }
 )
+watch(
+  () => props.radioSelectValLabel,
+  val => {
+    if (val) findLabel()
+  },
+  { deep: true }
+)
 onMounted(() => {
   // 设置默认选中项（单选）
   if (state.defaultSelectValue && state.defaultSelectValue.length > 0 && isDefaultSelectVal.value) {
