@@ -22,7 +22,7 @@ TForm/isTrim
 
 ### 对齐方式
 
-:::demo 通过设置 `formOpts.labelPosition` 属性可以改变表单域标签的位置，可选值为 `top`、`left`、`right`，默认`right`
+:::demo 通过设置 `formOpts.labelPosition` 属性或者设置`labelPosition`（`formOpts.labelPosition`优先级高于`labelPosition`）可以改变表单域标签的位置，可选值为 `top`、`left`、`right`，默认`right`
 TForm/labelPosition
 :::
 
@@ -56,7 +56,7 @@ TForm/slotName
 TForm/textShow
 :::
 
-### 结合自己封装组件使用
+ ### 结合自己封装组件使用
 
 :::demo 可以通过`getRefs`事件获取`formOpts.fieldList`中某项设置的`ref`示例；具体参考示例
 TForm/comUse

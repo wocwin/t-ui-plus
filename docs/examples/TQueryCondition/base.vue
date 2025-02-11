@@ -30,13 +30,13 @@
 import { computed, onMounted, reactive, ref, toRefs } from "vue"
 let state: any = reactive({
   queryData: {
-    userName: null, // 登录名
-    phonenumber: null, // 手机号码
-    workshopNum: null,
-    disabledDate: null,
-    date: null,
-    date2: null,
-    date1: null
+    userName: undefined, // 登录名
+    phonenumber: undefined, // 手机号码
+    workshopNum: undefined,
+    disabledDate: undefined,
+    date: undefined,
+    date2: [],
+    date1: undefined
   },
   listTypeInfo: {
     sexList: [

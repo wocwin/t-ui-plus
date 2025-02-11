@@ -89,7 +89,7 @@ const validateError = list => {
 }
 const radioChange = (row: any, scope: any) => {
   console.log("下拉选择表格-单选", row, scope)
-  // formOpts.formData.deptCode = row.userId;
+  // formOpts.formData.deptCode = row?.userId;
   table.data[scope.$index].deptCode = row?.userId
 }
 // 获取下拉选择表格数据

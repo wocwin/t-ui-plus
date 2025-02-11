@@ -1,12 +1,7 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-form
-        ref="TFormDemo"
-        v-model="formOpts.ref"
-        :formOpts="formOpts"
-        :widthSize="2"
-      />
+      <t-form ref="TFormDemo" v-model="formOpts.ref" :formOpts="formOpts" :widthSize="2" />
     </t-layout-page-item>
   </t-layout-page>
 </template>
@@ -65,16 +60,16 @@ const formOpts = reactive<FormTypes.FormOpts>({
   ref: null,
   labelWidth: "140px",
   formData: {
-    sex: null,
-    status: null,
-    hobby: null,
+    sex: undefined,
+    status: undefined,
+    hobby: undefined,
     icon: "",
-    createDate: null,
-    date: null,
-    wechat: null,
-    deptCode: null,
-    createDeptCode: null,
-    valDate3: null
+    createDate: undefined,
+    date: undefined,
+    wechat: undefined,
+    deptCode: undefined,
+    createDeptCode: undefined,
+    valDate3: undefined
   },
   fieldList: [
     {

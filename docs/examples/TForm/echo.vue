@@ -133,14 +133,14 @@ const formOpts = reactive<FormTypes.FormOpts>({
   ref: null,
   formData: {
     account: "wocwin", // *用户账号
-    password: null, // *用户密码
-    name: null, // *用户昵称
-    sex: null, // *性别: 0:男 1:女
-    hobby: null, // *爱好: 0:男 1:女
-    status: null, // *状态: 0：停用，1：启用(默认为1)',
-    desc: null, // 描述
-    wechat: null,
-    deptCode: null
+    password: undefined, // *用户密码
+    name: undefined, // *用户昵称
+    sex: undefined, // *性别: 0:男 1:女
+    hobby: undefined, // *爱好: 0:男 1:女
+    status: undefined, // *状态: 0：停用，1：启用(默认为1)',
+    desc: undefined, // 描述
+    wechat: undefined,
+    deptCode: undefined
   },
   fieldList: [
     {

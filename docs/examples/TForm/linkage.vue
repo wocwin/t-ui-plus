@@ -63,19 +63,19 @@ const formOpts = reactive<FormTypes.FormOpts>({
   // labelPosition: 'top',
   ref: null,
   formData: {
-    password: null, // *用户密码
-    name: null, // *用户昵称
-    sex: null, // *性别: 0:男 1:女
-    phone: null, // 手机号码
-    createDate: null, // 创建时间
-    valDate: null, // el日期选择范围
-    wechat: null, // 微信
-    qq: null, // qq
-    email: null, // 邮箱
-    desc: null, // 描述
-    code: null, // 物料编号',
-    codeName: null, // 物料名称',
-    mobile: null // 单位名称',
+    password: undefined, // *用户密码
+    name: undefined, // *用户昵称
+    sex: undefined, // *性别: 0:男 1:女
+    phone: undefined, // 手机号码
+    createDate: undefined, // 创建时间
+    valDate: undefined, // el日期选择范围
+    wechat: undefined, // 微信
+    qq: undefined, // qq
+    email: undefined, // 邮箱
+    desc: undefined, // 描述
+    code: undefined, // 物料编号',
+    codeName: undefined, // 物料名称',
+    mobile: undefined // 单位名称',
   },
   fieldList: [
     {

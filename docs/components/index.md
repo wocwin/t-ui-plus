@@ -8,12 +8,23 @@
 
 ### 安装
 
-```bash:no-line-numbers
-pnpm add @wocwin/t-ui-plus -S
-&
-npm install @wocwin/t-ui-plus -S
+**建议您使用包管理器 ([pnpm](https://pnpm.io/)<el-tag  effect="dark">推荐</el-tag> ， [yarn](https://classic.yarnpkg.com/lang/en/)，[npm](https://www.npmjs.com/)) 安装 @wocwin/t-ui-plus**。
+
+::: code-group
+
+```sh [pnpm]
+pnpm install @wocwin/t-ui-plus -S
 ```
 
+```sh [yarn]
+yarn add @wocwin/t-ui-plus
+```
+
+```sh [npm]
+npm install @wocwin/t-ui-plus    -S
+```
+
+:::
 ### 全局使用
 
 > #### 前提条件：使用项目必须全局注册 Element-plus 组件库
@@ -53,9 +64,40 @@ import '@wocwin/t-ui-plus/lib/style.css'
   import {TDetail, TForm} from "@wocwin/t-ui-plus"
 </script>
 ```
+
+### Use CDN in Project(v1.5.0支持)--建议使用pnpm安装使用
+> 浏览器直接引入组件库，属性`驼峰命名`必须转换为短横线，直接通过浏览器的 HTML 标签导入 `@wocwin/t-ui-plus`，然后就可以使用全局变量 `TuiPlus` 了。
+```html
+<head>
+  <!-- Import style -->
+   <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@wocwin/t-ui-plus/lib/style.css" />
+  <!-- Import Vue 3 -->
+  <script src="https://unpkg.com/vue@3"></script>
+  <!-- Import component library -->
+  <script src="https://unpkg.com/element-plus"></script>
+  <!-- 3. 引入t-ui-plus的组件库 -->
+  <script src="https://unpkg.com/@wocwin/t-ui-plus@latest"></script>
+</head>
+<body>
+  <div id="app">
+    <t-input placeholder="请输入金额" input-type="amount" show-thousands v-model="value"></t-input>
+  </div>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          value: ''
+        }
+      }
+    });
+    app.mount('#app');
+  </script>
+</body>
+```
 ### 全部组件如下
-| 组件名称        | 说明                                                                                                                                                       |
-| :-------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 组件名称                 | 说明                                                                                                                                                       |
+| :----------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | TLayoutPage              | 布局页面                                                                                                                                                   |
 | TLayoutPageItem          | 布局页面子项                                                                                                                                               |
 | TAdaptivePage            | [一屏组件](https://wocwin.github.io/t-ui-plus/components/TAdaptivePage/base.html?_blank)（继承TTable 及 TQueryCondition 组件的所有属性、事件、插槽、方法） |
@@ -78,6 +120,7 @@ import '@wocwin/t-ui-plus/lib/style.css'
 | TChart                   | [图表组件](https://wocwin.github.io/t-ui-plus/components/TChart/base.html?_blank)                                                                          |
 | TTabs                    | [标签页组件](https://wocwin.github.io/t-ui-plus/components/TTabs/base.html?_blank)                                                                         |
 | TSelectIcon              | [图标选择组件](https://wocwin.github.io/t-ui-plus/components/TSelectIcon/base.html?_blank)                                                                 |
+
 
 ### T-ui-plus 组件 Volar 类型提示
 

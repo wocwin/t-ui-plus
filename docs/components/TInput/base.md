@@ -79,15 +79,16 @@ TInput/slot
 
 ### 2、配置参数（Attributes）继承 el-input Attributes
 
-| 参数          | 说明                                                  | 类型                                                                                              | 默认值   |
-| :------------ | :---------------------------------------------------- | :------------------------------------------------------------------------------------------------ | :------- |
-| v-model       | 绑定值                                                | string                                                                                            | -        |
-| placeholder   | placeholder提示语                                     | string                                                                                            | '请输入' |
-| decimalLimit  | 小数点位数 <t-tip content='小数、金额类型时生效'/>    | Number                                                                                            | 2        |
-| appendTitle   | 插槽append显示文案<t-tip content='金额类型时生效'/>   | string                                                                                            | '元'     |
-| showThousands | 是否显示千分号<t-tip content='小数、金额类型时生效'/> | Boolean                                                                                           | false    |
-| isTip         | 是否提示金额中文<t-tip content='金额类型时生效'/>     | Boolean                                                                                           | false    |
-| inputType     | 特性类型标注                                          | string<t-tip content='文字:text,金额:amount,电话:phone,整数:integer,小数:decimal,身份证:idCard'/> | text     |
+| 参数           | 说明                                                  | 类型                                                                                              | 默认值   |
+| :------------- | :---------------------------------------------------- | :------------------------------------------------------------------------------------------------ | :------- |
+| v-model        | 绑定值                                                | string                                                                                            | -        |
+| placeholder    | placeholder提示语                                     | string                                                                                            | '请输入' |
+| decimalLimit   | 小数点位数 <t-tip content='小数、金额类型时生效'/>    | Number                                                                                            | 2        |
+| appendTitle    | 插槽append显示文案<t-tip content='金额类型时生效'/>   | string                                                                                            | '元'     |
+| showThousands  | 是否显示千分号<t-tip content='小数、金额类型时生效'/> | Boolean                                                                                           | false    |
+| isTip          | 是否提示金额中文<t-tip content='金额类型时生效'/>     | Boolean                                                                                           | false    |
+| inputType      | 特性类型标注                                          | string<t-tip content='文字:text,金额:amount,电话:phone,整数:integer,小数:decimal,身份证:idCard'/> | text     |
+| isShowErrorTip | 输入错误是否弹出弹窗提示                              | Boolean                                                                                           | true     |
 
 
 ### 3、继承 el-input 事件、插槽、方法

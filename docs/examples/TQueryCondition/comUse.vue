@@ -17,14 +17,14 @@ import { computed, reactive, ref, toRefs } from "vue"
 import cascaderData from "./cascaderData.json"
 let state = reactive({
   queryData: {
-    userName: null, // 登录名
-    userName2: null, // 登录名
-    workshopNum: null,
-    workshopNum2: null,
-    workshopNum3: null,
-    date: null,
-    date1: null,
-    deptCode: null,
+    userName: undefined, // 登录名
+    userName2: undefined, // 登录名
+    workshopNum: undefined,
+    workshopNum2: undefined,
+    workshopNum3: undefined,
+    date: undefined,
+    date1: [],
+    deptCode: undefined,
     icon: ""
   },
   table: {
@@ -197,11 +197,11 @@ const opts = computed(() => {
 })
 const radioChange = val => {
   console.log("下拉选择表格组件--单选", val, opts.value)
-  userName.value = val.name
+  userName.value = val?.name
 }
 const radioChange2 = val => {
   console.log("下拉选择表格组件--单选222", val)
-  userName2.value = val.name
+  userName2.value = val?.name
 }
 // 最终参数获取
 const getQueryData = computed(() => {
