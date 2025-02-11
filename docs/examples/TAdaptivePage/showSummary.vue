@@ -170,7 +170,7 @@ const opts = computed(() => {
 const userName = ref(null)
 const radioChange = val => {
   console.log("下拉选择表格组件--单选", val, opts.value)
-  userName.value = val.name
+  userName.value = val?.name
 }
 // 点击查询按钮
 const conditionEnter = (data: any) => {

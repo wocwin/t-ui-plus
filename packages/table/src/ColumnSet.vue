@@ -26,21 +26,31 @@
   </el-dropdown>
 </template>
 
-<script setup lang="ts" name="columnSet">
+<script setup lang="ts">
 import Draggable from "vuedraggable"
 import { watch, onMounted, reactive, computed, useAttrs } from "vue"
-const props = defineProps({
-  columns: {
-    type: Array,
-    default: () => []
-  },
-  title: String,
-  // 开启列拖拽，缓存唯一性标识
-  name: String,
-  columnSetBind: {
-    type: Object,
-    default: () => {}
-  }
+defineOptions({
+  name: "ColumnSet"
+})
+export interface Column {
+  label: string
+  prop: string
+  checkBoxDisabled?: boolean
+  hidden?: boolean
+}
+
+export interface ColumnSetProps {
+  columns: Column[]
+  title?: string
+  name?: string
+  columnSetBind?: Record<string, any>
+}
+
+const props = withDefaults(defineProps<ColumnSetProps>(), {
+  columns: () => [],
+  title: "",
+  name: "",
+  columnSetBind: () => ({})
 })
 const $attrs: any = useAttrs()
 const columnBind = computed(() => {
@@ -49,34 +59,36 @@ const columnBind = computed(() => {
 })
 // 获取缓存数据
 const getColumnSetCache = () => {
-  let value: any = localStorage.getItem(`t-ui-plus:TTable.columnSet-${props.name || props.title}`)
+  let value =
+    localStorage.getItem(`t-ui-plus:TTable.columnSet-${props.name || props.title}`) || "[]"
   let columnOption = initColumnSet()
-  let valueArr = JSON.parse(value) || []
+  let valueArr = (JSON.parse(value) as any[]) || []
+  // console.log("getColumnSetCache---valueArr", valueArr)
   columnOption.map(item => {
     let findEle = valueArr.find(
       (ele: { label: any; prop: any }) => ele.label === item.label && ele.prop === item.prop
     )
     item.hidden = findEle ? findEle.hidden : false
   })
-  value = JSON.stringify(columnOption)
+  value = JSON.stringify(valueArr.length ? valueArr : columnOption)
+  // console.log("getColumnSetCache---", value)
   return value ? JSON.parse(value) : initColumnSet()
 }
 // 初始化
 const initColumnSet = () => {
-  const columnSet = props.columns.map((col: any) =>{
-    return{
-          label: col.label,
-          prop: col.prop,
-          checkBoxDisabled: false,
-          hidden: false
-        }
+  return props.columns.map((col: any) => {
+    return {
+      label: col.label,
+      prop: col.prop,
+      checkBoxDisabled: false,
+      hidden: false
+    }
   })
-  return columnSet
 }
 
 // 抛出事件
 const emits = defineEmits(["columnSetting"])
-const state: any = reactive({
+const state = reactive({
   columnSet: []
 })
 onMounted(() => {

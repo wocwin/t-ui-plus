@@ -75,6 +75,8 @@ TAdaptivePage/showSummary
 | queryPageStyle      | 查询条件组件的 t-layout-page-item 行内样式                   | object        | -      |
 | tablePageStyle      | table 组件的 t-layout-page-item 行内样式                     | object        | -      |
 | isTTableSelfFilling | 一屏组件 TTable 自动撑满（即分页器显示最下，table 内容撑满） | Boolean       | false  |
+| columnSetting<el-tag>v1.5.0</el-tag> | TTable是否开启列设置 | Boolean       | false  |
+| name<el-tag>v1.5.0</el-tag> | 表格开启columnSetting后，设置缓存数据唯一标识 | string       | -  |
 
 
 ### 3、Slots

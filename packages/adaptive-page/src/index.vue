@@ -24,7 +24,7 @@
         :style="tablePageStyle"
       >
         <t-table
-          v-bind="{ columnSetting, ...$attrs }"
+          v-bind="{ columnSetting, name, ...$attrs }"
           :isSlotToolbar="isShow('toolbar')"
           :isSlotTitle="isShow('title')"
           ref="TTablePage"
@@ -40,57 +40,61 @@
   </div>
 </template>
 
-<script setup lang="ts" name="TAdaptivePage">
+<script setup lang="ts">
 import TLayoutPage from "../../layout-page/src/index.vue"
 import TLayoutPageItem from "../../layout-page-item/src/index.vue"
 import TTable from "../../table/src/index.vue"
 import TQueryCondition from "../../query-condition/src/index.vue"
 import { getCurrentInstance, onMounted, ref, useSlots } from "vue"
-defineProps({
-  leftWidth: {
-    type: Number,
-    default: 260
-  },
-  pageStyle: {
-    type: Object,
-    default: () => {}
-  },
-  columnSetting: Boolean,
-  queryPageStyle: {
-    type: Object,
-    default: () => {}
-  },
-  tablePageStyle: {
-    type: Object,
-    default: () => {}
-  },
-  // 是否table自动撑满
-  isTTableSelfFilling: Boolean
+
+defineOptions({
+  name: "TAdaptivePage"
 })
+
+export interface TAdaptivePageProps {
+  leftWidth?: number
+  pageStyle?: Record<string, string>
+  columnSetting?: boolean
+  name?: string // 表格开启columnSetting后，设置缓存数据唯一标识
+  queryPageStyle?: Record<string, string>
+  tablePageStyle?: Record<string, string>
+  isTTableSelfFilling?: boolean
+}
+
+withDefaults(defineProps<TAdaptivePageProps>(), {
+  leftWidth: 260,
+  pageStyle: () => ({}),
+  columnSetting: false,
+  name: "",
+  queryPageStyle: () => ({}),
+  tablePageStyle: () => ({}),
+  isTTableSelfFilling: false
+})
+
 const slots = useSlots()
-// 判断是否使用漏了某个插槽
+
 const isShow = (name: string) => {
   return Object.keys(slots).includes(name)
 }
-// 获取实例方法
+
 const instance = getCurrentInstance() as any
-// 获取ref
-const TQueryConditionPage = ref<HTMLElement | null>(null) as any
-const TTablePage = ref<HTMLElement | null>(null) as any
+const TQueryConditionPage = ref<InstanceType<typeof TQueryCondition> | null>(null)
+const TTablePage = ref<InstanceType<typeof TTable> | null>(null)
+
 onMounted(() => {
   const exposedObj = {
     ...TQueryConditionPage.value?.$.exposed,
     ...TTablePage.value?.$.exposed
   }
   const entries = Object.entries(exposedObj)
-  // console.log('111', entries)
   for (const [key, value] of entries) {
     instance.exposed[key] = value
   }
-  // console.log(789, instance)
 })
+
 defineExpose({ ...instance.exposed, TQueryConditionPage, TTablePage })
 </script>
+
 <style lang="scss" scoped>
 .t_adaptive_page {
   display: flex;
