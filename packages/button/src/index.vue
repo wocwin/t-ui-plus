@@ -9,33 +9,33 @@
   </el-button>
 </template>
 
-<script setup lang="ts" name="TButton">
+<script setup lang="ts">
 import { ref } from "vue"
-const props = defineProps({
-  time: {
-    type: Number,
-    default: 1000
-  },
-  tip: {
-    type: String,
-    default: ""
-  },
-  placement: {
-    type: String,
-    default: "top"
-  },
-  tipProps: {
-    type: Object,
-    default: () => ({})
-  },
-  isDebounce: {
-    type: Boolean,
-    default: true
-  }
+
+export interface TButtonProps {
+  time?: number
+  tip?: string
+  placement?: string
+  tipProps?: Record<string, any>
+  isDebounce?: boolean
+}
+defineOptions({
+  name: "TButton"
 })
+
+const props = withDefaults(defineProps<TButtonProps>(), {
+  time: 1000,
+  tip: "",
+  placement: "top",
+  tipProps: () => ({}),
+  isDebounce: true
+})
+
 // 抛出事件
 const emits = defineEmits(["click"])
+
 const record = ref(0)
+
 const handleClick = () => {
   if (!props.isDebounce) return emits("click")
   const newTime = new Date()
@@ -45,6 +45,7 @@ const handleClick = () => {
   record.value = newTime.getTime()
 }
 </script>
+
 <style lang="scss" scoped>
 .t-button-tip {
   padding: 0;

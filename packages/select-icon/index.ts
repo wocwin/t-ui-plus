@@ -3,3 +3,4 @@ import { withInstall } from "../withInstall"
 
 const TSelectIcon = withInstall(SelectIcon)
 export default TSelectIcon
+export type { TSelectIconProps } from "./src/index.vue"

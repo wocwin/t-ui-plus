@@ -3,3 +3,4 @@ import { withInstall } from "../withInstall"
 
 const TSelect = withInstall(Select)
 export default TSelect
+export type { TSelectProps } from "./src/index.vue"

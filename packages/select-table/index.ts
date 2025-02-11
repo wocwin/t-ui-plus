@@ -3,3 +3,4 @@ import { withInstall } from "../withInstall"
 
 const TSelectTable = withInstall(SelectTable)
 export default TSelectTable
+export type { TSelectTableProps } from "./src/index.vue"

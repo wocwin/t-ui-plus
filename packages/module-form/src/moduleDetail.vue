@@ -31,8 +31,11 @@
   </div>
 </template>
 
-<script setup lang="ts" name="moduleDetail">
+<script setup lang="ts">
 import { computed, useAttrs, useSlots } from "vue"
+defineOptions({
+  name: "ModuleDetail"
+})
 const props: any = defineProps({
   descData: {
     type: Object,

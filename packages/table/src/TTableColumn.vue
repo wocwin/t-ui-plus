@@ -61,10 +61,13 @@
   </el-table-column>
 </template>
 
-<script setup lang="tsx" name="TTableColumn">
+<script setup lang="tsx">
 import SingleEditCell from "./singleEditCell.vue"
 import RenderCol from "./renderCol.vue"
 import { useSlots } from "vue"
+defineOptions({
+  name: "TTableColumn"
+})
 defineProps({
   item: {
     type: Object,

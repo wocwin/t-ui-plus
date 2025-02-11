@@ -19,11 +19,13 @@
   </el-radio-group>
 </template>
 
-<script setup lang="ts" name="TRadio">
+<script setup lang="ts">
 import { computed, ref } from "vue"
 import type { PropType } from "vue"
 import type { OptionsProps } from "./radio"
-
+defineOptions({
+  name: "TRadio"
+})
 // 定义组件属性，包括类型、默认值和校验规则
 const radioProps = defineProps({
   type: {
@@ -32,7 +34,7 @@ const radioProps = defineProps({
     default: "radio"
   },
   options: {
-    type: Array as unknown as any[],
+    type: Array as any,
     default: () => []
   },
   size: {

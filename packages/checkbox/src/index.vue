@@ -18,10 +18,13 @@
   </el-checkbox-group>
 </template>
 
-<script setup lang="ts" name="TCheckbox">
+<script setup lang="ts">
 import { computed, ref } from "vue"
 import type { PropType } from "vue"
-import type { OptionsProps, CheckboxItem } from "./checkbox"
+import type { OptionsProps } from "./checkbox"
+defineOptions({
+  name: "TCheckbox"
+})
 const checkProps = defineProps({
   type: {
     type: String as PropType<"check" | "button">,
@@ -29,7 +32,7 @@ const checkProps = defineProps({
     default: "check"
   },
   options: {
-    type: Array as unknown as any[],
+    type: Array as any,
     default: () => []
   },
   size: {

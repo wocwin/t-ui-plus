@@ -4,6 +4,9 @@
   </section>
 </template>
 <script setup lang="ts" name="TLayoutPageItem">
+defineOptions({
+  name: "TLayoutPageItem"
+})
 defineProps({
   isNoMargin: {
     type: Boolean,

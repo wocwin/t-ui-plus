@@ -21,22 +21,32 @@
     </el-tabs>
   </div>
 </template>
-<script setup lang="ts" name="TTabs">
+<script setup lang="ts">
 import { ref, useSlots } from "vue"
-const props: any = defineProps({
-  tabs: {
-    type: Array as unknown as any[],
-    default: () => {
-      return []
-    }
-  }
+defineOptions({
+  name: "TTabs"
+})
+export interface TabItem {
+  key?: string
+  title?: string
+  bind?: Record<string, any>
+}
+
+export interface TTabsProps {
+  tabs: TabItem[]
+}
+const props = withDefaults(defineProps<TTabsProps>(), {
+  tabs: () => []
 })
 const slots = useSlots()
-const activeName: any = ref(props.tabs && props.tabs[0].key)
+const activeName = ref(props.tabs && props.tabs[0].key)
 const emit = defineEmits(["tabsChange"])
 const setSelectedTab = (key: any) => {
   activeName.value = key
 }
+defineExpose({
+  setSelectedTab
+})
 </script>
 <style lang="scss" scoped>
 .t_tabs {

@@ -12,16 +12,18 @@
   </div>
 </template>
 
-<script setup lang="ts" name="TTimerBtn">
+<script setup lang="ts">
 import { computed, ref } from "vue"
-const props = defineProps({
-  second: {
-    type: Number,
-    default: 60
-  },
-  className: {
-    type: String
-  }
+defineOptions({
+  name: "TTimerBtn"
+})
+export interface TTimerBtnProps {
+  second?: number
+  className?: string
+}
+const props = withDefaults(defineProps<TTimerBtnProps>(), {
+  second: 60,
+  className: ""
 })
 const time = ref(0)
 const disabled = ref(false)

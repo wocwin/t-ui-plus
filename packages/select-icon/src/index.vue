@@ -42,29 +42,27 @@
   </div>
 </template>
 
-<script setup lang="ts" name="TSelectIcon">
+<script setup lang="ts">
 import { ref, computed, useAttrs } from "vue"
 import * as Icons from "@element-plus/icons-vue"
-
-const props = defineProps({
-  modelValue: {
-    type: String,
-    default: ""
-  },
-  prefixIcon: {
-    type: String,
-    default: "Search"
-  },
-  selectBind: Object,
-  isShowSearch: {
-    type: Boolean,
-    default: true
-  },
-  isShowIcon: {
-    type: Boolean,
-    default: true
-  }
+defineOptions({
+  name: "TSelectIcon"
 })
+export interface TSelectIconProps {
+  modelValue: any
+  prefixIcon?: string
+  selectBind?: Record<string, any>
+  isShowSearch?: boolean
+  isShowIcon?: boolean
+}
+const props = withDefaults(defineProps<TSelectIconProps>(), {
+  modelValue: "",
+  prefixIcon: "Search",
+  selectBind: () => ({}),
+  isShowSearch: true,
+  isShowIcon: true
+})
+
 const emit = defineEmits(["update:modelValue", "select"])
 // v-model简写
 let valueIcon = computed({
@@ -143,8 +141,8 @@ const iconsList = computed((): { [key: string]: any } => {
     }
     .icon-list {
       display: grid;
-      grid-template-columns: repeat(auto-fill, 115px);
-      justify-content: space-evenly;
+      grid-template-columns: repeat(auto-fill, 120px);
+      justify-content: flex-end;
       max-height: 60vh;
       .icon-item {
         display: flex;

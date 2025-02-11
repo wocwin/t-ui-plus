@@ -34,51 +34,45 @@
   </el-input>
 </template>
 
-<script setup lang="ts" name="TInput">
+<script setup lang="ts">
 import { ElMessage } from "element-plus"
 import { computed, useSlots } from "vue"
-const props = defineProps({
-  modelValue: {
-    type: [String, Number],
-    default: ""
-  },
-  placeholder: {
-    type: String,
-    default: "请输入"
-  },
-  // 小数、金额类型时，小数点后最多几位
-  decimalLimit: {
-    type: Number,
-    default: 2
-  },
-  // inputType含有文字:text、金额:amount、电话:phone、整数:integer、小数:decimal、身份证:idCard类型
-  inputType: {
-    type: String,
-    default: "text"
-  },
-  appendTitle: {
-    type: String,
-    default: "元"
-  },
-  // 是否显示千分号
-  showThousands: {
-    type: Boolean,
-    default: false
-  },
-  // 是否显示金额中文提示
-  isTip: {
-    type: Boolean,
-    default: false
-  }
+export interface TInputProps {
+  modelValue: string | number
+  placeholder?: string
+  decimalLimit?: number
+  inputType?: "text" | "amount" | "decimal" | "phone" | "integer" | "idCard"
+  appendTitle?: string
+  showThousands?: boolean
+  isTip?: boolean
+  isShowErrorTip?: boolean
+}
+
+defineOptions({
+  name: "TInput"
 })
-const emits = defineEmits(["update:modelValue"])
+
+const props = withDefaults(defineProps<TInputProps>(), {
+  modelValue: "",
+  placeholder: "请输入",
+  decimalLimit: 2,
+  inputType: "text",
+  appendTitle: "元",
+  showThousands: false,
+  isTip: false,
+  isShowErrorTip: true
+})
+
+const emits = defineEmits<{
+  (e: "update:modelValue", value: string | number): void
+}>()
+
 const slots = useSlots()
 let internalValue = computed({
   get() {
     return props.modelValue
   },
   set(val) {
-    // console.log(777, val)
     emits("update:modelValue", val)
   }
 })
@@ -86,7 +80,7 @@ let internalValue = computed({
 const handleBlur = () => {
   let formattedValue = internalValue.value
 
-  const formatValue = (value, formatter) => {
+  const formatValue = (value: any, formatter: (val: any) => any) => {
     if (formatter) {
       return formatter(value)
     }
@@ -119,37 +113,38 @@ const handleBlur = () => {
 // 手机号码校验
 const validatePhone = (value: string) => {
   const phoneReg = /^1[3456789]\d{9}$/
-  if (phoneReg.test(value as string)) {
+  if (phoneReg.test(value)) {
     return value
   } else {
-    ElMessage.error("请输入正确的手机号码")
+    props.isShowErrorTip && ElMessage.error("请输入正确的手机号码")
     return ""
   }
 }
 // 身份证号码校验
 const validateIdCard = (value: string) => {
   const idCardReg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
-  if (idCardReg.test(value as string)) {
+  if (idCardReg.test(value)) {
     return value
   } else {
-    ElMessage.error("请输入正确的身份证号码")
+    props.isShowErrorTip && ElMessage.error("请输入正确的身份证号码")
     return ""
   }
 }
 // 整数校验
 const validateInteger = (value: string) => {
   const integerReg = /^\d+$/
-  if (integerReg.test(value as string)) {
+  if (integerReg.test(value)) {
     return value
   } else {
-    ElMessage.error("请输入正确的整数")
+    props.isShowErrorTip && ElMessage.error("请输入正确的整数")
     return ""
   }
 }
 // 小数、金额类型转换
 const formatAmount = (value: number, decimalLimit: number) => {
   if (!value) {
-    ElMessage.error(`请输入正确的${props.inputType == "amount" ? "金额" : "数字"}`)
+    props.isShowErrorTip &&
+      ElMessage.error(`请输入正确的${props.inputType == "amount" ? "金额" : "数字"}`)
     return ""
   }
   // 格式化千分号

@@ -21,7 +21,7 @@
             <span v-if="item.filters && item.filters.list">
               {{
                 constantEscape(
-                  dataList[item.fieldName],
+                  item.fieldName ? dataList[item.fieldName] : undefined,
                   listTypeInfo[item.filters.list],
                   item.filters.key || "value",
                   item.filters.label || "label"
@@ -50,7 +50,7 @@
           <span v-if="item.filters && item.filters.list">
             {{
               constantEscape(
-                dataList[item.fieldName],
+                item.fieldName ? dataList[item.fieldName] : undefined,
                 listTypeInfo[item.filters.list],
                 item.filters.key || "value",
                 item.filters.label || "label"
@@ -66,38 +66,48 @@
   </el-descriptions>
 </template>
 
-<script setup lang="ts" name="TDetail">
+<script setup lang="ts">
 import RenderTooltip from "./renderTooltip.vue"
 import RenderLabel from "./renderLabel.vue"
-defineProps({
-  descColumn: {
-    type: Number,
-    default: 4
-  },
-  // 后台数据源
-  dataList: {
-    type: Object,
-    default: () => ({})
-  },
-  // 需要解析的下拉数据
-  listTypeInfo: {
-    type: Object,
-    default: () => ({})
-  },
-  descData: {
-    type: Array as unknown as any[],
-    default: () => []
-  },
-  // 是否显示冒号
-  isColon: {
-    type: Boolean,
-    default: true
-  },
-  // label是否加粗显示
-  isLabelBold: {
-    type: Boolean,
-    default: true
+defineOptions({
+  name: "TDetail"
+})
+export interface DescItem {
+  span?: number
+  bind?: Record<string, any>
+  label?: string
+  labelRender?: (item: any) => any
+  slotName?: string
+  tooltip?: string | ((item: any) => any)
+  placement?: string
+  filters?: {
+    list: string
+    key?: string
+    label?: string
   }
+  value?: string | number
+  unit?: string
+  iconSize?: number
+  iconColor?: string
+  fieldName?: string
+}
+
+export interface TDetailProps {
+  descColumn?: number
+  dataList?: Record<string, any>
+  listTypeInfo?: Record<string, any>
+  descData: DescItem[]
+  isColon?: boolean
+  isLabelBold?: boolean
+}
+
+withDefaults(defineProps<TDetailProps>(), {
+  descColumn: 4,
+  dataList: () => ({}),
+  listTypeInfo: () => ({}),
+  descData: () => [],
+  isColon: true,
+  isLabelBold: true
 })
 /**
  * 下拉数据回显中文过滤器
@@ -106,11 +116,14 @@ defineProps({
  * @param [String,Number] key  数据源的key字段（默认：value）
  * @param {String} label  数据源的label字段（默认：label）
  */
-const constantEscape = (value: any, list: any[], key: string | number, label: string | number) => {
-  const res = list.find(item => {
-    return item[key] === value
-  })
-  return res && res[label]
+const constantEscape = (
+  value: any,
+  list: any[],
+  key: string = "value",
+  label: string = "label"
+): string | undefined => {
+  const res = list.find(item => item[key] === value)
+  return res?.[label]
 }
 </script>
 <style lang="scss" scoped>

@@ -13,27 +13,24 @@
     </div>
   </div>
 </template>
-<script setup lang="ts" name="TLayoutPage">
+<script setup lang="ts">
 import { onActivated, onMounted, ref, watch } from "vue"
-const props = defineProps({
-  keepScrollDisabled: {
-    type: Boolean,
-    default: false
-  },
-  isNoMargin: {
-    type: Boolean,
-    default: false
-  },
-  // 是否显示返回顶部按钮
-  showGoTopButton: {
-    type: Boolean,
-    default: true
-  },
-  // 滚动条位置
-  scrollToTop: {
-    type: Number,
-    default: 100
-  }
+import { CaretTop } from "@element-plus/icons-vue"
+defineOptions({
+  name: "TLayoutPage"
+})
+export interface TLayoutPageProps {
+  keepScrollDisabled?: boolean
+  isNoMargin?: boolean
+  showGoTopButton?: boolean
+  scrollToTop?: number
+}
+
+const props = withDefaults(defineProps<TLayoutPageProps>(), {
+  keepScrollDisabled: false,
+  isNoMargin: false,
+  showGoTopButton: true,
+  scrollToTop: 100
 })
 const isShowGoTopButton = ref(false)
 

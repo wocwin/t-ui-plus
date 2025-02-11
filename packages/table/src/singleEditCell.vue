@@ -87,8 +87,11 @@
   </component>
 </template>
 
-<script setup lang="ts" name="SingleEditCell">
+<script setup lang="ts">
 import { computed, ref, watch } from "vue"
+defineOptions({
+  name: "SingleEditCell"
+})
 const props = defineProps({
   /** 编辑配置项说明
    * label: '爱好', // placeholder显示

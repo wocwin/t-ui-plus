@@ -8,7 +8,7 @@
   </div>
 </template>
 
-<script setup lang="ts" name="TChart">
+<script setup lang="ts">
 import {
   onMounted,
   getCurrentInstance,
@@ -17,33 +17,31 @@ import {
   nextTick,
   onBeforeUnmount,
   markRaw,
-  useAttrs
+  useAttrs,
+  computed
 } from "vue"
 import { useResizeObserver } from "@vueuse/core"
 import { debounce, toLine } from "../../utils"
-import { computed } from "vue"
+
+export interface TChartProps {
+  options?: Record<string, any>
+  id?: string
+  theme?: string
+  isEmpty?: boolean | ((options: Record<string, any>) => boolean)
+  description?: string
+}
+
+defineOptions({
+  name: "TChart"
+})
 const { proxy } = getCurrentInstance() as any
-const props = defineProps({
-  options: {
-    type: Object,
-    default: () => ({})
-  },
-  id: {
-    type: String,
-    default: () => Math.random().toString(36).substring(2, 8)
-  },
-  theme: {
-    type: String,
-    default: ""
-  },
-  isEmpty: {
-    type: [Boolean, Function],
-    default: false
-  },
-  description: {
-    type: String,
-    default: "暂无数据"
-  }
+
+const props = withDefaults(defineProps<TChartProps>(), {
+  options: () => ({}),
+  id: () => Math.random().toString(36).substring(2, 8),
+  theme: "",
+  isEmpty: false,
+  description: "暂无数据"
 })
 
 const echartRef = ref<HTMLDivElement>()

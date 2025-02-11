@@ -13,79 +13,57 @@
     </el-date-picker>
   </div>
 </template>
-<script setup lang="ts" name="TDatePicker">
+
+<script setup lang="ts">
 import { computed, useAttrs, useSlots, watch, reactive, ref } from "vue"
-import type { PropType } from "vue"
-const props = defineProps({
-  modelValue: {
-    type: [String, Date, Array]
-  },
-  // 日期范围是否显示00:00:00 23:59:59时分秒
-  plusTime: {
-    type: Boolean,
-    default: false
-  },
-  // 时间类型
-  /***
-   * week周；month月；year年；dates多个日期；months多个月；years多个年；daterange日期范围；monthrange月份范围
-   * datetime日期和时间点;datetimerange日期和时间点范围
-   */
-  type: {
-    type: String as PropType<
-      | "date"
-      | "week"
-      | "month"
-      | "year"
-      | "dates"
-      | "months"
-      | "years"
-      | "daterange"
-      | "monthrange"
-      | "datetime"
-      | "datetimerange"
-    >,
-    validator: (value: string) =>
-      [
-        "date",
-        "week",
-        "month",
-        "year",
-        "dates",
-        "months",
-        "years",
-        "daterange",
-        "monthrange",
-        "datetime",
-        "datetimerange"
-      ].includes(value),
-    default: "date"
-  },
-  // 快捷配置
-  shortcuts: {
-    type: Array
-  },
-  // 是否开启快捷方式
-  isPickerOptions: {
-    type: Boolean,
-    default: false
-  }
+
+defineOptions({
+  name: "TDatePicker"
 })
+
+export interface TDatePickerProps {
+  modelValue: string | Date | Array<string | Date> | undefined
+  plusTime?: boolean
+  type?:
+    | "date"
+    | "week"
+    | "month"
+    | "year"
+    | "dates"
+    | "months"
+    | "years"
+    | "daterange"
+    | "monthrange"
+    | "datetime"
+    | "datetimerange"
+  shortcuts?: any[]
+  isPickerOptions?: boolean
+}
+
+const props = withDefaults(defineProps<TDatePickerProps>(), {
+  plusTime: false,
+  type: "date",
+  isPickerOptions: false
+})
+
 // 抛出事件
 const emits = defineEmits(["update:modelValue", "change"])
 
-const $attrs: any = useAttrs()
+const attrs = useAttrs()
 const slots = useSlots()
+
 // vue3 v-model简写
-let time: any = computed({
+let time = computed({
   get() {
     return props.modelValue
   },
   set(val) {
-    // console.log(777, val)
     emits("update:modelValue", val)
   }
 })
+
 const DatePicker = ref()
+
 const attrsBind = computed(() => {
   const baseAttrs = {
     date: { "value-format": "YYYY-MM-DD", placeholder: "请选择日期" },
@@ -123,15 +101,16 @@ const attrsBind = computed(() => {
   const typeAttrs = baseAttrs[props.type] || {}
   return {
     ...typeAttrs,
-    ...$attrs
+    ...attrs
   }
 })
 
 const state = reactive({
   dateOptions: props.shortcuts
 })
+
 // 获取快捷配置
-const getShortcuts = (type: any) => {
+const getShortcuts = (type: string) => {
   const shortcuts = {
     date: [
       { text: "今天", value: new Date() },
@@ -162,11 +141,13 @@ const getShortcuts = (type: any) => {
 
   return shortcuts[type] || []
 }
+
 const subtractDays = (date: Date, days: number) => {
   const newDate = new Date(date)
   newDate.setDate(newDate.getDate() - days)
   return newDate
 }
+
 const subtractMonths = (date: Date, months: number) => {
   const newDate = new Date(date)
   newDate.setMonth(newDate.getMonth() - months)
@@ -175,11 +156,10 @@ const subtractMonths = (date: Date, months: number) => {
 
 const dateChange = (val: any[]) => {
   if (props.type === "daterange" && val) {
-    let startTime = val[0]
-    let endTime = val[1]
+    let [startTime, endTime] = val
     if (props.plusTime) {
-      startTime = startTime + " 00:00:00"
-      endTime = endTime + " 23:59:59"
+      startTime += " 00:00:00"
+      endTime += " 23:59:59"
     }
     time.value = [startTime, endTime]
     emits("change", [startTime, endTime])
@@ -195,32 +175,27 @@ const dateChange = (val: any[]) => {
     }
   }
 }
+
 if (props.isPickerOptions) {
   state.dateOptions = getShortcuts(props.type)
 }
-// watch(
-//   () => props.value,
-//   (val) => {
-//     // console.log(111, val)
-//     time.value = val
-//   },
-//   { deep: true }
-// )
+
 watch(
   () => props.shortcuts,
   val => {
     if (props.isPickerOptions) {
-      let shortcuts = getShortcuts(props.type)
-      state.dateOptions = shortcuts
+      state.dateOptions = getShortcuts(props.type)
     } else {
       state.dateOptions = val
     }
   },
   { deep: true }
 )
+
 // 暴露方法出去
 defineExpose({ state })
 </script>
+
 <style lang="scss" scoped>
 .t-date-picker {
   width: 100%;

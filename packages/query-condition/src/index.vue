@@ -118,7 +118,7 @@
   </el-form>
 </template>
 
-<script setup lang="ts" name="TQueryCondition">
+<script setup lang="ts">
 import RenderComp from "./renderComp.vue"
 import MoreChoose from "./moreChoose.vue"
 import { computed, ref, watch, useSlots, onMounted, reactive } from "vue"
@@ -132,8 +132,51 @@ const {
   getPlaceholder,
   getColLength
 } = useComputed()
-import { queryProps } from "./useProps"
-const props = defineProps(queryProps)
+export interface TQueryConditionProps {
+  opts: Record<string, any>
+  labelWidth?: string
+  btnCheckBind?: Record<string, any>
+  btnResetBind?: Record<string, any>
+  loading?: boolean
+  reset?: boolean
+  boolEnter?: boolean
+  isShowOpen?: boolean
+  isExpansion?: boolean
+  maxVisibleRows?: number
+  packUpTxt?: string
+  unfoldTxt?: string
+  isFooter?: boolean
+  configChangedReset?: boolean
+  isShowWidthSize?: boolean
+  widthSize?: number
+  isDropDownSelectMore?: boolean
+  moreCheckList?: any[]
+  popoverAttrs?: Record<string, any>
+}
+const props = withDefaults(defineProps<TQueryConditionProps>(), {
+  opts: () => ({}),
+  labelWidth: "120px",
+  btnCheckBind: () => ({}),
+  btnResetBind: () => ({}),
+  loading: false,
+  reset: true,
+  boolEnter: true,
+  isShowOpen: true,
+  isExpansion: false,
+  maxVisibleRows: 1,
+  packUpTxt: "收起",
+  unfoldTxt: "展开",
+  isFooter: true,
+  configChangedReset: false,
+  isShowWidthSize: false,
+  widthSize: 4,
+  isDropDownSelectMore: false,
+  moreCheckList: () => [],
+  popoverAttrs: () => ({})
+})
+defineOptions({
+  name: "TQueryCondition"
+})
 const slots = useSlots()
 // 判断是否使用了某个插槽
 const isShow = (name: string) => {

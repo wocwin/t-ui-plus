@@ -105,7 +105,7 @@
             :width="item.width"
             :align="item.align || align || 'center'"
             :fixed="item.fixed"
-            v-bind="{ 'show-overflow-tooltip': true, ...item.bind, ...$attrs }"
+            v-bind="{ 'show-overflow-tooltip': true, ...item.bind }"
           >
             <template #default="scope">
               <!-- render方式 -->
@@ -145,7 +145,7 @@
   </el-select>
 </template>
 
-<script setup lang="ts" name="TSelectTable">
+<script setup lang="ts">
 import TQueryCondition from "../../query-condition/src/index.vue"
 import RenderCol from "./renderCol.vue"
 import {
@@ -172,22 +172,130 @@ const {
   saveDATA,
   getItemHeightFromCache
 } = useVirtualized()
-import { selectTableProps } from "./useProps"
-const props = defineProps(selectTableProps)
-
+export interface TSelectTableProps {
+  modelValue?: any
+  inputValue?: any
+  defaultSelectVal?: any[]
+  radioSelectValLabel?: string
+  table: {
+    data: any[]
+    currentPage: number
+    pageSize: number
+    total: number
+    [key: string]: any
+  }
+  keywords?: {
+    value: any
+    label: string
+  }
+  value?: any
+  columns: any[]
+  multiple?: boolean
+  filterable?: boolean
+  remote?: boolean
+  remoteMethod?: Function
+  filterMethod?: Function
+  isShowInput?: boolean
+  inputAttr?: Record<string, any>
+  inputWidth?: number
+  selectWidth?: number
+  tableWidth?: number
+  isShowQuery?: boolean
+  isShowBlurBtn?: boolean
+  btnBind?: Record<string, any>
+  align?: "left" | "center" | "right"
+  reserveSelection?: boolean
+  selectable?: Function
+  multipleFixed?: string | boolean
+  radioTxt?: string
+  radioFixed?: string | boolean
+  tableSize?: "" | "large" | "default" | "small"
+  border?: boolean
+  isShowFirstColumn?: boolean
+  useVirtual?: boolean
+  virtualShowSize?: number
+  isShowPagination?: boolean
+  paginationSize?: "" | "large" | "default" | "small"
+  selfExpanded?: boolean
+  isClearQuery?: boolean
+  isRadioEchoLabel?: boolean
+  defaultValIsOpenRadioChange?: boolean
+  radioSameIsCancel?: boolean
+  rowClickRadio?: boolean
+  isKeyup?: boolean
+  isExpanded?: boolean
+  multipleDisableDelete?: boolean
+}
+const props = withDefaults(defineProps<TSelectTableProps>(), {
+  modelValue: undefined,
+  inputValue: undefined,
+  defaultSelectVal: () => [],
+  radioSelectValLabel: "",
+  table: () => ({
+    data: [],
+    currentPage: 1,
+    pageSize: 10,
+    total: 0
+  }),
+  keywords: () => ({
+    value: "value",
+    label: "label"
+  }),
+  columns: () => [],
+  multiple: false,
+  filterable: true,
+  remote: false,
+  remoteMethod: undefined,
+  filterMethod: undefined,
+  isShowInput: false,
+  inputAttr: () => ({}),
+  inputWidth: 550,
+  selectWidth: 550,
+  tableWidth: 550,
+  isShowQuery: false,
+  isShowBlurBtn: false,
+  btnBind: () => ({ btnTxt: "关闭下拉框" }),
+  align: "center",
+  reserveSelection: true,
+  selectable: undefined,
+  multipleFixed: true,
+  radioTxt: "单选",
+  radioFixed: true,
+  tableSize: "default",
+  border: true,
+  isShowFirstColumn: true,
+  useVirtual: false,
+  virtualShowSize: 30,
+  isShowPagination: false,
+  paginationSize: "small",
+  selfExpanded: false,
+  isClearQuery: false,
+  isRadioEchoLabel: true,
+  defaultValIsOpenRadioChange: false,
+  radioSameIsCancel: true,
+  rowClickRadio: true,
+  isKeyup: false,
+  isExpanded: false,
+  multipleDisableDelete: true
+})
+defineOptions({
+  name: "TSelectTable"
+})
 // 自定义指令
 const vClickOutside = ClickOutside
+// 定义 Emits 类型
+export type Emits = {
+  (event: "page-change", val: any): void
+  (event: "selectionChange", val: any[], ids: any[]): void
+  (event: "radioChange", row: any, value: any): void
+  (event: "update:inputValue", val: string): void
+  (event: "input-focus"): void
+  (event: "input-blur"): void
+  (event: "input-clear"): void
+  (event: "input-click"): void
+}
 // 抛出事件
-const emits = defineEmits([
-  "page-change",
-  "selectionChange",
-  "radioChange",
-  "update:inputValue",
-  "input-focus",
-  "input-blur",
-  "input-clear",
-  "input-click"
-])
+const emits = defineEmits<Emits>()
 const slots = useSlots()
 const isDefaultSelectVal = ref(true) // 是否已经重新选择了
 const forbidden = ref(true) // 判断单选选中及取消选中
@@ -199,7 +307,7 @@ const isShowFirstRadio = ref(props.isShowFirstColumn) // 是否显示第一列
 const selectDefaultLabel: any = ref(props.modelValue) // 单选赋值
 const scrollTopNum = ref(0) // 滚动条位置
 // input回显值
-let selectInputVal: any = computed({
+let selectInputVal = computed({
   get() {
     return props.inputValue
   },
@@ -269,9 +377,6 @@ watch(
   val => {
     // console.log("props.defaultSelectVal---watch", val, isDefaultSelectVal.value)
     state.defaultSelectValue = val
-    // if (val.length > 0 && isDefaultSelectVal.value) {
-    //   defaultSelect(val)
-    // }
     if (val.length > 0) {
       if (props.multiple) {
         if (isDefaultSelectVal.value) {
@@ -350,7 +455,7 @@ onUpdated(() => {
   }
 })
 // 表格显示隐藏回调
-const visibleChange = async (visible: boolean) => {
+const visibleChange = (visible: boolean) => {
   // console.log('表格显示隐藏回调', visible)
   isVisible.value = visible
   if (isQueryVisible.value) {
@@ -640,7 +745,7 @@ const isForbidden = () => {
   }, 0)
 }
 // 单选抛出事件radioChange
-const radioClick = (row: { [x: string]: any }, index: string) => {
+const radioClick = (row: { [x: string]: any }, index: string | number) => {
   forbidden.value = !forbidden.value
   if (radioVal.value === index) {
     if (!props.radioSameIsCancel) return
@@ -657,7 +762,7 @@ const radioClick = (row: { [x: string]: any }, index: string) => {
   }
 }
 
-const updateState = (row: { [x: string]: any }, index: string) => {
+const updateState = (row: { [x: string]: any }, index: string | number) => {
   isForbidden()
   radioVal.value = index
   state.defaultValue = row

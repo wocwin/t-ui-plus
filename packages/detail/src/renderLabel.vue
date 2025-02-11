@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 export default defineComponent({
-  name: "RenderLabel.",
+  name: "RenderLabel",
   props: {
     render: Function,
     item: Object

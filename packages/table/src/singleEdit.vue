@@ -99,8 +99,11 @@
   </div>
 </template>
 
-<script setup lang="ts" name="SingleEdit">
+<script setup lang="ts">
 import { computed, nextTick, ref, watch, useSlots } from "vue"
+defineOptions({
+  name: "SingleEdit"
+})
 const props = defineProps({
   /** 编辑配置项说明
    * label: '爱好', // placeholder显示

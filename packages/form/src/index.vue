@@ -6,15 +6,16 @@
     :model="formOpts.formData"
     :rules="formOpts.rules"
     :label-width="formOpts.labelWidth || '120px'"
-    :label-position="labelPosition || formOpts.labelPosition || 'right'"
+    :label-position="formOpts.labelPosition || labelPosition || 'right'"
     v-bind="$attrs"
   >
     <template v-for="(item, index) in formOpts.fieldList">
       <el-form-item
-       v-if="
+        v-if="
           typeof item.isHideItem == 'function'
             ? item.isHideItem(formOpts.formData)
-            : !item.isHideItem"
+            : !item.isHideItem
+        "
         :key="index"
         :prop="item.value"
         :label="item.label"
@@ -138,47 +139,49 @@
     </div>
   </el-form>
 </template>
-<script setup lang="ts" name="TForm">
+
+<script setup lang="ts">
 import RenderComp from "./renderComp.vue"
 import RenderBtn from "./renderBtn.vue"
 import { ElMessage } from "element-plus"
 import { computed, ref, watch, onMounted, getCurrentInstance } from "vue"
-import type { PropType } from "vue"
-const props = defineProps({
-  // 自定义类名
-  className: {
-    type: String
-  },
-  /** 表单配置项说明
-   * formData object 表单提交数据
-   * rules object 验证规则
-   * fieldList Array 表单渲染数据
-   * operatorList Array 操作按钮list
-   * listTypeInfo object 下拉选项数据
-   * labelWidth  String label宽度
-   */
-  formOpts: {
-    type: Object,
-    default: () => ({})
-  },
-  // 一行显示几个输入项;最大值4
-  widthSize: {
-    type: Number as PropType<1 | 2 | 3 | 4 | 5 | 6>,
-    validator: (value: number) => [1, 2, 3, 4, 5, 6].includes(value),
-    default: 2
-  },
-  // label对齐方式
-  labelPosition: {
-    type: String as PropType<"left" | "right" | "top">,
-    default: ""
-  },
-  // 全局是否开启清除前后空格
-  isTrim: {
-    type: Boolean,
-    default: true
-  }
+
+defineOptions({
+  name: "TForm"
 })
-const cEvent: any = computed(() => {
+export interface FormOpts {
+  formData: Record<string, any>
+  rules?: Record<string, any>
+  fieldList: Array<any>
+  operatorList?: Array<{
+    label: string
+    fun: Function
+    bind?: Record<string, any>
+    isHideBtn?: boolean
+    render?: Function
+  }>
+  listTypeInfo?: Record<string, any[]>
+  labelWidth?: string
+  btnSlotName?: string
+  labelPosition?: "left" | "right" | "top"
+}
+export interface TFormProps {
+  className?: string
+  formOpts: FormOpts
+  widthSize?: 1 | 2 | 3 | 4 | 5 | 6
+  labelPosition?: "left" | "right" | "top"
+  isTrim?: boolean
+}
+
+const props = withDefaults(defineProps<TFormProps>(), {
+  className: "",
+  formOpts: () => ({} as any),
+  widthSize: 2,
+  labelPosition: "right",
+  isTrim: true
+})
+
+const cEvent = computed(() => {
   return (item: { eventHandle: any }, type = "") => {
     let event = { ...item.eventHandle }
     let changeEvent = {} as any
@@ -194,6 +197,7 @@ const cEvent: any = computed(() => {
     return { ...changeEvent }
   }
 })
+
 const selectListType = computed(() => {
   return (item: { list: string | number }) => {
     if (props.formOpts.listTypeInfo) {
@@ -203,8 +207,9 @@ const selectListType = computed(() => {
     }
   }
 })
+
 // 子组件名称
-const compChildName: any = computed(() => {
+const compChildName = computed(() => {
   return (opt: { type: any }) => {
     switch (opt.type) {
       case "checkbox":
@@ -217,6 +222,7 @@ const compChildName: any = computed(() => {
     }
   }
 })
+
 // 子子组件label
 const compChildLabel = computed(() => {
   return (opt: { type: any; arrLabel: any }, value: { [x: string]: any; value: any }) => {
@@ -232,6 +238,7 @@ const compChildLabel = computed(() => {
     }
   }
 })
+
 // 子子组件value
 const compChildValue = computed(() => {
   return (opt: { type: any; arrKey: any }, value: { [x: string]: any; value: any }, key: any) => {
@@ -247,6 +254,7 @@ const compChildValue = computed(() => {
     }
   }
 })
+
 // 子子组件文字展示
 const compChildShowLabel = computed(() => {
   return (opt: { type: any; arrLabel: any }, value: { [x: string]: any; label: any }) => {
@@ -262,22 +270,24 @@ const compChildShowLabel = computed(() => {
     }
   }
 })
+
 const colSize = ref(props.widthSize)
 // 获取ref
-const tform: any = ref<HTMLElement | null>(null)
+const tform = ref<HTMLElement | any>(null)
 // 获取实例方法
-const instance: any = getCurrentInstance()
+const instance = getCurrentInstance() as any
 // 抛出事件
 const emits = defineEmits(["update:modelValue", "handleEvent", "getRefs"])
+
 watch(
   () => props.formOpts.formData,
   () => {
-    // state.form = initForm(opts, true)
     // 将form实例返回到父级
     emits("update:modelValue", tform.value)
   },
   { deep: true }
 )
+
 watch(
   () => props.widthSize,
   val => {
@@ -290,10 +300,9 @@ watch(
   },
   { deep: true }
 )
+
 onMounted(() => {
-  // console.log('tform.value.$.exposed--', tform.value.$)
   const entries = Object.entries(tform.value.$.exposed)
-  // console.log('111', entries)
   for (const [key, value] of entries) {
     instance.exposed[key] = value
   }
@@ -315,6 +324,7 @@ onMounted(() => {
   // 将form实例返回到父级
   emits("update:modelValue", tform.value)
 })
+
 // label与输入框的布局方式
 const getChildWidth = (item: { widthSize: any }) => {
   if (props.formOpts.labelPosition === "top") {
@@ -323,9 +333,9 @@ const getChildWidth = (item: { widthSize: any }) => {
     return `flex: 0 1 ${100 / (item.widthSize || colSize.value)}%;`
   }
 }
+
 // placeholder的显示
 const getPlaceholder = (row: any) => {
-  // console.log(77, row.date)
   let placeholder
   if (row.comp && typeof row.comp == "string") {
     if (row.comp.includes("input")) {
@@ -338,6 +348,7 @@ const getPlaceholder = (row: any) => {
   }
   return placeholder
 }
+
 // 查询条件change事件
 const handleEvent = (
   type: null,
@@ -360,6 +371,7 @@ const handleEvent = (
 
   emits("handleEvent", type, val)
 }
+
 // 自定义校验
 const selfValidate = () => {
   return new Promise((resolve: any, reject: any) => {
@@ -378,24 +390,27 @@ const selfValidate = () => {
     })
   })
 }
+
 // 获取所有ref
 const getRefs = (el: any, item: any, index: any) => {
   emits("getRefs", el, item, index)
 }
+
 // 下拉选择表格组件 ref
-const tselecttableref: any = ref({})
+const tselecttableref = ref({})
 // 下拉选择表格组件 动态ref
-const handleRef = (el: any,item: any, key: any) => {
-  // console.log('el---2', el,item, key)
+const handleRef = (el: any, item: any, key: any) => {
   emits("getRefs", el, item, key)
   if (el) {
     tselecttableref.value[`tselecttableref-${key}`] = el
   }
 }
+
 const selfResetFields = () => {
   resetTselectTable()
   tform.value.resetFields()
 }
+
 // 清除下拉表格组件
 const resetTselectTable = () => {
   const refList = Object.keys(tselecttableref.value).filter(item =>
@@ -403,11 +418,11 @@ const resetTselectTable = () => {
   )
   if (refList.length > 0 && tselecttableref.value) {
     refList.map(val => {
-      // console.log('9999', val)
       tselecttableref.value[val].clear()
     })
   }
 }
+
 // 暴露方法出去
 defineExpose({ ...instance.exposed, selfValidate, selfResetFields, resetTselectTable })
 </script>
@@ -494,13 +509,9 @@ defineExpose({ ...instance.exposed, selfValidate, selfResetFields, resetTselectT
   }
 
   .slot_label {
-    // margin-bottom: 0 !important;
     .el-form-item__content {
-      // margin-left: 0 !important;
       label {
-        // min-width: 108px;
         color: var(--el-text-color-primary);
-        // text-align: right;
         margin-right: 12px;
       }
     }

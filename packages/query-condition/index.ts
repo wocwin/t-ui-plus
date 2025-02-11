@@ -3,3 +3,4 @@ import { withInstall } from "../withInstall"
 
 const TQueryCondition = withInstall(QueryCondition)
 export default TQueryCondition
+export type { TQueryConditionProps } from "./src/index.vue"

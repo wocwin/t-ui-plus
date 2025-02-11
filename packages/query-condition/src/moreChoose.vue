@@ -24,7 +24,7 @@
       </div>
       <el-checkbox-group v-model="checkList" class="inside_box_main" @change="getcheck">
         <el-checkbox
-          v-for="(item,index) of allcheckList"
+          v-for="(item, index) of allcheckList"
           :key="index"
           :label="item.label"
           :value="item.label"
@@ -41,8 +41,11 @@
     </template>
   </el-popover>
 </template>
-<script setup lang="ts" name="MoreChoose">
+<script setup lang="ts">
 import { ref, watch } from "vue"
+defineOptions({
+  name: "MoreChoose"
+})
 const props = defineProps({
   // 以下拉方式展示更多条件---数据源
   moreCheckList: {

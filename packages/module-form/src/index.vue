@@ -36,7 +36,7 @@
       <!-- tabs -->
       <div
         class="tabs"
-        v-if="tabs"
+        v-if="tabs.length"
         :style="{ 'margin-top': isTabMargin ? `${tabMarginNum}px` : 0 }"
       >
         <el-tabs v-if="tabs && tabs.length > 1" v-model="activeName" @tab-change="tabsChange">
@@ -65,67 +65,48 @@
   </div>
 </template>
 
-<script setup lang="ts" name="TModuleForm">
+<script setup lang="ts">
 import { ref, useAttrs, useSlots, nextTick, computed } from "vue"
-import type { PropType } from "vue"
 import ModuleDetail from "./moduleDetail.vue"
 import ModuleForm from "./moduleForm.vue"
-const props: any = defineProps({
-  handleType: {
-    type: String as PropType<"edit" | "desc">,
-    validator: (value: string) => ["edit", "desc"].includes(value),
-    default: "edit" // edit表form表单操作，desc表详情页面
-  },
-  // 是否显示header
-  isShowHeader: {
-    type: Boolean,
-    default: false
-  },
-  // 是否使用插槽显示title
-  titleSlot: {
-    type: Boolean,
-    default: false
-  },
-  // 是否显示返回箭头
-  isShowBack: {
-    type: Boolean,
-    default: false
-  },
-  // 返回上一层触发方法
-  isGoBackEvent: {
-    type: Boolean,
-    default: false
-  },
-  // 保存按钮配置
-  btnSaveBind: {
-    type: Object,
-    default: () => ({})
-  },
-  // 取消按钮配置
-  btnCancelBind: {
-    type: Object,
-    default: () => ({})
-  },
-  // tabs是否跟模块分离
-  isTabMargin: {
-    type: Boolean,
-    default: false
-  },
-  // tabs跟模块分离距离（默认10px）
-  tabMarginNum: {
-    type: Number,
-    default: 10
-  },
-  // 是否显示底部操作按钮 :footer="null"
-  footer: Object,
-  title: String,
-  subTitle: String,
-  tabs: Array as unknown as any[],
-  submit: Function
+defineOptions({
+  name: "TModuleForm"
+})
+export interface TModuleFormProps {
+  handleType?: "edit" | "desc"
+  isShowHeader?: boolean
+  titleSlot?: boolean
+  isShowBack?: boolean
+  isGoBackEvent?: boolean
+  btnSaveBind?: Record<string, any>
+  btnCancelBind?: Record<string, any>
+  isTabMargin?: boolean
+  tabMarginNum?: number
+  footer?: any
+  title?: string
+  subTitle?: string
+  tabs?: Array<{ key: string; title: string }>
+  submit?: (form: Record<string, any>) => Promise<boolean>
+}
+
+const props = withDefaults(defineProps<TModuleFormProps>(), {
+  handleType: "edit",
+  isShowHeader: false,
+  titleSlot: false,
+  isShowBack: false,
+  isGoBackEvent: false,
+  btnSaveBind: () => ({}),
+  btnCancelBind: () => ({}),
+  isTabMargin: false,
+  tabMarginNum: 10,
+  title: "",
+  subTitle: "",
+  tabs: () => [],
+  submit: async () => false
 })
 const attrs: any = useAttrs()
 const slots = useSlots()
-const activeName = ref(props.tabs && props.tabs[0].key)
+const activeName = ref(props.tabs && props.tabs[0]?.key)
 const loading = ref(false)
 // 保存按钮配置
 const saveAttrs = computed(() => {
@@ -146,9 +127,9 @@ const tForm: any = ref<HTMLElement | null>(null)
 const emits = defineEmits(["validateError", "back", "tabsChange"])
 // 点击保存
 const saveHandle = async () => {
-  let form = {} as any
-  let formError = {} as any
-  let formOpts = {} as any
+  let form: Record<string, any> = {}
+  let formError: Record<string, any> = {}
+  let formOpts: Record<string, any> = {}
   let successLength = 0
   loading.value = true
   // 过滤非插槽表单
@@ -200,12 +181,6 @@ const back = () => {
     history.go(-1)
   }
 }
-const show = (formType: any) => {
-  nextTick(() => {
-    updateFormFields()
-    props.formType = formType
-  })
-}
 // 获取默认选中tab
 const setSelectedTab = (key: any) => {
   activeName.value = key
@@ -216,7 +191,7 @@ const tabsChange = (tab: any) => {
 }
 // 清空表单
 const resetFormFields = () => {
-  let formOpts = {} as any
+  let formOpts: Record<string, any> = {}
   // 过滤非插槽表单
   Object.keys(attrs.formOpts).forEach(key => {
     if (attrs.formOpts[key].opts) {
@@ -229,7 +204,7 @@ const resetFormFields = () => {
 }
 // 清空校验规则
 const clearValidate = () => {
-  let formOpts = {} as any
+  let formOpts: Record<string, any> = {}
   // 过滤非插槽表单
   Object.keys(attrs.formOpts).forEach(key => {
     if (attrs.formOpts[key].opts) {
@@ -241,7 +216,7 @@ const clearValidate = () => {
   })
 }
 const updateFormFields = () => {
-  let formOpts = {} as any
+  let formOpts: Record<string, any> = {}
   // 过滤非插槽表单
   Object.keys(attrs.formOpts).forEach(key => {
     if (attrs.formOpts[key].opts) {
@@ -251,9 +226,6 @@ const updateFormFields = () => {
   Object.keys(formOpts).forEach(formIndex => {
     tForm.value.getChildRef(formIndex).updateFields(false)
   })
-}
-const isShow = (name: string) => {
-  return Object.keys(slots).includes(name)
 }
 // 暴露方法出去
 defineExpose({

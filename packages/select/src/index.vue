@@ -57,72 +57,48 @@
   </component>
 </template>
 
-<script setup lang="ts" name="TSelect">
+<script setup lang="ts">
 import { computed, ref, useSlots } from "vue"
-const props: any = defineProps({
-  modelValue: {
-    type: [String, Number, Array, Object]
-  },
-  // 是否多选
-  multiple: {
-    type: Boolean,
-    default: false
-  },
-  // 选择框宽度
-  width: {
-    type: String
-  },
-  // 传入的option数组中，要作为最终选择项的键值key
-  valueCustom: {
-    type: String,
-    default: "key"
-  },
-  // 传入的option数组中，要作为显示项的键值名称
-  labelCustom: {
-    type: String,
-    default: "label"
-  },
-  // 是否自定义设置下拉label
-  customLabel: {
-    type: String
-  },
-  // 下拉框组件数据源
-  optionSource: {
-    type: Array as unknown as any[],
-    default: () => []
-  },
-  // 是否过滤默认开启
-  filterable: {
-    type: Boolean,
-    default: true
-  },
-  // 是否显示分页
-  isShowPagination: {
-    type: Boolean,
-    default: false
-  },
-  // 分页配置
-  paginationOption: {
-    type: Object,
-    default: () => {
-      return {
-        pageSize: 6, // 每页显示条数
-        currentPage: 1, // 当前页
-        pagerCount: 5, // 按钮数，超过时会折叠
-        total: 0 // 总条数
-      }
-    }
-  },
-  // 是否开启虚拟列表
-  useVirtual: {
-    type: Boolean,
-    default: false
-  },
-  // 是否返回对象
-  returnObject: {
-    type: Boolean,
-    default: false
+defineOptions({
+  name: "TSelect"
+})
+export interface TSelectProps {
+  modelValue: string | number | Array<any> | Record<string, any> | undefined
+  multiple?: boolean
+  width?: string
+  valueCustom?: string
+  labelCustom?: string
+  customLabel?: string
+  optionSource?: Array<any>
+  filterable?: boolean
+  isShowPagination?: boolean
+  paginationOption?: {
+    pageSize?: number
+    currentPage?: number
+    pagerCount?: number
+    total?: number
+    layout?: string
+    bind?: Record<string, any>
   }
+  useVirtual?: boolean
+  returnObject?: boolean
+}
+const props = withDefaults(defineProps<TSelectProps>(), {
+  multiple: false,
+  valueCustom: "key",
+  labelCustom: "label",
+  customLabel: "",
+  optionSource: () => [],
+  filterable: true,
+  isShowPagination: false,
+  paginationOption: () => ({
+    pageSize: 6,
+    currentPage: 1,
+    pagerCount: 5,
+    total: 0
+  }),
+  useVirtual: false,
+  returnObject: false
 })
 const tselectRef = ref()
 const filteredOptionsCount = ref(1)

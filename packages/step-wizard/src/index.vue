@@ -67,37 +67,36 @@
   </div>
 </template>
 
-<script setup lang="ts" name="stepWizard">
+<script setup lang="ts">
 import { useSlots } from "vue"
-const props = defineProps({
-  // 步骤数据
-  stepData: {
-    type: Array as unknown as any[],
-    default: () => {
-      return []
-    },
-    required: true
-  },
-  successTitle: {
-    // 最后一步骤成功提示语
-    type: String,
-    default: ""
-  },
-  lastBtnTitle: {
-    // 最后一步骤成功按钮文字
-    type: String,
-    default: "完成"
-  },
-  active: {
-    type: Number,
-    default: 0,
-    required: true
-  },
-  isShowLastSuccess: {
-    type: Boolean,
-    default: true
-  }
+defineOptions({
+  name: "TStepWizard"
 })
+export interface StepItem {
+  title?: string
+  icon?: string
+  description?: string
+  slotName?: string
+  btnArr?: Array<{ type?: string; fn: Function; btnTitle: string }>
+  lastBtnArr?: Array<{ type?: string; fn: Function; btnTitle: string; disable?: boolean }>
+  disable?: boolean
+}
+
+export interface TStepWizardProps {
+  stepData?: StepItem[]
+  successTitle?: string
+  lastBtnTitle?: string
+  active?: number
+  isShowLastSuccess?: boolean
+}
+const props = withDefaults(defineProps<TStepWizardProps>(), {
+  stepData: () => [],
+  successTitle: "",
+  lastBtnTitle: "完成",
+  active: 0,
+  isShowLastSuccess: true
+})
+
 const slots = useSlots()
 const stepContent = () => {
   return props.isShowLastSuccess

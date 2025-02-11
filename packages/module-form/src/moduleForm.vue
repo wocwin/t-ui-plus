@@ -44,8 +44,11 @@
   </div>
 </template>
 
-<script setup lang="ts" name="ModuleForm">
+<script setup lang="ts">
 import { computed, ref, useAttrs, useSlots } from "vue"
+defineOptions({
+  name: "ModuleForm"
+})
 const props: any = defineProps({
   // 表单配置项
   formOpts: {

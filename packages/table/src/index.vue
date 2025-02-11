@@ -206,7 +206,7 @@
             :sortable="item.sortable || item.sort || sortable"
             :align="item.align || align"
             :fixed="item.fixed"
-            v-bind="{ 'show-overflow-tooltip': true, ...item.bind, ...$attrs }"
+            v-bind="{ 'show-overflow-tooltip': true, ...item.bind }"
           >
             <template #header v-if="item.headerRequired || item.renderHeader || item.isClickEdit">
               <render-header v-if="item.renderHeader" :column="item" :render="item.renderHeader" />
@@ -336,8 +336,7 @@
                   link: true,
                   text: true,
                   size: 'small',
-                  ...item.bind,
-                  ...$attrs
+                  ...item.bind
                 }"
                 v-if="checkIsShow(scope, item)"
               >
@@ -391,7 +390,7 @@
   </div>
 </template>
 
-<script setup lang="ts" name="TTable">
+<script setup lang="ts">
 import {
   computed,
   ref,
@@ -439,7 +438,9 @@ const {
 } = useExpose()
 import { tableProps } from "./tableProps"
 const props = defineProps(tableProps)
-
+defineOptions({
+  name: "TTable"
+})
 // 初始化数据
 let state = reactive({
   tableData: props.table.data,
