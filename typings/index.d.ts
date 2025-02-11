@@ -101,7 +101,6 @@ declare namespace TableTypes {
     sortable?: any; // 列是否可排序
     sort?: any; // 列排序方式
     isShowCol?: boolean | Function; // 列是否显示
-    isShowHidden?: boolean;
     align?: string; // 列对齐方式
     fixed?: string; // 列固定
     bind?: AnyObject; // el-table-column 属性

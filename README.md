@@ -33,11 +33,25 @@
 
 <img src="./README_GIF/TuiPlus__demo.gif">
 
-## npm 方式安装使用
+### 安装
 
-```shell
-pnpm i @wocwin/t-ui-plus
+**建议您使用包管理器 ([pnpm](https://pnpm.io/)<el-tag  effect="dark">推荐</el-tag> ， [yarn](https://classic.yarnpkg.com/lang/en/)，[npm](https://www.npmjs.com/)) 安装 @wocwin/t-ui-plus**。
+
+::: code-group
+
+```sh [pnpm]
+pnpm install @wocwin/t-ui-plus -S
 ```
+
+```sh [yarn]
+yarn add @wocwin/t-ui-plus
+```
+
+```sh [npm]
+npm install @wocwin/t-ui-plus    -S
+```
+
+:::
 
 ## 全局注册使用
 
@@ -79,6 +93,36 @@ import '@wocwin/t-ui-plus/lib/style.css'
   import {TDetail, TForm} from "@wocwin/t-ui-plus"
 </script>
 ```
+## Use CDN in Project(v1.5.0支持)--建议使用pnpm安装使用
+> 浏览器直接引入组件库，属性`驼峰命名`必须转换为短横线,直接通过浏览器的 HTML 标签导入 `@wocwin/t-ui-plus`，然后就可以使用全局变量 `TuiPlus` 了
+```html
+<head>
+  <!-- Import style -->
+   <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@wocwin/t-ui-plus/lib/style.css" />
+  <!-- Import Vue 3 -->
+  <script src="https://unpkg.com/vue@3"></script>
+  <!-- Import component library -->
+  <script src="https://unpkg.com/element-plus"></script>
+  <!-- 3. 引入t-ui-plus的组件库 -->
+  <script src="https://unpkg.com/@wocwin/t-ui-plus@latest"></script>
+</head>
+<body>
+  <div id="app">
+    <t-input placeholder="请输入金额" input-type="amount" show-thousands v-model="value"></t-input>
+  </div>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          value: ''
+        }
+      }
+    });
+    app.mount('#app');
+  </script>
+</body>
+```
 ## 全部组件如下
 | 组件名称                 | 说明                                                                                                                                                       |
 | :----------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -106,18 +150,7 @@ import '@wocwin/t-ui-plus/lib/style.css'
 | TSelectIcon              | [图标选择组件](https://wocwin.github.io/t-ui-plus/components/TSelectIcon/base.html?_blank)                                                                 |
 
 
-## Use CDN in Project(暂不支持)
 
-```html
-<head>
-  <!-- Import style -->
-  <link rel="stylesheet" href="//unpkg.com/@wocwin/t-ui-plus/lib/style.css" />
-  <!-- Import Vue 3 -->
-  <script src="//unpkg.com/vue@3"></script>
-  <!-- Import component library -->
-  <script src="https://unpkg.com/@wocwin/t-ui-plus@latest"></script>
-</head>
-```
 ## t-ui-plus Volar 组件类型提示
 
 ```js

@@ -13,6 +13,12 @@ import TTimerBtn from './lib/timer-btn/src/index.vue'
 import TModuleForm from './lib/module-form/src/index.vue'
 import TAdaptivePage from './lib/adaptive-page/src/index.vue'
 import TDatePicker from './lib/date-picker/src/index.vue'
+import TChart from './lib/chart/src/index.vue'
+import TCheckbox from './lib/checkbox/src/index.vue'
+import TInput from './lib/input/src/index.vue'
+import TRadio from './lib/radio/src/index.vue'
+import TSelectIcon from './lib/select-icon/src/index.vue'
+import TTabs from './lib/tabs/src/index.vue'
 // GlobalComponents for Volar
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
@@ -121,6 +127,12 @@ declare module '@vue/runtime-core' {
     TModuleForm: typeof TModuleForm
     TAdaptivePage: typeof TAdaptivePage
     TDatePicker: typeof TDatePicker
+    TChart: typeof TChart
+    TCheckbox: typeof TCheckbox
+    TInput: typeof TInput
+    TRadio: typeof TRadio
+    TSelectIcon: typeof TSelectIcon
+    TTabs: typeof TTabs
   }
 
   interface ComponentCustomProperties {
@@ -135,4 +147,4 @@ declare module '@vue/runtime-core' {
   }
 }
 
-export {}
+export { }

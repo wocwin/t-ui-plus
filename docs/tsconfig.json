@@ -16,6 +16,7 @@
       "element-plus/global",
       "../packages/components.d.ts",
       "../typings/index.d.ts",
+      "../global.d.ts",
     ]
   }
 }

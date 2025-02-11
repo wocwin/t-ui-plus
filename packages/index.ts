@@ -23,7 +23,6 @@ import TChart from "./chart"
 import TTabs from "./tabs"
 import TSelectIcon from "./select-icon"
 import TInput from "./input"
-
 // 存储组件列表
 const components: {
   [propName: string]: Component
@@ -49,31 +48,34 @@ const components: {
   TSelectIcon,
   TInput
 }
-// 插件声明：声明所有插件
-// 插件注册：在 Vue 项目的入口文件中，通过 ( app.use(插件) ) 进行注册
-const installComponents: any = (app: App) => {
-  // components.forEach((comp: any) => {
-  //   app.component(comp.name as string, comp)
-  // })
-  //   app.use(ElementPlus, {
-  //     locale // 语言设置
-  //   // size: Cookies.get('size') || 'medium' // 设置默认尺寸
-  // })
-  for (const key in components) {
-    app.component(key, components[key])
-  }
-}
 // vue插件
 // - install：每个插件都有一个 install 方法
 // - 参数：是通过 Vue.createApp() 创建的 app 实例
-const install: any = (app: any, router?: any) => {
-  // !router && installRouter(app);
-  installComponents(app)
+const TuiPlus = {
+  install(app: App) {
+    Object.entries(components).forEach(([name, component]) => {
+      // console.log('name--11', name, component)
+      app.component(name, component)
+    });
+  }
 }
+// 自动注册（针对CDN环境）
 // @ts-ignore
-if (typeof window !== "undefined" && window.Vue) {
+if (typeof window !== 'undefined' && window.Vue) {
   // @ts-ignore
-  install(window.Vue)
+  const Vue = window.Vue;
+  const originalCreateApp = Vue.createApp;
+  Vue.createApp = function (...args) {
+    const app = originalCreateApp.apply(this, args);
+    TuiPlus.install(app);
+    // 如果依赖 ElementPlus 的自动注册
+    // @ts-ignore
+    if (window.ElementPlus) {
+      // @ts-ignore
+      app.use(window.ElementPlus);
+    }
+    return app;
+  };
 }
 
 // 按需引入
@@ -103,8 +105,5 @@ export {
  * @description 公共方法
  */
 export { throttle, debounce, formatNumber }
-
-export default {
-  // 导出的对象必须具有 install，才能被 Vue.use() 方法安装
-  install
-}
+// 导出的对象必须具有 install，才能被 Vue.use() 方法安装
+export default TuiPlus
