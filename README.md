@@ -37,8 +37,6 @@
 
 **建议您使用包管理器 ([pnpm](https://pnpm.io/)<el-tag  effect="dark">推荐</el-tag> ， [yarn](https://classic.yarnpkg.com/lang/en/)，[npm](https://www.npmjs.com/)) 安装 @wocwin/t-ui-plus**。
 
-::: code-group
-
 ```sh [pnpm]
 pnpm install @wocwin/t-ui-plus -S
 ```
@@ -51,7 +49,6 @@ yarn add @wocwin/t-ui-plus
 npm install @wocwin/t-ui-plus    -S
 ```
 
-:::
 
 ## 全局注册使用
 
@@ -93,8 +90,8 @@ import '@wocwin/t-ui-plus/lib/style.css'
   import {TDetail, TForm} from "@wocwin/t-ui-plus"
 </script>
 ```
-## Use CDN in Project(v1.5.0支持)--建议使用pnpm安装使用
-> 浏览器直接引入组件库，属性`驼峰命名`必须转换为短横线,直接通过浏览器的 HTML 标签导入 `@wocwin/t-ui-plus`，然后就可以使用全局变量 `TuiPlus` 了
+## 浏览器直接引入(v1.5.0支持)--建议使用pnpm安装使用
+> Use CDN in Project；浏览器直接引入组件库，属性`驼峰命名`必须转换为短横线,直接通过浏览器的 HTML 标签导入 `@wocwin/t-ui-plus`，然后就可以使用全局变量 `TuiPlus` 了
 ```html
 <head>
   <!-- Import style -->
