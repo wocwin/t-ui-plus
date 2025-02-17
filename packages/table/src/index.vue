@@ -401,6 +401,7 @@ import {
   onUpdated,
   onBeforeUnmount
 } from "vue"
+import { Rank, Edit } from "@element-plus/icons-vue"
 import { ElMessage } from "element-plus"
 import Sortable from "sortablejs"
 import TTableColumn from "./TTableColumn.vue"

@@ -69,6 +69,7 @@
 <script setup lang="ts">
 import RenderTooltip from "./renderTooltip.vue"
 import RenderLabel from "./renderLabel.vue"
+import { Warning } from "@element-plus/icons-vue"
 defineOptions({
   name: "TDetail"
 })

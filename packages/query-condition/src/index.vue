@@ -122,6 +122,7 @@
 import RenderComp from "./renderComp.vue"
 import MoreChoose from "./moreChoose.vue"
 import { computed, ref, watch, useSlots, onMounted, reactive } from "vue"
+import { ArrowUp, ArrowDown } from "@element-plus/icons-vue"
 import { useComputed } from "./useComputed"
 const {
   compChildName,

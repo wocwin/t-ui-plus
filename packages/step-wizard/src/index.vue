@@ -69,6 +69,7 @@
 
 <script setup lang="ts">
 import { useSlots } from "vue"
+import { CircleCheck } from "@element-plus/icons-vue"
 defineOptions({
   name: "TStepWizard"
 })

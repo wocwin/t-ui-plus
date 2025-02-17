@@ -78,7 +78,7 @@ onActivated(() => {
   height: 100%;
   overflow: auto;
   .back_to_top {
-    position: fixed;
+    position: absolute;
     right: 10px;
     bottom: 100px;
     z-index: 100;
