@@ -37,7 +37,6 @@
 
 **建议您使用包管理器 ([pnpm](https://pnpm.io/)<el-tag  effect="dark">推荐</el-tag> ， [yarn](https://classic.yarnpkg.com/lang/en/)，[npm](https://www.npmjs.com/)) 安装 @wocwin/t-ui-plus**。
 
-::: code-group
 
 ```sh [pnpm]
 pnpm install @wocwin/t-ui-plus -S
@@ -51,7 +50,6 @@ yarn add @wocwin/t-ui-plus
 npm install @wocwin/t-ui-plus    -S
 ```
 
-:::
 
 ## 全局注册使用
 

@@ -6,17 +6,29 @@
         :table="table"
         :columns="table.columns"
         :isShowPagination="false"
-        isRowSort
-        isRowSortIcon
+        :isRowSort = "isRowSort"
+        :isRowSortIcon="isRowSortIcon"
         row-key="id"
         @rowSort="rowSort"
-      />
+      >
+      <template #toolbar>
+        <el-button
+          type="primary"
+          @click="()=>{isRowSort = !isRowSort,isRowSortIcon = !isRowSortIcon}"
+        >
+          {{ isRowSort&&isRowSortIcon ? "关闭拖拽" : "开启拖拽" }}
+        </el-button>
+      </template>
+      </t-table>
     </t-layout-page-item>
   </t-layout-page>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue"
+const isRowSort = ref(true)
+const isRowSortIcon = ref(true)
+
 let table = ref<TableTypes.Table>({
   // 接口返回数据
   data: [

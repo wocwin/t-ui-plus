@@ -78,7 +78,7 @@
           ...rowSortIconBind
         }"
       >
-        <template #default="scope">
+        <template #default>
           <el-icon class="row_drag" :color="rowSortIconBind.color" :size="rowSortIconBind.size"
             ><Rank
           /></el-icon>
@@ -504,7 +504,14 @@ watch(
   },
   { deep: true }
 )
-
+watch(
+  () => props.isRowSort,
+  val => {
+    if (val) {
+      initSort()
+    }
+  }
+)
 onMounted(() => {
   // console.log('onMounted', props.table.firstColumn)
   // 设置默认选中项（单选）
