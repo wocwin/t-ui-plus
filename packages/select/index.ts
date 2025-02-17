@@ -1,6 +1,6 @@
 import Select from "./src/index.vue"
 import { withInstall } from "../withInstall"
-
+export type TSelectInstance = InstanceType<typeof Select>
 const TSelect = withInstall(Select)
 export default TSelect
-export type { TSelectProps } from "./src/index.vue"
+export * from './src/type'

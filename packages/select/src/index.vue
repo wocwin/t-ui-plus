@@ -27,7 +27,7 @@
         >全选</el-checkbox
       >
       <el-option
-        v-for="(item, index) in optionSource"
+        v-for="(item, index) in mergedOptions"
         :key="index + 'i'"
         :label="customLabel ? customLabelHandler(item) : item[labelCustom]"
         :value="returnObject ? item : item[valueCustom]"
@@ -58,31 +58,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, useSlots } from "vue"
+import { computed, ref, useSlots, watch, onMounted } from "vue"
+import type { TSelectProps } from "@/select/src/type"
 defineOptions({
   name: "TSelect"
 })
-export interface TSelectProps {
-  modelValue: string | number | Array<any> | Record<string, any> | undefined
-  multiple?: boolean
-  width?: string
-  valueCustom?: string
-  labelCustom?: string
-  customLabel?: string
-  optionSource?: Array<any>
-  filterable?: boolean
-  isShowPagination?: boolean
-  paginationOption?: {
-    pageSize?: number
-    currentPage?: number
-    pagerCount?: number
-    total?: number
-    layout?: string
-    bind?: Record<string, any>
-  }
-  useVirtual?: boolean
-  returnObject?: boolean
-}
+
 const props = withDefaults(defineProps<TSelectProps>(), {
   multiple: false,
   valueCustom: "key",
@@ -98,22 +79,17 @@ const props = withDefaults(defineProps<TSelectProps>(), {
     total: 0
   }),
   useVirtual: false,
-  returnObject: false
+  returnObject: false,
+  isCached: true
 })
 const tselectRef = ref()
 const filteredOptionsCount = ref(1)
+
 const slots = useSlots()
 // 抛出事件
 const emits = defineEmits(["update:modelValue", "change", "input", "select-input"])
-const handlesSelectInput = (e: any) => {
-  if (props.filterable) {
-    // console.log("handlesSelectInput---tselectRef", tselectRef.value.filteredOptionsCount)
-    filteredOptionsCount.value = tselectRef.value.filteredOptionsCount
-  }
-  emits("select-input", e.target.value)
-}
-// vue3 v-model简写
-let childSelectedValue: any = computed({
+// // vue3 v-model简写
+const childSelectedValue = computed({
   get() {
     return props.modelValue
   },
@@ -122,9 +98,73 @@ let childSelectedValue: any = computed({
     emits("update:modelValue", val)
   }
 })
-const handlesChange = (val: any) => {
+// 当前页数据
+const currentOptions = ref(props.optionSource)
+// 缓存已选数据 { value: { label, value } }
+const cachedOptions = ref(new Map())
+// 合并后的选项列表（当前页数据 + 已选缓存）
+const mergedOptions = computed(() => {
+  const currentValues = currentOptions.value.map(item => item[props.valueCustom])
+  const cached = Array.from(cachedOptions.value.values()).filter(
+    item => !currentValues.includes(item[props.valueCustom])
+  )
+  return props.isCached ? [...currentOptions.value, ...cached] : [...currentOptions.value]
+})
+watch(
+  () => props.optionSource,
+  newVal => {
+    currentOptions.value = newVal
+    // 缓存已选数据
+    newVal.forEach(item => {
+      const isObject = typeof childSelectedValue.value === "object"
+      const condition = isObject
+        ? Array.isArray(childSelectedValue.value) &&
+          childSelectedValue.value.includes(item[props.valueCustom])
+        : childSelectedValue.value === item[props.valueCustom]
+
+      if (condition) {
+        cachedOptions.value.set(item[props.valueCustom], item)
+      }
+    })
+  }
+)
+onMounted(() => {
+  // 缓存已选数据
+  currentOptions.value.forEach(item => {
+    const isObject = typeof childSelectedValue.value === "object"
+    const condition = isObject
+      ? Array.isArray(childSelectedValue.value) &&
+        childSelectedValue.value.includes(item[props.valueCustom])
+      : childSelectedValue.value === item[props.valueCustom]
+
+    if (condition) {
+      cachedOptions.value.set(item[props.valueCustom], item)
+    }
+  })
+})
+const handlesSelectInput = (e: any) => {
+  if (props.filterable) {
+    // console.log("handlesSelectInput---tselectRef", tselectRef.value.filteredOptionsCount)
+    filteredOptionsCount.value = tselectRef.value.filteredOptionsCount
+  }
+  emits("select-input", e.target.value)
+}
+
+const handlesChange = (value: any) => {
   // console.log(val)
-  emits("change", val)
+  // 更新缓存
+  if (Array.isArray(value)) {
+    const newCache = new Map()
+    value.forEach(val => {
+      const item = mergedOptions.value.find(opt => opt[props.valueCustom] === val)
+      if (item) newCache.set(val, item)
+    })
+    cachedOptions.value = newCache
+  } else {
+    const item = mergedOptions.value.find(opt => opt[props.valueCustom] === value)
+    cachedOptions.value = item ? new Map([[value, item]]) : new Map()
+  }
+  emits("change", value)
 }
 // 设置全选
 const selectChecked = computed({

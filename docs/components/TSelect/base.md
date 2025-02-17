@@ -98,6 +98,7 @@ TSelect/returnObject
 | isShowPagination                    | 是否开启分页                                     | Boolean                         | false   |
 | paginationOption                    | 分页配置                                         | Object                          | -       |
 | returnObject<el-tag>1.4.14</el-tag> | 选中值是否返回对象必须设置`value-key`            | Boolean                         | false   |
+| isCached<el-tag>1.5.1</el-tag>      | 分页是否开启缓存选中项                           | Boolean                         | true    |
 
 ### 2-1、paginationOption 配置参数（Attributes）继承 el-pagination Attributes
 
