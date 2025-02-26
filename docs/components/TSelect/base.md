@@ -14,7 +14,7 @@ TSelect/customLabel
 
 ### 单选分页
 
-:::demo 在组件中配置：`isShowPagination` 及 `paginationOption`
+:::demo 在组件中配置：`isShowPagination` 及 `paginationOption`,`isCached`属性，默认`true`开启缓存，切换分页后会把上一页选中的数据，追加在当前页的数据中。
 TSelect/singePagination
 :::
 
@@ -44,7 +44,7 @@ TSelect/multipleCollapseTags
 
 ### 多选分页
 
-:::demo 在组件中配置：`isShowPagination` 及 `paginationOption`；**`多选不支持翻页选中功能`**
+:::demo 在组件中配置：`isShowPagination` 及 `paginationOption`；**`多选不支持翻页选中功能`**，`isCached`属性，默认`true`开启缓存，切换分页后会把上一页选中的数据，追加在当前页的数据中。
 TSelect/pagination
 :::
 
