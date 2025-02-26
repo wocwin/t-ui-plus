@@ -91,7 +91,7 @@ import '@wocwin/t-ui-plus/lib/style.css'
   import {TDetail, TForm} from "@wocwin/t-ui-plus"
 </script>
 ```
-## Use CDN in Project(v1.5.0支持)--建议使用pnpm安装使用
+## 浏览器直接引入Use CDN in Project(v1.5.0支持)--建议使用pnpm安装使用
 > 浏览器直接引入组件库，属性`驼峰命名`必须转换为短横线,直接通过浏览器的 HTML 标签导入 `@wocwin/t-ui-plus`，然后就可以使用全局变量 `TuiPlus` 了
 ```html
 <head>
@@ -120,6 +120,7 @@ import '@wocwin/t-ui-plus/lib/style.css'
     app.mount('#app');
   </script>
 </body>
+
 ```
 ## 全部组件如下
 | 组件名称                 | 说明                                                                                                                                                       |
