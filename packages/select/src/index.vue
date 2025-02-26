@@ -48,8 +48,8 @@
           v-bind="{
             size: 'small',
             background: true,
-            ...$attrs,
-            ...paginationOption.bind
+            ...paginationOption.bind,
+            ...$attrs
           }"
         />
       </div>
