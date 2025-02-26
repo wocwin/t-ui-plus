@@ -164,6 +164,11 @@ TSelectTable/tableSize
 TSelectTable/remoteMethod
 :::
 
+### table loading效果<el-tag>1.5.1</el-tag>
+:::demo 在`t-select-table`标签中添加`tableLoading`，loading文字设置`loadingText`
+
+TSelectTable/tableLoading
+:::
 
 ### TSelectTable 参数配置
 
@@ -223,7 +228,7 @@ TSelectTable/remoteMethod
 | selfExpanded                                       | 是否始终显示下拉框                                                                      | Boolean                             | false        |
 | isExpanded                                         | 是否显示下拉框                                                                          | Boolean                             | false        |
 | toolbar                                            | el-table 头部插槽（位置：查询条件下面）                                                 | slot                                | -            |
-| footer                                             | el-table 底部插槽（位置：分页器上面）                                                   | slot                                | -            |
+| footer                                             | el-table 底部插槽（位置：分页器下面）                                                   | slot                                | -            |
 | multipleFixed<el-tag>1.4.13</el-tag>               | table 是否固定多选                                                                      | Boolean                             | true         |
 | radioFixed<el-tag>1.4.13</el-tag>                  | table 是否固定单选                                                                      | Boolean                             | true         |
 | useVirtual<el-tag>1.4.13</el-tag>                  | table 是否开启虚拟滚动                                                                  | Boolean                             | false        |
@@ -237,6 +242,9 @@ TSelectTable/remoteMethod
 | isRadioEchoLabel<el-tag>1.4.16</el-tag>            | 单选--是否开启回显label                                                                 | Boolean                             | true         |
 | remote<el-tag>1.4.16</el-tag>                      | 是否开启远程搜索                                                                        | Boolean                             | false        |
 | remoteMethod<el-tag>1.4.16</el-tag>                | 自定义远程搜索方法                                                                      | Function                            | 搜索输入的值 |
+| tableLoading<el-tag>1.5.1</el-tag>                 | table loading                                                                           | Boolean                             | false        |
+| loadingText<el-tag>1.5.1</el-tag>                  | table loading 文字                                                                      | String                              | '加载中...'  |
+
 
 
 ### 3、事件（events）继承 el-table 及 el-select 属性

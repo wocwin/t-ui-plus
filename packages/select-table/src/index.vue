@@ -51,95 +51,99 @@
             </template>
           </t-query-condition>
         </div>
-        <slot name="toolbar"></slot>
-        <el-table
-          ref="selectTable"
-          :data="state.tableData"
-          :class="{
-            radioStyle: !multiple,
-            highlightCurrentRow: isRadio,
-            keyUpStyle: isKeyup,
-            t_select_table_multiple: useVirtual && multiple,
-            t_select_table_radio: useVirtual && !multiple
-          }"
-          :row-class-name="getRowClassName"
-          :row-key="getRowKey"
-          @row-click="rowClick"
-          @cell-dblclick="cellDblclick"
-          @selection-change="handlesSelectionChange"
-          v-bind="{ border, size: tableSize, 'highlight-current-row': true, ...$attrs }"
-        >
-          <el-table-column
-            v-if="multiple"
-            type="selection"
-            :width="tableSize === 'large' ? 65 : 55"
-            :align="align || 'center'"
-            :reserve-selection="reserveSelection"
-            :selectable="selectable"
-            :fixed="multipleFixed"
-          ></el-table-column>
-          <el-table-column
-            type="radio"
-            :width="tableSize === 'large' ? 65 : 55"
-            :label="radioTxt"
-            :fixed="radioFixed"
-            :align="align || 'center'"
-            v-if="!multiple && isShowFirstRadio"
-          >
-            <template #default="scope">
-              <el-radio
-                v-model="radioVal"
-                :label="scope.$index + 1"
-                :disabled="scope.row.isRadioDisabled"
-                @click.stop="radioChangeHandle($event, scope.row, scope.$index + 1)"
-              ></el-radio>
-            </template>
-          </el-table-column>
-          <el-table-column
-            v-for="(item, index) in columns"
-            :key="index + 'i'"
-            :type="item.type"
-            :label="item.label"
-            :prop="item.prop"
-            :min-width="item['min-width'] || item.minWidth"
-            :width="item.width"
-            :align="item.align || align || 'center'"
-            :fixed="item.fixed"
-            v-bind="{ 'show-overflow-tooltip': true, ...item.bind }"
-          >
-            <template #default="scope">
-              <!-- render方式 -->
-              <template v-if="item.render">
-                <render-col
-                  :column="item"
-                  :row="scope.row"
-                  :render="item.render"
-                  :index="scope.$index"
-                />
-              </template>
-              <!-- 作用域插槽 -->
-              <template v-if="item.slotName">
-                <slot :name="item.slotName" :scope="scope"></slot>
-              </template>
-              <div v-if="!item.render && !item.slotName">
-                <span>{{ scope.row[item.prop] }}</span>
-              </div>
-            </template>
-          </el-table-column>
-          <slot></slot>
-        </el-table>
-        <slot name="footer"></slot>
-        <div class="t-table-select__page" v-if="isShowPagination">
-          <el-pagination
-            v-model:current-page="table.currentPage"
-            v-model:page-size="table.pageSize"
-            @current-change="handlesCurrentChange"
-            layout="total, prev, pager, next, jumper"
-            :pager-count="table['pager-count'] || 5"
-            :total="table.total"
-            v-bind="{ background: true, size: paginationSize || 'small', ...$attrs }"
-          />
+        <div class="header_wrap" :style="{ paddingBottom: isShowSlot('toolbar') ? '10px' : 0 }">
+          <slot name="toolbar"></slot>
         </div>
+        <div class="table_content" v-loading="tableLoading" :element-loading-text="loadingTxt">
+          <el-table
+            ref="selectTable"
+            :data="state.tableData"
+            :class="{
+              radioStyle: !multiple,
+              highlightCurrentRow: isRadio,
+              keyUpStyle: isKeyup,
+              t_select_table_multiple: useVirtual && multiple,
+              t_select_table_radio: useVirtual && !multiple
+            }"
+            :row-class-name="getRowClassName"
+            :row-key="getRowKey"
+            @row-click="rowClick"
+            @cell-dblclick="cellDblclick"
+            @selection-change="handlesSelectionChange"
+            v-bind="{ border, size: tableSize, 'highlight-current-row': true, ...$attrs }"
+          >
+            <el-table-column
+              v-if="multiple"
+              type="selection"
+              :width="tableSize === 'large' ? 65 : 55"
+              :align="align || 'center'"
+              :reserve-selection="reserveSelection"
+              :selectable="selectable"
+              :fixed="multipleFixed"
+            ></el-table-column>
+            <el-table-column
+              type="radio"
+              :width="tableSize === 'large' ? 65 : 55"
+              :label="radioTxt"
+              :fixed="radioFixed"
+              :align="align || 'center'"
+              v-if="!multiple && isShowFirstRadio"
+            >
+              <template #default="scope">
+                <el-radio
+                  v-model="radioVal"
+                  :label="scope.$index + 1"
+                  :disabled="scope.row.isRadioDisabled"
+                  @click.stop="radioChangeHandle($event, scope.row, scope.$index + 1)"
+                ></el-radio>
+              </template>
+            </el-table-column>
+            <el-table-column
+              v-for="(item, index) in columns"
+              :key="index + 'i'"
+              :type="item.type"
+              :label="item.label"
+              :prop="item.prop"
+              :min-width="item['min-width'] || item.minWidth"
+              :width="item.width"
+              :align="item.align || align || 'center'"
+              :fixed="item.fixed"
+              v-bind="{ 'show-overflow-tooltip': true, ...item.bind }"
+            >
+              <template #default="scope">
+                <!-- render方式 -->
+                <template v-if="item.render">
+                  <render-col
+                    :column="item"
+                    :row="scope.row"
+                    :render="item.render"
+                    :index="scope.$index"
+                  />
+                </template>
+                <!-- 作用域插槽 -->
+                <template v-if="item.slotName">
+                  <slot :name="item.slotName" :scope="scope"></slot>
+                </template>
+                <div v-if="!item.render && !item.slotName">
+                  <span>{{ scope.row[item.prop] }}</span>
+                </div>
+              </template>
+            </el-table-column>
+            <slot></slot>
+          </el-table>
+          <div class="t-table-select__page" v-if="isShowPagination">
+            <el-pagination
+              v-model:current-page="table.currentPage"
+              v-model:page-size="table.pageSize"
+              @current-change="handlesCurrentChange"
+              layout="total, prev, pager, next, jumper"
+              :pager-count="table['pager-count'] || 5"
+              :total="table.total"
+              v-bind="{ background: true, size: paginationSize || 'small', ...$attrs }"
+            />
+          </div>
+        </div>
+        <slot name="footer"></slot>
       </div>
     </template>
   </el-select>
@@ -160,6 +164,7 @@ import {
   onUpdated,
   onBeforeUnmount
 } from "vue"
+import type { TSelectTableProps } from "@/select-table/src/type"
 import { ElMessage } from "element-plus"
 import ClickOutside from "../../utils/directives/click-outside/index"
 // 虚拟滚动
@@ -172,60 +177,7 @@ const {
   saveDATA,
   getItemHeightFromCache
 } = useVirtualized()
-export interface TSelectTableProps {
-  modelValue?: any
-  inputValue?: any
-  defaultSelectVal?: any[]
-  radioSelectValLabel?: string
-  table: {
-    data: any[]
-    currentPage: number
-    pageSize: number
-    total: number
-    [key: string]: any
-  }
-  keywords?: {
-    value: any
-    label: string
-  }
-  value?: any
-  columns: any[]
-  multiple?: boolean
-  filterable?: boolean
-  remote?: boolean
-  remoteMethod?: Function
-  filterMethod?: Function
-  isShowInput?: boolean
-  inputAttr?: Record<string, any>
-  inputWidth?: number
-  selectWidth?: number
-  tableWidth?: number
-  isShowQuery?: boolean
-  isShowBlurBtn?: boolean
-  btnBind?: Record<string, any>
-  align?: "left" | "center" | "right"
-  reserveSelection?: boolean
-  selectable?: Function
-  multipleFixed?: string | boolean
-  radioTxt?: string
-  radioFixed?: string | boolean
-  tableSize?: "" | "large" | "default" | "small"
-  border?: boolean
-  isShowFirstColumn?: boolean
-  useVirtual?: boolean
-  virtualShowSize?: number
-  isShowPagination?: boolean
-  paginationSize?: "" | "large" | "default" | "small"
-  selfExpanded?: boolean
-  isClearQuery?: boolean
-  isRadioEchoLabel?: boolean
-  defaultValIsOpenRadioChange?: boolean
-  radioSameIsCancel?: boolean
-  rowClickRadio?: boolean
-  isKeyup?: boolean
-  isExpanded?: boolean
-  multipleDisableDelete?: boolean
-}
+
 const props = withDefaults(defineProps<TSelectTableProps>(), {
   modelValue: undefined,
   inputValue: undefined,
@@ -276,7 +228,9 @@ const props = withDefaults(defineProps<TSelectTableProps>(), {
   rowClickRadio: true,
   isKeyup: false,
   isExpanded: false,
-  multipleDisableDelete: true
+  multipleDisableDelete: true,
+  tableLoading: false,
+  loadingTxt: "加载中..."
 })
 defineOptions({
   name: "TSelectTable"
@@ -826,6 +780,10 @@ const blur = () => {
 const focus = () => {
   selectRef.value.focus()
 }
+// 判断是否使用了某个插槽
+const isShowSlot = (name: string) => {
+  return Object.keys(slots).includes(name)
+}
 // 暴露方法出去
 defineExpose({
   focus,
@@ -890,6 +848,11 @@ defineExpose({
       overflow-x: auto;
       overflow-y: hidden;
       padding: 10px;
+    }
+    .header_wrap {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
     }
   }
 
