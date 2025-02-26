@@ -17,14 +17,14 @@ import { computed, reactive, ref, toRefs } from "vue"
 import cascaderData from "./cascaderData.json"
 let state = reactive({
   queryData: {
-    userName: undefined, // 登录名
-    userName2: undefined, // 登录名
-    workshopNum: undefined,
-    workshopNum2: undefined,
-    workshopNum3: undefined,
-    date: undefined,
+    userName: null, // 登录名
+    userName2: null, // 登录名
+    workshopNum: null,
+    workshopNum2: null,
+    workshopNum3: null,
+    date: null,
     date1: [],
-    deptCode: undefined,
+    deptCode: null,
     icon: ""
   },
   table: {

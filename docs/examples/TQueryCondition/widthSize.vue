@@ -26,13 +26,13 @@ import { computed, onMounted, reactive, ref, toRefs } from "vue"
 const widthSize = ref(3)
 let state: any = reactive({
   queryData: {
-    userName: undefined, // 登录名
-    phonenumber: undefined, // 手机号码
-    workshopNum: undefined,
-    start_time: undefined,
-    end_time: undefined,
-    date: undefined,
-    date1: undefined
+    userName: null, // 登录名
+    phonenumber: null, // 手机号码
+    workshopNum: null,
+    start_time: null,
+    end_time: null,
+    date: null,
+    date1: null
   },
   listTypeInfo: {
     sexList: [

@@ -20,14 +20,14 @@ const listTypeInfo: any = ref({
 })
 let state = reactive({
   queryData: {
-    userName: undefined, // 登录名
-    workshopNum: undefined,
-    workshopNum2: undefined,
-    date: undefined,
-    date1: undefined,
-    phonenumber: undefined,
-    email: undefined,
-    remark: undefined
+    userName: null, // 登录名
+    workshopNum: null,
+    workshopNum2: null,
+    date: null,
+    date1: null,
+    phonenumber: null,
+    email: null,
+    remark: null
   },
   listTypeInfo: {
     sexList: [

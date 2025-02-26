@@ -60,16 +60,16 @@ const formOpts = reactive<FormTypes.FormOpts>({
   ref: null,
   labelWidth: "140px",
   formData: {
-    sex: undefined,
-    status: undefined,
-    hobby: undefined,
+    sex: null,
+    status: null,
+    hobby: null,
     icon: "",
-    createDate: undefined,
-    date: undefined,
-    wechat: undefined,
-    deptCode: undefined,
-    createDeptCode: undefined,
-    valDate3: undefined
+    createDate: null,
+    date: null,
+    wechat: null,
+    deptCode: null,
+    createDeptCode: null,
+    valDate3: null
   },
   fieldList: [
     {

@@ -16,11 +16,11 @@
 import { computed, reactive, ref, toRefs } from "vue"
 let state = reactive({
   queryData: {
-    userName: undefined, // 登录名
-    phonenumber: undefined, // 手机号码
-    workshopNum: undefined,
-    date: undefined,
-    date1: undefined
+    userName: null, // 登录名
+    phonenumber: null, // 手机号码
+    workshopNum: null,
+    date: null,
+    date1: null
   },
   listTypeInfo: {
     sexList: [

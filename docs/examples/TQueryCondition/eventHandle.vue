@@ -76,10 +76,10 @@ const recordStepsList = workOrderNo => {
 }
 let state: any = reactive({
   queryData: {
-    likeCargoNo: undefined,
-    likeBookNo: undefined,
-    likeTransportNo: undefined,
-    likeCargoName: undefined
+    likeCargoNo: null,
+    likeBookNo: null,
+    likeTransportNo: null,
+    likeCargoName: null
   },
   likeBookNoList: []
 })
