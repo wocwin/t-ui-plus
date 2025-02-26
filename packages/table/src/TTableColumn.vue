@@ -8,6 +8,9 @@
     :width="item.width"
     :fixed="item.fixed"
   >
+  <template #header v-if="item.renderHeader">
+      <render-header :column="item" :render="item.renderHeader" />
+    </template>
     <template v-for="(val, index) of item.children">
       <t-table-column v-if="val.children" :key="index" :item="val">
         <template v-for="(index, name) in slots" v-slot:[name]="data">
@@ -22,11 +25,13 @@
         :min-width="val['min-width'] || val.minWidth"
         :width="val.width"
         :sortable="val.sort"
-        :render-header="val.renderHeader"
         :align="val.align || align"
         :fixed="val.fixed"
         v-bind="{ 'show-overflow-tooltip': true, ...val.bind, ...$attrs }"
       >
+        <template #header v-if="val.renderHeader">
+          <render-header :column="val" :render="val.renderHeader" />
+        </template>
         <template #default="scope">
           <!-- render渲染 -->
           <template v-if="val.render">
@@ -64,6 +69,7 @@
 <script setup lang="tsx">
 import SingleEditCell from "./singleEditCell.vue"
 import RenderCol from "./renderCol.vue"
+import RenderHeader from './renderHeader.vue'
 import { useSlots } from "vue"
 defineOptions({
   name: "TTableColumn"
