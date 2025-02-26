@@ -22,14 +22,7 @@ import {
 } from "vue"
 import { useResizeObserver } from "@vueuse/core"
 import { debounce, toLine } from "../../utils"
-
-export interface TChartProps {
-  options?: Record<string, any>
-  id?: string
-  theme?: string
-  isEmpty?: boolean | ((options: Record<string, any>) => boolean)
-  description?: string
-}
+import type { TChartProps } from "@/chart/src/type"
 
 defineOptions({
   name: "TChart"

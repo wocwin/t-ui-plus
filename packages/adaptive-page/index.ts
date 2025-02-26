@@ -2,4 +2,5 @@ import AdaptivePage from "./src/index.vue"
 import { withInstall } from "../withInstall"
 const TAdaptivePage = withInstall(AdaptivePage)
 export default TAdaptivePage
-export type { TAdaptivePageProps } from "./src/index.vue"
+export type TAdaptivePageInstance = InstanceType<typeof AdaptivePage>
+export * from './src/type'

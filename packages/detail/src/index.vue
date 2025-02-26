@@ -70,37 +70,10 @@
 import RenderTooltip from "./renderTooltip.vue"
 import RenderLabel from "./renderLabel.vue"
 import { Warning } from "@element-plus/icons-vue"
+import type { TDetailProps } from "@/detail/src/type"
 defineOptions({
   name: "TDetail"
 })
-export interface DescItem {
-  span?: number
-  bind?: Record<string, any>
-  label?: string
-  labelRender?: (item: any) => any
-  slotName?: string
-  tooltip?: string | ((item: any) => any)
-  placement?: string
-  filters?: {
-    list: string
-    key?: string
-    label?: string
-  }
-  value?: string | number
-  unit?: string
-  iconSize?: number
-  iconColor?: string
-  fieldName?: string
-}
-
-export interface TDetailProps {
-  descColumn?: number
-  dataList?: Record<string, any>
-  listTypeInfo?: Record<string, any>
-  descData: DescItem[]
-  isColon?: boolean
-  isLabelBold?: boolean
-}
 
 withDefaults(defineProps<TDetailProps>(), {
   descColumn: 4,

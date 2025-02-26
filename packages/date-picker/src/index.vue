@@ -16,29 +16,10 @@
 
 <script setup lang="ts">
 import { computed, useAttrs, useSlots, watch, reactive, ref } from "vue"
-
+import type { TDatePickerSelfProps as TDatePickerProps } from "@/date-picker/src/type"
 defineOptions({
   name: "TDatePicker"
 })
-
-export interface TDatePickerProps {
-  modelValue: string | Date | Array<string | Date> | undefined
-  plusTime?: boolean
-  type?:
-    | "date"
-    | "week"
-    | "month"
-    | "year"
-    | "dates"
-    | "months"
-    | "years"
-    | "daterange"
-    | "monthrange"
-    | "datetime"
-    | "datetimerange"
-  shortcuts?: any[]
-  isPickerOptions?: boolean
-}
 
 const props = withDefaults(defineProps<TDatePickerProps>(), {
   plusTime: false,

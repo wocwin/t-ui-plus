@@ -37,16 +37,7 @@
 <script setup lang="ts">
 import { ElMessage } from "element-plus"
 import { computed, useSlots } from "vue"
-export interface TInputProps {
-  modelValue: string | number
-  placeholder?: string
-  decimalLimit?: number
-  inputType?: "text" | "amount" | "decimal" | "phone" | "integer" | "idCard"
-  appendTitle?: string
-  showThousands?: boolean
-  isTip?: boolean
-  isShowErrorTip?: boolean
-}
+import type { TInputSelfProps as TInputProps } from "@/input/src/type"
 
 defineOptions({
   name: "TInput"

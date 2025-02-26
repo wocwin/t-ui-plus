@@ -12,24 +12,31 @@
         isClearQuery
         :opts="opts"
         @submit="conditionEnter"
-      ></t-select-table>
+        :tableLoading="tableLoading"
+      >
+        <template #querybar>
+          <el-button type="primary" @click="refresh">刷新</el-button>
+        </template>
+      </t-select-table>
     </t-layout-page-item>
   </t-layout-page>
 </template>
 <script setup lang="ts">
-import { computed, reactive } from "vue"
-const table = reactive({
-  data: [
-    { id: 1, code: 1, name: "物料名称1", spec: "物料规格1", unitName: "吨" },
-    { id: 2, code: 2, name: "物料名称2", spec: "物料规格2", unitName: "吨" },
-    { id: 3, code: 3, name: "物料名称3", spec: "物料规格3", unitName: "吨" },
-    { id: 4, code: 4, name: "物料名称4", spec: "物料规格4", unitName: "吨" },
-    { id: 5, code: 5, name: "物料名称5", spec: "物料规格5", unitName: "吨" },
-    { id: 6, code: 6, name: "物料名称6", spec: "物料规格6", unitName: "吨" },
-    { id: 7, code: 7, name: "物料名称7", spec: "物料规格7", unitName: "吨" },
-    { id: 8, code: 8, name: "物料名称8", spec: "物料规格8", unitName: "吨" },
-    { id: 9, code: 9, name: "物料名称9", spec: "物料规格9", unitName: "吨" }
-  ],
+import { computed, reactive, ref, onMounted } from "vue"
+const tableLoading = ref(false)
+interface TableRow {
+  id: number
+  code: number
+  name: string
+  spec: string
+  unitName: string
+}
+
+const table = reactive<{
+  data: TableRow[]
+  columns: { label: string; width: string; prop: string }[]
+}>({
+  data: [],
   columns: [
     { label: "物料编号", width: "100px", prop: "code" },
     { label: "物料名称", width: "149px", prop: "name" },
@@ -183,6 +190,29 @@ const opts = computed(() => {
     }
   }
 })
+onMounted(() => {
+  getData()
+})
+const getData = () => {
+  tableLoading.value = true
+  table.data = [
+    { id: 1, code: 1, name: "物料名称1", spec: "物料规格1", unitName: "吨" },
+    { id: 2, code: 2, name: "物料名称2", spec: "物料规格2", unitName: "吨" },
+    { id: 3, code: 3, name: "物料名称3", spec: "物料规格3", unitName: "吨" },
+    { id: 4, code: 4, name: "物料名称4", spec: "物料规格4", unitName: "吨" },
+    { id: 5, code: 5, name: "物料名称5", spec: "物料规格5", unitName: "吨" },
+    { id: 6, code: 6, name: "物料名称6", spec: "物料规格6", unitName: "吨" },
+    { id: 7, code: 7, name: "物料名称7", spec: "物料规格7", unitName: "吨" },
+    { id: 8, code: 8, name: "物料名称8", spec: "物料规格8", unitName: "吨" },
+    { id: 9, code: 9, name: "物料名称9", spec: "物料规格9", unitName: "吨" }
+  ]
+  setTimeout(() => {
+    tableLoading.value = false
+  }, 3000)
+}
+const refresh = () => {
+  getData()
+}
 // 点击查询按钮
 const conditionEnter = (data: any) => {
   console.log("点击查询按钮", data)

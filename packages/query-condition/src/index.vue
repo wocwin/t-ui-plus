@@ -123,6 +123,7 @@ import RenderComp from "./renderComp.vue"
 import MoreChoose from "./moreChoose.vue"
 import { computed, ref, watch, useSlots, onMounted, reactive } from "vue"
 import { ArrowUp, ArrowDown } from "@element-plus/icons-vue"
+import type { TQueryConditionProps } from "@/query-condition/src/type"
 import { useComputed } from "./useComputed"
 const {
   compChildName,
@@ -133,27 +134,7 @@ const {
   getPlaceholder,
   getColLength
 } = useComputed()
-export interface TQueryConditionProps {
-  opts: Record<string, any>
-  labelWidth?: string
-  btnCheckBind?: Record<string, any>
-  btnResetBind?: Record<string, any>
-  loading?: boolean
-  reset?: boolean
-  boolEnter?: boolean
-  isShowOpen?: boolean
-  isExpansion?: boolean
-  maxVisibleRows?: number
-  packUpTxt?: string
-  unfoldTxt?: string
-  isFooter?: boolean
-  configChangedReset?: boolean
-  isShowWidthSize?: boolean
-  widthSize?: number
-  isDropDownSelectMore?: boolean
-  moreCheckList?: any[]
-  popoverAttrs?: Record<string, any>
-}
+
 const props = withDefaults(defineProps<TQueryConditionProps>(), {
   opts: () => ({}),
   labelWidth: "120px",

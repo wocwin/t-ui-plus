@@ -3,4 +3,5 @@ import { withInstall } from "../withInstall"
 
 const TStepWizard = withInstall(StepWizard)
 export default TStepWizard
-export type { TStepWizardProps } from "./src/index.vue"
+export type TStepWizardInstance = InstanceType<typeof StepWizard>
+export * from './src/type'

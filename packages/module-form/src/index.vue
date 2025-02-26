@@ -69,25 +69,11 @@
 import { ref, useAttrs, useSlots, nextTick, computed } from "vue"
 import ModuleDetail from "./moduleDetail.vue"
 import ModuleForm from "./moduleForm.vue"
+import type { TModuleFormProps } from "@/module-form/src/type"
 defineOptions({
   name: "TModuleForm"
 })
-export interface TModuleFormProps {
-  handleType?: "edit" | "desc"
-  isShowHeader?: boolean
-  titleSlot?: boolean
-  isShowBack?: boolean
-  isGoBackEvent?: boolean
-  btnSaveBind?: Record<string, any>
-  btnCancelBind?: Record<string, any>
-  isTabMargin?: boolean
-  tabMarginNum?: number
-  footer?: any
-  title?: string
-  subTitle?: string
-  tabs?: Array<{ key: string; title: string }>
-  submit?: (form: Record<string, any>) => Promise<boolean>
-}
+
 
 const props = withDefaults(defineProps<TModuleFormProps>(), {
   handleType: "edit",

@@ -145,33 +145,10 @@ import RenderComp from "./renderComp.vue"
 import RenderBtn from "./renderBtn.vue"
 import { ElMessage } from "element-plus"
 import { computed, ref, watch, onMounted, getCurrentInstance } from "vue"
-
+import type { TFormSelfProps as TFormProps } from "@/form/src/type"
 defineOptions({
   name: "TForm"
 })
-export interface FormOpts {
-  formData: Record<string, any>
-  rules?: Record<string, any>
-  fieldList: Array<any>
-  operatorList?: Array<{
-    label: string
-    fun: Function
-    bind?: Record<string, any>
-    isHideBtn?: boolean
-    render?: Function
-  }>
-  listTypeInfo?: Record<string, any[]>
-  labelWidth?: string
-  btnSlotName?: string
-  labelPosition?: "left" | "right" | "top"
-}
-export interface TFormProps {
-  className?: string
-  formOpts: FormOpts
-  widthSize?: 1 | 2 | 3 | 4 | 5 | 6
-  labelPosition?: "left" | "right" | "top"
-  isTrim?: boolean
-}
 
 const props = withDefaults(defineProps<TFormProps>(), {
   className: "",

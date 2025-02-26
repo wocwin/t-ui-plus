@@ -70,26 +70,11 @@
 <script setup lang="ts">
 import { useSlots } from "vue"
 import { CircleCheck } from "@element-plus/icons-vue"
+import type { TStepWizardProps } from "@/step-wizard/src/type"
 defineOptions({
   name: "TStepWizard"
 })
-export interface StepItem {
-  title?: string
-  icon?: string
-  description?: string
-  slotName?: string
-  btnArr?: Array<{ type?: string; fn: Function; btnTitle: string }>
-  lastBtnArr?: Array<{ type?: string; fn: Function; btnTitle: string; disable?: boolean }>
-  disable?: boolean
-}
 
-export interface TStepWizardProps {
-  stepData?: StepItem[]
-  successTitle?: string
-  lastBtnTitle?: string
-  active?: number
-  isShowLastSuccess?: boolean
-}
 const props = withDefaults(defineProps<TStepWizardProps>(), {
   stepData: () => [],
   successTitle: "",

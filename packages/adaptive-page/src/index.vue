@@ -46,21 +46,11 @@ import TLayoutPageItem from "../../layout-page-item/src/index.vue"
 import TTable from "../../table/src/index.vue"
 import TQueryCondition from "../../query-condition/src/index.vue"
 import { getCurrentInstance, onMounted, ref, useSlots } from "vue"
+import type { TAdaptivePageProps } from "@/adaptive-page/src/type"
 
 defineOptions({
   name: "TAdaptivePage"
 })
-
-export interface TAdaptivePageProps {
-  leftWidth?: number
-  pageStyle?: Record<string, string>
-  columnSetting?: boolean
-  name?: string // 表格开启columnSetting后，设置缓存数据唯一标识
-  queryPageStyle?: Record<string, string>
-  tablePageStyle?: Record<string, string>
-  isTTableSelfFilling?: boolean
-}
-
 withDefaults(defineProps<TAdaptivePageProps>(), {
   leftWidth: 260,
   pageStyle: () => ({}),

@@ -11,14 +11,8 @@
 
 <script setup lang="ts">
 import { ref } from "vue"
+import type { TButtonSelfProps as TButtonProps } from "@/button/src/type"
 
-export interface TButtonProps {
-  time?: number
-  tip?: string
-  placement?: string
-  tipProps?: Record<string, any>
-  isDebounce?: boolean
-}
 defineOptions({
   name: "TButton"
 })

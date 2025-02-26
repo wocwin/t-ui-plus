@@ -13,9 +13,7 @@
           <el-button style="margin-top: 15px" type="primary" @click="clear">footer插槽</el-button>
         </template>
         <template #toolbar>
-          <el-button style="margin-bottom: 15px" type="primary" @click="clear"
-            >toolbar插槽</el-button
-          >
+          <el-button type="primary" @click="clear">toolbar插槽</el-button>
         </template>
       </t-select-table>
       <el-button style="margin-left: 15px" type="primary" @click="clear">清空选中</el-button>
