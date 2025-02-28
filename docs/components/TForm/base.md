@@ -105,6 +105,13 @@ TForm/btnRender
 TForm/btnisHide
 :::
 
+### 获取fieldList单项的Ref
+
+:::demo 通过`getRefs`事件获取`formOpts.fieldList`中某项设置的`ref`
+
+TForm/getRefs
+:::
+
 ### TForm 参数配置
 
 ---

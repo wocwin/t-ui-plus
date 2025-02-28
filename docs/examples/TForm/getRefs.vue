@@ -1,7 +1,13 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-form ref="TFormDemo" v-model="formOpts.ref" :formOpts="formOpts" :widthSize="1" />
+      <t-form
+        ref="TFormDemo"
+        v-model="formOpts.ref"
+        :formOpts="formOpts"
+        @getRefs="getRefs"
+        :widthSize="1"
+      />
     </t-layout-page-item>
   </t-layout-page>
 </template>
@@ -20,15 +26,6 @@ const sexList = ref([
   { label: "女", value: 1 },
   { label: "男", value: 0 }
 ])
-const statusList = ref([
-  { label: "启用", value: 1 },
-  { label: "停用", value: 0 }
-])
-const initials = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
-const stepList = Array.from({ length: 1000 }).map((_, idx) => ({
-  value: `Option ${idx + 1}`,
-  label: `${initials[idx % 10]}${idx}`
-}))
 const tableData = ref([
   { id: 1, code: 1, name: "物料名称1", spec: "物料规格1", unitName: "吨" },
   { id: 2, code: 2, name: "物料名称2", spec: "物料规格2", unitName: "吨" },
@@ -63,31 +60,40 @@ const submitForm = () => {
 const resetForm = () => {
   TFormDemo.value.selfResetFields()
 }
+const resetValue = type => {
+  console.log("reset---重置", type)
+  const resetActions = {
+    cascaderRef: () => allRefs.value[type].cascaderPanelRef.clearCheckedNodes(),
+    elDateRef: () => (formOpts.formData.valDate = null),
+    iconRef: () => allRefs.value[type].clearIcon(),
+    default: () => allRefs.value[type].clear()
+  }
+  resetActions[type] ? resetActions[type]() : resetActions.default()
+}
 
 const radioChange = row => {
   console.log("下拉选择表格-单选", row)
   formOpts.formData.deptCode = row?.id
 }
-const selectionChangeHandler = (row, ids) => {
-  console.log("下拉选择表格--复选框", row, ids)
-  formOpts.formData.createDeptCode = ids
+const allRefs = ref({})
+const getRefs = (el, item, index) => {
+  if (el && item.ref) {
+    // console.log("获取所有的ref--getRefs", el, item, index)
+    allRefs.value[item.ref] = el
+  }
 }
+onMounted(() => {
+  console.log("获取所有的ref", allRefs.value)
+})
 const formOpts = reactive<FormTypes.FormOpts>({
   ref: null,
   labelWidth: "140px",
   formData: {
     sex: null,
     hobby: null,
-    hobby1: null,
-    hobby2: null,
-    status: null,
-    wechat: null,
     deptCode: null,
     createDeptCode: null,
-    createDate: null,
-    valDate1: null,
-    valDate2: null,
-    valDate3: null,
+    valDate: null,
     date: null,
     icon: ""
   },
@@ -98,32 +104,16 @@ const formOpts = reactive<FormTypes.FormOpts>({
       placeholder: "TSelect单选",
       type: "select-arr",
       comp: "t-select",
-      ref: "adioSelectRef",
+      ref: "sexRef",
       isSelfCom: true,
       bind: { optionSource: sexList, valueCustom: "value" }
-    },
-    {
-      label: "状态",
-      value: "status",
-      placeholder: "TSelect单选",
-      type: "select-arr",
-      comp: "t-select",
-      isSelfCom: true,
-      bind: { optionSource: statusList, valueCustom: "value" }
     },
     {
       label: "爱好",
       value: "hobby",
       placeholder: "TSelect多选",
       comp: "t-select",
-      isSelfCom: true,
-      bind: { multiple: true, optionSource: hobbyList, valueCustom: "value" }
-    },
-    {
-      label: "爱好1",
-      value: "hobby1",
-      placeholder: "TSelect多选",
-      comp: "t-select",
+      ref: "hobbyRef",
       isSelfCom: true,
       bind: { multiple: true, optionSource: hobbyList, valueCustom: "value" }
     },
@@ -132,57 +122,37 @@ const formOpts = reactive<FormTypes.FormOpts>({
       value: "icon",
       placeholder: "TSelectIcon图标选择",
       comp: "t-select-icon",
+      ref: "iconRef",
       isSelfCom: true
       // bind: { multiple: true }
     },
     {
-      label: "年份",
-      value: "createDate",
-      placeholder: "TDatePicker选择年份",
-      bind: { type: "year" },
-      comp: "t-date-picker",
-      eventHandle: {
-        change: val => createDateChange(val)
+      label: "El日期",
+      value: "valDate",
+      type: "daterange",
+      comp: "el-date-picker",
+      ref: "elDateRef",
+      bind: {
+        rangeSeparator: "-",
+        startPlaceholder: "开始日期",
+        endPlaceholder: "结束日期",
+        valueFormat: "YYYY-MM-DD"
       }
     },
     {
-      label: "日期",
-      value: "date",
-      placeholder: "TDatePicker选择日期",
-      comp: "t-date-picker"
-    },
-    {
-      label: "月份范围",
-      value: "valDate1",
-      comp: "t-date-picker",
-      bind: { type: "monthrange", isPickerOptions: true }
-    },
-    {
       label: "日期范围",
-      value: "valDate2",
+      value: "date",
       comp: "t-date-picker",
+      ref: "dateRef",
       bind: { type: "daterange", isPickerOptions: true }
     },
     {
-      label: "时间范围",
-      value: "valDate3",
-      comp: "t-date-picker",
-      bind: { type: "datetimerange", isPickerOptions: true }
-    },
-    {
-      label: "虚拟列表",
-      value: "hobby2",
-      placeholder: "TSelect虚拟列表",
-      comp: "t-select",
-      isSelfCom: true,
-      bind: { useVirtual: true, optionSource: stepList }
-    },
-    {
       label: "部门",
-      value: "deptCode1",
+      value: "createDeptCode",
       placeholder: "el-cascader使用",
       comp: "el-cascader",
       isSelfCom: true,
+      ref: "cascaderRef",
       bind: {
         props: {
           children: "children",
@@ -216,39 +186,22 @@ const formOpts = reactive<FormTypes.FormOpts>({
       eventHandle: {
         radioChange: val => radioChange(val)
       }
-    },
-    {
-      label: "下拉选择表格-多选",
-      value: "createDeptCode",
-      placeholder: "t-select-table多选使用",
-      comp: "t-select-table",
-      isSelfCom: true,
-      bind: {
-        multiple: true,
-        maxHeight: 400,
-        keywords: { label: "name", value: "id" },
-        table: { data: tableData },
-        columns: [
-          { label: "物料编号", width: "100px", prop: "code", align: "left" },
-          { label: "物料名称", width: "149px", prop: "name" },
-          { label: "规格", width: "149px", prop: "spec" },
-          { label: "单位", width: "110px", prop: "unitName" },
-          { label: "物料编号1", width: "149px", prop: "code" },
-          { label: "物料名称1", width: "149px", prop: "name" }
-        ]
-      },
-      eventHandle: {
-        selectionChange: (val, ids) => selectionChangeHandler(val, ids)
-      }
     }
   ],
   operatorList: [
     { label: "提交", bind: { type: "danger" }, fun: submitForm },
-    { label: "重置", bind: { type: "primary" }, fun: resetForm }
+    { label: "重置", bind: { type: "primary" }, fun: resetForm },
+    {
+      label: "重置下拉表格",
+      bind: { type: "primary" },
+      fun: () => resetValue("selectTableRef")
+    },
+    { label: "重置性别", bind: { type: "primary" }, fun: () => resetValue("sexRef") },
+    { label: "重置图标", bind: { type: "primary" }, fun: () => resetValue("iconRef") },
+    { label: "重置部门", bind: { type: "primary" }, fun: () => resetValue("cascaderRef") },
+    { label: "重置爱好", bind: { type: "primary" }, fun: () => resetValue("hobbyRef") },
+    { label: "重置el日期", bind: { type: "primary" }, fun: () => resetValue("elDateRef") },
+    { label: "重置日期范围", bind: { type: "primary" }, fun: () => resetValue("dateRef") }
   ]
 })
-
-const createDateChange = val => {
-  console.log("年份选择", val)
-}
 </script>
