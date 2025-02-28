@@ -49,3 +49,9 @@ TSelectIcon/selectBind
 | 事件名 | 说明       | 回调参数           |
 | :----- | :--------- | :----------------- |
 | select | 选择完图标 | 返回选中的图标name |
+
+### Exposes（Method）
+
+| Method | 说明       |
+| :----- | :--------- |
+| clearIcon<el-tag>v1.5.1</el-tag>  | 重置选中项 |

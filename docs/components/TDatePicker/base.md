@@ -68,3 +68,9 @@ TDatePicker/slotCustomize
 | :-------------- | :------------------- |
 | default         | 自定义内容           |
 | range-separator | 自定义范围分割符内容 |
+
+### Exposes（Method）
+
+| Method | 说明       |
+| :----- | :--------- |
+| clear<el-tag>v1.5.1</el-tag>  | 重置选中项 |

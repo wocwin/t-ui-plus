@@ -203,6 +203,11 @@ const customLabelHandler = (_item: any) => {
   let fun = new Function("_item", "return " + props.customLabel)
   return fun(_item)
 }
+// 清空
+const clear = () => {
+  emits("update:modelValue", null)
+}
+defineExpose({ clear })
 </script>
 <style lang="scss" scoped>
 .t_select {

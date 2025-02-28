@@ -172,9 +172,12 @@ watch(
   },
   { deep: true }
 )
-
+// 监听时间变化
+const clear = () => {
+  emits("update:modelValue", null)
+}
 // 暴露方法出去
-defineExpose({ state })
+defineExpose({ state, clear })
 </script>
 
 <style lang="scss" scoped>

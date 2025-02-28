@@ -119,6 +119,7 @@ const iconsList = computed((): { [key: string]: any } => {
   }
   return result
 })
+defineExpose({ clearIcon })
 </script>
 
 <style scoped lang="scss">

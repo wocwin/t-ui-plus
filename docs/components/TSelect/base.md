@@ -118,3 +118,9 @@ TSelect/returnObject
 | change       | 选中值发生变化时触发 | 返回选中的值 |
 | input        | 分页器输入框触发     | 返回输入的值 |
 | select-input | 选择输入框触发       | 返回输入的值 |
+
+### Exposes（Method）
+
+| Method | 说明       |
+| :----- | :--------- |
+| clear<el-tag>v1.5.1</el-tag>  | 重置选中项 |
