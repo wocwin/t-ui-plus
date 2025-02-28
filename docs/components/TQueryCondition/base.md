@@ -103,6 +103,13 @@ TQueryCondition/isDropDownSelectMore
 TQueryCondition/handleEventChange
 :::
 
+### 获取opts单项的Ref<el-tag>v1.5.1</el-tag>
+
+:::demo 1、通过`getRefs`事件获取`opts`中某项设置的`ref`；2、重置方式(`调用handleEvent`)是：handleEventChangeRef.value.handleEvent({isChange:true, val: "" }, "workshopNum")`；3、通过`TQueryCondition`的ref获取`queryState`在把你需要重置的值赋值为`null`。
+
+TQueryCondition/getRefs
+:::
+
 ### TQueryCondition 参数配置
 
 ---
@@ -116,10 +123,6 @@ TQueryCondition/handleEventChange
   @handleEvent="handleEvent"
   :loading="loading"
 />
-<!-- opts:配置项
-     @submit：点击查询按钮 返回最终数据
-     @handleEvent：每个查询条件的event:string,输入的值
-     loading：查询按钮loading -->
 ```
 
 ### 2、配置参数（Attributes）
@@ -181,15 +184,17 @@ TQueryCondition/handleEventChange
 | defaultVal  | 默认值                                                                           | -                | -                          |
 | bind        | 继承第三方 UI 的 Attributes,function 传出 form                                   | object/function  | -                          |
 | eventHandle | 配置组件事件，与写组件时 change 等同理                                           | object           | 本身值，当前 formData 数据 |
+| ref         | 可以通过getRefs获取对应的ref                                                     | String           | 当前项的ref标识            |
 
 ### 3、事件（events）
 
-| 事件名       | 说明                                              | 返回值                                        |
-| :----------- | :------------------------------------------------ | :-------------------------------------------- |
-| handleEvent  | 筛选器数据发生变化时触发                          | event 标识, val：输入值,form:整个查询条件数据 |
-| submit       | 点击筛选器查询按钮时触发                          | form:整个查询条件数据                         |
-| reset        | 点击筛选器重置按钮时触发                          | -                                             |
-| getCheckList | 下拉动态添加条件（isDropDownSelectMore:true生效） | 返回选中的条件项                              |
+| 事件名                         | 说明                                              | 返回值                                            |
+| :----------------------------- | :------------------------------------------------ | :------------------------------------------------ |
+| handleEvent                    | 筛选器数据发生变化时触发                          | event 标识, val：输入值,form:整个查询条件数据     |
+| submit                         | 点击筛选器查询按钮时触发                          | form:整个查询条件数据                             |
+| reset                          | 点击筛选器重置按钮时触发                          | -                                                 |
+| getCheckList                   | 下拉动态添加条件（isDropDownSelectMore:true生效） | 返回选中的条件项                                  |
+| getRefs<el-tag>v1.5.1</el-tag> | 获取 TQueryCondition 使用组件的 ref               | opts 中 最好需要传 ref 标识来区分是哪个组件的 ref |
 
 ### 4、Slots
 

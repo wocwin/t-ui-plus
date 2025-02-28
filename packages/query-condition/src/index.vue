@@ -32,7 +32,7 @@
       <template v-if="opt.isSelfCom">
         <component
           :is="opt.comp"
-          :ref="opt.comp === 't-select-table' ? (el: any) => handleRef(el, i) : ''"
+          :ref="opt.comp === 't-select-table' ? (el: any) => handleRef(el,opt, i) : (el: any) => getRefs(el, opt, i)"
           v-model="queryState.form[opt.dataIndex]"
           :placeholder="opt.placeholder || getPlaceholder(opt)"
           v-bind="
@@ -55,6 +55,7 @@
         "
         :placeholder="opt.placeholder || getPlaceholder(opt)"
         @change="handleEvent({ type: opt.event, val: queryState.form[opt.dataIndex] })"
+        :ref="(el: any) => getRefs(el, opt, i)"
         v-on="cEvent(opt)"
         v-model="queryState.form[opt.dataIndex]"
       >
@@ -307,14 +308,19 @@ const initForm = (opts: any, keepVal = false) => {
     return acc
   }, {})
 }
-const emits = defineEmits(["handleEvent", "submit", "reset", "getCheckList"])
+const emits = defineEmits(["handleEvent", "submit", "reset", "getCheckList", "getRefs"])
 // 下拉选择表格组件 ref
 const tselecttableref: any = ref({})
 // 下拉选择表格组件 动态ref
-const handleRef = (el: any, key: any) => {
+const handleRef = (el: any, opt:any, key: any) => {
+  emits("getRefs", el, opt, key)
   if (el) {
     tselecttableref.value[`tselecttableref-${key}`] = el
   }
+}
+// 获取所有ref
+const getRefs = (el: any, opt: any, index: any) => {
+  emits("getRefs", el, opt, index)
 }
 // 重置
 const resetHandle = () => {
