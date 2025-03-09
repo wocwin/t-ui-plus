@@ -542,9 +542,21 @@ const handlesCurrentChange = (val: any) => {
       clear()
     }
   } else {
-    clear()
+    // clear()
+    reset()
   }
   emits("page-change", val)
+}
+// 数据重置后回调
+const reset = () => {
+  if (!props.multiple) {
+    // 取消高亮
+    selectTable.value.setCurrentRow(-1)
+    nowIndex.value = -1
+    radioVal.value = ""
+    isDefaultSelectVal.value = true
+    forbidden.value = false
+  }
 }
 // 默认选中（且只能默认选中第一页的数据）
 const defaultSelect = (defaultSelectVal: any[]) => {
@@ -651,7 +663,7 @@ const initTableData = () => {
         }
       })
     } else {
-      const matchedRow = state.tableData.find(
+      const matchedRow = state.tableData?.find(
         item => item[props.keywords.value] === selectDefaultLabel.value
       )
       if (matchedRow) {

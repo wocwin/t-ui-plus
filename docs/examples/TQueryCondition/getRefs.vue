@@ -110,7 +110,7 @@ const getRefs = (el, item, index) => {
 const resetValue = type => {
   const resetActions = {
     iconRef: () => allRefs.value[type].clearIcon(),
-    elDateRef: () => (state.queryData.date = null),
+    elDateRef: () => (queryRef.value.queryState.form.date = null),
     elDateRef1: () => (queryRef.value.queryState.form.date1 = null),
     elCascaderRef: () => allRefs.value[type].cascaderPanelRef.clearCheckedNodes(),
     default: () => allRefs.value[type].clear()
