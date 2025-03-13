@@ -318,43 +318,105 @@
       <!-- 操作按钮 -->
       <el-table-column
         v-if="table.operator"
-        :fixed="table.operatorConfig && table.operatorConfig.fixed"
-        :label="(table.operatorConfig && table.operatorConfig.label) || '操作'"
-        :min-width="table.operatorConfig && table.operatorConfig.minWidth"
-        :width="table.operatorConfig && table.operatorConfig.width"
-        :align="(table.operatorConfig && table.operatorConfig.align) || align"
-        v-bind="table.operatorConfig && table.operatorConfig.bind"
+        v-bind="{
+          fixed: table.operatorConfig?.fixed,
+          label: table.operatorConfig?.label || '操作',
+          'min-width': table.operatorConfig?.minWidth,
+          width: table.operatorConfig?.width,
+          align: table.operatorConfig?.align || align,
+          ...table.operatorConfig?.bind
+        }"
         class-name="operator"
       >
         <template #default="scope">
-          <div class="operator_btn" :style="table.operatorConfig && table.operatorConfig.style">
-            <template v-for="(item, index) in table.operator" :key="index">
-              <el-button
-                @click="item.fun && item.fun(scope.row, scope.$index, state.tableData)"
-                v-bind="{
-                  type: 'primary',
-                  link: true,
-                  text: true,
-                  size: 'small',
-                  ...item.bind
-                }"
-                v-if="checkIsShow(scope, item)"
-              >
-                <!-- render渲染 -->
-                <template v-if="item.render">
-                  <render-col
-                    :column="item"
-                    :row="scope.row"
-                    :render="item.render"
-                    :index="scope.$index"
-                  />
+          <div class="operator_btn" :style="table.operatorConfig?.style">
+            <template v-for="(item, index) in table.operator">
+              <template v-if="!item.isMore">
+                <el-button
+                  :key="index"
+                  @click="item.fun && item.fun(scope.row, scope.$index, state.tableData)"
+                  v-bind="{
+                    type: 'primary',
+                    link: true,
+                    text: true,
+                    size: 'small',
+                    ...item.bind
+                  }"
+                  :disabled="item.isDisabled && item.isDisabled(scope.row, item)"
+                  v-if="checkIsShow(scope, item)"
+                >
+                  <template v-if="item.render">
+                    <render-col
+                      :column="item"
+                      :row="scope.row"
+                      :render="item.render"
+                      :index="scope.$index"
+                    />
+                  </template>
+                  <span v-if="!item.render">{{ item.text }}</span>
+                </el-button>
+              </template>
+            </template>
+            <template v-if="hasMoreOper()">
+              <el-dropdown v-bind="hasMoreBind" class="oper_more_dropdown">
+                <span class="more_dropdown-link">
+                  <el-button
+                    v-bind="{
+                      type: 'primary',
+                      link: true,
+                      text: true,
+                      size: 'small',
+                      ...hasMoreBind.btnBind
+                    }"
+                  >
+                    {{ hasMoreBind.btnTxt || "更多" }}
+                    <el-icon v-if="hasMoreBind.isShowArrwIcon">
+                      <ArrowDown />
+                    </el-icon>
+                  </el-button>
+                </span>
+                <template #dropdown>
+                  <el-dropdown-menu v-bind="hasMoreBind.menuBind" class="oper_more_dropdown_menu">
+                    <template v-for="(item, index) in table.operator">
+                      <el-dropdown-item
+                        v-if="item.isMore"
+                        @click="item.fun && item.fun(scope.row, scope.$index, state.tableData)"
+                        :key="'more_' + index"
+                        v-bind="{
+                          disabled: item.isDisabled && item.isDisabled(scope.row, item),
+                          ...item.itemBind
+                        }"
+                      >
+                        <el-button
+                          :key="index"
+                          v-bind="{
+                            link: true,
+                            text: true,
+                            size: 'small',
+                            ...item.bind
+                          }"
+                          v-if="checkIsShow(scope, item)"
+                        >
+                          <template v-if="item.render">
+                            <render-col
+                              :column="item"
+                              :row="scope.row"
+                              :render="item.render"
+                              :index="scope.$index"
+                            />
+                          </template>
+                          <span v-if="!item.render">{{ item.text }}</span>
+                        </el-button>
+                      </el-dropdown-item>
+                    </template>
+                  </el-dropdown-menu>
                 </template>
-                <span v-if="!item.render">{{ item.text }}</span>
-              </el-button>
+              </el-dropdown>
             </template>
           </div>
         </template>
       </el-table-column>
+
       <template v-for="(index, name) in slots" v-slot:[name]="data">
         <slot :name="name" v-bind="data"></slot>
       </template>
@@ -399,9 +461,10 @@ import {
   reactive,
   onMounted,
   onUpdated,
-  onBeforeUnmount
+  onBeforeUnmount,
+  useAttrs
 } from "vue"
-import { Rank, Edit } from "@element-plus/icons-vue"
+import { Rank, Edit, ArrowDown } from "@element-plus/icons-vue"
 import { ElMessage } from "element-plus"
 import Sortable from "sortablejs"
 import TTableColumn from "./TTableColumn.vue"
@@ -889,6 +952,24 @@ const handleEvent = ({ type, val }: any, index: any) => {
 const handlesCurrentChange = (val: any) => {
   emits("page-change", val)
 }
+// 更多下拉配置
+const $attrs = useAttrs()
+const hasMoreBind: any = computed(() => {
+  const btnBind = { type: "primary", link: true, text: true, size: "small" } // 按钮属性
+  const menuBind = {} // 下拉menu属性
+  const setBind = {
+    btnTxt: "更多",
+    isShowArrwIcon: true, // 是否显示下拉箭头
+    ...menuBind, // 下拉menu属性
+    ...btnBind, // 按钮属性
+    ...props.table.operatorConfig.dropdownBind // 下拉属性
+  }
+  return { ...$attrs, ...setBind }
+})
+// 判断操作是否显示最多
+const hasMoreOper = () => {
+  return props.table.operator.some((item: { isMore: boolean }) => item.isMore === true)
+}
 /**
  * 公共方法
  */
@@ -1295,6 +1376,22 @@ defineExpose({
     .el-btn {
       margin-left: 8px;
     }
+  }
+  .operator {
+    .operator_btn {
+      display: flex;
+      align-items: center;
+      .oper_more_dropdown {
+        margin-left: 8px;
+      }
+    }
+  }
+}
+</style>
+<style lang="scss">
+.oper_more_dropdown_menu {
+  .el-dropdown-menu__item {
+    padding: 5px 16px;
   }
 }
 </style>

@@ -43,7 +43,7 @@
 </template>
 <script setup lang="ts">
 import { ref, watch } from "vue"
-import {  ArrowDown } from "@element-plus/icons-vue"
+import { ArrowDown } from "@element-plus/icons-vue"
 defineOptions({
   name: "MoreChoose"
 })
@@ -136,9 +136,9 @@ const getcheck = (val: any[]) => {
 const analysisObj = (val: any[]) => {
   return val.reduce((obj, item) => {
     obj[item.prop] = {
-      label: item.label,
+      label: item?.label,
       comp: item.comp,
-      bind: item.bind,
+      bind: item?.bind,
       list: item?.list,
       eventHandle: item?.eventHandle,
       changeEvent: item?.changeEvent,
@@ -149,7 +149,9 @@ const analysisObj = (val: any[]) => {
       span: item?.span,
       type: item?.type,
       isSelfCom: (item && item.isSelfCom) || false,
-      defaultVal: item?.defaultVal
+      defaultVal: item?.defaultVal,
+      placeholder: item?.placeholder,
+      event: item?.event
     }
     return obj
   }, {})

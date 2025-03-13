@@ -104,7 +104,10 @@ const currentOptions = ref(props.optionSource)
 const cachedOptions = ref(new Map())
 // 合并后的选项列表（当前页数据 + 已选缓存）
 const mergedOptions = computed(() => {
-  const currentValues = currentOptions.value.map(item => item[props.valueCustom])
+  const currentValues =
+    (currentOptions.value.length > 0 &&
+      currentOptions.value.map(item => item[props.valueCustom])) ||
+    []
   const cached = Array.from(cachedOptions.value.values()).filter(
     item => !currentValues.includes(item[props.valueCustom])
   )
@@ -113,19 +116,21 @@ const mergedOptions = computed(() => {
 watch(
   () => props.optionSource,
   newVal => {
-    currentOptions.value = newVal
+    currentOptions.value = newVal || []
+    // console.log("newVal---watch", newVal)
     // 缓存已选数据
-    newVal.forEach(item => {
-      const isObject = typeof childSelectedValue.value === "object"
-      const condition = isObject
-        ? Array.isArray(childSelectedValue.value) &&
-          childSelectedValue.value.includes(item[props.valueCustom])
-        : childSelectedValue.value === item[props.valueCustom]
+    newVal.length > 0 &&
+      newVal.forEach(item => {
+        const isObject = typeof childSelectedValue.value === "object"
+        const condition = isObject
+          ? Array.isArray(childSelectedValue.value) &&
+            childSelectedValue.value.includes(item[props.valueCustom])
+          : childSelectedValue.value === item[props.valueCustom]
 
-      if (condition) {
-        cachedOptions.value.set(item[props.valueCustom], item)
-      }
-    })
+        if (condition) {
+          cachedOptions.value.set(item[props.valueCustom], item)
+        }
+      })
   }
 )
 onMounted(() => {
