@@ -16,10 +16,19 @@
   --vp-code-block-bg: var(--vp-code-block-bg);
 } */
 
-/* .vp-doc {
+/* .vp-doc {    color: var(--vp-c-brand);
   background-color: var(--el-bg-color);
 } */
-
+.aside .outline-link.active {
+  color: var(--vp-c-brand);
+}
+.aside .outline-link:hover {
+  color: var(--vp-c-brand);
+}
+.VPSidebarItem .item .link .text el-tag {
+  margin-left: 10px;
+  color: #409eff;
+}
 .vp-doc .t_detail th,
 .vp-doc .t_detail td {
   border: none;
@@ -73,7 +82,8 @@
 .VPContent .VPDoc.has-aside .content-container {
   max-width: 1200px;
 }
-.vp-doc ul, .vp-doc ol {
+.vp-doc ul,
+.vp-doc ol {
   padding-left: 0;
 }
 
