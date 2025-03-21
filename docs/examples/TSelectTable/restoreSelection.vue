@@ -21,6 +21,7 @@ import { ElMessageBox } from "element-plus"
 import data from "./data.json"
 import data1 from "./data2.json"
 const selectTableRef = ref()
+const selectRowArr = ref<any[]>([])
 const state: any = reactive({
   table: {
     total: 0,
@@ -75,7 +76,76 @@ const getData = async pageNum => {
   if (res.success) {
     state.table.data = res.data.records
     state.table.total = res.data.total
+    selectRowArr.value = [
+      {
+        materialTypeLabel: "电极",
+        erpCodeJoin: "",
+        factoryModelId: 1,
+        shortRuleMore: 0.0,
+        claspType: "",
+        enableStatusLabel: "启用",
+        baseUnit: "吨",
+        materialPropertyLabel: "自产",
+        updateBy: "史炜立",
+        materialSourceLabel: "自增",
+        id: "1628268557300752386",
+        power: "RP",
+        singleWeight: 500.0,
+        materialSource: 1,
+        materialSpecs: "500",
+        materialType: 1,
+        materialCode: "555",
+        updateTime: "2023-02-22",
+        factoryModelIdLabel: "东日新能源",
+        shortRuleLess: 0.0,
+        materialProperty: 1,
+        materialName: "一烧0227",
+        createBy: "史炜立",
+        createTime: "2023-02-22 13:40:50",
+        enableStatus: 1
+      },
+      {
+        materialTypeLabel: "坩埚",
+        erpCodeJoin: "",
+        factoryModelId: 1,
+        shortRuleMore: 0.0,
+        claspType: "",
+        enableStatusLabel: "启用",
+        baseUnit: "",
+        materialPropertyLabel: "自产",
+        updateBy: "韦宏波",
+        materialSourceLabel: "自增",
+        id: "1567343974259994722",
+        power: "RP",
+        singleWeight: 1.02,
+        materialSource: 1,
+        materialSpecs: "sa",
+        materialType: 6,
+        materialCode: "GG15499",
+        updateTime: "2022-09-07",
+        factoryModelIdLabel: "东日新能源",
+        shortRuleLess: 0.0,
+        materialProperty: 1,
+        materialName: "坩埚99",
+        createBy: "韦宏波",
+        createTime: "2022-09-07 10:48:18",
+        enableStatus: 1
+      }
+    ]
+    restoreSelection()
+    // 回显select框选中项
+    selectTableRef.value.state.defaultValue = selectRowArr.value.map(item => item.materialName)
   }
+}
+
+// 回显el-table选中项
+const restoreSelection = () => {
+  selectRowArr.value.forEach(row => {
+    const index = state.table.data.findIndex(d => d.materialCode === row.materialCode)
+    if (index !== -1) {
+      selectTableRef.value.selectTable.toggleRowSelection(state.table.data[index], true)
+    }
+  })
 }
 // 获取当前的页码
 const pageChange = val => {

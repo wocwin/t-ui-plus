@@ -99,6 +99,13 @@ TSelectTable/multiple
 TSelectTable/isShowPagination
 :::
 
+### 复选框分页选中项回显<el-tag>1.5.2</el-tag>
+
+:::demo 赋值`state.defaultValue`能回显select框的`keywords.label`值，选中状态需要调用`selectTable`的`toggleRowSelection`方法
+
+TSelectTable/restoreSelection
+:::
+
 ### 是否隐藏删除icon<el-tag>1.4.14</el-tag>
 
 :::demo `multipleDisableDelete` 开启隐藏删除icon；`场景使用`：通常用于`切换分页`及`条件查询后`时，之前选中的数据不在`新数据源`下，隐藏`tag`删除icon。
@@ -261,11 +268,12 @@ TSelectTable/tableLoading
 
 ### 4、Expose 方法（Methods）
 
-| 方法名             | 说明                            | 回调参数 |
-| :----------------- | :------------------------------ | :------- |
-| clear              | 清空选中项                      |          |
-| focus              | 使 input 获取焦点               |          |
-| blur               | 使 input 失去焦点，并隐藏下拉框 |          |
-| tQueryConditionRef | 条件查询组件实例                |          |
-| selectRef          | 下拉选择实例                    |          |
-| selectTable        | el-table 实例                   |          |
+| 方法名             | 说明                            |
+| :----------------- | :------------------------------ |
+| clear              | 清空选中项                      |
+| focus              | 使 input 获取焦点               |
+| blur               | 使 input 失去焦点，并隐藏下拉框 |
+| tQueryConditionRef | 条件查询组件实例                |
+| selectRef          | 下拉选择实例                    |
+| selectTable        | el-table 实例                   |
+| state              | 组件内定义的参数对象            |

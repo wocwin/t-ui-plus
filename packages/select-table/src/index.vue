@@ -592,7 +592,7 @@ const defaultSelect = (defaultSelectVal: any[]) => {
 
 // 复选框(多选)
 const handlesSelectionChange = (val: any[]) => {
-  // console.log('复选框', val)
+  // console.log("复选框--组件内--val", val)
   isDefaultSelectVal.value = false
   state.defaultValue = val.map(item => item[props.keywords.label])
   state.ids = val.map(item => item[props.keywords.value])
@@ -673,27 +673,44 @@ const initTableData = () => {
   })
 }
 
-// 复制内容
-const copyDomText = (val: any) => {
-  // 获取需要复制的元素以及元素内的文本内容
-  const text = val
-  // 添加一个input元素放置需要的文本内容
-  const input = document.createElement("input")
-  input.value = text
-  document.body.appendChild(input)
-  // 选中并复制文本到剪切板
-  input.select()
-  document.execCommand("copy")
-  // 移除input元素
-  document.body.removeChild(input)
-}
-// 双击复制单元格内容
-const cellDblclick = (row: { [x: string]: any }, column: { property: string | number }) => {
+// 复制内容到剪切板
+const copyToClipboard = async (text: any) => {
+  // 确保传入的内容是字符串类型
+  if (typeof text !== "string" || text.trim() === "") {
+    throw new Error("无效的复制内容")
+  }
   try {
-    copyDomText(row[column.property])
-    ElMessage.success("复制成功")
-  } catch (e) {
-    ElMessage.error("复制失败")
+    // 使用现代剪贴板 API 进行复制
+    await navigator.clipboard.writeText(text)
+  } catch (error) {
+    // 捕获并抛出具体的错误信息
+    if ((error as any).name === "NotAllowedError" || (error as any).name === "SecurityError") {
+      throw new Error("复制失败：权限被拒绝")
+    } else {
+      throw new Error("复制失败：浏览器不支持或发生未知错误")
+    }
+  }
+}
+
+// 显示消息提示
+const showMessage = (type: "success" | "error", message: string) => {
+  if (type === "success") {
+    ElMessage.success(message)
+  } else {
+    ElMessage.error(message)
+  }
+}
+
+// 双击复制单元格内容
+const cellDblclick = async (row: { [x: string]: any }, column: { property: string | number }) => {
+  const value = row[column.property]
+  try {
+    // 调用复制函数
+    await copyToClipboard(String(value)) // 确保值转换为字符串
+    showMessage("success", "复制成功")
+  } catch (error: any) {
+    // 捕获并显示错误信息
+    showMessage("error", error.message || "复制失败")
   }
 }
 // 点击单选框单元格触发事件
@@ -761,27 +778,45 @@ const removeTag = (tag: any) => {
     (item: { [x: string]: any }) => item[props.keywords.label] === tag
   )
   console.log("tags删除后回调", row)
-  selectTable.value.toggleRowSelection(row, false)
+  row && selectTable.value.toggleRowSelection(row, false)
   isDefaultSelectVal.value = true
 }
 // 清空后的回调
 const clear = () => {
-  if (props.multiple) {
-    selectTable.value.clearSelection()
+  // 公共逻辑：重置默认选择状态
+  const resetDefaultState = () => {
     isDefaultSelectVal.value = true
     state.defaultSelectValue = []
-    state.defaultValue = []
-  } else {
-    // 取消高亮
-    selectTable.value.setCurrentRow(-1)
+    state.defaultValue = props.multiple ? [] : null
+  }
+
+  // 安全检查：确保 selectTable.value 存在
+  if (!selectTable.value) {
+    console.warn("selectTable.value is not initialized")
+    return
+  }
+
+  if (props.multiple === true) {
+    try {
+      selectTable.value.clearSelection()
+    } catch (error) {
+      console.error("Failed to clear selection:", error)
+    }
+    resetDefaultState()
+  } else if (props.multiple === false) {
+    try {
+      selectTable.value.setCurrentRow(-1)
+    } catch (error) {
+      console.error("Failed to set current row:", error)
+    }
     nowIndex.value = -1
     radioVal.value = ""
-    isDefaultSelectVal.value = true
-    state.defaultSelectValue = []
     forbidden.value = false
     selectDefaultLabel.value = null
-    state.defaultValue = null
+    resetDefaultState()
     emits("radioChange", null, null)
+  } else {
+    console.warn("Invalid value for props.multiple:", props.multiple)
   }
 }
 // 触发select隐藏
@@ -802,6 +837,7 @@ defineExpose({
   blur,
   clear,
   props,
+  state,
   tQueryConditionRef,
   selectRef,
   selectTable
