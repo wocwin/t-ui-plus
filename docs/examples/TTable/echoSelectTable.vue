@@ -84,7 +84,7 @@ onMounted(async () => {
   getData()
 })
 const getData = () => {
-  console.log("获取表格数据", table.data)
+  // console.log("获取表格数据", table.data)
   const data = [
     {
       name: "张三",

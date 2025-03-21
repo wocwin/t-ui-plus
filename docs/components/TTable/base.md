@@ -325,6 +325,12 @@ TTable/eventHandle
 TTable/rules
 :::
 
+### 单元格编辑--columns校验 <el-tag>v1.5.2</el-tag>
+
+:::demo `columns`: `columns`某一项的 rules;`table`: rules; `saveMethod方法`:singleEdit.value.saveMethod((data) => {console.log('callback 返回数据', data)});`save方法`：`const tableData = await singleEdit.value.save()`接收一个`Promise`对象。
+TTable/rulesCol
+:::
+
 ### 单元格编辑--TSelectTable 校验 rules
 
 :::demo
@@ -501,6 +507,7 @@ TTable/expand
 | 事件名                                   | 说明                                                           | 返回值              |
 | :--------------------------------------- | :------------------------------------------------------------- | :------------------ |
 | saveMethod                               | 单元格编辑保存方法                                             | callback(tableData) |
+| save<el-tag>1.5.2</el-tag>               | 单元格编辑后调用save方法返回Promise                            | Promise(tableData)  |
 | resetFields                              | 对表单进行重置，并移除校验结果（单元格编辑时生效）             | —                   |
 | clearValidate                            | 清空校验规则（单元格编辑时生效）                               | -                   |
 | defaultRadioSelect                       | 单选默认选中--且只能默认选中第一页的数据--传入值必须大于等于 1 | -                   |
