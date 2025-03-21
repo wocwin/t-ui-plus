@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from "vue"
+import { ref, reactive, computed } from "vue"
 import cascaderData from "./cascaderData.json"
 const hobbyList = ref([
   { label: "吉他", value: "0" },
@@ -63,10 +63,37 @@ const submitForm = () => {
 const resetForm = () => {
   TFormDemo.value.selfResetFields()
 }
-
+const formSelectOpts = computed(() => {
+  return {
+    userName: {
+      label: "登录名",
+      comp: "el-input",
+      span: 2
+    },
+    deptName: {
+      label: "部门",
+      comp: "el-input",
+      span: 2
+    },
+    createTime: {
+      label: "创建时间",
+      comp: "t-date-picker",
+      span: 2,
+      bind: {
+        isPickerOptions: true
+      }
+    }
+  }
+})
 const radioChange = row => {
   console.log("下拉选择表格-单选", row)
   formOpts.formData.deptCode = row?.id
+}
+const pageChange = (page: any) => {
+  console.log("pageChange", page)
+}
+const conditionEnter = (data: any) => {
+  console.log("条件查询", data)
 }
 const selectionChangeHandler = (row, ids) => {
   console.log("下拉选择表格--复选框", row, ids)
@@ -201,20 +228,29 @@ const formOpts = reactive<FormTypes.FormOpts>({
       isSelfCom: true,
       bind: {
         isKeyup: true,
+        isShowQuery: true, //是否显示查询条件
+        isShowPagination: true,
         maxHeight: 400,
+        tableWidth: 600,
         keywords: { label: "name", value: "id" },
-        table: { data: tableData },
+        table: {
+          total: 50,
+          currentPage: 1, // 当前页
+          pageSize: 10, // 每页条数
+          data: tableData
+        },
         columns: [
-          { label: "物料编号", width: "100px", prop: "code", align: "left" },
-          { label: "物料名称", width: "149px", prop: "name" },
-          { label: "规格", width: "149px", prop: "spec" },
-          { label: "单位", width: "110px", prop: "unitName" },
-          { label: "物料编号1", width: "149px", prop: "code" },
-          { label: "物料名称1", width: "149px", prop: "name" }
-        ]
+          { label: "物料编号", minWidth: "100px", prop: "code" },
+          { label: "物料名称", minWidth: "149px", prop: "name" },
+          { label: "规格", minWidth: "149px", prop: "spec" },
+          { label: "单位", minWidth: "110px", prop: "unitName" }
+        ],
+        opts: formSelectOpts
       },
       eventHandle: {
-        radioChange: val => radioChange(val)
+        radioChange: val => radioChange(val),
+        submit: (val: any) => conditionEnter(val),
+        "page-change": (val: any) => pageChange(val)
       }
     },
     {
