@@ -24,9 +24,13 @@
     "prettier": "prettier --write \"packages/**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\"",
     "docs:prettier": "prettier --write \"docs/**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\"",
     "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs"
+    "docs:build": "vitepress build docs",
+    "lint:lint-staged": "lint-staged",
+    "prepare": "husky install"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
     "@element-plus/icons-vue": "^2.0.10",
     "@rollup/plugin-replace": "^5.0.5",
     "@rollup/plugin-terser": "^0.4.4",
@@ -49,7 +53,9 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "^9.6.0",
+    "husky": "^9.1.7",
     "jsencrypt": "3.0.0-rc.1",
+    "lint-staged": "^15.5.0",
     "markdown-it": "^13.0.1",
     "markdown-it-container": "^3.0.0",
     "minimist": "^1.2.8",
