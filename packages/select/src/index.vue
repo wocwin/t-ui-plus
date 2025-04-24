@@ -65,6 +65,7 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<TSelectProps>(), {
+  modelValue: undefined,
   multiple: false,
   valueCustom: "key",
   labelCustom: "label",
@@ -80,24 +81,25 @@ const props = withDefaults(defineProps<TSelectProps>(), {
   }),
   useVirtual: false,
   returnObject: false,
-  isCached: true
+  isCached: true,
+  isRadioEchoLabel: true,
+  radioSelectValLabel: ""
 })
 const tselectRef = ref()
 const filteredOptionsCount = ref(1)
-
 const slots = useSlots()
 // 抛出事件
 const emits = defineEmits(["update:modelValue", "change", "input", "select-input"])
-// // vue3 v-model简写
+// vue3 v-model简写
 const childSelectedValue = computed({
   get() {
     return props.modelValue
   },
   set(val) {
-    // console.log("childSelectedValue", val)
     emits("update:modelValue", val)
   }
 })
+
 // 当前页数据
 const currentOptions = ref(props.optionSource)
 // 缓存已选数据 { value: { label, value } }
@@ -111,7 +113,9 @@ const mergedOptions = computed(() => {
   const cached = Array.from(cachedOptions.value.values()).filter(
     item => !currentValues.includes(item[props.valueCustom])
   )
-  return props.isCached ? [...currentOptions.value, ...cached] : [...currentOptions.value]
+  return props.isShowPagination && props.isCached
+    ? [...currentOptions.value, ...cached]
+    : [...currentOptions.value]
 })
 watch(
   () => props.optionSource,
@@ -133,6 +137,15 @@ watch(
       })
   }
 )
+watch(
+  () => props.radioSelectValLabel,
+  val => {
+    if (val && props.isRadioEchoLabel && !props.multiple && props.isShowPagination) {
+      childSelectedValue.value = val
+    }
+  },
+  { deep: true }
+)
 onMounted(() => {
   // 缓存已选数据
   currentOptions.value.forEach(item => {
@@ -146,6 +159,14 @@ onMounted(() => {
       cachedOptions.value.set(item[props.valueCustom], item)
     }
   })
+  if (
+    props.radioSelectValLabel &&
+    props.isRadioEchoLabel &&
+    !props.multiple &&
+    props.isShowPagination
+  ) {
+    childSelectedValue.value = props.radioSelectValLabel
+  }
 })
 const handlesSelectInput = (e: any) => {
   if (props.filterable) {

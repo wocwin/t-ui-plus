@@ -24,5 +24,19 @@ export interface TSelectProps {
    * @type boolean
    * version 1.5.1
    */
-  isCached?: boolean
+  isCached?: boolean,
+  /**
+   * 是否开启回显不是第一页数据的label
+   * @default true
+   * @type boolean
+   * version 1.5.2
+   */
+  isRadioEchoLabel?: boolean,
+  /**
+   * 单选时，回显非第一页数据的label
+   * @default ''
+   * @type string
+   * version 1.5.2
+   */
+  radioSelectValLabel?: string,
 }
