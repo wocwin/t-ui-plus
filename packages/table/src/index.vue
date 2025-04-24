@@ -308,7 +308,14 @@
           </el-table-column>
         </template>
         <!-- 表头合并单元格 -->
-        <t-table-column v-else :key="index + 'm'" :item="item" :align="align" v-bind="$attrs">
+        <t-table-column
+          v-else
+          :key="index + 'm'"
+          :item="item"
+          :align="align"
+          v-bind="$attrs"
+          :sortable="sortable"
+        >
           <template v-for="(index, name) in slots" v-slot:[name]="data">
             <slot :name="name" v-bind="data"></slot>
           </template>
@@ -365,10 +372,9 @@ import {
   reactive,
   onMounted,
   onUpdated,
-  onBeforeUnmount,
-  useAttrs
+  onBeforeUnmount
 } from "vue"
-import { Rank, Edit, ArrowDown } from "@element-plus/icons-vue"
+import { Rank, Edit } from "@element-plus/icons-vue"
 import { ElMessage } from "element-plus"
 import Sortable from "sortablejs"
 import TTableColumn from "./TTableColumn.vue"

@@ -8,11 +8,23 @@
     :width="item.width"
     :fixed="item.fixed"
   >
-  <template #header v-if="item.renderHeader">
+    <template #header v-if="item.renderHeader">
       <render-header :column="item" :render="item.renderHeader" />
     </template>
     <template v-for="(val, index) of item.children">
-      <t-table-column v-if="val.children" :key="index" :item="val">
+      <t-table-column
+        v-if="val.children"
+        :key="index"
+        :item="val"
+        :prop="val.prop"
+        :label="val.label"
+        :min-width="val['min-width'] || val.minWidth"
+        :width="val.width"
+        :sortable="val.sortable || val.sort || sortable"
+        :align="val.align || align"
+        :fixed="val.fixed"
+        v-bind="{ 'show-overflow-tooltip': true, ...val.bind, ...$attrs }"
+      >
         <template v-for="(index, name) in slots" v-slot:[name]="data">
           <slot :name="name" v-bind="data"></slot>
         </template>
@@ -24,7 +36,7 @@
         :label="val.label"
         :min-width="val['min-width'] || val.minWidth"
         :width="val.width"
-        :sortable="val.sort"
+        :sortable="val.sortable || val.sort || sortable"
         :align="val.align || align"
         :fixed="val.fixed"
         v-bind="{ 'show-overflow-tooltip': true, ...val.bind, ...$attrs }"
@@ -69,7 +81,7 @@
 <script setup lang="tsx">
 import SingleEditCell from "./singleEditCell.vue"
 import RenderCol from "./renderCol.vue"
-import RenderHeader from './renderHeader.vue'
+import RenderHeader from "./renderHeader.vue"
 import { useSlots } from "vue"
 defineOptions({
   name: "TTableColumn"
@@ -85,6 +97,9 @@ defineProps({
   align: {
     type: String,
     default: "center"
+  },
+  sortable: {
+    type: [Boolean, String]
   }
 })
 // 抛出事件

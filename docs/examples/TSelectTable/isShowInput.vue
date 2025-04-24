@@ -13,8 +13,8 @@
         @input-click="clickInput"
         @radioChange="radioChange"
       >
-      <template #prepend>Http://</template>
-      <template #append>.com</template>
+        <template #prepend>Http://</template>
+        <template #append>.com</template>
       </t-select-table>
     </t-layout-page-item>
   </t-layout-page>
