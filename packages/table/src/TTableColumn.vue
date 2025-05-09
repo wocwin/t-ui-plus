@@ -22,6 +22,7 @@
         :width="val.width"
         :sortable="val.sortable || val.sort || sortable"
         :align="val.align || align"
+        :formatter="val.formatter"
         :fixed="val.fixed"
         v-bind="{ 'show-overflow-tooltip': true, ...val.bind, ...$attrs }"
       >
@@ -39,6 +40,7 @@
         :sortable="val.sortable || val.sort || sortable"
         :align="val.align || align"
         :fixed="val.fixed"
+        :formatter="val.formatter"
         v-bind="{ 'show-overflow-tooltip': true, ...val.bind, ...$attrs }"
       >
         <template #header v-if="val.renderHeader">
@@ -69,7 +71,7 @@
               </template>
             </single-edit-cell>
           </template>
-          <div v-if="!val.render && !val.slotNameMerge && !val.canEdit">
+          <div v-if="!val.render && !val.slotNameMerge && !val.canEdit && !val.formatter">
             {{ scope.row[val.prop] }}
           </div>
         </template>

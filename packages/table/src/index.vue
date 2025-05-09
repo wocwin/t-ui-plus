@@ -206,7 +206,12 @@
             :sortable="item.sortable || item.sort || sortable"
             :align="item.align || align"
             :fixed="item.fixed"
-            v-bind="{ 'show-overflow-tooltip': true, ...item.bind }"
+            :formatter="item.formatter"
+            v-bind="
+              typeof item.bind == 'function'
+                ? item.bind(item)
+                : { 'show-overflow-tooltip': true, ...item.bind }
+            "
           >
             <template #header v-if="item.headerRequired || item.renderHeader || item.isClickEdit">
               <render-header v-if="item.renderHeader" :column="item" :render="item.renderHeader" />
@@ -299,7 +304,8 @@
                   !item.slotName &&
                   !item.canEdit &&
                   !item.filters &&
-                  !item.isClickEdit
+                  !item.isClickEdit &&
+                  !item.formatter
                 "
               >
                 <span>{{ scope.row[item.prop] }}</span>

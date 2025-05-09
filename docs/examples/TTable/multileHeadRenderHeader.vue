@@ -1,7 +1,12 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <t-table title="多级表头--自定义表头" :table="table" :columns="table.columns" :isShowPagination="false" />
+      <t-table
+        title="多级表头--自定义表头"
+        :table="table"
+        :columns="table.columns"
+        :isShowPagination="false"
+      />
     </t-layout-page-item>
   </t-layout-page>
 </template>
@@ -50,14 +55,17 @@ let table = ref<TableTypes.Table>({
       prop: "name",
       label: "姓名",
       minWidth: "100",
-      renderHeader: (col) => {
-            return (
-              <el-checkbox style="width:100%;display:flex;align-items:center;justify-content:center;" value={col.check}
-                onChange={(value) => handleCheckboxChange(value, col)}>
-                <span style="font-size:13px;font-weight: 700;color:red;">{col.label}</span>
-              </el-checkbox>
-            )
-          },
+      renderHeader: col => {
+        return (
+          <el-checkbox
+            style="width:100%;display:flex;align-items:center;justify-content:center;"
+            value={col.check}
+            onChange={value => handleCheckboxChange(value, col)}
+          >
+            <span style="font-size:13px;font-weight: 700;color:red;">{col.label}</span>
+          </el-checkbox>
+        )
+      },
       children: [
         {
           prop: "name",
@@ -68,10 +76,13 @@ let table = ref<TableTypes.Table>({
               prop: "type",
               label: "类型",
               minWidth: "100",
-               renderHeader: (col) => {
+              renderHeader: col => {
                 return (
-                  <el-checkbox style="width:100%;display:flex;align-items:center;justify-content:center;" value={col.check}
-                    onChange={(value) => handleCheckboxChange(value, col)}>
+                  <el-checkbox
+                    style="width:100%;display:flex;align-items:center;justify-content:center;"
+                    value={col.check}
+                    onChange={value => handleCheckboxChange(value, col)}
+                  >
                     <span style="font-size:13px;font-weight: 700;color:red;">{col.label}</span>
                   </el-checkbox>
                 )
@@ -121,14 +132,17 @@ let table = ref<TableTypes.Table>({
     },
     {
       prop: "name",
-      label: "姓名",
+      label: "姓名22",
       minWidth: "100",
       children: [
         {
-          prop: "type",
-          label: "类型",
+          prop: "date1",
+          label: "formatter格式化",
           minWidth: "100",
-          children: [{ prop: "date1", label: "日期2552", minWidth: "180" }]
+          formatter: (row, column, cellValue) => {
+            // console.log("formatter--合并表头", row, column, cellValue)
+            return "3333"
+          }
         }
       ]
     },
@@ -164,7 +178,7 @@ let table = ref<TableTypes.Table>({
     { prop: "date1", label: "日期", minWidth: "180" }
   ]
 })
-const handleCheckboxChange = (val,col) => {
-  console.log('handleCheckboxChange', val,col)
+const handleCheckboxChange = (val, col) => {
+  console.log("handleCheckboxChange", val, col)
 }
 </script>

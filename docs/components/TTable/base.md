@@ -83,6 +83,12 @@ TTable/sortCellChange
 TTable/sortable
 :::
 
+### formatter使用 <el-tag>v1.5.3</el-tag>
+
+:::demo 在`columns`某一项中添加`formatter`,formatter为`Function`，会传入4个参数：当前行`row` ，当前列 `column`，当前值`cellValue`，当前索引`index`， 可以根据自己的需求进行处理
+TTable/formatter
+:::
+
 ### 复选框表格
 
 :::demo 在`table`对象中添加`firstColumn:{ type: 'selection', fixed: true }`
@@ -434,6 +440,7 @@ TTable/expand
 | ----minWidth                                                      | 对应列的最小宽度(会把剩余宽度按比例分配给设置了 min-width 的列)           | string / number  | -                                          |
 | ----slotName                                                      | 插槽显示此列数据（其值是具名作用域插槽                                    | String           | -                                          |
 | ----isShowCol<el-tag>1.4.16</el-tag>                              | 动态显示隐藏列                                                            | Boolean/Function | false                                      |
+| ----formatter<el-tag>1.5.3</el-tag>                               | 格式化内容Function(row, column, cellValue, index) => VNode                | Function         | -                                          |
 | ----isShowHidden<el-tag type="danger">v1.4.16 deprecated</el-tag> | 是否动态显示隐藏列设置（隐藏/显示列）                                     | Boolean          | false                                      |
 | ----slotNameMerge                                                 | 合并表头插槽显示此列数据（其值是具名作用域插槽）                          | String           | -                                          |
 | ----------scope                                                   | 具名插槽获取此行数据必须用解构接收{scope}.row 是当前行数据 }              | Object           | -                                          |
