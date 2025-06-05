@@ -1,0 +1,9 @@
+{
+  "name": "@t-ui-plus/components",
+  "version": "0.0.1",
+  "private": true,
+  "description": "all components are settled here",
+  "main": "index.ts",
+  "type": "module",
+  "sideEffects": false
+}
