@@ -1,0 +1,118 @@
+.t-query-condition.el-form {
+  position: relative;
+  display: grid;
+  gap: 2px 8px;
+  margin-bottom: -7px;
+  text-align: left;
+
+  .el-select,
+  .el-date-editor,
+  .ant-calendar-picker {
+    width: 100%;
+  }
+
+  .flex_end {
+    grid-area: submit_btn;
+    margin-top: 2px;
+
+    .el-form-item__content {
+      display: flex;
+      // justify-content: flex-end;
+      align-items: center;
+      overflow: visible !important;
+    }
+  }
+
+  .btn {
+    .el-form-item__content {
+      display: flex;
+      // justify-content: flex-end;
+    }
+
+    .more_dropdown_icon {
+      margin-left: 10px;
+      cursor: pointer;
+    }
+  }
+
+  .btn_flex_end {
+    .el-form-item__content {
+      justify-content: flex-end;
+    }
+  }
+
+  .el-form-item {
+    display: flex;
+    margin-bottom: 6px;
+
+    .el-form-item__label {
+      flex-shrink: 0;
+      min-width: 60px;
+      padding-left: 8px;
+    }
+
+    .el-form-item__content {
+      flex-grow: 1;
+      // overflow: hidden;
+      margin-left: 0 !important;
+    }
+  }
+
+  .render_label {
+    .el-form-item__label {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      &::before {
+        margin-top: 1px;
+      }
+    }
+  }
+
+  .btn_check {
+    position: relative;
+    top: -1px;
+  }
+
+  .btn_reset {
+    position: relative;
+    top: -1px;
+    margin-left: 8px;
+  }
+}
+
+.t_query_condition_more.el-popover {
+  padding: 15px;
+
+  .inside_box {
+    display: flex;
+    flex-direction: column;
+
+    .inside_box_title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .inside_box_main {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(100px, 50%));
+
+      .el-checkbox {
+        display: flex;
+        align-items: center;
+
+        .el-checkbox__label {
+          -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          word-break: break-all;
+          min-width: 90px;
+        }
+      }
+    }
+  }
+}

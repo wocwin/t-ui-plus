@@ -1,0 +1,71 @@
+.t-select-table {
+  // 单选样式
+  .radioStyle {
+    .el-radio {
+      .el-radio__label {
+        display: none;
+      }
+      &:focus:not(.is-focus):not(:active):not(.is-disabled) .el-radio__inner {
+        box-shadow: none;
+      }
+    }
+    .el-table__row {
+      cursor: pointer;
+    }
+  }
+  // 键盘事件开启选择高亮
+  .keyUpStyle {
+    .el-table__body {
+      tbody {
+        .current-row {
+          color: var(--el-color-primary) !important;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  // 键盘事件开启选中行样式
+  .selected_row_style {
+    color: var(--el-color-primary);
+    cursor: pointer;
+  }
+  // 选中行样式
+  .highlightCurrentRow {
+    .current-row {
+      color: var(--el-color-primary);
+      cursor: pointer;
+    }
+  }
+  .t-table-select__table {
+    padding: 10px;
+
+    .el-table__body,
+    .el-table__header {
+      margin: 0;
+    }
+    // 条件查询组件样式
+    .table_query_condition {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 10px;
+    }
+    .header_wrap {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+  }
+
+  .t-table-select__page {
+    padding-top: 5px;
+    padding-right: 10px;
+    .el-pagination {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-right: calc(2% - 20px);
+      background-color: var(--el-table-tr-bg-color);
+    }
+  }
+}

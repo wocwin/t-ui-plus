@@ -1,0 +1,51 @@
+.t_step-wizard {
+  position: relative;
+
+  .el-steps--simple {
+    .el-step__head {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .content-step-main {
+    .step-last {
+      .icon-success {
+        color: var(--el-color-primary);
+        font-size: 95px;
+        margin-top: 40px;
+      }
+
+      .success-margin {
+        color: var(--el-color-primary);
+        margin-bottom: 70px;
+      }
+    }
+
+    .step_btn {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: var(--el-bg-color);
+    }
+  }
+
+  .flex-box {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+  }
+
+  .flex-ver {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .flex-col {
+    flex-direction: column;
+  }
+}

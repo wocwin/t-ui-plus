@@ -1,0 +1,8 @@
+//  fork from element-plus  and rewrite
+
+$el-namespace: "el" !default;
+$t-namespace: "t" !default;
+$t-common-separator: "-" !default;
+$t-element-separator: "__" !default;
+$t-modifier-separator: "--" !default;
+$t-state-prefix: "is-" !default;

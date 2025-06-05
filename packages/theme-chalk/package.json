@@ -1,0 +1,21 @@
+{
+  "name": "@t-ui-plus/theme-chalk",
+  "private": true,
+  "version": "0.0.7",
+  "description": "@t-ui-plus theme-chalk",
+  "license": "MIT",
+  "main": "index.css",
+  "unpkg": "index.css",
+  "jsdelivr": "index.css",
+  "scripts": {
+    "clean": "rimraf dist",
+    "dev": "cross-env T_UI_PLUS_THEME_CHALK_DEV=true  tsx watch ./build.ts ",
+    "build": "tsx ./build.ts"
+  },
+  "devDependencies": {
+    "sass": "^1.69.4",
+    "postcss": "^8.4.31",
+    "postcss-nested": "^6.0.1",
+    "postcss-scss": "^4.0.9"
+  }
+}

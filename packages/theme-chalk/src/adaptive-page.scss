@@ -1,0 +1,48 @@
+.t_adaptive_page {
+  display: flex;
+  align-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  .left_content {
+    background: var(--el-bg-color);
+    margin: 8px;
+    margin-right: 0;
+    .left_tree {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      padding: 10px;
+      overflow-y: auto;
+    }
+  }
+  .right_content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    .table_main {
+      flex: 1;
+      overflow-y: auto;
+      width: 100%;
+      height: 100vh;
+      .t-table {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .t_table_self-filling {
+      .t-table {
+        .el-table {
+          height: 100vh;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,104 @@
+.t-form {
+  display: flex;
+  flex-wrap: wrap;
+
+  .el-form-item {
+    align-items: center;
+
+    .el-form-item__content {
+      .el-input,
+      .el-select,
+      .el-date-editor,
+      .el-textarea {
+        width: 100%;
+      }
+
+      .el-input-number {
+        .el-input {
+          width: inherit;
+        }
+      }
+    }
+  }
+
+  // 左对齐
+  .asterisk-left {
+    .el-form-item__label {
+      margin-left: 5px;
+    }
+  }
+
+  .t-margin-top-5 {
+    margin-top: calc(5px);
+  }
+
+  .el-input-number {
+    .el-input {
+      .el-input__inner {
+        text-align: left;
+      }
+    }
+  }
+
+  .render_label {
+    .el-form-item__label {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      &::before {
+        margin-top: 1px;
+      }
+    }
+  }
+
+  // 左对齐
+  .render_laber_position_left {
+    .el-form-item__label {
+      justify-content: flex-start;
+    }
+  }
+
+  // 顶部对齐
+  &.el-form--label-top {
+    .render_label {
+      .el-form-item__label {
+        justify-content: flex-start;
+      }
+    }
+  }
+
+  .label_render {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .text_show {
+    color: var(--el-text-color-primary);
+  }
+
+  .slot_label {
+    .el-form-item__content {
+      label {
+        color: var(--el-text-color-primary);
+        margin-right: 12px;
+      }
+    }
+  }
+
+  .flex-box {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+  }
+
+  .flex-ver {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer_btn {
+    width: 100%;
+  }
+}
