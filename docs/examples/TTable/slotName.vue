@@ -85,7 +85,6 @@ const table = ref<TableTypes.Table>({
         return (
           <div>
             <span style="color:red">插槽渲染</span>
-            <search style="width: 1em; height: 1em; margin-right: 8px" />
           </div>
         )
       },

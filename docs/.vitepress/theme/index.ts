@@ -1,39 +1,50 @@
 import DefaultTheme from "vitepress/theme"
-
+import type { App } from "vue"
 import ElementPlus from "element-plus"
 import "element-plus/dist/index.css"
 import "element-plus/theme-chalk/dark/css-vars.css"
 import locale from "element-plus/es/locale/lang/zh-cn"
 // 图标并进行全局注册
 import * as ElementPlusIconsVue from "@element-plus/icons-vue"
-import * as echarts from "echarts" // 引入echarts
+import * as echarts from "echarts"
+import "highlight.js/lib/common"
+import hljsVuePlugin from "@highlightjs/vue-plugin/dist/highlightjs-vue.esm.min.js" // 引入echarts
+
+// 基于element-plus二次封装基础组件
+import TuiPlus from "../../../packages/t-ui-plus/index.ts" // 引入t-ui-plus
+// import "t-ui-plus/index.css"
+import "../../../packages/theme-chalk/src/index.scss" // 引入主题样式
+
 import TVHtml from "../components/TVHtml.vue"
 import TIcon from "../components/TIcon.vue"
 import TTip from "../components/TTip.vue"
-import { VPDemo } from "../vitepress"
-// 基于element-plus二次封装基础组件
-import TuiPlus from "../../../packages"
-import "../../public/css/index.css"
+import DocsCodeDemo from "./components/docs-code-demo.vue"
+import MyLayout from "./components/layout.vue"
+
+import directive from "./directives"
+import "./styles/index.scss"
 
 export default {
-  ...DefaultTheme,
-  enhanceApp(ctx) {
-    DefaultTheme.enhanceApp(ctx)
-    ctx.app.config.globalProperties.$echarts = echarts // 全局使用
+  extends: DefaultTheme,
+  Layout: MyLayout,
+  enhanceApp({ app }: { app: App }) {
+    app.config.globalProperties.$echarts = echarts // 全局使用
     // 注册ElementPlus
-    ctx.app.use(ElementPlus, {
+    app.use(ElementPlus, {
       locale // 语言设置
     })
     // 注册所有图标
     for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-      ctx.app.component(key, component)
+      app.component(key, component)
     }
     // 全局注册基础组件
-    ctx.app.use(TuiPlus)
+    app.use(TuiPlus)
 
-    ctx.app.component("Demo", VPDemo)
-    ctx.app.component("TVHtml", TVHtml)
-    ctx.app.component("TIcon", TIcon)
-    ctx.app.component("TTip", TTip)
+    app.component("highlightjs", hljsVuePlugin.component) // 注册代码高亮组件
+    app.component("DocsCodeDemo", DocsCodeDemo)
+    app.component("TVHtml", TVHtml)
+    app.component("TIcon", TIcon)
+    app.component("TTip", TTip)
+    directive(app)
   }
 }

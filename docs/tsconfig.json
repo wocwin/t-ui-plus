@@ -10,13 +10,23 @@
     "strict": true,
     "noImplicitAny": false,
     "skipLibCheck": true,
+    "lib": [
+      "DOM"
+    ],
+    "paths": {},
     "jsx": "preserve",
     "types": [
-      // 用来指定需要包含的模块，并将其包含在全局范围内。
       "element-plus/global",
-      "../packages/components.d.ts",
+      "vite/client",
       "../typings/index.d.ts",
       "../global.d.ts",
     ]
-  }
+  },
+  "include": [
+    "**/*",
+    ".vitepress/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -1,0 +1,59 @@
+/* 本文件只放code样式 */
+// @import 'highlight.js/styles/vs2015.css';
+@import 'highlight.js/styles/color-brewer.css';
+
+.main {
+  /* vitePres默认 */
+  .github-light {
+    [class*='language-'] pre {
+      padding: 0 10px;
+
+      box-sizing: border-box;
+      overflow: auto hidden;
+    }
+  }
+  /* 组件文档自定义code */
+  .docs-example-language-vue {
+    &.language-vue {
+      margin: 0;
+      border-radius: 0;
+      overflow-y: hidden;
+      padding-top: 10px;
+
+      pre {
+        font-family: monospace, monospace;
+        font-size: 1em;
+        overflow: unset;
+        line-height: 1.4;
+        padding: 0;
+      }
+
+      code {
+        padding: 0 10px 20px;
+        line-height: 1.4;
+        font-size: 14px;
+        color: var(--el-text-color-primary);
+        background-color: var(--vp-code-block-bg);
+      }
+
+      .hljs-keyword {
+        color: #c792ea;
+      }
+      .hljs-attr,
+      .hljs-tag {
+        color: #717c11;
+      }
+      /* number boolean */
+      .hljs-number,
+      .hljs-literal {
+        color: #c25205;
+      }
+      .hljs-string {
+        color: #0b8235;
+      }
+      .hljs-variable {
+        color: var(--el-text-color-primary);
+      }
+    }
+  }
+}

@@ -15,7 +15,7 @@ hero:
   actions:
     - theme: brand
       text: 安装指南
-      link: /components/
+      link: /guide/
     - theme: brand
       text: 组件预览
       link: /components/TInput/base.md
