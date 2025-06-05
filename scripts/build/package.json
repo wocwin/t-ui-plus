@@ -1,0 +1,14 @@
+{
+  "name": "@t-ui-plus/build",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Build Toolchain for t-ui-plus",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "node .",
+    "stub": "npx unbuild --stub"
+  }
+}
