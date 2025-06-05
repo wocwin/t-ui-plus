@@ -95,7 +95,7 @@ declare namespace TableTypes {
     width?: string | number // 列宽度
     minWidth?: string | number // 列最小宽度
     align?: string // 列对齐方式
-    fixed?: string // 列固定
+    fixed?: string | boolean // 列固定
     type?: string // 列类型
     sortable?: any // 列是否可排序
     sort?: any // 列排序方式
