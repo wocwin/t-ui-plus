@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "jsx": "preserve",
+    "lib": ["ES2018", "DOM", "DOM.Iterable"],
+    "types": [],
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "paths": {
+      "element-plus": ["./node_modules/element-plus"],
+      "async-validator": ["./node_modules/async-validator"],
+      "@vue/shared": ["./node_modules/@vue/shared"]
+    }
+  },
+  "include": ["packages", "typings"],
+  "exclude": ["node_modules", "**/dist", "**/__tests__/**/*", "**/*.md"]
+}
