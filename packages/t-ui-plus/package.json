@@ -1,0 +1,116 @@
+{
+  "name": "@wocwin/t-ui-plus",
+  "version": "2.0.1",
+  "description": "Page level components developed based on Element Plus.",
+  "author": "wocwin",
+  "keywords": [
+    "element-ui",
+    "element-plus",
+    "vite",
+    "vite3",
+    "vitepress",
+    "vue",
+    "vue3",
+    "t-ui",
+    "t-ui-plus",
+    "wocwin",
+    "vitepress-theme-demoblock",
+    "二次封装组件",
+    "封装组件",
+    "components"
+  ],
+  "homepage": "https://wocwin.github.io/t-ui-plus/",
+  "bugs": {
+    "url": "https://github.com/wocwin/t-ui-plus/issues"
+  },
+  "license": "MIT",
+  "main": "lib/index.js",
+  "module": "es/index.mjs",
+  "types": "es/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./es/index.d.ts",
+      "import": "./es/index.mjs",
+      "require": "./lib/index.js"
+    },
+    "./global": {
+      "types": "./global.d.ts"
+    },
+    "./es": {
+      "types": "./es/index.d.ts",
+      "import": "./es/index.mjs"
+    },
+    "./lib": {
+      "types": "./lib/index.d.ts",
+      "require": "./lib/index.js"
+    },
+    "./es/*.mjs": {
+      "types": "./es/*.d.ts",
+      "import": "./es/*.mjs"
+    },
+    "./es/*": {
+      "types": [
+        "./es/*.d.ts",
+        "./es/*/index.d.ts"
+      ],
+      "import": "./es/*.mjs"
+    },
+    "./lib/*.js": {
+      "types": "./lib/*.d.ts",
+      "require": "./lib/*.js"
+    },
+    "./lib/*": {
+      "types": [
+        "./lib/*.d.ts",
+        "./lib/*/index.d.ts"
+      ],
+      "require": "./lib/*.js"
+    },
+    "./locale/*": {
+      "types": "./locale/*.d.ts",
+      "import": "./locale/*.mjs"
+    },
+    "./*": "./*"
+  },
+  "unpkg": "index.js",
+  "jsdelivr": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wocwin/t-ui-plus.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "style": "index.css",
+  "sideEffects": [
+    "dist/*",
+    "locale/*",
+    "index.css",
+    "theme-chalk/**/*.css",
+    "theme-chalk/src/**/*.scss",
+    "es/components/*/style/*",
+    "lib/components/*/style/*"
+  ],
+  "peerDependencies": {
+    "vue": "^3.2.0",
+    "element-plus": "^2.7.8"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
+    "lodash-es": "^4.17.21",
+    "sortablejs": "^1.15.0"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.6",
+    "@types/node": "*",
+    "@types/sortablejs": "^1.15.1",
+    "vue": "^3.3.4",
+    "element-plus": "^2.3.4"
+  },
+  "browserslist": [
+    "> 1%",
+    "not ie 11",
+    "not op_mini all"
+  ]
+}
