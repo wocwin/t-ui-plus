@@ -327,21 +327,47 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      padding: 0;
 
       .t_table_column_setting_dropdown {
         display: flex;
         flex-direction: column;
-        max-height: 300px;
+        max-height: 400px;
         overflow-y: auto;
+        width: 100%;
+        padding: 0 10px 0 12px;
         gap: 10px;
 
-        .el-checkbox {
-          .el-checkbox__input.is-checked+.el-checkbox__label {
-            cursor: move;
-            color: var(--el-text-color-primary);
+        &:hover {
+          background-color: transparent;
+        }
+
+        .el-tree-node {
+
+          .el-tree-node__content {
+            padding: 10px;
+            cursor: default;
+
+            &:hover {
+              color: var(--el-color-primary);
+            }
+
+            .el-tree-node__expand-icon {
+              display: none;
+            }
+
+            .el-tree-node__label {
+              display: inline-block;
+              cursor: move;
+              width: 100%;
+            }
           }
         }
       }
+    }
+
+    .el-dropdown-menu__item:not(.is-disabled):hover {
+      background-color: transparent;
     }
   }
 }
