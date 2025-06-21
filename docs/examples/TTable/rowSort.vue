@@ -60,7 +60,9 @@ let table = ref<TableTypes.Table>({
     { prop: "address", label: "地址", minWidth: "220" }
   ]
 })
-const rowSort = list => {
+const rowSort = (list: any, oldIndex: number, newIndex: number) => {
   console.log("行拖拽后的数据---", list)
+  console.log("行拖拽前---index", oldIndex)
+  console.log("行拖拽后---index", newIndex)
 }
 </script>

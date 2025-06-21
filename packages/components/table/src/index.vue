@@ -558,9 +558,10 @@ const initSort = () => {
     // ghostClass: 'ghostClass', // 设置拖拽停靠样式类名
     // chosenClass: 'chosenClass', // 设置选中样式类名
     onEnd: (evt: { oldIndex: any; newIndex: any }) => {
+      // console.log("拖拽结束---11", evt.oldIndex, evt.newIndex)
       const curRow = state.tableData.splice(evt.oldIndex, 1)[0]
       state.tableData.splice(evt.newIndex, 0, curRow)
-      emits("rowSort", state.tableData)
+      emits("rowSort", state.tableData, evt.oldIndex, evt.newIndex)
     }
   })
 }

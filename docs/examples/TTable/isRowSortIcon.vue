@@ -6,19 +6,17 @@
         :table="table"
         :columns="table.columns"
         :isShowPagination="false"
-        :isRowSort = "isRowSort"
+        :isRowSort="isRowSort"
         :isRowSortIcon="isRowSortIcon"
         row-key="id"
         @rowSort="rowSort"
       >
-      <template #toolbar>
-        <el-button
-          type="primary"
-          @click="()=>{isRowSort = !isRowSort,isRowSortIcon = !isRowSortIcon}"
-        >
-          {{ isRowSort&&isRowSortIcon ? "关闭拖拽" : "开启拖拽" }}
-        </el-button>
-      </template>
+        <template #toolbar>
+          <el-button
+            type="primary"
+            @click="()=>{isRowSort = !isRowSort,isRowSortIcon = !isRowSortIcon}"
+          >{{ isRowSort&&isRowSortIcon ? "关闭拖拽" : "开启拖拽" }}</el-button>
+        </template>
       </t-table>
     </t-layout-page-item>
   </t-layout-page>
@@ -67,13 +65,15 @@ let table = ref<TableTypes.Table>({
   ],
   // 表头数据
   columns: [
-    { prop: "name", label: "姓名", minWidth: "100"},
+    { prop: "name", label: "姓名", minWidth: "100" },
     { prop: "date", label: "日期", minWidth: "180" },
     { prop: "status", label: "状态", minWidth: "80" },
     { prop: "address", label: "地址", minWidth: "220" }
   ]
 })
-const rowSort = list => {
+const rowSort = (list: any, oldIndex: number, newIndex: number) => {
   console.log("行拖拽后的数据---", list)
+  console.log("行拖拽前---index", oldIndex)
+  console.log("行拖拽后---index", newIndex)
 }
 </script>

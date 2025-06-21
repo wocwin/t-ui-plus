@@ -219,7 +219,7 @@ TTable/columnSetting
 
 ### 行--拖拽排序
 
-:::demo 属性`isRowSort`是否开启行拖拽排序;事件`@rowSort`，返回最终排序的 table 数据;`注意`: `row-key` 需要设置，否则拖动排序可能显示不正常
+:::demo 属性`isRowSort`是否开启行拖拽排序;事件`@rowSort`，三个返回值：排序后 table 数据，拖拽前`index`,拖拽后`index`;`注意`: `row-key` 需要设置，否则拖动排序可能显示不正常
 TTable/rowSort
 :::
 
@@ -509,15 +509,15 @@ TTable/expand
 
 ### 3、events 其他事件按照 el-table 直接使用（如 sort-change 排序事件）
 
-| 事件名                          | 说明                                 | 返回值                                        |
-| :------------------------------ | :----------------------------------- | :-------------------------------------------- |
-| page-change                     | 当前页码                             | 当前选中的页码                                |
-| save                            | 保存按钮                             | 编辑后的所有数据                              |
-| handleEvent                     | 单个输入触发事件                     | configEdit 中的 event 值和对应输入的 value 值 |
-| radioChange                     | 单选选中事件                         | 返回当前选中的整行数据                        |
-| rowSort                         | 行拖拽排序后触发事件                 | 返回排序后的 table 数据                       |
-| validateError                   | 单元格编辑保存校验不通过触发         | 返回校验不通过的 prop--label 集合             |
-| getRefs <el-tag>1.4.15</el-tag> | 获取 TTbale单元格编辑 使用组件的 ref | -                                             |
+| 事件名                          | 说明                                 | 返回值                                                     |
+| :------------------------------ | :----------------------------------- | :--------------------------------------------------------- |
+| page-change                     | 当前页码                             | 当前选中的页码                                             |
+| save                            | 保存按钮                             | 编辑后的所有数据                                           |
+| handleEvent                     | 单个输入触发事件                     | configEdit 中的 event 值和对应输入的 value 值              |
+| radioChange                     | 单选选中事件                         | 返回当前选中的整行数据                                     |
+| rowSort <el-tag>2.0.2</el-tag>  | 行拖拽排序后触发事件                 | 三个返回值：排序后 table 数据，拖拽前`index`,拖拽后`index` |
+| validateError                   | 单元格编辑保存校验不通过触发         | 返回校验不通过的 prop--label 集合                          |
+| getRefs <el-tag>1.4.15</el-tag> | 获取 TTbale单元格编辑 使用组件的 ref | -                                                          |
 
 ### 4、Methods 方法 继承 el-table 所有方法(Expose)
 
