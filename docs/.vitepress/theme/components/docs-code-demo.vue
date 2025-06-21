@@ -1,5 +1,6 @@
 <template>
   <ClientOnly>
+    <p text="sm" v-html="decodedDescription" />
     <div class="example">
       <div class="docs-example-showcase">
         <AppAsyncComponent />
@@ -76,6 +77,7 @@ const props = defineProps<{
   source: string
   path: string
   rawSource: string
+  description?: string
 }>()
 
 const show = ref(false)
@@ -84,6 +86,7 @@ const size = 16
 
 const AppAsyncComponent = getComponent(moduleFiles, props.path)
 
+const decodedDescription = computed(() => decodeURIComponent(props.description!))
 const handleToggle = () => {
   show.value = !show.value
 }
