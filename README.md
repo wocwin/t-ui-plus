@@ -16,7 +16,7 @@
 
 <p align="center">
   <a href="https://github.com/vuejs/vue" target="_blank">
-    <img src="https://img.shields.io/badge/vue-3.2.36-brightgreen.svg" alt="vue3">
+    <img src="https://img.shields.io/badge/vue-3.4.21-brightgreen.svg" alt="vue3">
   </a>
   <a href="https://gitee.com/wocwin/t-ui-plus/stargazers" target="_blank">
     <img src="https://gitee.com/wocwin/t-ui-plus/badge/star.svg?theme=dark" alt="t-ui-plus">
@@ -66,7 +66,7 @@ import locale from "element-plus/es/locale/lang/zh-cn";
 // element-plus图标
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import TuiPlus from '@wocwin/t-ui-plus'
-import '@wocwin/t-ui-plus/lib/style.css'
+import '@wocwin/t-ui-plus/index.css'
 const app = createApp(App)
 // 注册所有图标
   for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
@@ -85,42 +85,52 @@ app.mount('#app')
 
 ```js
 // 在main.js中按下引入
-import '@wocwin/t-ui-plus/lib/style.css'
+import '@wocwin/t-ui-plus/index.css'
 // 单个.vue文件引入
 <script setup lang="ts">
   import {TDetail, TForm} from "@wocwin/t-ui-plus"
 </script>
 ```
-## 浏览器直接引入Use CDN in Project(v1.5.0支持)--建议使用pnpm安装使用
-> 浏览器直接引入组件库，属性`驼峰命名`必须转换为短横线,直接通过浏览器的 HTML 标签导入 `@wocwin/t-ui-plus`，然后就可以使用全局变量 `TuiPlus` 了
+## 浏览器直接引入
+
+直接通过浏览器的 HTML 标签导入 @wocwin/t-ui-plus，然后就可以使用全局变量 `TuiPlus` 了。
+
+根据不同的 CDN 提供商有不同的引入方式， 我们在这里以[unpkg](https://unpkg.com) 和 [jsDelivr](https://jsdelivr.com) 举例。 你也可以使用其它的 CDN 供应商。
+
+### unpkg
+
 ```html
 <head>
-  <!-- Import style -->
-   <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css" />
-  <link rel="stylesheet" href="https://unpkg.com/@wocwin/t-ui-plus/lib/style.css" />
-  <!-- Import Vue 3 -->
-  <script src="https://unpkg.com/vue@3"></script>
-  <!-- Import component library -->
-  <script src="https://unpkg.com/element-plus"></script>
-  <!-- 3. 引入t-ui-plus的组件库 -->
-  <script src="https://unpkg.com/@wocwin/t-ui-plus@latest"></script>
-</head>
-<body>
-  <div id="app">
-    <t-input placeholder="请输入金额" input-type="amount" show-thousands v-model="value"></t-input>
-  </div>
-  <script>
-    const app = Vue.createApp({
-      data() {
-        return {
-          value: ''
-        }
-      }
-    });
-    app.mount('#app');
-  </script>
-</body>
+  <!-- 导入element-plus样式 -->
+  <link rel="stylesheet" href="//unpkg.com/element-plus/dist/index.css" />
+  <!-- 导入vue3 -->
+  <script src="//unpkg.com/vue@3"></script>
+  <!-- 导入element-plus -->
+  <script src="//unpkg.com/element-plus"></script>
 
+  <!-- 导入t-ui-plus样式 -->
+  <link rel="stylesheet" href="//unpkg.com/@wocwin/t-ui-plus/index.css" />
+  <!--导入t-ui-plus"  -->
+  <script src="//unpkg.com/@wocwin/t-ui-plus"></script>
+</head>
+```
+
+### jsDelivr
+
+```html
+<head>
+  <!-- 导入element-plus样式 -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/element-plus/dist/index.css" />
+  <!-- 导入vue3 -->
+  <script src="//cdn.jsdelivr.net/npm/vue@3"></script>
+  <!-- 导入element-plus -->
+  <script src="//cdn.jsdelivr.net/npm/element-plus"></script>
+
+  <!-- 导入t-ui-plus样式 -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@wocwin/t-ui-plus/index.css" />
+  <!--导入t-ui-plus"  -->
+  <script src="//cdn.jsdelivr.net/npm/@wocwin/t-ui-plus"></script>
+</head>
 ```
 ## 全部组件如下
 | 组件名称                 | 说明                                                                                                                                                       |
@@ -150,24 +160,72 @@ import '@wocwin/t-ui-plus/lib/style.css'
 
 
 
-## t-ui-plus Volar 组件类型提示
+## Vue - Official （Volar）待验证
 
 ```js
 // 需要在使用的项目的tsconfig.json文件中添加以下
 compilerOptions：{
   "types": [
-      "@wocwin/t-ui-plus/components.d.ts",
+      "@wocwin/t-ui-plus/index.d.ts"
     ],
 }
 
 ```
-## Vue3 + Vite项目中安装引入报如下错误的解决方法
-> #### 把项目的vite版本升级到4+
+## 自动按需导入 (暂不支持--待完善)
+- 1. 安装插件
 
-<img src="./README_GIF/error.png">
+  ```sh
+  pnpm install -D unplugin-vue-components unplugin-auto-import @t-ui-plus/resolver
 
+  ```
+- 2.  配置 `vite.config.ts` 或者配置 `webpack(vue).config.js`
+### vite.config.ts配置
+```js
+  // vite.config.ts
+  import { defineConfig } from 'vite'
+  import AutoImport from 'unplugin-auto-import/vite'
+  import Components from 'unplugin-vue-components/vite'
+  import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+  import { TuiPlusResolver } from '@t-ui-plus/resolver'
+
+  export default defineConfig({
+    // ...
+    plugins: [
+      // ...
+      AutoImport({
+        resolvers: [ElementPlusResolver()]
+      }),
+      Components({
+        resolvers: [ElementPlusResolver(), TuiPlusResolver()]
+      })
+    ]
+  })
+```
+### vue.config.js配置
+```js
+const { defineConfig } = require('@vue/cli-service')
+  const AutoImport = require('unplugin-auto-import/webpack')
+  const Components = require('unplugin-vue-components/webpack')
+  const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
+  const { TuiPlusResolver } = require('@t-ui-plus/resolver')
+
+  module.exports = defineConfig({
+    // ...
+    configureWebpack: {
+      plugins: [
+        // ...
+        AutoImport({
+          resolvers: [ElementPlusResolver()]
+        }),
+        Components({
+          resolvers: [TuiPlusResolver(), ElementPlusResolver()]
+        })
+      ]
+    }
+  })
+```
 ## 安装依赖
-> ### 注意: 本地环境版本最好安装 [Node.js 16.x+](https://nodejs.org/en)、[pnpm 7.x+](https://github.com/pnpm/pnpm/)
+> ### 注意: 本地环境版本最好安装 [Node.js 18.x+](https://nodejs.org/en)、[pnpm 7.x+](https://github.com/pnpm/pnpm/)
 
 ```shell
 npm install -g pnpm
@@ -182,7 +240,7 @@ pnpm install --registry=https://registry.npmjs.org/
 
 ```
 
-## 本地运行 vuepress 中组件文档
+## 本地运行 vitepress 中组件文档
 
 ```shell
 // docs项目(文档demo示例)基于vue3+vite项目
