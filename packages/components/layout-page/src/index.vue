@@ -48,7 +48,10 @@ watch(
 )
 const backToTop = () => {
   scrollTop.value = 0
-  ;(TLayoutPageRef.value as any).scrollTop = 0
+  ;(TLayoutPageRef.value as any).scrollTo({
+    top: 0,
+    behavior: "smooth"
+  })
 }
 onMounted(() => {
   const pageItems = (TLayoutPageRef.value as any).querySelectorAll(".t_layout_page_item")
