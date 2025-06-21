@@ -49,7 +49,7 @@ import '@wocwin/t-ui-plus/index.css'
 {
   "compilerOptions": {
     // ...
-    "types": ["@wocwin/t-ui-plus/global"]
+    "types": ["@wocwin/t-ui-plus/index.d.ts"]
   }
 }
 ```
