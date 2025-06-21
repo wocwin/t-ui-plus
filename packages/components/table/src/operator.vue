@@ -77,6 +77,7 @@
                         link: true,
                         text: true,
                         size: 'small',
+                        disabled: item.isDisabled && item.isDisabled(scope.row, item),
                         ...item.bind
                       }"
                       v-if="checkIsShow(scope, item)"
