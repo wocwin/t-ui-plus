@@ -1,5 +1,6 @@
 <template>
   <el-table-column
+    v-if="typeof item.isShowCol == 'function' ? item.isShowCol(item) : !item.isShowCol"
     :prop="item.prop"
     :label="item.label"
     :type="item.type"
@@ -12,20 +13,7 @@
       <render-header :column="item" :render="item.renderHeader" />
     </template>
     <template v-for="(val, index) of item.children">
-      <t-table-column
-        v-if="val.children"
-        :key="index"
-        :item="val"
-        :prop="val.prop"
-        :label="val.label"
-        :min-width="val['min-width'] || val.minWidth"
-        :width="val.width"
-        :sortable="val.sortable || val.sort || sortable"
-        :align="val.align || align"
-        :formatter="val.formatter"
-        :fixed="val.fixed"
-        v-bind="{ 'show-overflow-tooltip': true, ...val.bind, ...$attrs }"
-      >
+      <t-table-column v-if="val.children" :key="index" :item="val" v-bind="$attrs">
         <template v-for="(_index, name) in slots" v-slot:[name]="data">
           <slot :name="name" v-bind="data"></slot>
         </template>
@@ -41,6 +29,7 @@
         :align="val.align || align"
         :fixed="val.fixed"
         :formatter="val.formatter"
+        v-if="typeof val.isShowCol == 'function' ? val.isShowCol(val) : !val.isShowCol"
         v-bind="{ 'show-overflow-tooltip': true, ...val.bind, ...$attrs }"
       >
         <template #header v-if="val.renderHeader">
