@@ -15,7 +15,7 @@
         <el-button :icon="customIcons[modelValue]" />
       </template>
     </el-input>
-    <el-dialog v-model="dialogVisible" :title="attrs.dialogTitle" draggable :width="attrs.width">
+    <el-dialog v-model="dialogVisible" :title="attrs.dialogTitle" draggable :width="attrs.width" class="t_select_icon_dialog">
       <el-input
         v-model="inputValue"
         v-if="isShowSearch"
