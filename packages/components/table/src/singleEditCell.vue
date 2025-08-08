@@ -75,8 +75,8 @@
       <template v-if="!configEdit.editComponent.includes('date')">
         <component
           :is="compChildName(configEdit)"
-          v-for="(value, key, index) in selectListType(configEdit)"
-          :key="index"
+          v-for="(value, key) in selectListType(configEdit)"
+          :key="key"
           :disabled="value.disabled"
           :label="compChildLabel(configEdit, value)"
           :value="compChildValue(configEdit, value, key)"

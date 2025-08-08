@@ -129,6 +129,17 @@ export const tableProps = {
   footerBtnAlign: {
     type: String,
     default: "right"
+  },
+  /**
+   * 空数据时表头是否显示校验红点
+   */
+  isEmptyDataRequired: {
+    type: Boolean,
+    default: false
+  },
+  saveBtnTxt: {
+    type: String,
+    default: "保存"
   }
 }
 
