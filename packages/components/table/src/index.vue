@@ -215,7 +215,7 @@
           >
             <template #header v-if="item.headerRequired || item.renderHeader || item.isClickEdit">
               <render-header v-if="item.renderHeader" :column="item" :render="item.renderHeader" />
-              <div style="display: inline" v-if="item.headerRequired">
+              <div style="display: inline" v-if="item.headerRequired && emptyDataRequired">
                 <span style="color: #f56c6c; font-size: 16px; margin-right: 3px">*</span>
                 <span>{{ item.label }}</span>
               </div>
@@ -427,6 +427,14 @@ let state = reactive({
   tableData: props.table.data,
   columnSet: [],
   copyTableData: [] // 键盘事件
+})
+// 空数据时表头是否显示校验红点
+const emptyDataRequired = computed(() => {
+  if (props.isEmptyDataRequired) {
+    return state.tableData.length > 0
+  } else {
+    return true
+  }
 })
 // 单选框
 const radioVal = ref<number | any>("")

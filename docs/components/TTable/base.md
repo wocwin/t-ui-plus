@@ -506,6 +506,7 @@ TTable/expand
 | useVirtual<el-tag>1.4.13</el-tag>                                 | table 是否开启虚拟滚动                                                    | Boolean          | false                                      |
 | virtualShowSize<el-tag>1.4.13</el-tag>                            | 虚拟列表的渲染行数                                                        | Number           | 30                                         |
 | footerBtnAlign<el-tag>1.4.14</el-tag>                             | TTable底部插槽操作布局方式有三个值（`left` `center` `right`）             | String           | 'right'                                    |
+| isEmptyDataRequired<el-tag>2.0.3</el-tag>                          | 空数据时表头是否显示校验红点                                           | Boolean          | false                                      |
 
 ### 3、events 其他事件按照 el-table 直接使用（如 sort-change 排序事件）
 

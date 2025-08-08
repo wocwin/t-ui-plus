@@ -12,6 +12,7 @@
         @save="singleSave"
         @validateError="validateError"
         isShowFooterBtn
+        isEmptyDataRequired
       >
         <template #toolbar>
           <div class="add_data" style="display: flex; margin-right: 10px">
