@@ -79,9 +79,9 @@
         }"
       >
         <template #default>
-          <el-icon class="row_drag" :color="rowSortIconBind.color" :size="rowSortIconBind.size"
-            ><Rank
-          /></el-icon>
+          <el-icon class="row_drag" :color="rowSortIconBind.color" :size="rowSortIconBind.size">
+            <Rank />
+          </el-icon>
         </template>
       </el-table-column>
       <!-- 复选框/单选框/序列号 -->
@@ -125,9 +125,9 @@
               @click="radioHandleChange(scope.row, scope.$index + 1)"
             ></el-radio>
             <template v-if="table.firstColumn.type === 'index'">
-              <span v-if="isPaginationCumulative && isShowPagination">
-                {{ (table.currentPage - 1) * table.pageSize + scope.$index + 1 }}
-              </span>
+              <span v-if="isPaginationCumulative && isShowPagination">{{
+                (table.currentPage - 1) * table.pageSize + scope.$index + 1
+              }}</span>
               <span v-else>{{ scope.$index + 1 }}</span>
             </template>
             <template v-if="table.firstColumn.type === 'expand'">
@@ -179,9 +179,9 @@
                 @click="radioHandleChange(scope.row, scope.$index + 1)"
               ></el-radio>
               <template v-if="item.type === 'index'">
-                <span v-if="isPaginationCumulative && isShowPagination">
-                  {{ (table.currentPage - 1) * table.pageSize + scope.$index + 1 }}
-                </span>
+                <span v-if="isPaginationCumulative && isShowPagination">{{
+                  (table.currentPage - 1) * table.pageSize + scope.$index + 1
+                }}</span>
                 <span v-else>{{ scope.$index + 1 }}</span>
               </template>
               <template v-if="item.type === 'expand'">
@@ -363,7 +363,7 @@
     >
       <slot name="footer" />
       <div v-if="!slots.footer">
-        <el-button type="primary" @click="save">保存</el-button>
+        <el-button type="primary" @click="save">{{ saveBtnTxt }}</el-button>
       </div>
     </footer>
   </div>

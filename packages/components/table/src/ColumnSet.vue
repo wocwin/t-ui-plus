@@ -156,7 +156,9 @@ const handleDrop = (draggingNode: any, dropNode: any, dropType: string, ev: Even
   if (draggingIndex === -1 || dropIndex === -1) return
   const item = state.columnSet.splice(draggingIndex, 1)[0]
   if (dropType === "before") {
-    state.columnSet.splice(dropIndex, 0, item)
+    // 如果拖拽项在目标项后面，直接插入；如果在前面，dropIndex要减1
+    const insertIndex = draggingIndex < dropIndex ? dropIndex - 1 : dropIndex
+    state.columnSet.splice(insertIndex, 0, item)
   } else if (dropType === "after") {
     state.columnSet.splice(dropIndex + 1, 0, item)
   }
