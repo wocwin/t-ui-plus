@@ -108,22 +108,9 @@
     }
   }
 
-  .el-table th,
-  .el-table td {
-    padding: 8px 0;
-  }
-
   .el-table--border th:first-child .cell,
   .el-table--border td:first-child .cell {
     padding-left: 5px;
-  }
-
-  .el-table .cell {
-    padding: 0 5px;
-  }
-
-  .el-table--scrollable-y .el-table__fixed-right {
-    right: 8px !important;
   }
 
   .header_wrap {
@@ -150,8 +137,6 @@
         background-color: #355db4;
         border: 1px solid #355db4;
       }
-
-
     }
 
     .header_title {
@@ -226,25 +211,6 @@
     }
   }
 
-  // 每行高度设置
-  .el-table {
-    .el-table__body {
-      .el-table__row {
-        .el-table__cell {
-          padding: 8px 0;
-
-          .cell {
-            min-height: 32px;
-            line-height: 32px;
-            // display: flex;
-            // align-items: center;
-            // justify-content: center;
-          }
-        }
-      }
-    }
-  }
-
   // treeTable样式
   .tree_style {
     .el-table__body-wrapper {
@@ -263,17 +229,14 @@
     }
   }
 
-  // 页面缓存时，表格内操作栏每行高度撑满
-  // .el-table__fixed-right {
-  //   height: 100% !important;
-  // }
-
   // 选中行样式
   .highlightCurrentRow {
     .current-row {
-      color: var(--el-color-primary);
       cursor: pointer;
-      background-color: #355db4 !important;
+
+      > td.el-table__cell {
+        background-color: var(--el-table-current-row-bg-color);
+      }
     }
   }
 
@@ -298,9 +261,6 @@
 
   .operator {
     .operator_btn {
-      display: flex;
-      align-items: center;
-
       .oper_more_dropdown {
         margin-left: 8px;
       }
@@ -343,7 +303,6 @@
         }
 
         .el-tree-node {
-
           .el-tree-node__content {
             padding: 10px;
             cursor: default;
