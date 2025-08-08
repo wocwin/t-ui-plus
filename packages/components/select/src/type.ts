@@ -39,4 +39,5 @@ export interface TSelectProps {
    * version 1.5.2
    */
   radioSelectValLabel?: string
+  selectAllTxt?: string
 }

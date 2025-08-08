@@ -107,6 +107,7 @@ TSelect/returnObject
 | isCached<el-tag>1.5.1</el-tag>            | 分页是否开启缓存选中项                           | Boolean                         | true    |
 | isRadioEchoLabel<el-tag>1.5.2</el-tag>    | 是否开启回显不是第一页数据的label                | Boolean                         | true    |
 | radioSelectValLabel<el-tag>1.5.2</el-tag> | 回显不是第一页数据label的绑定值                  | String                          | ''      |
+| selectAllTxt<el-tag>2.0.3</el-tag> | 全选文字提示                  | String                          | '全选'      |
 
 ### 2-1、paginationOption 配置参数（Attributes）继承 el-pagination Attributes
 

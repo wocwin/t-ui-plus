@@ -61,8 +61,8 @@
       >
         <component
           :is="compChildName(opt)"
-          v-for="(value, key, index) in selectListType(opt)"
-          :key="index"
+          v-for="(value, key) in selectListType(opt)"
+          :key="key"
           :disabled="value.disabled"
           :label="compChildLabel(opt, value)"
           :value="compChildValue(opt, value, key)"

@@ -24,7 +24,7 @@
         v-model="selectChecked"
         @change="selectAll"
         class="all_checkbox"
-        >全选</el-checkbox
+        >{{ selectAllTxt }}</el-checkbox
       >
       <el-option
         v-for="(item, index) in mergedOptions"
@@ -83,7 +83,8 @@ const props = withDefaults(defineProps<TSelectProps>(), {
   returnObject: false,
   isCached: true,
   isRadioEchoLabel: true,
-  radioSelectValLabel: ""
+  radioSelectValLabel: "",
+  selectAllTxt: "全选"
 })
 const tselectRef = ref()
 const filteredOptionsCount = ref(1)
