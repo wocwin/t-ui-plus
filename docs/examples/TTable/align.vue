@@ -1,7 +1,12 @@
 <template>
   <t-layout-page>
     <t-layout-page-item>
-      <el-radio-group v-model="align" size="small" style="margin-bottom: 15px">
+      <el-radio-group
+        v-model="align"
+        size="small"
+        style="margin-bottom: 15px"
+        @change="handleAlignChange"
+      >
         <el-radio-button value="left">左对齐</el-radio-button>
         <el-radio-button value="center">居中</el-radio-button>
         <el-radio-button value="right">右对齐</el-radio-button>
@@ -27,6 +32,15 @@ import { ref } from "vue"
 const align = ref("center")
 const setDate = ref("设置日期")
 const setName = ref("设置姓名")
+const viewDetail = val => {
+  console.log("viewDetail", val)
+}
+const edit = val => {
+  console.log("edit", val)
+}
+const nullify = val => {
+  console.log("nullify", val)
+}
 const table = ref<TableTypes.Table>({
   border: true,
   data: [
@@ -63,14 +77,37 @@ const table = ref<TableTypes.Table>({
       address: "广东省广州市天广东省广州市天河区2广东省广州市天河区2河区2"
     }
   ],
-  // 表头数据
   columns: [
     { prop: "name", label: "姓名", minWidth: "100", align: "" },
     { prop: "date", label: "日期", minWidth: "180", align: "" },
     { prop: "status", label: "状态", minWidth: "80" },
     { prop: "address", label: "地址", minWidth: "220" }
-  ]
+  ],
+  operator: [
+    {
+      text: "查看",
+      fun: viewDetail
+    },
+    {
+      text: "编辑",
+      fun: edit
+    },
+    {
+      text: "作废",
+      fun: nullify
+    }
+  ],
+  // 操作列样式
+  operatorConfig: {
+    width: 200,
+    align: "center", // 操作列对齐方式
+    label: "操作"
+  }
 })
+const handleAlignChange = val => {
+  console.log("align.value", val)
+  table.value.operatorConfig.align = val
+}
 // 设置日期左对齐
 const setDateLeft = () => {
   table.value.columns.forEach(item => {

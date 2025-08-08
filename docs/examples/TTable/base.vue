@@ -7,6 +7,7 @@
         :columns="table.columns"
         :isShowPagination="false"
         size="small"
+        highlightCurrentRow
       />
     </t-layout-page-item>
   </t-layout-page>
