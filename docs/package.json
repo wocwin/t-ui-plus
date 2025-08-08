@@ -46,7 +46,7 @@
     "highlight.js": "^11.9.0",
     "js-cookie": "^3.0.5",
     "echarts": "^5.4.3",
-    "@wocwin/t-ui-plus": "npm:t-ui-plus@latest",
+    "@wocwin/t-ui-plus": "npm:@wocwin/t-ui-plus@latest",
     "vue": "3.4.21"
   }
 }
