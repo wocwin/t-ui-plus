@@ -17,6 +17,11 @@ export interface TDatePickerSelfProps {
     | "datetimerange"
   shortcuts?: any[]
   isPickerOptions?: boolean
+  config?: {
+    isEnable?: boolean
+    minTime?: string | Date
+    maxTime?: string | Date
+  }
 }
 
 export type TDatePickerProps = TDatePickerSelfProps & Partial<Mutable<DatePickerProps>>

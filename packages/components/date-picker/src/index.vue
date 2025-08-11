@@ -1,14 +1,15 @@
 <template>
-  <div class="t-date-picker" ref="DatePicker">
+  <div ref="DatePicker" class="t-date-picker">
     <el-date-picker
-      :type="type"
       v-model="time"
+      :type="type"
       :shortcuts="state.dateOptions"
-      @change="dateChange"
+      :disabled-date="disabledDate"
       v-bind="attrsBind"
+      @change="dateChange"
     >
-      <template v-for="(_index, name) in slots" v-slot:[name]="data">
-        <slot :name="name" v-bind="data"></slot>
+      <template v-for="(_index, name) in slots" #[name]="data">
+        <slot :name="name" v-bind="data" />
       </template>
     </el-date-picker>
   </div>
@@ -24,7 +25,8 @@ defineOptions({
 const props = withDefaults(defineProps<TDatePickerProps>(), {
   plusTime: false,
   type: "date",
-  isPickerOptions: false
+  isPickerOptions: false,
+  config: () => ({ isEnable: false, minTime: "", maxTime: "" })
 })
 
 // 抛出事件
@@ -34,12 +36,12 @@ const attrs = useAttrs()
 const slots = useSlots()
 
 // vue3 v-model简写
-let time = computed({
+const time = computed({
   get() {
     return props.modelValue
   },
   set(val) {
-    emits("update:modelValue", val)
+    emits('update:modelValue', val)
   }
 })
 
@@ -122,7 +124,32 @@ const getShortcuts = (type: string) => {
 
   return shortcuts[type] || []
 }
-
+/** 动态禁用日期函数 */
+const disabledDate = (time: Date) => {
+  const timeStamp = time.getTime()
+  if (!props.config?.isEnable) {
+    return false
+  }
+  const { minTime, maxTime } = props.config
+  // 均未配置时间范围，默认禁用今天之前日期
+  if (!minTime && !maxTime) {
+    const todayStart = new Date(new Date().toLocaleDateString()).getTime()
+    return timeStamp < todayStart
+  }
+  const minTimestamp = minTime ? new Date(minTime).getTime() : null
+  const maxTimestamp = maxTime ? new Date(maxTime).getTime() : null
+  if (minTimestamp && maxTimestamp && minTimestamp > maxTimestamp) {
+    console.warn("DatePicker: minTime must be less than or equal to maxTime")
+    return true
+  }
+  if (minTimestamp && timeStamp < minTimestamp) {
+    return true
+  }
+  if (maxTimestamp && timeStamp > maxTimestamp) {
+    return true
+  }
+  return false
+}
 const subtractDays = (date: Date, days: number) => {
   const newDate = new Date(date)
   newDate.setDate(newDate.getDate() - days)
