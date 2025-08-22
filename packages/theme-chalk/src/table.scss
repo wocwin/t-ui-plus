@@ -89,6 +89,14 @@
       .t_edit_cell_form_rules {
         .single_edit_cell {
           margin-bottom: 15px;
+
+          .el-form-item__content {
+            overflow: visible;
+
+            .el-form-item__error {
+              overflow: visible;
+            }
+          }
         }
       }
     }
