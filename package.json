@@ -23,7 +23,7 @@
     "build:eslint-config": "pnpm run -C packages/eslint-config build",
     "clean": "rimraf dist && rimraf packages/theme-chalk/dist",
     "pub": "npm publish --registry=https://registry.npmjs.org/",
-    "deploy": "deploy.sh",
+    "deploy": "./deploy.sh",
     "resolver": "resolver.sh",
     "publish": "publish.sh",
     "lib-pub": "lib.sh",
