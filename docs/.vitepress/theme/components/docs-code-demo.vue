@@ -23,6 +23,9 @@
             </svg>
           </el-icon>
         </el-tooltip>
+          <el-tooltip content="在 GitHub 上编辑">
+          <el-icon :size="size" class="op-btn" @click="handleEditGithub"><EditPen /></el-icon>
+        </el-tooltip>
         <el-tooltip content="复制代码">
           <el-icon :size="size" class="op-btn"><CopyDocument v-copy="content" /></el-icon>
         </el-tooltip>
@@ -61,10 +64,11 @@
 
 <script setup lang="ts">
 import { ref, computed } from "vue"
-import { CopyDocument, View, CaretTop } from "@element-plus/icons-vue"
+import { CopyDocument, View, CaretTop, EditPen } from "@element-plus/icons-vue"
 import { getComponent } from "../../utils/getComponent"
 import { getPlaygroundEncoded } from "../../utils"
 
+const editUrl = "https://github.com/wocwin/t-ui-plus/edit/master/docs/examples"
 const editPlaygroundUrl = "https://wocwin.github.io/wocwin-playground/"
 // const editPlaygroundUrl = 'http://127.0.0.1:3332'
 
@@ -97,7 +101,11 @@ const content = computed(() => decodeURIComponent(props.rawSource))
 // add line-number
 const tem = content.value.split("\r\n")
 total.value = tem.length
-
+// 去GitHub编辑
+const handleEditGithub = () => {
+  const url = `${editUrl}/${props.path}.vue`
+  window.open(url, "_blank")
+}
 // 去Playground编辑
 const handleEditPlayground = () => {
   const encoded = getPlaygroundEncoded(props.rawSource)
