@@ -41,11 +41,11 @@ export default defineConfig({
       }
     ],
     ["meta", { name: "keywords", content }],
-    ["link", { rel: "icon", href: "/logo.jpg" }]
+    ["link", { rel: "icon", href: "./favicon.ico" }]
   ],
   lastUpdated: true,
   themeConfig: {
-    logo: "/favicon.ico",
+    logo: "/logo.jpg",
     siteTitle: "TuiPlus基础组件文档",
     outline: 3,
     search: {
