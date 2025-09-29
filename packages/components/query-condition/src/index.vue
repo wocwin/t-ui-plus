@@ -4,6 +4,7 @@
     v-bind="$attrs"
     :label-width="labelWidth"
     :form="queryState.form"
+    :label-position="labelPosition"
     size="default"
     class="t-query-condition"
     :style="{
@@ -19,7 +20,14 @@
       :label-width="opt.labelWidth"
       v-bind="$attrs"
       :style="{ gridArea: i }"
-      :class="[opt.className, { render_label: opt.labelRender }]"
+      :class="[
+        opt.className,
+        {
+          render_label: opt.labelRender,
+          render_label_position_left: opt.labelRender && labelPosition === 'left',
+          render_label_position_top: opt.labelRender && labelPosition === 'top'
+        }
+      ]"
     >
       <!-- 自定义label -->
       <template #label v-if="opt.labelRender">
@@ -77,7 +85,8 @@
       :class="[
         'btn',
         { flex_end: cellLength % colLength === 0 },
-        { btn_flex_end: Object.keys(cOpts).length === 4 || cellLength > 3 }
+        { btn_flex_end: Object.keys(cOpts).length === 4 || cellLength > 3 },
+        { btn_label_position_top: labelPosition === 'top' }
       ]"
     >
       <template v-if="isFooter">
@@ -155,7 +164,8 @@ const props = withDefaults(defineProps<TQueryConditionProps>(), {
   widthSize: 4,
   isDropDownSelectMore: false,
   moreCheckList: () => [],
-  popoverAttrs: () => ({})
+  popoverAttrs: () => ({}),
+  labelPosition: "right"
 })
 defineOptions({
   name: "TQueryCondition"

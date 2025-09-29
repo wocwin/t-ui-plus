@@ -109,7 +109,12 @@ TQueryCondition/handleEventChange
 
 TQueryCondition/getRefs
 :::
+### 对齐方式<el-tag>v2.0.4</el-tag>
 
+:::demo 通过设置`labelPosition`可以改变表单域标签的位置，可选值为 `top`、`left`、`right`，默认`right`
+
+TQueryCondition/labelPosition
+:::
 ### TQueryCondition 参数配置
 
 ---
@@ -146,6 +151,7 @@ TQueryCondition/getRefs
 | isShowWidthSize      | 是否开启动态设置每行显示数                | Boolean | false                                          |
 | widthSize            | 每行显示多少项，最小值 2                  | Number  | 4                                              |
 | isDropDownSelectMore | 是否以下拉方式展示更多条件                | Boolean | false                                          |
+| labelPosition |改变表单域标签的位置，可选值为 `top`、`left`、`right`| String  | 'right'                        |
 
 #### 2-1 以下拉方式展示更多条件--配置参数（Attributes）
 | 参数              | 说明                                                             | 类型             | 默认值     |

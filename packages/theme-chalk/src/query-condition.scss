@@ -40,10 +40,14 @@
       justify-content: flex-end;
     }
   }
+  .btn_label_position_top{
+    display: flex;
+    align-items: flex-end;
+  }
 
   .el-form-item {
-    display: flex;
-    margin-bottom: 6px;
+    // display: flex;
+    margin-bottom: 10px;
 
     .el-form-item__label {
       flex-shrink: 0;
@@ -70,7 +74,10 @@
       }
     }
   }
-
+  .render_label_position_left,
+  render_label_position_top {
+    justify-content: flex-start;
+  }
   .btn_check {
     position: relative;
     top: -1px;
