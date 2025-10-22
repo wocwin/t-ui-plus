@@ -34,7 +34,6 @@
           </template>
         </t-table>
       </t-layout-page-item>
-      <slot />
     </t-layout-page>
     <slot name="footer" />
   </div>

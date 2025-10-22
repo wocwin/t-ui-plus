@@ -78,7 +78,7 @@ declare namespace TableTypes {
     rules?: AnyObject // 表单验证规则
     listTypeInfo?: any // 字典过滤
     operator?: any // 操作按钮
-    operatorConfig?: AnyObject // 操作列配置
+    operatorConfig?: any // 操作列配置
     currentPage?: Number // 当前页码
     pageSize?: Number // 每页条数
     total?: Number // 总条数

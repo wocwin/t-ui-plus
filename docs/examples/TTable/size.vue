@@ -57,7 +57,6 @@ const table = ref<TableTypes.Table>({
       address: "广东省广州市天广东省广州市天河区2广东省广州市天河区2河区2"
     }
   ],
-  // 表头数据
   columns: [
     { prop: "name", label: "姓名", minWidth: "100" },
     { prop: "date", label: "日期", minWidth: "180" },

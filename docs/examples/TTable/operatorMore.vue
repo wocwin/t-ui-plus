@@ -9,6 +9,15 @@
         :isShowPagination="false"
       >
         <template #toolbar>
+          <el-radio-group
+            v-model="table.operatorConfig.align"
+            size="small"
+            style="margin-right: 15px"
+          >
+            <el-radio-button value="left">左对齐</el-radio-button>
+            <el-radio-button value="center">居中</el-radio-button>
+            <el-radio-button value="right">右对齐</el-radio-button>
+          </el-radio-group>
           <el-button size="default" type="primary" @click="add">新增</el-button>
         </template>
       </t-table>
@@ -33,7 +42,6 @@ const del = val => {
 // 获取ref
 const selectionTable = ref<any>(null)
 let table = reactive<TableTypes.Table>({
-  // 接口返回数据
   data: [
     {
       id: "1",
@@ -68,7 +76,6 @@ let table = reactive<TableTypes.Table>({
       address: "广东省广州市天广东省广州市天河区2广东省广州市天河区2河区2"
     }
   ],
-  // 表头数据
   columns: [
     { prop: "name", label: "姓名", width: "120" },
     { prop: "date", label: "日期", width: "180" },
@@ -84,7 +91,6 @@ let table = reactive<TableTypes.Table>({
       width: "220"
     }
   ],
-  // 表格内操作列
   operator: [
     {
       text: "查看",
@@ -113,11 +119,11 @@ let table = reactive<TableTypes.Table>({
       }
     }
   ],
-  // 操作列样式
   operatorConfig: {
     dropdownBind: { trigger: "click", btnBind: { type: "danger" } }, // 下拉按钮样式
-    fixed: "right", // 固定列表右边（left则固定在左边）
-    width: 140,
+    fixed: "right",
+    align: "center",
+    width: 180,
     label: "操作"
   }
 })
@@ -133,4 +139,8 @@ const add = () => {
     address: "广东省广州市天广东省广州市天河区2广东省广州市天河区2河区2"
   })
 }
+// const alignChange = val => {
+//   console.log("alignChange", val)
+//   table.operatorConfig.align = val
+// }
 </script>

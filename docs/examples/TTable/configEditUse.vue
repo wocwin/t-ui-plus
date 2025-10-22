@@ -29,6 +29,7 @@ const save = (row: any) => {
   table.columns.map((item: any) => {
     if (item.label == "生产设备") {
       item.canEdit = false
+      item.prop = "equipmentName"  // 保存时使用equipmentName
     }
     if (item.label == "重量") {
       item.canEdit = false
@@ -51,6 +52,7 @@ const cancel = (row: any) => {
   })
   table.columns.map((item: any) => {
     if (item.label == "生产设备") {
+      item.prop = "equipmentName"  // 取消时使用equipmentName
       item.canEdit = false
     }
     if (item.label == "重量") {
@@ -71,6 +73,7 @@ const edit = (row: any) => {
       item.canEdit = true
     }
     if (item.label == "生产设备") {
+      item.prop = "equipmentCode"  // 编辑时使用equipmentCode
       item.canEdit = true
     }
   })
