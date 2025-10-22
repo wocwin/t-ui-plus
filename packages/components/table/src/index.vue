@@ -245,7 +245,7 @@
                 <slot :name="item.slotName" :scope="scope"></slot>
               </template>
               <!-- 单个单元格编辑 -->
-              <template v-if="item.canEdit">
+              <template v-if="typeof item.canEdit == 'function' ? item.canEdit(scope):item.canEdit">
                 <el-form
                   :model="state.tableData[scope.$index]"
                   :rules="isEditRules ? table.rules : {}"

@@ -329,6 +329,18 @@ TTable/configEditUse
 TTable/singleEditKeyup
 :::
 
+### 单元格编辑--canEdit函数形式（复选框选中行开启编辑）
+
+:::demo `canEdit`支持函数形式，函数接收`scope`参数（包含`scope.row`当前行数据、`scope.$index`当前行索引等），返回`Boolean`值控制是否开启编辑。示例：选中某行后，该行的"年龄"和"地址"列可编辑
+TTable/canEditFunction
+:::
+
+### 单元格编辑--canEdit函数高级用法
+
+:::demo `canEdit`函数可以根据行数据的任意字段或组合条件判断是否可编辑。示例包含三种场景：1. 复选框选中行行开启编辑；2. "状态"为"在职"的行，"工资"列可编辑；3. "年龄"大于30的行，"备注"列可编辑
+TTable/canEditFunctionAdvanced
+:::
+
 ### 单元格编辑--使用组件事件
 
 :::demo `eventHandle`继承第三方组件事件，根据第三方组件事件传参，若第三方组件事件`本身有参数`则返回`三`个参数不然就是后`两`个参数：第一个就是本身自己带的参数，第二个是`porp`，第三个是`scope`(`scope.row`)--就是当前行的数据；`scope.$index`就是当前行数
@@ -449,7 +461,7 @@ TTable/expand
 | ----isShowHidden<el-tag type="danger">v1.4.16 deprecated</el-tag> | 是否动态显示隐藏列设置（隐藏/显示列）                                     | Boolean          | false                                      |
 | ----slotNameMerge                                                 | 合并表头插槽显示此列数据（其值是具名作用域插槽）                          | String           | -                                          |
 | ----------scope                                                   | 具名插槽获取此行数据必须用解构接收{scope}.row 是当前行数据 }              | Object           | -                                          |
-| ----canEdit                                                       | 是否开启单元格编辑功能                                                    | Boolean          | false                                      |
+| ----canEdit                                                       | 是否开启单元格编辑功能(function返回值scope)                               | Boolean/function | false                                      |
 | ----isClickEdit<el-tag>1.4.15</el-tag>                            | 是否开启单击-单元格编辑功能                                               | Boolean          | false                                      |
 | ----isShowEditIcon<el-tag>1.4.15</el-tag>                         | 开启单击-单元格编辑后表头是否显示编辑图标                                 | Boolean          | false                                      |
 | ----editIconAlign<el-tag>1.4.15</el-tag>                          | 编辑icon表头的对齐方式(可选值：flex-end、center、flex-start)              | String           | 'center'                                   |
@@ -506,7 +518,7 @@ TTable/expand
 | useVirtual<el-tag>1.4.13</el-tag>                                 | table 是否开启虚拟滚动                                                    | Boolean          | false                                      |
 | virtualShowSize<el-tag>1.4.13</el-tag>                            | 虚拟列表的渲染行数                                                        | Number           | 30                                         |
 | footerBtnAlign<el-tag>1.4.14</el-tag>                             | TTable底部插槽操作布局方式有三个值（`left` `center` `right`）             | String           | 'right'                                    |
-| isEmptyDataRequired<el-tag>2.0.3</el-tag>                          | 空数据时表头是否显示校验红点                                           | Boolean          | false                                      |
+| isEmptyDataRequired<el-tag>2.0.3</el-tag>                         | 空数据时表头是否显示校验红点                                              | Boolean          | false                                      |
 
 ### 3、events 其他事件按照 el-table 直接使用（如 sort-change 排序事件）
 
@@ -535,15 +547,17 @@ TTable/expand
 
 ### 5、Slots 插槽
 
-| 插槽名     | 说明                                                | 参数  |
-| :--------- | :-------------------------------------------------- | :---- |
-| title      | TTable 左侧 Title                                   | -     |
-| titleTip   | TTable 头部 tip                                     | -     |
-| toolbar    | TTable 右侧 toolbar                                 | -     |
-| expand     | table.firstColumn.type：`expand` 展开行插槽         | scope |
-| -          | el-table-column 某列自定义插槽（slotName 命名）     | scope |
-| -          | el-table-column 单元格编辑插槽（editSlotName 命名） | scope |
-| -          | el-table-column 表头合并插槽（slotNameMerge 命名）  | scope |
-| -          | 操作列前一列自定义默认内容插槽                      | -     |
-| footer     | 底部操作区具名插槽需要设置`isShowFooterBtn`         | -     |
-| pagination | 分页器自定义内容 设置文案(table 设置 layout 才生效) | -     |
+| 插槽名     | 说明                                                                                                                                    | 参数  |
+| :--------- | :-------------------------------------------------------------------------------------------------------------------------------------- | :---- |
+| title      | TTable 左侧 Title                                                                                                                       | -     |
+| titleTip   | TTable 头部 tip                                                                                                                         | -     |
+| toolbar    | TTable 右侧 toolbar                                                                                                                     | -     |
+| expand     | table.firstColumn.type：`expand` 展开行插槽                                                                                             | scope |
+| -          | el-table-column 某列自定义插槽（slotName 命名）                                                                                         | scope |
+| -          | el-table-column 单元格编辑插槽（editSlotName 命名）                                                                                     | scope |
+| -          | el-table-column 表头合并插槽（slotNameMerge 命名）                                                                                      | scope |
+| -          | 操作列前一列自定义默认内容插槽                                                                                                          | -     |
+| empty      | 当数据为空时自定义的内容                                                                                                                | -     |
+| append     | 插入至表格最后一行之后的内容， 如果需要对表格的内容进行无限滚动操作，可能需要用到这个 slot。 若表格有合计行，该 slot 会位于合计行之上。 | -     |
+| footer     | 底部操作区具名插槽需要设置`isShowFooterBtn`                                                                                             | -     |
+| pagination | 分页器自定义内容 设置文案(table 设置 layout 才生效)                                                                                     | -     |
