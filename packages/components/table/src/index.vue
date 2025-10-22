@@ -334,8 +334,11 @@
         :tableData="state.tableData"
         :align="align"
       />
-      <template v-for="(_index, name) in slots" v-slot:[name]="data">
-        <slot :name="name" v-bind="data"></slot>
+      <template #append>
+        <slot name="append"></slot>
+      </template>
+      <template #empty>
+        <slot name="empty"></slot>
       </template>
     </el-table>
     <!-- 分页器 -->

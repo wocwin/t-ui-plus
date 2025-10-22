@@ -13,12 +13,24 @@
     class-name="operator"
   >
     <template #default="scope">
-      <div class="operator_btn" :style="table.operatorConfig?.style">
+      <div
+        class="operator_btn"
+        :style="{
+          justifyContent:
+            (table.operatorConfig?.align || align) == 'center'
+              ? 'center'
+              : (table.operatorConfig?.align || align) == 'right'
+              ? 'flex-end'
+              : 'flex-start',
+          ...table.operatorConfig?.style
+        }"
+      >
         <template v-for="(item, index) in table.operator">
           <template v-if="!item.isMore">
             <el-button
               :key="index"
               @click="item.fun && item.fun(scope.row, scope.$index, tableData)"
+              :disabled="item.isDisabled && item.isDisabled(scope.row, item)"
               v-bind="{
                 type: 'primary',
                 link: true,
@@ -26,7 +38,6 @@
                 size: 'small',
                 ...item.bind
               }"
-              :disabled="item.isDisabled && item.isDisabled(scope.row, item)"
               v-if="checkIsShow(scope, item)"
             >
               <template v-if="item.render">
