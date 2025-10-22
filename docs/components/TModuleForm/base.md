@@ -191,8 +191,8 @@ TModuleForm/detailTitleBtn
 | ----type        | form 表单每一项类型                                                                                     | String       | -      |
 | ----widthSize   | form 表单某一项所占比例(如果一行展示可以设值：1)                                                        | Number       | 2      |
 | ----width       | form 表单某一项所占实际宽度                                                                             | String       | -      |
-| ----arrLabel    | type=select-arr/radio/checkbox 时，每个下拉显示的中文                                                                  | String       | label  |
-| ----arrKey      | type=select-arr/radio/checkbox 时，每个下拉显示的中文传后台的数字                                                      | String       | key    |
+| ----arrLabel    | type=select-arr/radio/checkbox 时，每个下拉显示的中文                                                   | String       | label  |
+| ----arrKey      | type=select-arr/radio/checkbox 时，每个下拉显示的中文传后台的数字                                       | String       | key    |
 | ----label       | form 表单每一项 title                                                                                   | String       | -      |
 | ----labelRender | 自定义某一项 title                                                                                      | function     | -      |
 | ----value       | form 表单每一项传给后台的参数                                                                           | String       | -      |
@@ -226,8 +226,9 @@ TModuleForm/detailTitleBtn
 
 ### 4、Methods
 
-| 事件名          | 说明         | 参数                |
-| :-------------- | :----------- | :------------------ |
-| resetFormFields | 重置表单     | -                   |
-| clearValidate   | 清空校验     | -                   |
-| setSelectedTab  | 默认选中 tab | 默认选中 tab 插槽名 |
+| 事件名          | 说明                               | 参数                              |
+| :-------------- | :--------------------------------- | :-------------------------------- |
+| resetFormFields | 重置表单                           | -                                 |
+| clearValidate   | 清空校验                           | -                                 |
+| setSelectedTab  | 默认选中 tab                       | 默认选中 tab 插槽名               |
+| saveHandle      | 点击触发保存事件并返回所有表单数据 | `{ valid: true, formData: form }` |
