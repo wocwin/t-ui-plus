@@ -144,15 +144,15 @@ const dateChange = (val: any[]) => {
     }
     time.value = [startTime, endTime]
     emits("change", [startTime, endTime])
-    DatePicker.value.getElementsByClassName("el-range-input")[0].blur()
-    DatePicker.value.getElementsByClassName("el-range-input")[1].blur()
+    DatePicker.value.getElementsByClassName("el-range-input")[0]?.blur()
+    DatePicker.value.getElementsByClassName("el-range-input")[1]?.blur()
   } else {
     emits("change", val)
     if (props.type.includes("range")) {
-      DatePicker.value.getElementsByClassName("el-range-input")[0].blur()
-      DatePicker.value.getElementsByClassName("el-range-input")[1].blur()
+      DatePicker.value.getElementsByClassName("el-range-input")[0]?.blur()
+      DatePicker.value.getElementsByClassName("el-range-input")[1]?.blur()
     } else {
-      DatePicker.value.getElementsByClassName("el-input__inner")[0].blur()
+      DatePicker.value.getElementsByClassName("el-input__inner")[0]?.blur()
     }
   }
 }
