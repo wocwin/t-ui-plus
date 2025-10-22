@@ -4,7 +4,7 @@
     v-bind="$attrs"
     :label-width="labelWidth"
     :form="queryState.form"
-    :label-position="labelPosition"
+    :labelPosition="labelPosition"
     size="default"
     class="t-query-condition"
     :style="{
@@ -24,8 +24,8 @@
         opt.className,
         {
           render_label: opt.labelRender,
-          render_label_position_left: opt.labelRender && labelPosition === 'left',
-          render_label_position_top: opt.labelRender && labelPosition === 'top'
+          render_label_position_top: labelPosition == 'top' && opt.labelRender,
+          render_label_position_left: labelPosition == 'left' && opt.labelRender
         }
       ]"
     >
@@ -86,7 +86,7 @@
         'btn',
         { flex_end: cellLength % colLength === 0 },
         { btn_flex_end: Object.keys(cOpts).length === 4 || cellLength > 3 },
-        { btn_label_position_top: labelPosition === 'top' }
+        { btn_label_position_top: labelPosition == 'top' }
       ]"
     >
       <template v-if="isFooter">

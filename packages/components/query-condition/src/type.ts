@@ -18,5 +18,5 @@ export interface TQueryConditionProps {
   isDropDownSelectMore?: boolean
   moreCheckList?: any[]
   popoverAttrs?: Record<string, any>
-  labelPosition?: 'right' | 'left' | 'top'
+  labelPosition?: 'top' | 'left' | 'right'
 }

@@ -6,22 +6,20 @@
         <el-radio-button value="right">右对齐</el-radio-button>
         <el-radio-button value="top">顶部对齐</el-radio-button>
       </el-radio-group>
-       <t-query-condition
+      <t-query-condition
         :opts="opts"
         @submit="conditionEnter"
         @handleEvent="handleEvent"
-        :label-position="labelPosition"
-        isShowWidthSize
-        :widthSize="3"
+        :labelPosition="labelPosition"
         isExpansion
       />
     </t-layout-page-item>
   </t-layout-page>
 </template>
 
-<script setup lang="ts">
-import { computed, reactive, toRefs, ref } from 'vue'
-const labelPosition = ref('right')
+<script setup lang="tsx">
+import { computed, reactive, toRefs, ref } from "vue"
+const labelPosition = ref("right")
 let state = reactive({
   queryData: {
     userName: null, // 登录名
@@ -33,12 +31,12 @@ let state = reactive({
   listTypeInfo: {
     sexList: [
       {
-        label: '前纺一车间',
-        key: 'W1'
+        label: "前纺一车间",
+        key: "W1"
       },
       {
-        label: '前纺二车间',
-        key: 'W2'
+        label: "前纺二车间",
+        key: "W2"
       }
     ]
   }
@@ -46,39 +44,42 @@ let state = reactive({
 const opts = computed(() => {
   return {
     userName: {
-      label: '登录名称',
-      comp: 'el-input'
+      label: "登录名称",
+      comp: "el-input"
     },
     phonenumber: {
-      label: '手机号码',
-      comp: 'el-input'
+      labelRender: () => {
+        return <label style="color:red">手机号码</label>
+      },
+      label: "手机号码",
+      comp: "el-input"
     },
     workshopNum: {
-      label: '车间',
-      comp: 'el-select',
-      changeEvent: 'change',
-      type: 'select-arr',
-      list: 'sexList',
+      label: "车间",
+      comp: "el-select",
+      changeEvent: "change",
+      type: "select-arr",
+      list: "sexList",
       listTypeInfo: state.listTypeInfo
     },
     date1: {
-      label: '日期',
-      comp: 'el-date-picker',
+      label: "日期",
+      comp: "el-date-picker",
       bind: {
-        valueFormat: 'YYYY-MM-DD'
+        valueFormat: "YYYY-MM-DD"
       }
     },
     date: {
-      label: '装炉时间',
-      comp: 'el-date-picker',
-      // span: 2,
-      event: 'date',
+      label: "装炉时间",
+      comp: "el-date-picker",
+      span: 2,
+      event: "date",
       bind: {
-        rangeSeparator: '-',
-        startPlaceholder: '开始日期',
-        endPlaceholder: '结束日期',
-        valueFormat: 'YYYY-MM-DD',
-        type: 'daterange'
+        rangeSeparator: "-",
+        startPlaceholder: "开始日期",
+        endPlaceholder: "结束日期",
+        valueFormat: "YYYY-MM-DD",
+        type: "daterange"
       }
     }
   }
@@ -99,8 +100,8 @@ const getQueryData = computed(() => {
 const handleEvent = (type, val) => {
   // console.log(111, type, val)
   switch (type) {
-    case 'date':
-      console.log('获取event==date的数据', val)
+    case "date":
+      console.log("获取event==date的数据", val)
       break
   }
 }
@@ -108,6 +109,6 @@ const handleEvent = (type, val) => {
 const conditionEnter = (data: any) => {
   console.log(1122, data)
   state.queryData = data
-  console.log('最终参数', getQueryData.value)
+  console.log("最终参数", getQueryData.value)
 }
 </script>
