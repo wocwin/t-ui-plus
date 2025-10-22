@@ -96,14 +96,22 @@ const loading = ref(false)
 // 保存按钮配置
 const saveAttrs = computed(() => {
   return {
-    type: "primary",
+    type: "primary" as
+      | "primary"
+      | "default"
+      | "success"
+      | "warning"
+      | "danger"
+      | "info"
+      | "text"
+      | "",
     btnTxt: "保存",
     ...props.btnSaveBind
   }
 })
 // 取消按钮配置
 const cancelAttrs = computed(() => {
-  return { btnTxt: "取消", ...props.btnCancelBind }
+  return { btnTxt: "返回", ...props.btnCancelBind }
 })
 // 获取ref
 const tForm: any = ref<HTMLElement | null>(null)
@@ -112,49 +120,59 @@ const tForm: any = ref<HTMLElement | null>(null)
 const emits = defineEmits(["validateError", "back", "tabsChange"])
 // 点击保存
 const saveHandle = async () => {
-  let form: Record<string, any> = {}
-  let formError: Record<string, any> = {}
-  let formOpts: Record<string, any> = {}
-  let successLength = 0
-  loading.value = true
-  // 过滤非插槽表单
-  Object.keys(attrs.formOpts).forEach(key => {
-    if (attrs.formOpts[key].opts) {
-      formOpts[key] = attrs.formOpts[key]
-    }
-  })
-  Object.keys(formOpts).forEach(async formIndex => {
-    const { valid } = await tForm.value.getChildRef(formIndex).selfValidate()
-    if (valid) {
-      successLength = successLength + 1
-      form[formIndex] = attrs.formOpts[formIndex].opts.formData
-    }
-  })
-  setTimeout(async () => {
-    if (successLength === Object.keys(formOpts).length) {
-      // 所有表单都校验成功
-      const isSuccess = await props.submit(form)
-      if (isSuccess) {
-        // 成功
-        back()
-      }
-    } else {
-      // 校验失败抛出事件
-      Object.keys(formOpts).forEach(key => {
-        if (Object.keys(form).length > 0) {
-          Object.keys(form).map(val => {
-            if (key !== val) {
-              formError[key] = formOpts[key]
-            }
-          })
-        } else {
-          formError[key] = formOpts[key]
+  return new Promise(async (resolve: any, reject: any) => {
+    let form: Record<string, any> = {}
+    let formError: Record<string, any> = {}
+    let formOpts: Record<string, any> = {}
+    let successLength = 0
+    loading.value = true
+    try {
+      // 过滤非插槽表单
+      Object.keys(attrs.formOpts).forEach(key => {
+        if (attrs.formOpts[key].opts) {
+          formOpts[key] = attrs.formOpts[key]
         }
       })
-      emits("validateError", formError)
+      // 校验表单
+      for (const formIndex of Object.keys(formOpts)) {
+        const { valid } = await tForm.value.getChildRef(formIndex).selfValidate()
+        if (valid) {
+          successLength = successLength + 1
+          form[formIndex] = attrs.formOpts[formIndex].opts.formData
+        }
+      }
+      if (successLength === Object.keys(formOpts).length) {
+        // 所有表单都校验成功
+        const isSuccess = await props.submit(form)
+        resolve({ valid: true, formData: form }) // 返回表单数据
+        if (isSuccess) {
+          // 成功
+          back()
+        }
+      } else {
+        // 校验失败抛出事件
+        Object.keys(formOpts).forEach(key => {
+          if (Object.keys(form).length > 0) {
+            Object.keys(form).map(val => {
+              if (key !== val) {
+                formError[key] = formOpts[key]
+              }
+            })
+          } else {
+            formError[key] = formOpts[key]
+          }
+        })
+        reject({ valid: false, error: formError }) // 返回校验失败信息
+        emits("validateError", formError)
+      }
+    } catch (error) {
+      // 捕获异常并抛出校验失败事件
+      emits("validateError", { error })
+      reject({ valid: false, error })
+    } finally {
+      loading.value = false
     }
-    loading.value = false
-  }, 300)
+  })
 }
 // 点击头部返回或者取消
 const back = () => {
