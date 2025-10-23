@@ -36,11 +36,14 @@
   }
 
   .btn_flex_end {
+
+
     .el-form-item__content {
       justify-content: flex-end;
     }
   }
-  .btn_label_position_top{
+
+  .btn_label_position_top {
     display: flex;
     align-items: flex-end;
   }
@@ -74,10 +77,14 @@
       }
     }
   }
-  .render_label_position_left,
-  render_label_position_top {
-    justify-content: flex-start;
+
+  .render_label_position_top,
+  .render_label_position_left {
+    .el-form-item__label {
+      justify-content: flex-start;
+    }
   }
+
   .btn_check {
     position: relative;
     top: -1px;
@@ -122,4 +129,5 @@
       }
     }
   }
+
 }
