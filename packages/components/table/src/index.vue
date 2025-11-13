@@ -84,117 +84,20 @@
           </el-icon>
         </template>
       </el-table-column>
-      <!-- 复选框/单选框/序列号 -->
-      <template v-if="!Array.isArray(table.firstColumn) && table.firstColumn">
-        <!-- 复选框 -->
-        <el-table-column
-          v-if="table.firstColumn.type === 'selection'"
-          v-bind="{
-            type: 'selection',
-            width: table.firstColumn.width || 55,
-            label: table.firstColumn.label,
-            fixed: table.firstColumn.fixed,
-            align: table.firstColumn.align || align,
-            'reserve-selection': table.firstColumn.isPaging || false,
-            selectable: table.firstColumn.selectable,
-            ...table.firstColumn.bind
-          }"
-        />
-        <el-table-column
-          v-else
-          v-bind="{
-            type: table.firstColumn.type,
-            width: table.firstColumn.width || 55,
-            label:
-              table.firstColumn.label ||
-              (table.firstColumn.type === 'radio' && '单选') ||
-              (table.firstColumn.type === 'index' && '序号') ||
-              (table.firstColumn.type === 'expand' && '') ||
-              '',
-            fixed: table.firstColumn.fixed,
-            align: table.firstColumn.align || align,
-            ...table.firstColumn.bind
-          }"
-        >
-          <template #default="scope" v-if="table.firstColumn.type !== 'selection'">
-            <el-radio
-              v-if="table.firstColumn.type === 'radio'"
-              v-model="radioVal"
-              :label="scope.$index + 1"
-              :disabled="scope.row.isRadioDisabled"
-              @click="radioHandleChange(scope.row, scope.$index + 1)"
-            ></el-radio>
-            <template v-if="table.firstColumn.type === 'index'">
-              <span v-if="isPaginationCumulative && isShowPagination">{{
-                (table.currentPage - 1) * table.pageSize + scope.$index + 1
-              }}</span>
-              <span v-else>{{ scope.$index + 1 }}</span>
-            </template>
-            <template v-if="table.firstColumn.type === 'expand'">
-              <slot name="expand" :scope="scope"></slot>
-            </template>
-          </template>
-        </el-table-column>
-      </template>
-      <template v-if="Array.isArray(table.firstColumn)">
-        <template v-for="(item, index) in table.firstColumn">
-          <!-- 复选框 -->
-          <el-table-column
-            :key="index + 1"
-            v-if="item.type === 'selection'"
-            v-bind="{
-              type: 'selection',
-              width: item.width || 55,
-              label: item.label,
-              fixed: item.fixed,
-              align: item.align || align,
-              'reserve-selection': item.isPaging || false,
-              selectable: item.selectable,
-              ...item.bind
-            }"
-          />
-          <el-table-column
-            v-else
-            :key="index + 'k'"
-            v-bind="{
-              type: item.type,
-              width: item.width || 55,
-              label:
-                item.label ||
-                (item.type === 'radio' && '单选') ||
-                (item.type === 'index' && '序号') ||
-                (item.type === 'expand' && '') ||
-                '',
-              fixed: item.fixed,
-              align: item.align || align,
-              ...item.bind
-            }"
-          >
-            <template #default="scope" v-if="item.type !== 'selection'">
-              <el-radio
-                v-if="item.type === 'radio'"
-                v-model="radioVal"
-                :label="scope.$index + 1"
-                :disabled="scope.row.isRadioDisabled"
-                @click="radioHandleChange(scope.row, scope.$index + 1)"
-              ></el-radio>
-              <template v-if="item.type === 'index'">
-                <span v-if="isPaginationCumulative && isShowPagination">{{
-                  (table.currentPage - 1) * table.pageSize + scope.$index + 1
-                }}</span>
-                <span v-else>{{ scope.$index + 1 }}</span>
-              </template>
-              <template v-if="item.type === 'expand'">
-                <slot name="expand" :scope="scope"></slot>
-              </template>
-            </template>
-          </el-table-column>
+      <first-column
+        :table="table"
+        v-model:radioVal="radioVal"
+        :align="align"
+        :isPaginationCumulative="isPaginationCumulative"
+        :isShowPagination="isShowPagination"
+        @radio-change="radioHandleChange"
+      >
+        <template v-for="(_index, name) in slots" v-slot:[name]="data">
+          <slot :name="name" v-bind="data"></slot>
         </template>
-      </template>
-      <!-- 主体内容 -->
+      </first-column>
       <template v-for="(item, index) in renderColumns">
         <template v-if="!item.children">
-          <!-- 常规列 -->
           <el-table-column
             v-if="typeof item.isShowCol == 'function' ? item.isShowCol(item) : !item.isShowCol"
             :key="index + 'i'"
@@ -393,6 +296,7 @@ import ColumnSet from "@t-ui-plus/components/table/src/ColumnSet.vue"
 import RenderCol from "@t-ui-plus/components/table/src/renderCol.vue"
 import Operator from "@t-ui-plus/components/table/src/operator.vue"
 import RenderHeader from "@t-ui-plus/components/table/src/renderHeader.vue"
+import FirstColumn from "@t-ui-plus/components/table/src/firstColumn.vue"
 // 虚拟滚动
 import { useVirtualized } from "./useVirtualized"
 const {
