@@ -57,7 +57,7 @@
         row_sort_none: isRowSortIcon,
         tree_style: isTree,
         highlightCurrentRow: highlightCurrentRow,
-        radioStyle: radioStyleClass,
+        radioStyle: radioStyleClass || props.rowClickCheckbox,
         multile_head_column: isTableHeader,
         t_table_use_virtual: useVirtual
       }"
@@ -697,15 +697,28 @@ const radioHandleChange = (row: any, index: any) => {
   if (props.rowClickRadio) {
     return
   }
+  if (radioVal.value === index) {
+    emits("radioChange", row, index)
+    return
+  }
+
   radioClick(row, index)
 }
 // 点击某行事件
 const rowClick = (row: any) => {
   if (row.isRadioDisabled) return
-  if (!props.rowClickRadio) {
-    return
+  // 单选框点击事件
+  if (props.rowClickRadio) {
+    radioClick(row, state.tableData.indexOf(row) + 1)
+  } else {
+    return false
   }
-  radioClick(row, state.tableData.indexOf(row) + 1)
+  // 多选框点击事件
+  if (props.rowClickCheckbox) {
+    TTable.value.toggleRowSelection(row)
+  } else {
+    return false
+  }
 }
 // 清除单选框选中状态
 const clearRadioHandle = () => {

@@ -89,6 +89,11 @@ TTable/sortable
 TTable/formatter
 :::
 
+### 复选框--点击整行选中 <el-tag>v2.0.5</el-tag>
+
+:::demo 在`t-table`标签中添加`rowClickCheckbox`属性，点击整行选中复选框
+TTable/rowClickCheckbox
+:::
 ### 复选框表格
 
 :::demo 在`table`对象中添加`firstColumn:{ type: 'selection', fixed: true }`
@@ -519,6 +524,7 @@ TTable/expand
 | virtualShowSize<el-tag>1.4.13</el-tag>                            | 虚拟列表的渲染行数                                                        | Number           | 30                                         |
 | footerBtnAlign<el-tag>1.4.14</el-tag>                             | TTable底部插槽操作布局方式有三个值（`left` `center` `right`）             | String           | 'right'                                    |
 | isEmptyDataRequired<el-tag>2.0.3</el-tag>                         | 空数据时表头是否显示校验红点                                              | Boolean          | false                                      |
+| rowClickCheckbox<el-tag>2.0.5</el-tag>                            | 是否开启点击整行选中复选框                                                | Boolean          | false                                      |
 
 ### 3、events 其他事件按照 el-table 直接使用（如 sort-change 排序事件）
 
