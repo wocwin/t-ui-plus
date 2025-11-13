@@ -70,21 +70,6 @@ export function useComputed() {
       }
     }
   })
-  // placeholder的显示
-  const getPlaceholder = (row: any) => {
-    // console.log(77, row)
-    let placeholder
-    if (row.comp && typeof row.comp == "string") {
-      if (row.comp.includes("input")) {
-        placeholder = "请输入" + row.label
-      } else if (row.comp.includes("select") || row.comp.includes("date")) {
-        placeholder = "请选择" + row.label
-      } else {
-        placeholder = row.label
-      }
-    }
-    return placeholder
-  }
   const getColLength = () => {
     // 行列数
     const width = window.innerWidth
@@ -104,7 +89,6 @@ export function useComputed() {
     compChildLabel,
     compChildValue,
     compChildShowLabel,
-    getPlaceholder,
     getColLength
   }
 }

@@ -24,7 +24,7 @@
         v-model="selectChecked"
         @change="selectAll"
         class="all_checkbox"
-        >{{ selectAllTxt }}</el-checkbox
+        >{{ selectAllTxtText }}</el-checkbox
       >
       <el-option
         v-for="(item, index) in mergedOptions"
@@ -59,11 +59,12 @@
 
 <script setup lang="ts">
 import { computed, ref, useSlots, watch, onMounted } from "vue"
+import { useLocale } from "@t-ui-plus/hooks"
 import type { TSelectProps } from "./type"
 defineOptions({
   name: "TSelect"
 })
-
+const { t } = useLocale()
 const props = withDefaults(defineProps<TSelectProps>(), {
   modelValue: undefined,
   multiple: false,
@@ -84,11 +85,12 @@ const props = withDefaults(defineProps<TSelectProps>(), {
   isCached: true,
   isRadioEchoLabel: true,
   radioSelectValLabel: "",
-  selectAllTxt: "全选"
+  selectAllTxt: ""
 })
 const tselectRef = ref()
 const filteredOptionsCount = ref(1)
 const slots = useSlots()
+const selectAllTxtText = computed(() => props.selectAllTxt || t("plus.select.selectAllTxt"))
 // 抛出事件
 const emits = defineEmits(["update:modelValue", "change", "input", "select-input"])
 // vue3 v-model简写

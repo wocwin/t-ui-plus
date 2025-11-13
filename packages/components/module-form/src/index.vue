@@ -69,6 +69,7 @@
 import { ref, useAttrs, useSlots, computed } from "vue"
 import ModuleDetail from "@t-ui-plus/components/module-form/src/moduleDetail.vue"
 import ModuleForm from "@t-ui-plus/components/module-form/src/moduleForm.vue"
+import { useLocale } from "@t-ui-plus/hooks"
 import type { TModuleFormProps } from "./type"
 defineOptions({
   name: "TModuleForm"
@@ -89,7 +90,8 @@ const props = withDefaults(defineProps<TModuleFormProps>(), {
   tabs: () => [],
   submit: async () => false
 })
-const attrs: any = useAttrs()
+const { t } = useLocale()
+const attrs = useAttrs() as Record<string, any>
 const slots = useSlots()
 const activeName = ref(props.tabs && props.tabs[0]?.key)
 const loading = ref(false)
@@ -105,13 +107,13 @@ const saveAttrs = computed(() => {
       | "info"
       | "text"
       | "",
-    btnTxt: "保存",
+    btnTxt: t("plus.moduleForm.save"),
     ...props.btnSaveBind
   }
 })
 // 取消按钮配置
 const cancelAttrs = computed(() => {
-  return { btnTxt: "返回", ...props.btnCancelBind }
+  return { btnTxt: t("plus.moduleForm.back"), ...props.btnCancelBind }
 })
 // 获取ref
 const tForm: any = ref<HTMLElement | null>(null)

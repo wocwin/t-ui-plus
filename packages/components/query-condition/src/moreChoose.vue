@@ -9,17 +9,17 @@
   >
     <div class="inside_box">
       <div class="inside_box_title">
-        <div>{{ popoverAttrsBind.title || "所有条件" }}</div>
+        <div>{{ popoverAttrsBind.title }}</div>
         <div class="check-box">
-          <el-button size="small" link @click="handlecheckAll">{{
-            popoverAttrsBind.allTxt || "全选"
-          }}</el-button>
-          <el-button size="small" link @click="handleReset">{{
-            popoverAttrsBind.clearTxt || "清空"
-          }}</el-button>
-          <el-button size="small" link @click="handleReverseCheck">{{
-            popoverAttrsBind.reverseTxt || "反选"
-          }}</el-button>
+          <el-button size="small" link @click="handlecheckAll">
+            {{ popoverAttrsBind.allTxt }}
+          </el-button>
+          <el-button size="small" link @click="handleReset">
+            {{ popoverAttrsBind.clearTxt }}
+          </el-button>
+          <el-button size="small" link @click="handleReverseCheck">
+            {{ popoverAttrsBind.reverseTxt }}
+          </el-button>
         </div>
       </div>
       <el-checkbox-group v-model="checkList" class="inside_box_main" @change="getcheck">
@@ -33,7 +33,7 @@
     </div>
     <template #reference>
       <div class="more_dropdown_icon">
-        <span class="out_box">{{ popoverAttrsBind.showTxt || "更多" }}</span>
+        <span class="out_box">{{ popoverAttrsBind.showTxt }}</span>
         <el-icon>
           <ArrowDown />
         </el-icon>

@@ -51,6 +51,7 @@
 <script setup lang="ts">
 import { ref, computed, useAttrs } from "vue"
 import * as Icons from "@element-plus/icons-vue"
+import { useLocale } from "@t-ui-plus/hooks"
 defineOptions({
   name: "TSelectIcon"
 })
@@ -68,15 +69,13 @@ const props = withDefaults(defineProps<TSelectIconProps>(), {
   isShowSearch: true,
   isShowIcon: true
 })
-
+const { t } = useLocale()
 const emit = defineEmits(["update:modelValue", "select"])
-// v-model简写
 let valueIcon = computed({
   get() {
     return props.modelValue
   },
   set(val) {
-    // console.log("v-model简写", val);
     emit("update:modelValue", val)
   }
 })
@@ -84,10 +83,10 @@ const $attrs: any = useAttrs()
 const attrs = computed(() => {
   const selectBind = {
     "prefix-icon": customIcons[props.prefixIcon],
-    placeholder: "请选择图标",
-    dialogTitle: "请选择图标",
-    searchPlaceholder: "搜索图标",
-    emptyDescription: "未搜索到您要找的图标",
+    placeholder: t("plus.selectIcon.placeholder"),
+    dialogTitle: t("plus.selectIcon.dialogTitle"),
+    searchPlaceholder: t("plus.selectIcon.searchPlaceholder"),
+    emptyDescription: t("plus.selectIcon.emptyDescription"),
     clearable: true,
     width: "50%",
     ...props.selectBind

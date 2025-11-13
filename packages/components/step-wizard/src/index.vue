@@ -50,7 +50,7 @@
             v-if="!stepData[stepData.length - 1].lastBtnArr"
             type="danger"
             @click="complete"
-            >{{ lastBtnTitle }}</el-button
+            >{{ lastBtnTitleText }}</el-button
           >
           <el-button
             v-else
@@ -68,9 +68,11 @@
 </template>
 
 <script setup lang="ts">
-import { useSlots } from "vue"
+import { useSlots, computed } from "vue"
 import { CircleCheck } from "@element-plus/icons-vue"
 import type { TStepWizardProps } from "./type"
+import { useLocale } from "@t-ui-plus/hooks"
+const { t } = useLocale()
 defineOptions({
   name: "TStepWizard"
 })
@@ -78,11 +80,11 @@ defineOptions({
 const props = withDefaults(defineProps<TStepWizardProps>(), {
   stepData: () => [],
   successTitle: "",
-  lastBtnTitle: "完成",
+  lastBtnTitle: "",
   active: 0,
   isShowLastSuccess: true
 })
-
+const lastBtnTitleText = computed(() => props.lastBtnTitle || t("plus.stepWizard.lastBtnTitle"))
 const slots = useSlots()
 const stepContent = () => {
   return props.isShowLastSuccess

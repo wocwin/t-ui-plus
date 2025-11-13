@@ -1,4 +1,6 @@
 import type { PropType, ExtractPropTypes } from "vue"
+import { useLocale } from "@t-ui-plus/hooks"
+const { t } = useLocale()
 export const tableProps = {
   // table所需数据
   table: {
@@ -65,6 +67,11 @@ export const tableProps = {
     type: Boolean,
     default: true
   },
+  // 是否开启点击整行选中多选框
+  rowClickCheckbox: {
+    type: Boolean,
+    default: false
+  },
   // 设置默认选中项（单选）defaultRadioCol值必须大于0！
   defaultRadioCol: Number,
   // 序列号显示是否分页累加
@@ -117,7 +124,7 @@ export const tableProps = {
   },
   loadingTxt: {
     type: String,
-    default: "加载中..."
+    default: () => t("plus.table.loadingTxt")
   },
   // 是否开启虚拟列表
   useVirtual: Boolean,
@@ -139,7 +146,7 @@ export const tableProps = {
   },
   saveBtnTxt: {
     type: String,
-    default: "保存"
+    default: () => t("plus.table.saveBtnTxt")
   }
 }
 

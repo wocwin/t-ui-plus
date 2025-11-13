@@ -4,7 +4,7 @@
     v-if="table.operator"
     v-bind="{
       fixed: table.operatorConfig?.fixed,
-      label: table.operatorConfig?.label || '操作',
+      label: table.operatorConfig?.label || t('plus.table.operator.label'),
       'min-width': table.operatorConfig?.minWidth,
       width: table.operatorConfig?.width,
       align: table.operatorConfig?.align || align,
@@ -64,7 +64,7 @@
                   ...hasMoreBind.btnBind
                 }"
               >
-                {{ hasMoreBind.btnTxt || "更多" }}
+                {{ hasMoreBind.btnTxt || t("plus.table.operator.more") }}
                 <el-icon v-if="hasMoreBind.isShowArrwIcon">
                   <ArrowDown />
                 </el-icon>
@@ -118,6 +118,8 @@
 import { computed, useAttrs } from "vue"
 import { ArrowDown } from "@element-plus/icons-vue"
 import RenderCol from "@t-ui-plus/components/table/src/renderCol.vue"
+import { useLocale } from "@t-ui-plus/hooks"
+const { t } = useLocale()
 const props = defineProps({
   tableData: {
     type: Array,
@@ -172,16 +174,31 @@ const checkIsShow = (
     isNoshow = true
   }
   // 单独判断
-  let isShow = !item.show || item.show.val.includes(scope.row[item.show.key])
+  // let isShow = !item.show || item.show.val.includes(scope.row[item.show.key])
+  // 多重判断
+  let isShow = true
+  if (Array.isArray(item.show)) {
+    for (const condition of item.show) {
+      if (!condition.val.includes(scope.row[condition.key])) {
+        isShow = false
+        break
+      }
+    }
+  } else if (item.show) {
+    isShow = item.show.val.includes(scope.row[item.show.key])
+  }
   // 按钮权限
   let isPermission = item.hasPermi ? props.btnPermissions?.includes(item.hasPermi) : true
   // table页面合计
   let totalTxt = Object.values(scope.row).every(key => {
-    return key !== "当页合计"
+    return key !== t("plus.table.operator.sum")
   })
   // table页面合计
   let totalTxt1 = Object.values(scope.row).every(key => {
-    return key !== "全部合计"
+    return key !== t("plus.table.operator.allSum")
+  })
+  let totalTxt2 = Object.values(scope.row).every(key => {
+    return key !== t("plus.table.operator.total")
   })
   return (
     isShow &&
@@ -190,6 +207,7 @@ const checkIsShow = (
     (item.isField ? scope.row[item.isField] : true) &&
     totalTxt &&
     totalTxt1 &&
+    totalTxt2 &&
     isPermission
   )
 }
@@ -199,7 +217,7 @@ const hasMoreBind: any = computed(() => {
   const btnBind = { type: "primary", link: true, text: true, size: "small" } // 按钮属性
   const menuBind = {} // 下拉menu属性
   const setBind = {
-    btnTxt: "更多",
+    btnTxt: t("plus.table.operator.more"),
     isShowArrwIcon: true, // 是否显示下拉箭头
     ...menuBind, // 下拉menu属性
     ...btnBind, // 按钮属性

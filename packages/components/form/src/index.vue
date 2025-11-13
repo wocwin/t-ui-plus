@@ -144,8 +144,8 @@
 <script setup lang="ts">
 import RenderComp from "./renderComp.vue"
 import RenderBtn from "./renderBtn.vue"
-import { ElMessage } from "element-plus"
 import { computed, ref, watch, onMounted, getCurrentInstance } from "vue"
+import { useLocale } from "@t-ui-plus/hooks"
 import type { TFormSelfProps as TFormProps } from "./type"
 defineOptions({
   name: "TForm"
@@ -252,6 +252,7 @@ const compChildShowLabel = computed(() => {
 const colSize = ref(props.widthSize)
 // 获取ref
 const tform = ref<HTMLElement | any>(null)
+const { t } = useLocale()
 // 获取实例方法
 const instance = getCurrentInstance() as any
 // 抛出事件
@@ -270,7 +271,6 @@ watch(
   () => props.widthSize,
   val => {
     if (val > 6) {
-      ElMessage.warning("widthSize值不能大于6！")
       colSize.value = 6
     } else {
       colSize.value = val
@@ -317,9 +317,9 @@ const getPlaceholder = (row: any) => {
   let placeholder
   if (row.comp && typeof row.comp == "string") {
     if (row.comp.includes("input")) {
-      placeholder = "请输入" + row.label
+      placeholder = t("plus.form.pleaseEnter") + row.label
     } else if (row.comp.includes("select") || row.comp.includes("date")) {
-      placeholder = "请选择" + row.label
+      placeholder = t("plus.form.pleaseSelect") + row.label
     } else {
       placeholder = row.label
     }

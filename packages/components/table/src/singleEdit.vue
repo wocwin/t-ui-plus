@@ -6,7 +6,7 @@
         class="item"
         v-bind="{
           effect: 'light',
-          content: '单击可编辑',
+          content: t('plus.table.singleEdit.tipText'),
           placement: 'top',
           ...configEdit.tipbind
         }"
@@ -86,8 +86,8 @@
         <div v-if="!$slots.editChild">
           <component
             :is="compChildName(configEdit)"
-            v-for="(value, key, index) in listTypeInfo[configEdit.list]"
-            :key="index"
+            v-for="(value, key) in listTypeInfo[configEdit.list]"
+            :key="key"
             :disabled="value.disabled"
             :label="compChildLabel(configEdit, value)"
             :value="compChildValue(configEdit, value, key)"
@@ -101,6 +101,8 @@
 
 <script setup lang="ts">
 import { computed, nextTick, ref, watch, useSlots } from "vue"
+import { useLocale } from "@t-ui-plus/hooks"
+const { t } = useLocale()
 defineOptions({
   name: "SingleEdit"
 })
@@ -333,9 +335,9 @@ const getPlaceholder = (row: any) => {
   }
   const componentType = row.editComponent.toLowerCase()
   if (componentType.includes("input")) {
-    return "请输入" + row.label
+    return t("plus.table.pleaseEnter") + row.label
   } else if (componentType.includes("select") || componentType.includes("date")) {
-    return "请选择" + row.label
+    return t("plus.table.pleaseSelect") + row.label
   }
   return row.label
 }

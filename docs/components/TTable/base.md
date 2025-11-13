@@ -270,7 +270,7 @@ TTable/isShowColMultileHead
 
 ### 表格操作按钮
 
-:::demo `operator数组`：`operator 数组`是显示按钮数且点击后将当前行数据传出；`operatorConfig` 对象是操作列样式（可以设置宽度/列标题及是否固定在最左/右侧）；按钮的颜色是以 `ElementUI` 内置 `button` 的 `type` 为准；隐藏按钮——`noshow`:多种状态控制按钮的显示与隐藏；例如：`noshow:[{key:'fields',val:'isHasVal'},{key:'status',val:[0,1,99]},{key:'channelCode',val:['bank']}]`；注释： `noshow` 中的 `key` 值(fields/status/channelCode)是表格后台返回的字段； 当 `val` 等于字符串'isHasVal'时,字段'fields'返回为空时，此行操作按钮隐藏； `以上综合：`当'status'为 0/1/99 并且'channelCode'为'bank'及'fields'为空时；`show: { key: 'status', val: [3,4] }`表 status 值为 3 或者 4 时，显示此操作健 根据后台字段返回是数字还是字符串来显示
+:::demo `operator数组`：`operator 数组`是显示按钮数且点击后将当前行数据传出；`operatorConfig` 对象是操作列样式（可以设置宽度/列标题及是否固定在最左/右侧）；按钮的颜色是以 `ElementUI` 内置 `button` 的 `type` 为准；动态隐藏按钮——`noshow`:多种状态控制按钮的显示与隐藏；例如：`noshow:[{key:'fields',val:'isHasVal'},{key:'status',val:[0,1,99]},{key:'channelCode',val:['bank']}]`；注释： `noshow` 中的 `key` 值(fields/status/channelCode)是表格后台返回的字段； 当 `val` 等于字符串'isHasVal'时,字段'fields'返回为空时，此行操作按钮隐藏； `以上综合：`当'status'为 0/1/99 并且'channelCode'为'bank'及'fields'为空时；`show: { key: 'status', val: [3,4] }`表 status 值为 3 或者 4 时，显示此操作健 根据后台字段返回是数字还是字符串来显示，`show`同时可以设置多个条件，如示例当`status`为1并且`id`为`1`时显示`编辑按钮`.。
 TTable/operator
 :::
 
@@ -430,7 +430,7 @@ TTable/expand
 | ---toolbar                                                        | 表格外操作栏选中表格某行，可以将其数据传出                                | Array            | []                                         |
 | ---operator                                                       | 表格内操作栏数据                                                          | Array            | []                                         |
 | -------hasPermi                                                   | 表格内操作栏按钮权限资源（必须传`btnPermissions`属性才生效）              | String           | -                                          |
-| -------show                                                       | 表格内操作栏根据状态显示                                                  | Object           | -                                          |
+| -------show                                                       | 表格内操作栏根据状态显示(数组时：同时满足条件才显示)                      | Object/Array     | -                                          |
 | -------render                                                     | render 函数渲染使用的 Function(val) 可以用 tsx 方式                       | Function         | -                                          |
 | -------noshow                                                     | 表格内操作栏根据多种状态不显示                                            | Array            | -                                          |
 | -------bind                                                       | 继承 el-button 所有 Attributes                                            | Object           | -                                          |

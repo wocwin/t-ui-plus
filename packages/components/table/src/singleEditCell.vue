@@ -89,6 +89,8 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from "vue"
+import { useLocale } from "@t-ui-plus/hooks"
+const { t } = useLocale()
 defineOptions({
   name: "SingleEditCell"
 })
@@ -290,9 +292,9 @@ const getPlaceholder = (row: any) => {
   }
   const componentType = row.editComponent.toLowerCase()
   if (componentType.includes("input")) {
-    return "请输入" + row.label
+    return t("plus.table.pleaseEnter") + row.label
   } else if (componentType.includes("select") || componentType.includes("date")) {
-    return "请选择" + row.label
+    return t("plus.table.pleaseSelect") + row.label
   }
   return row.label
 }

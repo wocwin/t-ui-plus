@@ -9,16 +9,16 @@ import consola from "consola"
 import { nodeResolve } from "@rollup/plugin-node-resolve"
 import commonjs from "@rollup/plugin-commonjs"
 import esbuild, { minify as minifyPlugin } from "rollup-plugin-esbuild"
-// import glob from 'fast-glob'
-// import { camelCase, upperFirst } from 'lodash'
-// import { pcOutput, pcRoot, projPackage, localesRoot } from '../utils/paths'
-import { pcOutput, pcRoot, projPackage } from "../utils/paths"
+import glob from 'fast-glob'
+import { camelCase, upperFirst } from 'lodash'
+import { pcOutput, pcRoot, projPackage, localesRoot } from '../utils/paths'
+// import { pcOutput, pcRoot, projPackage } from "../utils/paths"
 import {
   writeBundles,
   formatBundleFilename,
   PKG_CAMEL_CASE_NAME,
   PKG_NAME,
-  // PKG_CAMEL_CASE_LOCAL_NAME,
+  PKG_CAMEL_CASE_LOCAL_NAME,
   target
 } from "../utils"
 import { external } from "../utils/main"
@@ -103,50 +103,50 @@ const buildAll = async (minify?: boolean) => {
   consola.success(msg)
 }
 
-// async function buildLocale(minify: boolean) {
-//   const files = await glob(`**/*.ts`, {
-//     cwd: resolve(localesRoot, 'lang'),
-//     absolute: true
-//   })
-//   return Promise.all(
-//     files.map(async file => {
-//       const filename = basename(file, '.ts')
-//       const name = upperFirst(camelCase(filename))
+async function buildLocale(minify: boolean) {
+  const files = await glob(`**/*.ts`, {
+    cwd: resolve(localesRoot, 'lang'),
+    absolute: true
+  })
+  return Promise.all(
+    files.map(async file => {
+      const filename = basename(file, '.ts')
+      const name = upperFirst(camelCase(filename))
 
-//       const bundle = await rollup({
-//         input: file,
-//         plugins: [
-//           esbuild({
-//             minify,
-//             sourceMap: false,
-//             target
-//           })
-//         ]
-//       })
-//       await writeBundles(bundle, [
-//         {
-//           format: 'umd',
-//           file: resolve(pcOutput, 'locale', formatBundleFilename(filename, minify, 'js')),
-//           exports: 'default',
-//           name: `${PKG_CAMEL_CASE_LOCAL_NAME}${name}`,
-//           sourcemap: false,
-//           banner
-//         },
-//         {
-//           format: 'esm',
-//           file: resolve(pcOutput, 'locale', formatBundleFilename(filename, minify, 'mjs')),
-//           sourcemap: false,
-//           banner
-//         }
-//       ])
-//     })
-//   ).then(() => {
-//     const msg = minify ? 'Successfully build compressed locale!' : 'Successfully build into locale!'
-//     consola.success(msg)
-//   })
-// }
+      const bundle = await rollup({
+        input: file,
+        plugins: [
+          esbuild({
+            minify,
+            sourceMap: false,
+            target
+          })
+        ]
+      })
+      await writeBundles(bundle, [
+        {
+          format: 'umd',
+          file: resolve(pcOutput, 'locale', formatBundleFilename(filename, minify, 'js')),
+          exports: 'default',
+          name: `${PKG_CAMEL_CASE_LOCAL_NAME}${name}`,
+          sourcemap: false,
+          banner
+        },
+        {
+          format: 'esm',
+          file: resolve(pcOutput, 'locale', formatBundleFilename(filename, minify, 'mjs')),
+          sourcemap: false,
+          banner
+        }
+      ])
+    })
+  ).then(() => {
+    const msg = minify ? 'Successfully build compressed locale!' : 'Successfully build into locale!'
+    consola.success(msg)
+  })
+}
 
-// const task = [buildAll(false), buildAll(true), buildLocale(false), buildLocale(true)]
-const task = [buildAll(false), buildAll(true)]
+const task = [buildAll(false), buildAll(true), buildLocale(false), buildLocale(true)]
+// const task = [buildAll(false), buildAll(true)]
 
 export default task

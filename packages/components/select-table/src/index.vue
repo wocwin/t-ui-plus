@@ -44,8 +44,8 @@
               <slot :name="name" v-bind="data"></slot>
             </template>
             <template #querybar v-if="isShowBlurBtn">
-              <el-button v-bind="{ type: 'danger', ...btnBind }" @click="blur">
-                {{ btnBind.btnTxt || "关闭下拉框" }}
+              <el-button v-bind="{ type: 'danger', ...computedBtnBind }" @click="blur">
+                {{ computedBtnBind.btnTxt }}
               </el-button>
               <slot name="querybar"></slot>
             </template>
@@ -54,7 +54,7 @@
         <div class="header_wrap" :style="{ paddingBottom: isShowSlot('toolbar') ? '10px' : 0 }">
           <slot name="toolbar"></slot>
         </div>
-        <div class="table_content" v-loading="tableLoading" :element-loading-text="loadingTxt">
+        <div class="table_content" v-loading="tableLoading" :element-loading-text="computedLoadingTxt">
           <el-table
             ref="selectTable"
             :data="state.tableData"
@@ -84,7 +84,7 @@
             <el-table-column
               type="radio"
               :width="tableSize === 'large' ? 65 : 55"
-              :label="radioTxt"
+              :label="computedRadioTxt"
               :fixed="radioFixed"
               :align="align || 'center'"
               v-if="!multiple && isShowFirstRadio"
@@ -111,7 +111,6 @@
               v-bind="{ 'show-overflow-tooltip': true, ...item.bind }"
             >
               <template #default="scope">
-                <!-- render方式 -->
                 <template v-if="item.render">
                   <render-col
                     :column="item"
@@ -120,7 +119,6 @@
                     :index="scope.$index"
                   />
                 </template>
-                <!-- 作用域插槽 -->
                 <template v-if="item.slotName">
                   <slot :name="item.slotName" :scope="scope"></slot>
                 </template>
@@ -169,6 +167,8 @@ import { ElMessage } from "element-plus"
 import ClickOutside from "./ClickOutside"
 // 虚拟滚动
 import { useVirtualized } from "./useVirtualized"
+import { useLocale } from "@t-ui-plus/hooks"
+const { t } = useLocale()
 const {
   scrollContainerEl,
   updateRenderedItemCache,
@@ -206,12 +206,12 @@ const props = withDefaults(defineProps<TSelectTableProps>(), {
   tableWidth: 550,
   isShowQuery: false,
   isShowBlurBtn: false,
-  btnBind: () => ({ btnTxt: "关闭下拉框" }),
+  btnBind: () => ({ btnTxt: "" }),
   align: "center",
   reserveSelection: true,
   selectable: undefined,
   multipleFixed: true,
-  radioTxt: "单选",
+  radioTxt: "",
   radioFixed: true,
   tableSize: "default",
   border: true,
@@ -230,7 +230,7 @@ const props = withDefaults(defineProps<TSelectTableProps>(), {
   isExpanded: false,
   multipleDisableDelete: true,
   tableLoading: false,
-  loadingTxt: "加载中..."
+  loadingTxt: ""
 })
 defineOptions({
   name: "TSelectTable"
@@ -284,6 +284,17 @@ const state = reactive<InitState>({
   ids: [], // 多选id集合
   tabularMap: {} // 存储下拉tale的所有name
 })
+// 国际化文本计算属性
+const computedBtnBind = computed(() => {
+  return props.btnBind.btnTxt ? props.btnBind : { btnTxt: t("plus.selectTable.searchBtnTxt") }
+})
+const computedRadioTxt = computed(() => {
+  return props.radioTxt || t("plus.selectTable.radioTxt")
+})
+const computedLoadingTxt = computed(() => {
+  return props.loadingTxt || t("plus.selectTable.loadingTxt")
+})
+
 // 获取ref
 const selectRef = ref<HTMLElement | any>(null)
 const selectTable = ref<HTMLElement | any>(null)
@@ -677,18 +688,13 @@ const initTableData = () => {
 const copyToClipboard = async (text: any) => {
   // 确保传入的内容是字符串类型
   if (typeof text !== "string" || text.trim() === "") {
-    throw new Error("无效的复制内容")
+    throw new Error(t("plus.copy.invalidCopyContent"))
   }
   try {
     // 使用现代剪贴板 API 进行复制
     await navigator.clipboard.writeText(text)
   } catch (error) {
-    // 捕获并抛出具体的错误信息
-    if ((error as any).name === "NotAllowedError" || (error as any).name === "SecurityError") {
-      throw new Error("复制失败：权限被拒绝")
-    } else {
-      throw new Error("复制失败：浏览器不支持或发生未知错误")
-    }
+    throw new Error(t("plus.copy.copyFail"))
   }
 }
 
@@ -707,10 +713,10 @@ const cellDblclick = async (row: { [x: string]: any }, column: { property: strin
   try {
     // 调用复制函数
     await copyToClipboard(String(value)) // 确保值转换为字符串
-    showMessage("success", "复制成功")
+    showMessage("success", t("plus.copy.copySuccess"))
   } catch (error: any) {
     // 捕获并显示错误信息
-    showMessage("error", error.message || "复制失败")
+    showMessage("error", error.message || t("plus.copy.copyFail"))
   }
 }
 // 点击单选框单元格触发事件
@@ -777,7 +783,7 @@ const removeTag = (tag: any) => {
   const row = state.tableData.find(
     (item: { [x: string]: any }) => item[props.keywords.label] === tag
   )
-  console.log("tags删除后回调", row)
+  // console.log("tags删除后回调", row)
   row && selectTable.value.toggleRowSelection(row, false)
   isDefaultSelectVal.value = true
 }

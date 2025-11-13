@@ -24,13 +24,11 @@
         </template>
       </div>
       <div class="toolbar_top">
-        <!-- 表格外操作 -->
         <slot name="toolbar"></slot>
-        <!--列设置按钮-->
         <div
           class="header_right_wrap"
           :style="{
-            marginLeft: isShow('toolbar') || isSlotToolbar ? '12px' : 0
+            marginLeft: isShow('toolbar') || isSlotToolbar ? '10px' : 0
           }"
         >
           <slot name="btn" />
@@ -72,7 +70,7 @@
         v-bind="{
           width: rowSortIconBind.width || 55,
           'min-width': rowSortIconBind['min-width'] || rowSortIconBind.minWidth,
-          label: rowSortIconBind.label || '拖动',
+          label: rowSortIconBind.label || t('plus.table.dragTxt'),
           fixed: rowSortIconBind.fixed,
           align: rowSortIconBind.align || align,
           ...rowSortIconBind
@@ -148,7 +146,9 @@
                 <slot :name="item.slotName" :scope="scope"></slot>
               </template>
               <!-- 单个单元格编辑 -->
-              <template v-if="typeof item.canEdit == 'function' ? item.canEdit(scope):item.canEdit">
+              <template
+                v-if="typeof item.canEdit == 'function' ? item.canEdit(scope) : item.canEdit"
+              >
                 <el-form
                   :model="state.tableData[scope.$index]"
                   :rules="isEditRules ? table.rules : {}"
@@ -261,7 +261,6 @@
     >
       <slot name="pagination"></slot>
     </el-pagination>
-    <!-- 表格底部按钮 -->
     <footer
       class="handle_wrap"
       :style="{ textAlign: footerBtnAlign as any }"
@@ -326,6 +325,8 @@ const {
 } = useExpose()
 import { tableProps } from "./tableProps"
 const props = defineProps(tableProps)
+import { useLocale } from "@t-ui-plus/hooks"
+const { t } = useLocale()
 defineOptions({
   name: "TTable"
 })
@@ -633,18 +634,13 @@ const clearRadioHandle = () => {
 const copyToClipboard = async (text: any) => {
   // 确保传入的内容是字符串类型
   if (typeof text !== "string" || text.trim() === "") {
-    throw new Error("无效的复制内容")
+    throw new Error(t("plus.copy.invalidCopyContent"))
   }
   try {
     // 使用现代剪贴板 API 进行复制
     await navigator.clipboard.writeText(text)
   } catch (error) {
-    // 捕获并抛出具体的错误信息
-    if ((error as any).name === "NotAllowedError" || (error as any).name === "SecurityError") {
-      throw new Error("复制失败：权限被拒绝")
-    } else {
-      throw new Error("复制失败：浏览器不支持或发生未知错误")
-    }
+    throw new Error(t("plus.copy.copyFail"))
   }
 }
 
@@ -666,95 +662,16 @@ const cellDblclick = async (row: { [x: string]: any }, column: { property: strin
   try {
     // 调用复制函数
     await copyToClipboard(String(value)) // 确保值转换为字符串
-    showMessage("success", "复制成功")
+    showMessage("success", t("plus.copy.copySuccess"))
   } catch (error: any) {
     // 捕获并显示错误信息
-    showMessage("error", error.message || "复制失败")
+    showMessage("error", error.message || t("plus.copy.copyFail"))
   }
 }
 // 判断是否使用了某个插槽
 const isShow = (name: string) => {
   return Object.keys(slots).includes(name)
 }
-
-// 整行编辑返回数据
-// const save = () => {
-//   if (!isEditRules.value) {
-//     emits("save", state.tableData)
-//     return
-//   }
-//   // 表单规则校验
-//   let successLength = 0
-//   let rulesList: string[] = []
-//   let rulesError: (string | number)[] = []
-//   let propError: string[] = []
-//   let propLabelError = [] as any
-//   // 获取所有的form ref
-//   const refList = Object.keys(formRef.value).filter(item => item.includes("formRef"))
-//   // 获取单独设置规则项
-//   const arr = renderColumns.value
-//     .filter((val: { configEdit: { rules: any } }) => {
-//       if (val.configEdit?.rules) {
-//         return val
-//       }
-//     })
-//     .map((item: { prop: any }) => item.prop)
-//   // 获取整体设置规则
-//   const arr1 = (props.table.rules && Object.keys(props.table.rules)) ?? []
-//   // 获取最终设置了哪些规则（其值是设置的--prop）
-//   const newArr = [...arr, ...arr1]
-//   // 最终需要校验的ref
-//   newArr.map(val => {
-//     refList.map((item: any) => {
-//       if (typeof item === "string" && item.includes(val)) {
-//         rulesList.push(item)
-//       }
-//     })
-//   })
-//   // console.log('最终需要校验的数据', rulesList, formRef.value)
-//   // 表单都校验
-//   rulesList.map((val: string | number) => {
-//     formRef.value[val].validate((valid: boolean) => {
-//       if (valid) {
-//         successLength = successLength + 1
-//       } else {
-//         rulesError.push(val)
-//       }
-//     })
-//   })
-//   setTimeout(() => {
-//     // 所有表单都校验成功
-//     if (successLength == rulesList.length) {
-//       if (isEditRules.value) {
-//         console.log("所有表单都校验成功--", state.tableData)
-//         if (props.isSelfSave) {
-//           return state.tableData
-//         } else {
-//           emits("save", state.tableData)
-//         }
-//       }
-//     } else {
-//       // 校验未通过的prop
-//       rulesError.map(item => {
-//         newArr.map(val => {
-//           if (typeof item === "string" && item.includes(val)) {
-//             propError.push(val)
-//           }
-//         })
-//       })
-//       // 去重获取校验未通过的prop--label
-//       Array.from(new Set(propError)).map(item => {
-//         renderColumns.value.map((val: { prop: string; label: string }) => {
-//           if (item === val.prop) {
-//             propLabelError.push(val.label)
-//           }
-//         })
-//       })
-//       console.log("校验未通过的prop--label", propLabelError)
-//       emits("validateError", propLabelError)
-//     }
-//   }, 300)
-// }
 const save = (): Promise<any> => {
   return new Promise(resolve => {
     if (!isEditRules.value) {
@@ -833,8 +750,7 @@ const save = (): Promise<any> => {
             }
           })
         })
-
-        console.log("校验未通过的prop--label", propLabelError)
+        // console.log("校验未通过的prop--label", propLabelError)
         emits("validateError", propLabelError)
       }
     }, 300)
@@ -920,7 +836,7 @@ const saveMethod = (callback: (arg0: any) => any) => {
           }
         })
       })
-      console.log("校验未通过的prop--label", propLabelError)
+      // console.log("校验未通过的prop--label", propLabelError)
       emits("validateError", propLabelError)
     }
   }, 300)

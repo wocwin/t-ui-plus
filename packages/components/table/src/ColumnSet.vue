@@ -1,8 +1,8 @@
 <template>
   <el-dropdown trigger="click" popper-class="column_set">
-    <el-button v-bind="columnBind">{{ columnBind.btnTxt || "列设置" }}</el-button>
+    <el-button v-bind="columnBind">{{ columnBind.btnTxt }}</el-button>
     <template #dropdown>
-      <div class="title" v-if="columnBind.isShowTitle">{{ columnBind.title || "列设置" }}</div>
+      <div class="title" v-if="columnBind.isShowTitle">{{ columnBind.title }}</div>
       <el-dropdown-menu>
         <el-dropdown-item :divided="columnBind.isShowTitle">
           <el-tree
@@ -30,6 +30,8 @@
 
 <script setup lang="ts">
 import { watch, onMounted, reactive, computed, useAttrs, ref } from "vue"
+import { useLocale } from "@t-ui-plus/hooks"
+const { t } = useLocale()
 defineOptions({
   name: "ColumnSet"
 })
@@ -56,7 +58,11 @@ const props = withDefaults(defineProps<ColumnSetProps>(), {
 const treeRef = ref()
 const $attrs: any = useAttrs()
 const columnBind = computed(() => {
-  const columnSetBind = { btnTxt: "列设置", title: "列设置", ...props.columnSetBind }
+  const columnSetBind = {
+    btnTxt: t("plus.table.columnBind.btnTxt"),
+    title: t("plus.table.columnBind.title"),
+    ...props.columnSetBind
+  }
   return { size: "default", icon: "Setting", isShowTitle: true, ...$attrs, ...columnSetBind }
 })
 

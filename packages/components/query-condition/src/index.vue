@@ -108,7 +108,7 @@
             @click="open = !open"
             link
           >
-            {{ open ? packUpTxt : unfoldTxt }}
+            {{ open ? packUpTxtText : unfoldTxtText }}
             <el-icon v-if="open">
               <ArrowUp />
             </el-icon>
@@ -135,16 +135,16 @@ import { computed, ref, watch, useSlots, onMounted, reactive } from "vue"
 import { ArrowUp, ArrowDown } from "@element-plus/icons-vue"
 import type { TQueryConditionProps } from "./type"
 import { useComputed } from "./useComputed"
+import { useLocale } from "@t-ui-plus/hooks"
 const {
   compChildName,
   selectListType,
   compChildLabel,
   compChildValue,
   compChildShowLabel,
-  getPlaceholder,
   getColLength
 } = useComputed()
-
+const { t } = useLocale()
 const props = withDefaults(defineProps<TQueryConditionProps>(), {
   opts: () => ({}),
   labelWidth: "120px",
@@ -156,8 +156,9 @@ const props = withDefaults(defineProps<TQueryConditionProps>(), {
   isShowOpen: true,
   isExpansion: false,
   maxVisibleRows: 1,
-  packUpTxt: "收起",
-  unfoldTxt: "展开",
+  // 不在模块顶层调用 t(...)，否则在构建/SSR 阶段会导致错误
+  packUpTxt: "",
+  unfoldTxt: "",
   isFooter: true,
   configChangedReset: false,
   isShowWidthSize: false,
@@ -177,11 +178,11 @@ const isShow = (name: string) => {
 }
 const popoverAttrsBind = computed(() => {
   return {
-    showTxt: "更多",
-    title: "所有条件",
-    allTxt: "全选",
-    reverseTxt: "反选",
-    clearTxt: "清空",
+    showTxt: t("plus.search.popoverAttrs.showTxt"),
+    title: t("plus.search.popoverAttrs.title"),
+    allTxt: t("plus.search.popoverAttrs.allTxt"),
+    reverseTxt: t("plus.search.popoverAttrs.reverseTxt"),
+    clearTxt: t("plus.search.popoverAttrs.clearTxt"),
     ...props.popoverAttrs
   }
 })
@@ -196,17 +197,31 @@ let colLength = ref(4)
 let showOpen = ref(false)
 
 let open = ref(false)
-
+// placeholder的显示
+const getPlaceholder = (row: any) => {
+  // console.log(77, row)
+  let placeholder
+  if (row.comp && typeof row.comp == "string") {
+    if (row.comp.includes("input")) {
+      placeholder = t("plus.search.pleaseEnter") + row.label
+    } else if (row.comp.includes("select") || row.comp.includes("date")) {
+      placeholder = t("plus.search.pleaseSelect") + row.label
+    } else {
+      placeholder = row.label
+    }
+  }
+  return placeholder
+}
 // 查询按钮配置
 const queryAttrs = computed(() => {
   return {
-    btnTxt: "查询",
+    btnTxt: t("plus.search.searchText"),
     ...props.btnCheckBind
   }
 })
 // 重置按钮配置
 const resetAttrs = computed(() => {
-  return { btnTxt: "重置", ...props.btnResetBind }
+  return { btnTxt: t("plus.search.resetText"), ...props.btnResetBind }
 })
 const originCellLength = computed(() => {
   let length = 0
@@ -281,6 +296,9 @@ const gridAreas = computed(() => {
     return acc
   }, "")
 })
+
+const packUpTxtText = computed(() => props.packUpTxt || t("plus.search.retract"))
+const unfoldTxtText = computed(() => props.unfoldTxt || t("plus.search.expand"))
 // 引用第三方事件
 const cEvent = computed(() => {
   return (opt: { eventHandle: any; comp: string | string[] }) => {

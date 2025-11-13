@@ -77,7 +77,7 @@ export default defineConfig({
       },
       {
         text: `v${pkg.version}`,
-        items:[
+        items: [
           {
             text: "版本升级",
             link: "/guide/upgrade"
@@ -96,12 +96,17 @@ export default defineConfig({
     sidebar: {
       "/guide/": [
         {
-          text: "安装指南",
+          text: "简介",
           items: [
             {
               text: "简介",
               link: "/guide/index"
-            },
+            }
+          ]
+        },
+        {
+          text: "基础",
+          items: [
             {
               text: "安装",
               link: "/guide/installation"
@@ -109,6 +114,19 @@ export default defineConfig({
             {
               text: "快速开始",
               link: "/guide/quickstart"
+            }
+          ]
+        },
+        {
+          text: "进阶",
+          items: [
+            {
+              text: "国际化",
+              link: "/guide/i18n"
+            },
+            {
+              text: "版本升级",
+              link: "/guide/upgrade"
             },
             {
               text: "Resolver按需引入",

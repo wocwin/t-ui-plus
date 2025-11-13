@@ -32,9 +32,9 @@ const copyDts = async () => {
   /**
    * copy lang dts
    */
-  // const lang = resolve(src, 'locale', 'lang')
-  // const targetLocale = resolve(pcOutput, 'locale')
-  // await copy(lang, targetLocale)
+  const lang = resolve(src, 'locale', 'lang')
+  const targetLocale = resolve(pcOutput, 'locale')
+  await copy(lang, targetLocale)
 }
 
 const updateVersion = async () => {

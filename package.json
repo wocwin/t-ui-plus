@@ -40,6 +40,8 @@
     "@t-ui-plus/eslint-config": "workspace:*",
     "@t-ui-plus/resolver": "workspace:*",
     "@t-ui-plus/theme-chalk": "workspace:*",
+    "@t-ui-plus/hooks": "workspace:*",
+    "@t-ui-plus/locale": "workspace:*",
     "@t-ui-plus/types": "workspace:*",
     "@t-ui-plus/utils": "workspace:*",
     "dayjs": "^1.11.7",

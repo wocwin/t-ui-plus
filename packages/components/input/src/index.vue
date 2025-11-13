@@ -6,21 +6,21 @@
     </template>
     <el-input
       v-model="internalValue"
-      v-bind="{ placeholder, clearable: true, ...$attrs }"
+      v-bind="{ placeholder: placeholderText, clearable: true, ...$attrs }"
       @blur="handleBlur"
     >
       <template v-for="(_index, name) in slots" v-slot:[name]="data">
         <slot :name="name" v-bind="data" />
       </template>
       <template #append v-if="$slots.append || inputType === 'amount'">
-        <span v-if="inputType === 'amount'">{{ appendTitle }}</span>
+        <span v-if="inputType === 'amount'">{{ appendTitleText }}</span>
         <slot v-else name="append" />
       </template>
     </el-input>
   </el-tooltip>
   <el-input
     v-model="internalValue"
-    v-bind="{ placeholder, clearable: true, ...$attrs }"
+    v-bind="{ placeholder: placeholderText, clearable: true, ...$attrs }"
     @blur="handleBlur"
     v-else
   >
@@ -28,7 +28,7 @@
       <slot :name="name" v-bind="data" />
     </template>
     <template #append v-if="$slots.append || inputType === 'amount'">
-      <span v-if="inputType === 'amount'">{{ appendTitle }}</span>
+      <span v-if="inputType === 'amount'">{{ appendTitleText }}</span>
       <slot v-else name="append" />
     </template>
   </el-input>
@@ -37,18 +37,19 @@
 <script setup lang="ts">
 import { ElMessage } from "element-plus"
 import { computed, useSlots } from "vue"
+import { useLocale } from "@t-ui-plus/hooks"
 import type { TInputSelfProps as TInputProps } from "./type"
 
 defineOptions({
   name: "TInput"
 })
-
+const { t } = useLocale()
 const props = withDefaults(defineProps<TInputProps>(), {
   modelValue: "",
-  placeholder: "请输入",
+  placeholder: "",
   decimalLimit: 2,
   inputType: "text",
-  appendTitle: "元",
+  appendTitle: "",
   showThousands: false,
   isTip: false,
   isShowErrorTip: true
@@ -67,6 +68,10 @@ let internalValue = computed({
     emits("update:modelValue", val)
   }
 })
+
+// 运行时根据 props 或者国际化文本计算最终显示文案，避免在模块初始化时调用 t()
+const placeholderText = computed(() => props.placeholder || t("plus.input.placeholder"))
+const appendTitleText = computed(() => props.appendTitle || t("plus.input.appendTitle"))
 
 const handleBlur = () => {
   let formattedValue = internalValue.value
@@ -107,7 +112,7 @@ const validatePhone = (value: string) => {
   if (phoneReg.test(value)) {
     return value
   } else {
-    props.isShowErrorTip && ElMessage.error("请输入正确的手机号码")
+    props.isShowErrorTip && ElMessage.error(t("plus.input.validatePhone"))
     return ""
   }
 }
@@ -117,7 +122,7 @@ const validateIdCard = (value: string) => {
   if (idCardReg.test(value)) {
     return value
   } else {
-    props.isShowErrorTip && ElMessage.error("请输入正确的身份证号码")
+    props.isShowErrorTip && ElMessage.error(t("plus.input.validateIdCard"))
     return ""
   }
 }
@@ -127,7 +132,7 @@ const validateInteger = (value: string) => {
   if (integerReg.test(value)) {
     return value
   } else {
-    props.isShowErrorTip && ElMessage.error("请输入正确的整数")
+    props.isShowErrorTip && ElMessage.error(t("plus.input.validateInteger"))
     return ""
   }
 }
@@ -135,7 +140,10 @@ const validateInteger = (value: string) => {
 const formatAmount = (value: number, decimalLimit: number) => {
   if (!value) {
     props.isShowErrorTip &&
-      ElMessage.error(`请输入正确的${props.inputType == "amount" ? "金额" : "数字"}`)
+      ElMessage.error(
+        t("plus.input.format") +
+          (props.inputType == "amount" ? t("plus.input.amount") : t("plus.input.numbers"))
+      )
     return ""
   }
   // 格式化千分号
@@ -181,7 +189,7 @@ const currencyFilter = (num: any, n: number = 2) => {
 const digitUppercase = (num: any) => {
   const reg = /((^[1-9]\d*)|^0)(\.\d{0,2}){0,1}$/
   if (!reg.test(num)) {
-    return "请输入正确的金额格式"
+    return t("plus.input.digitUppercase")
   } else {
     let fraction = ["角", "分"]
     let digit = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"]
