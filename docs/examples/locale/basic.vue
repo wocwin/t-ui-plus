@@ -3,7 +3,7 @@
     <t-layout-page-item>
       <el-button style="margin-bottom: 10px" type="primary" @click="toggle">切换语言</el-button>
       <el-config-provider :locale="locales">
-        <t-date-picker v-model="date" type="daterange" @change="change" />
+        <t-date-picker style="width: 80%" v-model="date" type="daterange" @change="change" />
       </el-config-provider>
     </t-layout-page-item>
   </t-layout-page>
@@ -34,6 +34,5 @@ const change = event => {
 }
 const toggle = () => {
   language.value = language.value === "zh-cn" ? "en" : "zh-cn"
-  console.log(language.value)
 }
 </script>

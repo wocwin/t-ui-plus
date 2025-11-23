@@ -94,9 +94,9 @@ export default {
       popoverAttrs: {
         showTxt: "More",
         title: "All conditions",
-        allTxt: "Select all",
-        reverseTxt: "Reverse selection",
-        clearTxt: "Clear selection"
+        allTxt: "SelectAll",
+        reverseTxt: "Reverse",
+        clearTxt: "ClearAll"
       }
     },
     select: {
@@ -147,10 +147,10 @@ export default {
       loadingTxt: "Loading...",
       dragTxt: "Drag",
       saveBtnTxt: "Save",
-      density: 'Density',
-      default: 'Default',
-      loose: 'Loose',
-      compact: 'Compact'
+      density: "Density",
+      default: "Default",
+      loose: "Loose",
+      compact: "Compact"
     }
   }
 }

@@ -145,7 +145,7 @@ export default {
       loadingTxt: "加载中...",
       saveBtnTxt: "保存",
       dragTxt: "拖动",
-      density: '密度',
+      density: "密度",
       default: "默认",
       loose: "宽松",
       compact: "紧凑"
