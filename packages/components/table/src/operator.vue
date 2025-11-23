@@ -52,7 +52,7 @@
             </el-button>
           </template>
         </template>
-        <template v-if="hasMoreOper()">
+        <template v-if="hasMoreOper() && isTotalPage(scope)">
           <el-dropdown v-bind="hasMoreBind" class="oper_more_dropdown">
             <span class="more_dropdown-link">
               <el-button
@@ -74,7 +74,7 @@
               <el-dropdown-menu v-bind="hasMoreBind.menuBind" class="oper_more_dropdown_menu">
                 <template v-for="(item, index) in table.operator">
                   <el-dropdown-item
-                    v-if="item.isMore"
+                    v-if="item.isMore && checkIsShow(scope, item)"
                     @click="item.fun && item.fun(scope.row, scope.$index, tableData)"
                     :key="'more_' + index"
                     v-bind="{
@@ -91,7 +91,6 @@
                         disabled: item.isDisabled && item.isDisabled(scope.row, item),
                         ...item.bind
                       }"
-                      v-if="checkIsShow(scope, item)"
                     >
                       <template v-if="item.render">
                         <render-col
@@ -178,12 +177,8 @@ const checkIsShow = (
   // 多重判断
   let isShow = true
   if (Array.isArray(item.show)) {
-    for (const condition of item.show) {
-      if (!condition.val.includes(scope.row[condition.key])) {
-        isShow = false
-        break
-      }
-    }
+    const showConditions = item.show
+    isShow = showConditions.some(condition => condition.val.includes(scope.row[condition.key]))
   } else if (item.show) {
     isShow = item.show.val.includes(scope.row[item.show.key])
   }
@@ -210,6 +205,19 @@ const checkIsShow = (
     totalTxt2 &&
     isPermission
   )
+}
+const isTotalPage = (scope: { row: { [s: string]: unknown } | ArrayLike<unknown> | any }) => {
+  let totalTxt = Object.values(scope.row).every(key => {
+    return key !== t("plus.table.operator.sum")
+  })
+  // table页面合计
+  let totalTxt1 = Object.values(scope.row).every(key => {
+    return key !== t("plus.table.operator.allSum")
+  })
+  let totalTxt2 = Object.values(scope.row).every(key => {
+    return key !== t("plus.table.operator.total")
+  })
+  return totalTxt && totalTxt1 && totalTxt2
 }
 // 更多下拉配置
 const $attrs = useAttrs()
