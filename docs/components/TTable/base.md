@@ -41,6 +41,11 @@ TTable/borderCom
 TTable/size
 :::
 
+### 表格的密度选择<el-tag>2.0.7</el-tag>
+:::demo 在`TTable`标签中添加`densitySeting`，默认开启,显示`密度按钮`点击下拉可选值`宽松：large`、`默认：default`、`紧凑：small`，点击按钮设置表格大小，外层按钮配置`densitySetBind`。注意：`table`标签中的`size`属性优先级高于`densitySeting`
+TTable/densitySeting
+:::
+
 ### 对齐方式
 
 :::demo 在`TTable`标签中添加`align:'center'`设置整个 table 对齐方式，在`columns`中设置`align`设置每列对齐方式（`columns优先级`高于`整体的对齐方式`）----`align`可选值`left`、`center`、`right`
@@ -270,7 +275,7 @@ TTable/isShowColMultileHead
 
 ### 表格操作按钮
 
-:::demo `operator数组`：`operator 数组`是显示按钮数且点击后将当前行数据传出；`operatorConfig` 对象是操作列样式（可以设置宽度/列标题及是否固定在最左/右侧）；按钮的颜色是以 `ElementUI` 内置 `button` 的 `type` 为准；动态隐藏按钮——`noshow`:多种状态控制按钮的显示与隐藏；例如：`noshow:[{key:'fields',val:'isHasVal'},{key:'status',val:[0,1,99]},{key:'channelCode',val:['bank']}]`；注释： `noshow` 中的 `key` 值(fields/status/channelCode)是表格后台返回的字段； 当 `val` 等于字符串'isHasVal'时,字段'fields'返回为空时，此行操作按钮隐藏； `以上综合：`当'status'为 0/1/99 并且'channelCode'为'bank'及'fields'为空时；`show: { key: 'status', val: [3,4] }`表 status 值为 3 或者 4 时，显示此操作健 根据后台字段返回是数字还是字符串来显示，`show`同时可以设置多个条件，如示例当`status`为1并且`id`为`1`时显示`编辑按钮`.。
+:::demo `operator数组`：`operator 数组`是显示按钮数且点击后将当前行数据传出；`operatorConfig` 对象是操作列样式（可以设置宽度/列标题及是否固定在最左/右侧）；按钮的颜色是以 `ElementUI` 内置 `button` 的 `type` 为准；动态隐藏按钮——`noshow`:多种状态控制按钮的显示与隐藏；例如：`noshow:[{key:'fields',val:'isHasVal'},{key:'status',val:[0,1,99]},{key:'channelCode',val:['bank']}]`；注释： `noshow` 中的 `key` 值(fields/status/channelCode)是表格后台返回的字段； 当 `val` 等于字符串'isHasVal'时,字段'fields'返回为空时，此行操作按钮隐藏； `以上综合：`当'status'为 0/1/99 并且'channelCode'为'bank'及'fields'为空时；`show: { key: 'status', val: [3,4] }`表 status 值为 3 或者 4 时，显示此操作健 根据后台字段返回是数字还是字符串来显示，`show`同时可以设置多个条件，如示例当`status`为1或者`id`为`1`时显示`编辑按钮`.。
 TTable/operator
 :::
 
@@ -525,6 +530,11 @@ TTable/expand
 | footerBtnAlign<el-tag>1.4.14</el-tag>                             | TTable底部插槽操作布局方式有三个值（`left` `center` `right`）             | String           | 'right'                                    |
 | isEmptyDataRequired<el-tag>2.0.3</el-tag>                         | 空数据时表头是否显示校验红点                                              | Boolean          | false                                      |
 | rowClickCheckbox<el-tag>2.0.5</el-tag>                            | 是否开启点击整行选中复选框                                                | Boolean          | false                                      |
+| densitySeting<el-tag>2.0.7</el-tag>                               | 是否显示表格密度按钮                                                      | Boolean          | true                                       |
+| densitySetBind                                                    | 密度按钮配置（继承`el-button`所有属性）                                   | Object           | -                                          |
+| ----btnTxt                                                        | 按钮显示文字                                                              | String           | '列设置'                                   |
+| ----size                                                          | el-button 的 size                                                         | String           | 'default'                                  |
+| ----icon                                                          | el-button 的 icon                                                         | String           | ''                                         |
 
 ### 3、events 其他事件按照 el-table 直接使用（如 sort-change 排序事件）
 

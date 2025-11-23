@@ -155,6 +155,11 @@
         background-color: #355db4;
         border: 1px solid #355db4;
       }
+
+      .header_right_wrap {
+        display: flex;
+        align-items: center;
+      }
     }
 
     .header_title {
@@ -353,7 +358,24 @@
 }
 
 .oper_more_dropdown_menu {
+  display: flex;
+  flex-direction: column;
+
   .el-dropdown-menu__item {
-    padding: 5px 16px;
+    padding: 6px 12px;
+  }
+}
+
+.density_set {
+  .density_set_list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+
+    .el-button {
+      margin: 0;
+    }
   }
 }

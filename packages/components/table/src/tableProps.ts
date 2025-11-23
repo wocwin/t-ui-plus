@@ -1,4 +1,5 @@
 import type { PropType, ExtractPropTypes } from "vue"
+import type { ComponentSize } from "element-plus/es/constants"
 import { useLocale } from "@t-ui-plus/hooks"
 const { t } = useLocale()
 export const tableProps = {
@@ -147,6 +148,14 @@ export const tableProps = {
   saveBtnTxt: {
     type: String,
     default: () => t("plus.table.saveBtnTxt")
+  },
+  defaultSize: {
+    type: String as PropType<ComponentSize>,
+    default: "default"
+  },
+  densitySeting: {
+    type: Boolean,
+    default: true
   }
 }
 

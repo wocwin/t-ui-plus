@@ -9,7 +9,8 @@
           isShow('title') ||
           isShow('toolbar') ||
           isSlotToolbar ||
-          columnSetting
+          columnSetting ||
+          densitySeting
             ? '10px'
             : 0
       }"
@@ -40,6 +41,18 @@
             ref="columnSetRef"
             @columnSetting="v => (state.columnSet = v)"
           />
+          <div
+            :style="{
+              marginLeft: columnSetting ? '10px' : 0
+            }"
+          >
+            <density-set
+              v-if="densitySeting"
+              v-bind="$attrs"
+              :default-size="state.size"
+              @click-density="handleClickDensity"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -59,9 +72,10 @@
         multile_head_column: isTableHeader,
         t_table_use_virtual: useVirtual
       }"
-      v-bind="$attrs"
       :highlight-current-row="highlightCurrentRow"
       :border="border || table.border || isTableBorder || useVirtual"
+      :size="state.size"
+      v-bind="$attrs"
       @cell-dblclick="cellDblclick"
       @row-click="rowClick"
     >
@@ -287,6 +301,7 @@ import {
 } from "vue"
 import { Rank, Edit } from "@element-plus/icons-vue"
 import { ElMessage } from "element-plus"
+import type { ComponentSize } from "element-plus/es/constants"
 import Sortable from "sortablejs"
 import TTableColumn from "@t-ui-plus/components/table/src/TTableColumn.vue"
 import SingleEditCell from "@t-ui-plus/components/table/src/singleEditCell.vue"
@@ -296,6 +311,7 @@ import RenderCol from "@t-ui-plus/components/table/src/renderCol.vue"
 import Operator from "@t-ui-plus/components/table/src/operator.vue"
 import RenderHeader from "@t-ui-plus/components/table/src/renderHeader.vue"
 import FirstColumn from "@t-ui-plus/components/table/src/firstColumn.vue"
+import DensitySet from "@t-ui-plus/components/table/src/densitySet.vue"
 // 虚拟滚动
 import { useVirtualized } from "./useVirtualized"
 const {
@@ -332,6 +348,7 @@ defineOptions({
 })
 // 初始化数据
 let state = reactive({
+  size: props.defaultSize,
   tableData: props.table.data,
   columnSet: [],
   copyTableData: [] // 键盘事件
@@ -629,6 +646,10 @@ const rowClick = (row: any) => {
 const clearRadioHandle = () => {
   radioVal.value = null
   TTable.value.setCurrentRow(-1)
+}
+// 密度
+const handleClickDensity = (size: ComponentSize) => {
+  state.size = size
 }
 // 复制内容到剪切板
 const copyToClipboard = async (text: any) => {
