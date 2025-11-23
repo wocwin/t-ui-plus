@@ -46,7 +46,7 @@ let table = reactive<TableTypes.Table>({
       date: "2019-09-25",
       date1: "2019-09-26",
       name: "张三",
-      status: "2",
+      status: "5",
       address: "广东省广州市天河区"
     },
     {
@@ -61,16 +61,16 @@ let table = reactive<TableTypes.Table>({
       id: "3",
       date: "2019-09-26",
       date1: "2019-09-28",
-      name: "张三1",
-      status: "1",
+      name: "张三2",
+      status: "3",
       address: "广东省广州市天广东省广州市天河区2广东省广州市天河区2河区2"
     },
     {
-      id: "4",
+      id: "1",
       date: "2019-09-26",
       date1: "2019-09-29",
-      name: "张三1",
-      status: "1",
+      name: "张三3",
+      status: "4",
       address: "广东省广州市天广东省广州市天河区2广东省广州市天河区2河区2"
     }
   ],
@@ -101,6 +101,10 @@ let table = reactive<TableTypes.Table>({
     {
       text: "编辑",
       hasPermi: "operator-edit",
+      show: [
+        { key: "status", val: ["1"] },
+        { key: "id", val: ["1"] }
+      ],
       fun: edit
     },
     {
