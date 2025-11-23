@@ -62,6 +62,12 @@ TForm/textShow
 TForm/comUse
 :::
 
+ ### 结合自己封装组件--校验规则
+
+:::demo 可以通过`getRefs`事件获取`formOpts.fieldList`中某项设置的`ref`示例；具体参考示例
+TForm/comUseRule
+:::
+
 ### 赋值回显数据
 
 :::demo
