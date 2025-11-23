@@ -1,9 +1,5 @@
 # T-ui-Plus
 
-## [Vue2 基于 Element-ui基础组件传送门](https://github.com/wocwin/t-ui)
-
-> 基于 Element-ui 二次封装基础组件地址
->
 ## [T-ui-Plus使用Demo项目](https://github.com/wocwin/wocwin-admin)
 
 >`wocwin-admin`是基于 Vue3.3、TypeScript、Vite4、Pinia、Element-Plus 开源的一套后台管理模板；此项目全面使用了`T-ui-Plus`二次封装基础组件库
@@ -15,39 +11,31 @@
 这是我在学习 Vue3 中基于[Element-plus](https://element-plus.org/zh-CN/) 二次封装基础组件文档，希望对你有用。可查看 [详细组件案例文档](https://wocwin.github.io/t-ui-plus/) 预览
 
 <p align="center">
-  <a href="https://github.com/vuejs/vue" target="_blank">
-    <img src="https://img.shields.io/badge/vue-3.4.21-brightgreen.svg" alt="vue3">
-  </a>
   <a href="https://gitee.com/wocwin/t-ui-plus/stargazers" target="_blank">
     <img src="https://gitee.com/wocwin/t-ui-plus/badge/star.svg?theme=dark" alt="t-ui-plus">
   </a>
    <a href="https://github.com/wocwin/t-ui-plus/stargazers" target="_blank">
     <img src="https://img.shields.io/github/stars/wocwin/t-ui-plus.svg" alt="t-ui-plus">
   </a>
-   <a href="https://www.npmjs.com/package/@wocwin/t-ui-plus" target="_blank">
-      <img alt="npm" src="https://img.shields.io/npm/v/@wocwin/t-ui-plus.svg" />
-    </a>
+  <a href="https://www.npmjs.com/package/@wocwin/t-ui-plus" target="_blank">
+    <img alt="npm" src="https://img.shields.io/npm/v/@wocwin/t-ui-plus.svg" />
+  </a>
 </p>
-
-## 动态效果图
-
-<img src="./README_GIF/TuiPlus__demo.gif">
 
 ### 安装
 
 **建议您使用包管理器 ([pnpm](https://pnpm.io/)<el-tag  effect="dark">推荐</el-tag> ， [yarn](https://classic.yarnpkg.com/lang/en/)，[npm](https://www.npmjs.com/)) 安装 @wocwin/t-ui-plus**。
 
 
-```sh [pnpm]
+```shell
+// 使用pnpm
 pnpm install @wocwin/t-ui-plus -S
-```
 
-```sh [yarn]
+// 使用npm
+npm install @wocwin/t-ui-plus -S
+
+// 使用yarn
 yarn add @wocwin/t-ui-plus
-```
-
-```sh [npm]
-npm install @wocwin/t-ui-plus    -S
 ```
 
 
@@ -62,7 +50,10 @@ import App from "./App.vue";
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
 import "element-plus/theme-chalk/dark/css-vars.css";
-import locale from "element-plus/es/locale/lang/zh-cn";
+// import en from 'element-plus/es/locale/lang/en' // 引入element-plus语言包 en--不建议固定设置
+import zhCn from 'element-plus/es/locale/lang/zh-cn' // 引入element-plus语言包 zh-cn--不建议固定设置
+import plusZhCn from '@wocwin/t-ui-plus/locale/zh-cn' // 引入t-ui-plus语言包 zh-cn--不建议固定设置
+// import plusEn from '@wocwin/t-ui-plus/locale/en' // 引入t-ui-plus语言包 en--不建议固定设置
 // element-plus图标
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import TuiPlus from '@wocwin/t-ui-plus'
@@ -74,7 +65,7 @@ const app = createApp(App)
   }
   // 注册ElementPlus
   app.use(ElementPlus, {
-    locale // 语言设置
+    locale: { ...zhCn, ...plusZhCn } // 语言设置--不建议固定设置
     // size: Cookies.get('size') || 'medium' // 尺寸设置
   });
 app.use(TuiPlus)
@@ -89,6 +80,34 @@ import '@wocwin/t-ui-plus/index.css'
 // 单个.vue文件引入
 <script setup lang="ts">
   import {TDetail, TForm} from "@wocwin/t-ui-plus"
+</script>
+```
+## 国际化配置-- ConfigProvider <el-tag  effect="dark">推荐</el-tag>
+```html
+<template>
+  <el-config-provider :locale="locale"> *** </el-config-provider>
+</template>
+
+<script setup>
+  import { ElConfigProvider } from 'element-plus'
+  import { useGlobalStore } from "@/store/modules/global"; // 引入pinia全局状态管理
+  import en from 'element-plus/es/locale/lang/en'
+  import zhCn from 'element-plus/es/locale/lang/zh-cn'
+  import plusZhCn from '@wocwin/t-ui-plus/locale/zh-cn'
+  import plusEn from '@wocwin/t-ui-plus/locale/en'
+
+  const zhCnLocales = {
+    ...zhCn,
+    ...plusZhCn
+  }
+  const enLocales = {
+    ...en,
+    ...plusEn
+  }
+
+  const globalStore = useGlobalStore();
+  const locale = computed(() => (globalStore.language === 'zh' ? zhCnLocales : enLocales))
+
 </script>
 ```
 ## 浏览器直接引入
@@ -274,3 +293,7 @@ npm run docs:dev
 - `docs`: 文档变动;
 - `test`: 补充缺失的测试用例或者修正现有的测试用例;
 - `revert`: 回滚操作;
+
+## [Vue2 基于 Element-ui基础组件传送门](https://github.com/wocwin/t-ui)
+
+> 基于 Element-ui 二次封装基础组件地址

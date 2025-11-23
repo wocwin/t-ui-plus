@@ -11,7 +11,10 @@ import App from "./App.vue"
 import ElementPlus from "element-plus"
 import "element-plus/dist/index.css"
 import "element-plus/theme-chalk/dark/css-vars.css"
-import locale from "element-plus/es/locale/lang/zh-cn"
+// import en from 'element-plus/es/locale/lang/en' // 引入element-plus语言包 en
+import zhCn from 'element-plus/es/locale/lang/zh-cn' // 引入element-plus语言包 zh-cn
+import plusZhCn from '@wocwin/t-ui-plus/locale/zh-cn' // 引入t-ui-plus语言包 zh-cn
+// import plusEn from '@wocwin/t-ui-plus/locale/en' // 引入t-ui-plus语言包 en
 // element-plus图标
 import * as ElementPlusIconsVue from "@element-plus/icons-vue"
 import TuiPlus from "@wocwin/t-ui-plus"
@@ -23,7 +26,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 // 注册ElementPlus
 app.use(ElementPlus, {
-  locale // 语言设置
+  locale: { ...zhCn, ...plusZhCn } // 语言设置
   // size: Cookies.get('size') || 'medium' // 尺寸设置
 })
 app.use(TuiPlus)
