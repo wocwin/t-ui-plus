@@ -53,7 +53,7 @@
           </template>
         </template>
         <template v-if="hasMoreOper() && isTotalPage(scope)">
-          <el-dropdown v-bind="hasMoreBind" class="oper_more_dropdown">
+          <el-dropdown v-bind="hasMoreBind" class="oper_more_dropdown" v-if="hasMoreItems(scope)">
             <span class="more_dropdown-link">
               <el-button
                 v-bind="{
@@ -237,4 +237,10 @@ const hasMoreBind: any = computed(() => {
 const hasMoreOper = () => {
   return props.table.operator.some((item: { isMore: boolean }) => item.isMore === true)
 }
+// 判断是否显示更多按钮
+const hasMoreItems = computed(() => {
+   return (scope: any) => {
+     return props.table.operator?.some((item: any) => item.isMore && checkIsShow(scope, item))
+   }
+})
 </script>
