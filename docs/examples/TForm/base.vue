@@ -252,6 +252,7 @@ const formOpts = reactive<FormTypes.FormOpts>({
       type: "input",
       comp: "el-input",
       event: "account",
+      labelWidth:200,
       isTrim: true,
       eventHandle: {
         input: val => (formOpts.formData.account = getInputVal(val)),

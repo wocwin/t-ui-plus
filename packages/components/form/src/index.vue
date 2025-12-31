@@ -26,6 +26,7 @@
           { render_laber_position_left: formOpts.labelPosition === 'left' }
         ]"
         :rules="item.rules"
+        :label-width="item.labelWidth"
         :style="getChildWidth(item)"
         v-bind="$attrs"
       >
