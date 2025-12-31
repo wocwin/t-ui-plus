@@ -56,6 +56,7 @@ export default {
       amount: "金额",
       numbers: "数字",
       digitUppercase: "请输入正确的金额格式",
+      validateError: "请输入正确的格式",
       escaped: {
         0: "角",
         1: "分",

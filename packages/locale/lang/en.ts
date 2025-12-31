@@ -56,6 +56,7 @@ export default {
       amount: "amount",
       numbers: "numbers",
       digitUppercase: "Please enter a valid amount format",
+      validateError: "Please enter a valid format",
       escaped: {
         0: "Cent",
         1: "Penny",
