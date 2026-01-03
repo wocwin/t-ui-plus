@@ -67,6 +67,14 @@ TInput/size
 TInput/slot
 :::
 
+### 自定义输入类型正则
+
+:::demo `inputType` 自定义输入类型正则表达式;`customErrorTip` 自定义错误提示信息。
+TInput/inputTypeRegExp
+:::
+
+
+
 ### TInput Attributes
 
 ---
@@ -89,6 +97,7 @@ TInput/slot
 | isTip          | 是否提示金额中文<t-tip content='金额类型时生效'/>     | Boolean                                                                                           | false    |
 | inputType      | 特性类型标注                                          | string<t-tip content='文字:text,金额:amount,电话:phone,整数:integer,小数:decimal,身份证:idCard'/> | text     |
 | isShowErrorTip | 输入错误是否弹出弹窗提示                              | Boolean                                                                                           | true     |
+| customErrorTip | 自定义错误提示信息                                    | string                                                                                            | -        |
 
 
 ### 3、继承 el-input 事件、插槽、方法
