@@ -273,9 +273,7 @@ npm run docs:dev
   <img src="https://contrib.rocks/image?repo=wocwin/t-ui-plus" alt="contributors" />
 </a>
 
-## 微信交流群
-
->目前微信群已超过 200 人，需要加微信好友(请备注 T-ui-Plus)，拉大家进群
+## 微信交流（请备注T-ui-Plus）
 
 |                微信二维码                 |
 | :---------------------------------------: |
